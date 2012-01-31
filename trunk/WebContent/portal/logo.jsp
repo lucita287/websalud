@@ -23,32 +23,16 @@ border:1px solid #FFF8DC;
 </head>
 <body>
 
-  <button id="go">&raquo; Run</button>
 
-<div id="block"><img src="../images/u-salud.png" width="100px" height="80px" /></div>
-<script>
-$(window).load(function() {
-    $('#slider').nivoSlider();
-});
-$("#go").click(function(){
-  $("#block").animate({
-    width: "70%",
-    opacity: 0.4,
-    marginLeft: "0.6in",
-    fontSize: "3em",
-    borderWidth: "10px"
-  }, 1500 );
-});
-</script>
-<div id="slider-wrapper">        
+				<div id="slider-wrapper">        
 
 					    <div id="slider" class="nivoSlider">
 
-									<img src="images/u-salud.png" alt=""  title="Examen de Salud / Primer Ingreso" />
+									<img src="../images/u-salud.png" alt=""  title="Examen de Salud / Primer Ingreso" />
 
-									<img src="images/header2.jpg" alt="" title="Universidad de San Carlos de Guatemala" />
+									<img src="../images/fotos/1.png" alt="" title="Universidad de San Carlos de Guatemala" />
 
-									<img src="images/header3.jpg" alt="" title="Areás de la unidad de salud" />									
+									<img src="../images/fotos/2.png" alt="" title="Areás de la unidad de salud" />									
 
 						</div>        
 
@@ -57,3 +41,13 @@ $("#go").click(function(){
 </body>
 </html>
 
+      <script>
+
+    $(window).load(function() {
+
+        $('#slider').nivoSlider();
+
+    });
+
+
+    </script>
