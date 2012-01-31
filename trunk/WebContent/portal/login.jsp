@@ -36,15 +36,13 @@
 										</tr>
 										</table>
 										<br/>
-											<center>
-											<a href="#" id="button" class="ui-state-default ui-corner-all">Entrar</a>
+											<a href="#" id="button" class="ui-state-default ui-corner-all"> Entrar</a>
 											
-											<center/>
 											<br/>		
 											<hr/>
 										<br/><a href="#">¿Olvid&oacute; su contraseña?</a>
 										<br/><a href="#">Obtener Usuario</a>
-										</center>
+										
 									</div>
 								</div>
 						</div>
