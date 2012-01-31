@@ -3,7 +3,7 @@ package framework;
 import java.util.ArrayList;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;

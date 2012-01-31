@@ -19,7 +19,7 @@ public class SNoticia extends HttpServlet {
      */
     public SNoticia() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
