@@ -31,13 +31,13 @@ dbo.Close();
 	$(document).ready(function() {initMenu();});
 	</script>
 	<style type="text/css">
-
-
+	
+#menu-principal {  width:25%;  float:left; }
 ul#menu, ul#menu ul {
   list-style-type:none;
   margin: 0;
   padding: 0;
-  width: 15em;
+  width: 20em;
 }
 
 ul#menu a {
@@ -50,32 +50,27 @@ ul#menu li {
 }
 
 ul#menu li a {
-  background: #333;
+  background: #6495ED;
   color: #fff;	
   padding: 0.5em;
 }
 
 ul#menu li a:hover {
-  background: #000;
+  background: #0000FF;
 }
 
 ul#menu li ul li a {
-  background: #ccc;
+  background: #E6E6FA;
   color: #000;
   padding-left: 20px;
 }
 
 ul#menu li ul li a:hover {
-  background: #aaa;
+  background: #778899;
   border-left: 5px #000 solid;
   padding-left: 15px;
 }
 
-.code { border: 1px solid #ccc; list-style-type: decimal-leading-zero; padding: 5px; margin: 0; }
-.code code { display: block; padding: 3px; margin-bottom: 0; }
-.code li { background: #ddd; border: 1px solid #ccc; margin: 0 0 2px 2.2em; }
-.indent1 { padding-left: 1em; }
-.indent2 { padding-left: 2em; }
 	</style>
 	
 <ul id="menu">
