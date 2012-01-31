@@ -43,11 +43,12 @@ dbo.Close();
 		#tabs1-inicio-info { width:35%; float:left; }
 		#widget-info { width:50%; float:left; }
 		#tabs1-inicio-info h3 { margin: 0; padding: 0.4em; text-align: center; }
-		
+		#Panel-texto { width:90%;  padding: 0.4em; background: #fff; }
+		#Panel-texto h3 { margin: 0; padding: 0.4em; text-align: center; }
 		.news-inicio{	width:95%; height:80px; border-style:solid; border-width:1px;	}
      </style>
      
-     <div id="noticias">
+
 <div id="Panel-inicio" class="ui-widget-content ui-corner-all">
 						<h3 class="ui-widget-header ui-corner-all">Noticias</h3>				
 
@@ -122,5 +123,4 @@ dbo.Close();
 <div style="clear: both;"></div>
 
 </div>
-</div>            
 <div style="clear: both;"></div>

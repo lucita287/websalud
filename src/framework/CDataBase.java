@@ -3,6 +3,7 @@ package framework;
 import java.util.ArrayList;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 //import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
@@ -68,21 +69,48 @@ public class CDataBase {
 		}
 		return ret;
 	}
+	public CMenu getMenuEspecifico(int idmenu){
+		CMenu temp_menu=null;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,areaidarea,contenido FROM Menu where  idmenu=? ");
+			stm.setInt(1, idmenu);
+			ResultSet rs2=stm.executeQuery();
+			rs2.next();
+			temp_menu=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),rs2.getInt("areaidarea"),rs2.getString("contenido"),null);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp_menu;
+	}
+	
 	public ArrayList<CMenu> getMenu(int area){
 		ArrayList<CMenu> ret=new ArrayList<CMenu>();
 		try{
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,areaidarea FROM Menu where areaidarea=?");
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,areaidarea FROM Menu where areaidarea=? and  idmenu_rec is null");
 			stm.setInt(1, area);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CMenu temp_menu=null;
-				temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),rs.getInt("areaidarea"));
+				
+				PreparedStatement stm2=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,areaidarea FROM Menu where  idmenu_rec=? ");
+				stm2.setInt(1, rs.getInt("idmenu"));
+				ResultSet rs2=stm2.executeQuery();
+				ArrayList<CMenu> temp_list=new ArrayList<CMenu>();
+				while(rs2.next()){
+					temp_menu=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),rs2.getInt("areaidarea"),"",null);
+					temp_list.add(temp_menu);
+				}
+				temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),rs.getInt("areaidarea"),"",temp_list);
 				ret.add(temp_menu);
 				
 			}
 			rs.close();
 			stm.close();
 		}
+		
 		catch(Throwable e){
 			
 		}

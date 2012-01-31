@@ -7,7 +7,7 @@
 	$(function() {
 		$(".menu_header").jCarouselLite({
 			hoverPause:true,
-			visible: 4,
+			visible: 5,
 			auto:500,
 			speed:1000,
 			scroll:1
@@ -27,7 +27,7 @@
 										<li>
 										<div class="foto-inicio" >
 												
-													<img src="images/fotos/1.jpg" width="120px" height="120px" />												
+													<img src="images/fotos/1.jpg" width="160px" height="120px" />												
 	
 											
 										</div>
@@ -36,7 +36,7 @@
 										<li>
 										<div class="foto-inicio"  >	
 												
-												<img src="images/fotos/2.png" width="120px" height="120px" />												
+												<img src="images/fotos/2.png" width="160px" height="120px" />												
 
 												
 										</div>
@@ -45,25 +45,31 @@
 										<li>
 										<div class="foto-inicio"  >
 												
-												<img src="images/fotos/3.png" width="120px" height="120px" />
+												<img src="images/fotos/3.png" width="160px" height="120px" />
 												
 										</div>		
 										</li>
 										<li>
 										<div class="foto-inicio"  >
 												
-												<img src="images/fotos/4.png" width="120px" height="120px" />
+												<img src="images/fotos/4.png" width="160px" height="120px" />
 												
 										</div>		
 										</li>
-										
+										<li>
+										<div class="foto-inicio"  >
+												
+												<img src="images/fotos/5.png" width="160px" height="120px" />
+												
+										</div>		
+										</li>
 										
 									</ul>
 
 								</div>
 	
 	
-Unidad de Salud	
+<h3>Unidad de Salud	</h3>
 	
 	
 			
