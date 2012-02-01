@@ -45,8 +45,9 @@ public class SMenu extends HttpServlet {
 		 CDataBase dbo=new CDataBase();
 		 dbo.Connect();
 		 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
-		 String result=(temp_menu!=null)?"{\"titulo\":\""+temp_menu.getdescripcion()+"\",\"texto\":\""
-				 +temp_menu.getcontenido()+"\"}"
+		 String result=(temp_menu!=null)?
+				 "{\"descripcion\":\""+temp_menu.getdescripcion()+"\",\"area\":\""+temp_menu.getareaidarea().getidarea()+"\"," +
+				 		"\"contenido\":\""+temp_menu.getcontenido()+"\"}"
 				 :"";
 		 out.println(result);
 	}

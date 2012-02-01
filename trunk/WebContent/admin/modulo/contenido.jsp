@@ -4,7 +4,7 @@
 	});
 	(function($) {
 		$(document).ready(function() {
-			$('#wysiwyg').wysiwyg();
+			$('.wysiwyg').wysiwyg();
 		});
 	})(jQuery);
 	
@@ -26,14 +26,18 @@
 				Titulo: <input type="text" size="60" /><br/>
 				Area Pertenece:<br/>
 				Sub Parte:<br/>
-				
-				
-			<textarea id="wysiwyg" rows="5" cols="80"></textarea>
+					
+			<textarea class="wysiwyg" rows="5" cols="80"></textarea>
 				
 			</div>
 			<div id="tabs-2" style="width:1000px; ">
 			
 			<table id="flex1" style="display:none"></table>
+				ID:  <label id="edit-id"></label><br/>
+				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
+				Area Pertenece:<br/>
+				Sub Parte:<br/>
+			<textarea class="wysiwyg" rows="5" cols="80"></textarea>
 			<div style="clear: both;"></div>
 			
 			</div>
@@ -45,15 +49,12 @@
 		({
 		    dataType: 'json',
 		    colModel: [
-			{ display: 'idmenu', name: 'idmenu', width: 150, sortable: true, align: 'left' },
+			{display: 'Seleccionar', name : 'chkDelete', width : 30, sortable : false, align: 'left'},           
+			{ display: 'idmenu', name: 'idmenu', width: 40, sortable: true, align: 'left' },
 			{ display: 'descripcion', name: 'descripcion', width: 100, sortable: true, align: 'left' },
 			{ display: 'area', name: 'area', width: 100, sortable: true, align: 'left' },
 			{ display: 'contenido', name: 'contenido', width: 150, sortable: true, align: 'left' },
 			{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' },
-			],
-		    searchitems: [
-			{ display: 'idmenu', name: 'idmenu' },
-			{ display: 'descripcion', name: 'descripcion', isdefault: true }
 			],
 		    sortname: "idmenu",
 		    sortorder: "asc",
@@ -75,7 +76,24 @@
           });            
   });
 
+  	function editar(idmenu){
+  		$('#edit-id').text(idmenu);
+  		 cadena = [ 'idmenu='     + idmenu,
+  		            'a=edit'
+  		        ].join('&');
+  		
+  		$.ajax({
+  	        url: "../SMenu",
+  	        data: cadena,
+	  	    type: 'post',
+	        dataType: 'json',
+  	        success: function(data){
+  	           // $("#rpta_servidor").html(data);
+  	        }
 
+  	    });
+  		
+  	}
 	
 
 

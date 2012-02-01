@@ -24,19 +24,8 @@
 		           'idmenu='     + idmenu,
 		        ].join('&');
 
-		 //$.ajax({
-			//url: "SMenu",
-	        //type: 'post',
-           //dataType: 'json',
-           //data:cadena,
-	        // success: function(data){
-	        	//$("#Panel-texto-tit").html(data['titulo']);
-	        	//$("#panel-texto-c").html(data['texto']);
-	        	$('#Cont-Panel-texto').load("portal/contenido.jsp?idmenu="+idmenu);
-	        	//
-	        	//    }
-	    //});
-		
+		    	$('#Cont-Panel-texto').load("portal/contenido.jsp?idmenu="+idmenu);
+	    
 
 		
 	}
