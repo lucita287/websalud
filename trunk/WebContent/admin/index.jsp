@@ -9,17 +9,14 @@
 <div id="content">
 
 <div class="top">
-<table>
-<tr>
-<td>
+<div style="float:left">
 <img src="../images/usalud.png" width="100px" height="100px" />
-</td>
-<td>
+</div>
+<div style="float:left">
 <h1><a href="#">Unidad de Salud</a></h1>
 <h2><a href="#" id="metamorph">Administraci&oacute;n</a></h2>
-</td>
-</tr>
-</table>
+</div>
+<div style="clear: both;"></div>
 </div>
 
 <div id="back">
