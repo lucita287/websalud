@@ -43,11 +43,6 @@ border:1px solid #FFF8DC;
 
       <script>
 
-    $(window).load(function() {
-
-        $('#slider').nivoSlider();
-
-    });
 
 
     </script>

@@ -12,41 +12,6 @@ ArrayList<CNoticia> list_news=dbo.getNoticias();
 dbo.Close();
 %>
 
-<script>
-
-	
-	$(function() {
-		$(".jCarouselLite2").jCarouselLite({
-		vertical: true,
-		btnNext: "#next_info",
-		btnPrev: "#prev_info",
-		visible: 3
-	});
-	});
-	$(function() {	
-	$(".news-inicio").click(function() {
-
-		$("#widget-info").html($(this).attr("name"));
-	});
-	});
-	
-    </script>
-	<style type="text/css">
-		#noticias {width:75%; float:left; }
-		#news_descripcion {width:75%; float:left; }
-		#news_imagen { width:35%; float:left;  }
-		#feedback { font-size: 1.4em; }
-		#Panel-inicio { width:90%;  padding: 0.4em; background: #fff; }
-		#header-inicio {float:left; }
-		#tabs1-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }
-		#Panel-inicio-info { width:90%;  padding: 0.4em; background: #fff; }
-		#tabs1-inicio-info { width:35%; float:left; }
-		#widget-info { width:50%; float:left; }
-		#tabs1-inicio-info h3 { margin: 0; padding: 0.4em; text-align: center; }
-		#Panel-texto { width:90%;  padding: 0.4em; background: #fff; }
-		#Panel-texto h3 { margin: 0; padding: 0.4em; text-align: center; }
-		.news-inicio{	width:95%; height:80px; border-style:solid; border-width:1px;	}
-     </style>
      
 
 <div id="Panel-inicio" class="ui-widget-content ui-corner-all">
