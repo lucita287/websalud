@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,10 +46,19 @@ public class SEditContenido extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			 CDataBase dbo=new CDataBase();
 			 dbo.Connect();
-			 	
-			 String info="{ total: 2, page: 1, rows: [{ cell: [\"test\", \"localhost\" , 8080 , \"ERROR\" , 0.0 ] }, { cell: [\"drew\" , \"localhost\" , 8080 , \"UNKNOWN\" , 0.0 ]}] }";
-			 out.println(info);
+			 ArrayList<CMenu> list=dbo.getMenuLista();	
 			 
+			 String info="{";
+			 info+="total: "+dbo.getCMenuTotal();
+			 info+=", page: 1,";
+			 info+="rows: [";
+			 for(int i=0; i<list.size();i++){
+					CMenu temp=list.get(i);
+					info+="{ cell: [\"<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />\",\""+temp.getidmenu()+"\", \""+temp.getdescripcion()+"\" , \""+temp.getareaidarea().getdescripcion()+"\" , \""+temp.getcontenido()+"\" , \""+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"\" ] },";
+			}
+			 info+="] }";
+			 out.println(info);
+			 dbo.Close();
 	}
 
 }

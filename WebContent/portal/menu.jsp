@@ -22,8 +22,7 @@ dbo.Close();
 			
 			
 			<ul>
-				<% if (temp_list!=null)
-					for(int j=0; j<temp_list.size();j++){ 
+				<% for(int j=0; j<temp_list.size();j++){ 
 					CMenu temp_menu1=temp_list.get(j);
 					%>
 				<li>
