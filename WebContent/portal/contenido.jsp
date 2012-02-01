@@ -4,16 +4,20 @@
 <%@ page import="data.CMenu" %>
 <%
 
-int idmenu=Integer.parseInt(request.getParameter("idmenu"));
+int idmenu=1;
+try {
+idmenu=Integer.parseInt(request.getParameter("idmenu"));
+} catch (NumberFormatException e) {
+}
 CDataBase dbo=new CDataBase();
 dbo.Connect();
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 %>
-
-		<h3 id="Panel-texto-tit" class="ui-widget-header ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
+		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
+		<br/>
 		<div id="panel-texto-c" class="panel-texto-desc">
-			<div id="panel-texto-conte">
 					<%=temp_menu.getcontenido()%>				
-			</div>
+			
 		</div>
+		<br/>
 	<div style="clear: both;"></div>					

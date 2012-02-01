@@ -38,7 +38,7 @@
 </div>
      <div id="noticias">
 <div id="Cont-Panel-texto" class="ui-widget-content ui-corner-all">
-				
+<jsp:include page="portal/contenido.jsp" />				
 </div>
 <jsp:include page="portal/noticias.jsp" />						
 </div>
