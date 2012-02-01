@@ -1,8 +1,3 @@
-/*
-Design by Metamorphosis Design
-http://www.metamorphozis.com
-Released for free under a Creative Commons Attribution 2.5 License
-*/
 
 *{
 margin: 0px;
@@ -67,30 +62,6 @@ border-left: 7px solid #ffffff;
 border-right: 7px solid #ffffff;
 }
 
-#header {
-	height: 451px;
-			
-}
-
-#logo {
-
-width: 978px;
-height: 389px;
-background: url(../images/header.jpg) no-repeat;
-}
-
-
-#logo a {
-	text-decoration: none;
-	text-transform: lowercase;
-	font-style: italic;
-	font-size: 18px;
-	color: #ffffff;
-}
-#logo H2 a
-{
-font-size: 12px;
-}
 
 
 
@@ -162,80 +133,63 @@ h2 span {color:#13c5ff}
 
 
 
-/*=================================*/
-/* Nivo Slider Demo
-/* November 2010
-/* By: Gilbert Pellegrom
-/* http://dev7studios.com
-/*=================================*/
-
-
-#slider-wrapper {
-    background:url(../images/top.jpg) no-repeat;
-    width: 978px;
-    height: 389px;
-    margin:0 auto;
+/************* PORTAL ******************/
+		#panel-texto-c {
+					width: 80%;
+					height: 50px;
+					overflow: auto;
+					background: #ccc;
+					float: left;
+				}
+				#menu-principal {  width:25%;  float:left; }
+ul#menu, ul#menu ul {
+  list-style-type:none;
+  margin: 0;
+  padding: 0;
+  width: 20em;
 }
 
-#slider {
-	position:relative;
-    width: 978px;
-    height: 389px;
-	background:url(../images/loading.gif) no-repeat 50% 50%;
-}
-#slider img {
-	position:absolute;
-	top:0px;
-	left:0px;
-	display:none;
-}
-#slider a {
-	border:0;
-	display:block;
+ul#menu a {
+  display: block;
+  text-decoration: none;	
 }
 
-.nivo-controlNav {
-	position:absolute;
-	left:260px;
-	bottom:-42px;
-	display: none;
-}
-.nivo-controlNav a {
-	display:block;
-	width:22px;
-	height:22px;
-	background:url(../images/bullets.png) no-repeat;
-	text-indent:-9999px;
-	border:0;
-	margin-right:3px;
-	float:left;
-}
-.nivo-controlNav a.active {
-	background-position:0 -22px;
+ul#menu li {
+  margin-top: 1px;
 }
 
-.nivo-directionNav a {
-	display:block;
-	width:30px;
-	height:30px;
-	background:url(../images/arrows.png) no-repeat;
-	text-indent:-9999px;
-	border:0;
-}
-a.nivo-nextNav {
-	background-position:-30px 0;
-	right:15px;
-}
-a.nivo-prevNav {
-	left:15px;
+ul#menu li a {
+  background: #333;
+  color: #fff;	
+  padding: 0.5em;
 }
 
-.nivo-caption {
-    text-shadow:none;
-    font-family: Helvetica, Arial, sans-serif;
-}
-.nivo-caption a { 
-    color:#efe9d1;
-    text-decoration:underline;
+ul#menu li a:hover {
+  background: #000;
 }
 
+ul#menu li ul li a {
+  background: #ccc;
+  color: #000;
+  padding-left: 20px;
+}
+
+ul#menu li ul li a:hover {
+  background: #aaa;
+  border-left: 5px #000 solid;
+  padding-left: 15px;
+}
+		#noticias {width:75%; float:left; }
+		#news_descripcion {width:75%; float:left; }
+		#news_imagen { width:35%; float:left;  }
+		#feedback { font-size: 1.4em; }
+		#Panel-inicio { width:90%;  padding: 0.4em; background: #fff; }
+		#header-inicio {float:left; }
+		#tabs1-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }
+		#Panel-inicio-info { width:90%;  padding: 0.4em; background: #fff; }
+		#tabs1-inicio-info { width:35%; float:left; }
+		#widget-info { width:50%; float:left; }
+		#tabs1-inicio-info h3 { margin: 0; padding: 0.4em; text-align: center; }
+		#Panel-texto { width:90%;  padding: 0.4em; background: #fff; }
+		#Panel-texto h3 { margin: 0; padding: 0.4em; text-align: center; }
+		.news-inicio{	width:95%; height:80px; border-style:solid; border-width:1px;	}

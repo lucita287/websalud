@@ -28,10 +28,11 @@
  <div id="main">
 <div style="clear: both;"></div>
 <div id="menu-principal" >
-<div>
+<jsp:include page="modulo/menu.jsp" />
 </div>
+<div id="contenido">
+<jsp:include page="modulo/contenido.jsp" />
 </div>
-
 <div style="clear: both;"></div>
 
 </div>	

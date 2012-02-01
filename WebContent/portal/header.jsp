@@ -4,15 +4,7 @@
 <%@ page import="data.CNoticia" %>
 <%@ page import="java.util.ArrayList" %>
 	<script>
-	$(function() {
-		$(".menu_header").jCarouselLite({
-			hoverPause:true,
-			visible: 5,
-			auto:500,
-			speed:1000,
-			scroll:1
-			});
-		});	
+
     </script>
 	<style type="text/css">
 		#header_carousel { float:right; }
