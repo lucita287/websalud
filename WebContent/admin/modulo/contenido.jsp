@@ -16,7 +16,6 @@
 	
 		
         </style>
-        
     	<div id="tabs">
 			<ul>
 				<li><a href="#tabs-1">Nueva Entrada</a></li>
@@ -41,72 +40,41 @@
     </div>
     
   <script type="text/javascript">
-
-$("#flex1").flexigrid({
-
-	url: '../SContenido',
-
-	dataType: 'json',
-
-	colModel : [
-
-		{display: 'ISO', name : 'iso', width : 40, sortable : true, align: 'center'},
-
-		{display: 'Name', name : 'name', width : 100, sortable : true, align: 'left'},
-
-		{display: 'Printable Name', name : 'printable_name', width : 100, sortable : true, align: 'left'},
-
-		{display: 'ISO3', name : 'iso3', width : 100, sortable : true, align: 'left', hide: true},
-
-		{display: 'Number Code', name : 'numcode', width : 80, sortable : true, align: 'right'}
-
-		],
-
-	searchitems : [
-
-		{display: 'ISO', name : 'iso'},
-
-		{display: 'Name', name : 'name', isdefault: true}
-
-		],
-
-	sortname: "iso",
-
-	sortorder: "asc",
-
-	usepager: true,
-
-	title: 'Countries',
-
-	useRp: true,
-
-	rp: 15,
-
-	showTableToggleBtn: true,
-
-	width: 600,
-
-	onSubmit: addFormData,
-
-	height: 200
-
-});
+  $(document).ready(function () {
+      $("#flex1").flexigrid
+		({
+		    dataType: 'json',
+		    colModel: [
+			{ display: 'idmenu', name: 'idmenu', width: 150, sortable: true, align: 'left' },
+			{ display: 'descripcion', name: 'descripcion', width: 100, sortable: true, align: 'left' },
+			{ display: 'area', name: 'area', width: 100, sortable: true, align: 'left' },
+			{ display: 'contenido', name: 'contenido', width: 150, sortable: true, align: 'left' },
+			{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' },
+			],
+		    searchitems: [
+			{ display: 'idmenu', name: 'idmenu' },
+			{ display: 'descripcion', name: 'descripcion', isdefault: true }
+			],
+		    sortname: "idmenu",
+		    sortorder: "asc",
+		    usepager: true,
+		    title: 'Contenido',
+		    useRp: true,
+		    rp: 15,
+		    showTableToggleBtn: true,
+		    width: 600,
+		    height: 200
+		});
 
 
+      $.post("../SEditContenido",
+          function (data) {                    
+              var arr = Array();
+              arr = eval("(" + data + ")");                    
+              $('#flex1').flexAddData(arr);                    
+          });            
+  });
 
-//This function adds paramaters to the post of flexigrid. You can add a verification as well by return to false if you don't want flexigrid to submit			
-
-function addFormData(){
-
-	//passing a form object to serializeArray will get the valid data from all the objects, but, if the you pass a non-form object, you have to specify the input elements that the data will come from
-
-	var dt = $('#sform').serializeArray();
-
-	$("#flex1").flexOptions({params: dt});
-
-	return true;
-
-}
 
 	
 
