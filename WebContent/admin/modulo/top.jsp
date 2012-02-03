@@ -5,10 +5,6 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 
-<link rel="stylesheet" type="text/css" href="../css/screen.css" media="screen, projection" />
-<link rel="stylesheet" type="text/css" href="../css/print.css" media="print" />
-<!--[if lt IE 8]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection" /><![endif]-->
-<link rel="stylesheet" href="../css/jquery.wysiwyg.css" type="text/css"/>
 <link type="text/css" href="../css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 <link href="../css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 <link rel="stylesheet" type="text/css" href="../css/flexigrid.css"></link>
@@ -18,11 +14,7 @@
 <script type="text/javascript" src="../lib/jquery.nivo.slider.pack.js"></script>
 <script type="text/javascript" src="../lib/jquery-ui-1.8.17.custom.min.js"></script>
 <script src="../lib/jcarousellite_1.0.1c4.js" type="text/javascript"></script>
-<script type="text/javascript" src="../lib/jquery.wymeditor.min.js"></script>
-<script type="text/javascript" src="../lib/jquery.wysiwyg.js"></script>
-<script type="text/javascript" src="../lib/wysiwyg.image.js"></script>
-<script type="text/javascript" src="../lib/wysiwyg.link.js"></script>
-<script type="text/javascript" src="../lib/wysiwyg.table.js"></script>
+
 <script type="text/javascript" src="../lib/flexigrid.js"></script>
 	<script>
 	
