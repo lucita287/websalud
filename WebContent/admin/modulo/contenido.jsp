@@ -37,7 +37,7 @@
 				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
 				Area Pertenece:<br/>
 				Sub Parte:<br/>
-			<textarea class="wysiwyg" rows="5" cols="80"></textarea>
+			<textarea id="cont_text"  class="wysiwyg" rows="5" cols="80"></textarea>
 			<div style="clear: both;"></div>
 			
 			</div>
@@ -54,7 +54,7 @@
 			{ display: 'descripcion', name: 'descripcion', width: 100, sortable: true, align: 'left' },
 			{ display: 'area', name: 'area', width: 100, sortable: true, align: 'left' },
 			{ display: 'contenido', name: 'contenido', width: 150, sortable: true, align: 'left' },
-			{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' },
+			{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' }
 			],
 		    sortname: "idmenu",
 		    sortorder: "asc",
@@ -74,12 +74,11 @@
               arr = eval("(" + data + ")");                    
               $('#flex1').flexAddData(arr);                    
           });            
-  });
+  	  });
 
   	function editar(idmenu){
   		$('#edit-id').text(idmenu);
   		 cadena = [ 'idmenu='     + idmenu,
-  		            'a=edit'
   		        ].join('&');
   		
   		$.ajax({
@@ -88,9 +87,13 @@
 	  	    type: 'post',
 	        dataType: 'json',
   	        success: function(data){
-  	           // $("#rpta_servidor").html(data);
+  	        	
+  	        	$("#cont_text").attr("value", data.contenido);
+  	        	$('#edit-id').text("holaaaaaa");
+  	        		//$("#cont-text").text(data);
+  	     			//$("#rpta_servidor").html(data);
   	        }
-
+		
   	    });
   		
   	}
