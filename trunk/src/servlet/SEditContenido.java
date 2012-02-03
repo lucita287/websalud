@@ -52,11 +52,13 @@ public class SEditContenido extends HttpServlet {
 			 info+="total: "+dbo.getCMenuTotal();
 			 info+=", page: 1,";
 			 info+="rows: [";
+			 String data="";
 			 for(int i=0; i<list.size();i++){
 					CMenu temp=list.get(i);
-					info+="{ cell: [\"<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />\",\""+temp.getidmenu()+"\", \""+temp.getdescripcion()+"\" , \""+temp.getareaidarea().getdescripcion()+"\" , \""+temp.getcontenido()+"\" , \""+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"\" ] },";
-			}
-			 info+="] }";
+					data+=(data=="")?"":",";
+					data+="{ cell: [\"<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />\",\""+temp.getidmenu()+"\", \""+temp.getdescripcion()+"\" , \""+temp.getareaidarea().getdescripcion()+"\" , \""+temp.getcontenido()+"\" , \""+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"\" ] }";
+			 }
+			 info+=data+"] }";
 			 out.println(info);
 			 dbo.Close();
 	}
