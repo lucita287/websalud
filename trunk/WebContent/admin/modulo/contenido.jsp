@@ -2,11 +2,6 @@
 	$(function() {
 		$( "#tabs" ).tabs();
 	});
-	(function($) {
-		$(document).ready(function() {
-			$('.wysiwyg').wysiwyg();
-		});
-	})(jQuery);
 	
 	</script>	
 	<style type="text/css">
