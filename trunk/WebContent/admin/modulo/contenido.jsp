@@ -3,6 +3,18 @@
 		$( "#tabs" ).tabs();
 	});
 	
+	$().ready(function() {
+		var opts = {
+			cssClass : 'el-rte',
+			// lang     : 'ru',
+			height   : 300,
+			width	 : 600,
+			toolbar  : 'complete',
+			cssfiles : ['../css/elrte-inner.css']
+		};
+		$('#cont-text').elrte(opts);
+	});
+	
 	</script>	
 	<style type="text/css">
         #tabs {width: 95%;
@@ -32,7 +44,8 @@
 				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
 				Area Pertenece:<br/>
 				Sub Parte:<br/>
-			<textarea id="cont_text"  class="wysiwyg" rows="5" cols="80"></textarea>
+				<div id="cont-text"></div>
+
 			<div style="clear: both;"></div>
 			
 			</div>
@@ -83,10 +96,9 @@
 	        dataType: 'json',
   	        success: function(data){
   	        	
-  	        	$("#cont_text").attr("value", data.contenido);
-  	        	$('#edit-id').text("holaaaaaa");
-  	        		//$("#cont-text").text(data);
-  	     			//$("#rpta_servidor").html(data);
+					$('edit-titulo').val();
+  					$('#cont-text').elrte('val', data.contenido);
+  				
   	        }
 		
   	    });
