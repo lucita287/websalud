@@ -25,6 +25,12 @@ public class CMenu {
 		this.idmenu_rec=idmenu_rec;
 		this.contenido=contenido;
 	}
+	public void setdescripcion(String descripcion){
+		this.descripcion=descripcion;
+	}
+	public void setcontenido(String contenido){
+		this.contenido=contenido;
+	}
 	public int getidmenu(){
 		return this.idmenu;
 	}

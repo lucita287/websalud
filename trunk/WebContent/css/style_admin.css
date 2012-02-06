@@ -1,0 +1,13 @@
+        #tabs {width: 95%;
+            margin:0 auto 0 auto;
+			}
+		.centerd { 
+			width: 600px;
+  			display: block;
+  			margin-left: auto;
+ 			margin-right: auto;
+		}	
+		.button-delete  { margin: 0; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
+		.button-save  { margin: 0; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
+		.tabtam {width:1000px; }
+		#validacion {color:red;	font-size:1.5em;}

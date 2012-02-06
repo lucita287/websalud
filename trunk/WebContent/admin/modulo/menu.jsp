@@ -56,12 +56,15 @@ ul#menu li ul li a:hover {
 	</li>
 
 	<li>
-	<a >Administrar Contenido</a>
+	<a  >Administrar Contenido</a>
 			
 			
 			<ul>
-				<li>
-					<a >Gestionar Contenido</a>
+				<li  >
+					<a id="1" >Editar Contenido</a>
+				</li>
+				<li >
+					<a  id="2" >Nuevo Contenido</a>
 				</li>
 				<li>
 					<a >Gestionar Noticias</a>
@@ -109,12 +112,14 @@ ul#menu li ul li a:hover {
 	<script>
 		
 
+	
 	function initMenu() {
 	  $('#menu ul').hide();
 	  $('#menu ul:first').show();
 	  $('#menu li a').click(
 	    function() {
-	      var checkElement = $(this).next();
+	    	
+	    	var checkElement = $(this).next();
 	      if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
 	        return false;
 	        }
@@ -123,6 +128,20 @@ ul#menu li ul li a:hover {
 	        checkElement.slideDown('normal');
 	        return false;
 	        }
+	      cadena = [ 'idmenu='     + $(this).attr("id"),
+		             'a=admin'
+		  		        ].join('&');
+	      
+		  $.ajax({
+			  url: "../SMenu",
+		        data: cadena,
+		  	    type: 'post',
+		        success: function(data){
+		        	window.location.href="index.jsp";
+		        }
+			
+		    });
+
 	      }
 	    );
 	  }
