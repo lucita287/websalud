@@ -26,6 +26,7 @@
 <!-- header begins -->
 
  <div id="main">
+
 <jsp:include page="portal/header.jsp" />	
 <div style="clear: both;"></div>
 <div id="menu-principal" >

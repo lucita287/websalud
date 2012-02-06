@@ -1,0 +1,134 @@
+			
+			
+			
+			<script  type="text/javascript">
+			
+			  $(document).ready(function () {
+			      $("#flex1").flexigrid
+					({
+					    dataType: 'json',
+					    colModel: [
+						{display: 'Seleccionar', name : 'chkDelete', width : 30, sortable : false, align: 'left'},           
+						{ display: 'idmenu', name: 'idmenu', width: 40, sortable: true, align: 'left' },
+						{ display: 'descripcion', name: 'descripcion', width: 100, sortable: true, align: 'left' },
+						{ display: 'area', name: 'area', width: 100, sortable: true, align: 'left' },
+						{ display: 'contenido', name: 'contenido', width: 150, sortable: true, align: 'left' },
+						{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' }
+						],
+					    sortname: "idmenu",
+					    sortorder: "asc",
+					    usepager: true,
+					    title: 'Contenido',
+					    useRp: true,
+					    rp: 15,
+					    showTableToggleBtn: true,
+					    width: 600,
+					    height: 200
+					});
+		      
+			      $.post("../SMenu", {a:"editmenu"},
+			          function (data) {                    
+			              var arr = Array();
+			              arr = eval("(" + data + ")");                    
+			              $('#flex1').flexAddData(arr);                    
+			       });            
+			      $('#editconte').elrte({
+						cssClass : 'el-rte',
+						//lang     : 'es',
+						width	 : 600,
+					    height	 : 200,
+					    toolbar  : 'complete',
+						//cssfiles : ['../css/elrte-inner.css']
+					    styleWithCSS : false
+					});
+			      
+			      //Sacar un mensaje según el explorador 
+			    if (navigator.appName.indexOf("Explorer") != -1) { 
+
+			    	$("#validacion").html("POR FAVOR UTILIZAR OTRO NAVEGADOR PARA ESTA AREA");
+			    } 
+
+			      
+			  });
+			  var editidmenu=0;
+			  function Guardaredit(){
+				  if(editidmenu>0){
+				//	  if($.trim($('#edit-titulo').val())!=""){
+							
+							 $("#validacion").html($('#editconte').elrte('val')); 
+							cadena = [ 	'idmenu='   + editidmenu,
+							             	'a=guardaredit',
+								            'titulo='+$('#edit-titulo').val(),
+								            'contenido='+$('#editconte').elrte('val')
+								        ].join('&');
+							 $("#validacion").html("1111111112"); 
+							  $.ajax({
+							        url: "../SMenu",
+							        data: cadena,
+							  	    type: 'post',
+							        dataType: 'json',
+							        success: function(data){
+							        	if(data.resultado=="OK"){
+							        		$("#validacion").html(data.mensaje);
+							        	}else{
+							        		$("#validacion").html(data.mensaje);	
+							        	}
+							        }
+								
+							    }); 
+				//	  }else{
+				//		  $("#validacion").html("El titulo no puede estar vacio");
+				//	  }
+				  }else{
+					  $("#validacion").html("Debe Seleccionar un item");
+					    }
+			  }
+			  function editar(idmenu){
+					$('#edit-id').text(idmenu);
+					 cadena = [ 'idmenu='     + idmenu,
+					            'a=show',
+					        ].join('&');
+					
+					$.ajax({
+				        url: "../SMenu",
+				        data: cadena,
+				  	    type: 'post',
+				        dataType: 'json',
+				        success: function(data){
+				        	editidmenu=idmenu;
+							$('#edit-area').text(data.areanombre);	
+							$('#edit-submenu').text(data.submenu);
+				        	$('#edit-titulo').val(data.descripcion);
+							$('#editconte').elrte('val', data.contenido);
+							//$('#editconte').elrte('updateSource');
+				        }
+					
+				    });
+					
+				}	
+
+			</script>
+			<h1>Editar Contenido</h1>
+			
+			<table id="flex1" style="display:none"></table>
+			<div id="validacion"></div>
+				ID:  <label id="edit-id"></label><br/>
+				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
+				Area Pertenece: <label id="edit-area"></label><br/>
+				Sub Menu: <label id="edit-submenu"></label><br/>
+				Tama&ntilde;o:<select id="edit-tam"> 
+						<option value="4">Grande</option>
+						<option value="3">Mediano</option>
+						<option value="1">Peque&ntilde;o</option>
+						<option value="0">Sin Texto</option>
+				</select>
+				<textarea id="editconte" class="editor"> Texto </textarea>
+				
+				<br/><br/>
+				<div class="centerd">
+						<a href="#" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+					<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+				</div>
+			
+				<br/><br/>
+			<div style="clear: both;"></div>

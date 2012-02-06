@@ -2,6 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
+<% 
+HttpSession sessiones = request.getSession(false);
+
+
+Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
+%>
+
 <jsp:include page="modulo/top.jsp" />
 </head>
 <body>
@@ -28,7 +35,11 @@
 <jsp:include page="modulo/menu.jsp" />
 </div>
 <div id="contenido">
-<jsp:include page="modulo/contenido.jsp" />
+<% if(portal==1){ %>
+<jsp:include page="modulo/edit_contenido.jsp" />
+<% }else if(portal==2){ %>
+<jsp:include page="modulo/new_contenido.jsp" />
+<% } %>
 </div>
 <div style="clear: both;"></div>
 
