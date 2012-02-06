@@ -47,7 +47,7 @@ public class SMenu extends HttpServlet {
 		 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 		 String result=(temp_menu!=null)?
 				 "{\"descripcion\":\""+temp_menu.getdescripcion()+"\",\"area\":\""+temp_menu.getareaidarea().getidarea()+"\"," +
-				 		"\"contenido\":\""+temp_menu.getcontenido()+"\"}"
+				 		"\"contenido\":\""+temp_menu.getcontenido()+"\",\"areanombre\":\""+temp_menu.getareaidarea().getdescripcion()+"\"}"
 				 :"";
 		 out.println(result);
 	}
