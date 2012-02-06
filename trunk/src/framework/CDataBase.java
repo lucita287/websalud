@@ -74,12 +74,12 @@ public class CDataBase {
 		CMenu temp_menu=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido FROM Menu where  idmenu=? ");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido, ifnull(idmenu_rec,0) idmenu_rec FROM Menu where  idmenu=? ");
 			stm.setInt(1, idmenu);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
 				CArea temp_c=this.getCAreaEspecifico(rs2.getInt("areaidarea"));
-				CMenu temp_menu1=null;
+				CMenu temp_menu1=(rs2.getInt("idmenu")!=0)?getMenuEspecifico(rs2.getInt("idmenu_rec")):null;
 				temp_menu=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),temp_c,rs2.getString("contenido"),temp_menu1);
 			}
 		} catch (SQLException e) {

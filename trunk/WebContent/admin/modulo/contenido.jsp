@@ -67,6 +67,7 @@
   	        success: function(data){
   	        	
 				$('#edit-area').text(data.areanombre);	
+				$('#edit-submenu').text(data.submenu);
   	        	$('#edit-titulo').val(data.descripcion);
   					$('#editconte').elrte({			
   							cssClass : 'el-rte',
@@ -104,9 +105,10 @@
 				ID:  <label id="edit-id"></label><br/>
 				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
 				Area Pertenece: <label id="edit-area"></label><br/>
-				Sub Parte:<br/>
+				Sub Parte: <label id="edit-submenu"></label><br/>
 				<div id="editconte"></div>
-
+				
+				<a href="#" id="button" class="ui-state-default ui-corner-all"> <img src="../images/save.png"/>Guardar</a>
 			<div style="clear: both;"></div>
 			
 			</div>
