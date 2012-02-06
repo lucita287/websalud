@@ -1,21 +1,5 @@
-	<script>
-	$(function() {
-		$( "#tabs" ).tabs();
-	});
-	
-	$().ready(function() {
-		var opts = {
-			cssClass : 'el-rte',
-			// lang     : 'ru',
-			height   : 300,
-			width	 : 600,
-			toolbar  : 'complete',
-			cssfiles : ['../css/elrte-inner.css']
-		};
-		$('#cont-text').elrte(opts);
-	});
-	
-	</script>	
+
+
 	<style type="text/css">
         #tabs {width: 95%;
             margin:0 auto 0 auto;
@@ -23,35 +7,12 @@
 	
 		
         </style>
-    	<div id="tabs">
-			<ul>
-				<li><a href="#tabs-1">Nueva Entrada</a></li>
-				<li><a href="#tabs-2">Editar Entrada</a></li>
-
-			</ul>
-			<div id="tabs-1" style="width:1000px; ">
-				Titulo: <input type="text" size="60" /><br/>
-				Area Pertenece:<br/>
-				Sub Parte:<br/>
-					
-			<textarea class="wysiwyg" rows="5" cols="80"></textarea>
-				
-			</div>
-			<div id="tabs-2" style="width:1000px; ">
-			
-			<table id="flex1" style="display:none"></table>
-				ID:  <label id="edit-id"></label><br/>
-				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
-				Area Pertenece:<br/>
-				Sub Parte:<br/>
-				<div id="cont-text"></div>
-
-			<div style="clear: both;"></div>
-			
-			</div>
-    </div>
-    
-  <script type="text/javascript">
+         <script type="text/javascript">
+         
+  $(function() {
+		$( "#tabs" ).tabs();
+	});
+	
   $(document).ready(function () {
       $("#flex1").flexigrid
 		({
@@ -76,13 +37,22 @@
 		});
 
 
+      
       $.post("../SEditContenido",
           function (data) {                    
               var arr = Array();
               arr = eval("(" + data + ")");                    
               $('#flex1').flexAddData(arr);                    
-          });            
-  	  });
+       });            
+      $('#cont-text').elrte({
+			cssClass : 'el-rte',
+			lang     : 'es',
+			width	 : 600,
+		    height	 : 200,
+		    toolbar  : 'complete',
+			cssfiles : ['../css/elrte-inner.css']
+		});
+      });
 
   	function editar(idmenu){
   		$('#edit-id').text(idmenu);
@@ -96,15 +66,49 @@
 	        dataType: 'json',
   	        success: function(data){
   	        	
-					$('edit-titulo').val();
-  					$('#cont-text').elrte('val', data.contenido);
-  				
+				$('#edit-area').text(data.areanombre);	
+  	        	$('#edit-titulo').val(data.descripcion);
+  					$('#editconte').elrte({			
+  							cssClass : 'el-rte',
+  							lang     : 'es',
+  							width	 : 600,
+  						    height	 : 200,
+  						    toolbar  : 'complete',
+  							cssfiles : ['../css/elrte-inner.css']
+  	        		});
+  					$('#editconte').elrte('val', data.contenido);
   	        }
 		
   	    });
   		
   	}
-	
+	</script> 
+        
+        
+    	<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Nueva Entrada</a></li>
+				<li><a href="#tabs-2">Editar Entrada</a></li>
 
+			</ul>
+			<div id="tabs-1" style="width:1000px; ">
+				Titulo: <input type="text" size="60" /><br/>
+				Area Pertenece:<br/>
+				Sub Parte:<br/>
+					
+			<div id="cont-text"></div>	
+			</div>
+			<div id="tabs-2" style="width:1000px; ">
+			
+			<table id="flex1" style="display:none"></table>
+				ID:  <label id="edit-id"></label><br/>
+				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
+				Area Pertenece: <label id="edit-area"></label><br/>
+				Sub Parte:<br/>
+				<div id="editconte"></div>
 
-</script>
+			<div style="clear: both;"></div>
+			
+			</div>
+    </div>
+    
