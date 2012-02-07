@@ -99,10 +99,8 @@ public class CDataBase {
 			if(rs2.next())
 			temp=new CArea( rs2.getInt("idarea"),rs2.getString("descripcion"));
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-		
 		return temp;
 	}
 	
@@ -156,27 +154,73 @@ public class CDataBase {
 		}
 		return ret;
 	}
-	public ArrayList<CMenu> getMenuLista(){
-		ArrayList<CMenu> ret=new ArrayList<CMenu>();
-		try{
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,ifnull(idmenu_rec,0) idmenu_rec FROM Menu ");
-			ResultSet rs=stm.executeQuery();
-			while(rs.next()){
-					CMenu temp_menu=null;
-					temp_menu=this.getMenuEspecifico(rs.getInt("idmenu_rec"));
-					CArea temp_c=this.getCAreaEspecifico(rs.getInt("areaidarea"));
-					temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),temp_menu);
-				ret.add(temp_menu);
-				
+	public boolean SafeMenu(CMenu menu){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE menu SET descripcion = ?, areaidarea = ?, contenido = ?, idmenu_rec = ? WHERE idmenu=?");
+			
+			stm.setString(1, menu.getdescripcion());
+			stm.setInt(2, menu.getareaidarea().getidarea());
+			stm.setString(3, menu.getcontenido());
+			
+			if(menu.getidmenu_rec()==null){
+				stm.setNull(4,java.sql.Types.INTEGER);
+			}else {
+				stm.setInt(4, menu.getidmenu_rec().getidmenu());
 			}
-			rs.close();
-			stm.close();
+			
+			stm.setInt(5,menu.getidmenu());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
 		
-		catch(Throwable e){
-			
-		}
-		return ret;
+		return false;
+	}
+	public ArrayList<CMenu> getMenuLista(){
+        ArrayList<CMenu> ret=new ArrayList<CMenu>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,ifnull(idmenu_rec,0) idmenu_rec FROM Menu ");
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                                CMenu temp_menu=null;
+                                temp_menu=this.getMenuEspecifico(rs.getInt("idmenu_rec"));
+                                CArea temp_c=this.getCAreaEspecifico(rs.getInt("areaidarea"));
+                                temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),temp_menu);
+                        ret.add(temp_menu);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
+	public ArrayList<CArea> getAreaLista(){
+        ArrayList<CArea> ret=new ArrayList<CArea>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion from area");
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CArea temp_menu=null;
+                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"));
+                        ret.add(temp_menu);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
 	}
 	public void Close(){
 		try{

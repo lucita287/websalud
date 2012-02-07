@@ -81,7 +81,7 @@ public class SMenu extends HttpServlet {
 			 for(int i=0; i<list.size();i++){
 					CMenu temp=list.get(i);
 					data+=(data=="")?"":",";
-					data+="{ cell: [\"<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />\",\""+temp.getidmenu()+"\", \""+temp.getdescripcion()+"\" , \""+temp.getareaidarea().getdescripcion()+"\" , \""+temp.getcontenido()+"\" , \""+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"\" ] }";
+					data+="{ cell: [\"<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />\",\""+temp.getidmenu()+"\", \""+temp.getdescripcion()+"\" , \""+temp.getareaidarea().getdescripcion()+"\"  , \""+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"\" ] }";
 			 }
 			 info+=data+"] }";
 			 out.println(info);
@@ -91,23 +91,21 @@ public class SMenu extends HttpServlet {
 			int idmenu=Integer.parseInt(((request.getParameter("idmenu")==null)?"0":request.getParameter("idmenu")));
 				if(idmenu>0){
 					String titulo=request.getParameter("titulo");
-					
-					String string = titulo;
-				    byte[] utf8 = string.getBytes("UTF-8");
-
-				    // Convert from UTF-8 to Unicode
-				    titulo = new String(utf8, "UTF-8");
-					
+					titulo=titulo.replace("\"", "\\\"");
+										
 					if(titulo.trim()!=""){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
-							if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
+							//if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
 								String contenido=request.getParameter("contenido");
+								contenido=contenido.replace("\"", "'");
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
-								result="{\"resultado\":\"ERROR\",\"mensaje\":\"OK -"+temp_menu.getdescripcion()+"."+titulo+"\"}";
-							}else{
-								result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede cambiarse en el menu principal -"+temp_menu.getdescripcion()+"-"+titulo+"-\"}";
-							}
+								boolean b=dbo.SafeMenu(temp_menu);
+								if(b)result="{\"resultado\":\"OK\",\"mensaje\":\"ACTUALIZACI&Oacute;N\"}";
+								else result="{\"resultado\":\"ERROR\",\"mensaje\":\"PROBLEMA AL GUARDAR\"}";
+							//}else{
+							//	result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede cambiarse en el menu principal -"+temp_menu.getdescripcion()+"-"+titulo+"-\"}";
+							//}
 					}else{
 						result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede estar vacio\"}";
 					}

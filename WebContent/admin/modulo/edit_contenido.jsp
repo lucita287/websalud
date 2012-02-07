@@ -12,7 +12,6 @@
 						{ display: 'idmenu', name: 'idmenu', width: 40, sortable: true, align: 'left' },
 						{ display: 'descripcion', name: 'descripcion', width: 100, sortable: true, align: 'left' },
 						{ display: 'area', name: 'area', width: 100, sortable: true, align: 'left' },
-						{ display: 'contenido', name: 'contenido', width: 150, sortable: true, align: 'left' },
 						{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' }
 						],
 					    sortname: "idmenu",
@@ -38,8 +37,8 @@
 						width	 : 600,
 					    height	 : 200,
 					    toolbar  : 'complete',
-						//cssfiles : ['../css/elrte-inner.css']
-					    styleWithCSS : false
+						cssfiles : ['../css/elrte-inner.css']
+					    
 					});
 			      
 			      //Sacar un mensaje según el explorador 
@@ -53,7 +52,7 @@
 			  var editidmenu=0;
 			  function Guardaredit(){
 				  if(editidmenu>0){
-				//	  if($.trim($('#edit-titulo').val())!=""){
+					  if($.trim($('#edit-titulo').val())!=""){
 							
 							 $("#validacion").html($('#editconte').elrte('val')); 
 							cadena = [ 	'idmenu='   + editidmenu,
@@ -76,9 +75,9 @@
 							        }
 								
 							    }); 
-				//	  }else{
-				//		  $("#validacion").html("El titulo no puede estar vacio");
-				//	  }
+					  }else{
+						  $("#validacion").html("El titulo no puede estar vacio");
+					  }
 				  }else{
 					  $("#validacion").html("Debe Seleccionar un item");
 					    }
