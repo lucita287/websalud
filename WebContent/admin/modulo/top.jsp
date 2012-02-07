@@ -20,7 +20,6 @@
 <script src="../lib/jcarousellite_1.0.1c4.js" type="text/javascript"></script>
 <script src="../lib/elrte.min.js" type="text/javascript" charset="utf-8"></script>
 
-
 <script type="text/javascript" src="../lib/flexigrid.js"></script>
 	<script>
 	
