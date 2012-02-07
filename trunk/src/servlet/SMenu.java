@@ -89,8 +89,9 @@ public class SMenu extends HttpServlet {
 					if(titulo.trim()!=""){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 							//if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
-								String contenido=request.getParameter("contenido");
+								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));
 								contenido=contenido.replace("\"", "'");
+								System.out.println(contenido);
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
 								boolean b=dbo.SafeMenu(temp_menu);
@@ -105,6 +106,18 @@ public class SMenu extends HttpServlet {
 				}else{
 					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}";
 				}
+				out.println(result);
+		}else if(action.equalsIgnoreCase("showsubmenu")){
+			int idarea=Integer.parseInt((request.getParameter("idarea")==null)?"1":request.getParameter("idarea"));
+			ArrayList<CMenu> list_menu=dbo.getMenu(idarea);
+			String data="";
+			for(int i=0; i<list_menu.size(); i++){
+				CMenu menu=list_menu.get(i);
+				data+=(data.equalsIgnoreCase("")?"":",");
+				data+="{\"idmenu\":\""+menu.getidmenu()+"\",\"descripcion\": \""+menu.getdescripcion()+"\"}";
+			}
+			
+				String result=	" {\"menus\": [  "+data+" ] }";
 				out.println(result);
 		}
 		dbo.Close();

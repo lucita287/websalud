@@ -7,7 +7,8 @@
 <%  
 CDataBase dbo=new CDataBase();
 dbo.Connect();
-ArrayList<CMenu> list_menu=dbo.getMenu(1);
+int idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
+ArrayList<CMenu> list_menu=dbo.getMenu(idarea);
 ArrayList<CArea> list_area=dbo.getAreaLista();
 dbo.Close();
 %>
@@ -35,17 +36,4 @@ dbo.Close();
 	</li>
 	
 	<%} %>
-	<li>
-		<a>Areas Profesionales</a>
-			<ul>
-				<% for(int h=0; h<list_area.size(); h++){ 
-					CArea temp_area=list_area.get(h);
-					%>
-					<li>
-					<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getdescripcion()%></a>
-					</li>
-				<% } %>
-			</ul>	
-	</li>
-	
 </ul>

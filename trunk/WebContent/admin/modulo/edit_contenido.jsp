@@ -54,13 +54,17 @@
 				  if(editidmenu>0){
 					  if($.trim($('#edit-titulo').val())!=""){
 							
+						  var data_cont=$('#editconte').elrte('val');
+						  
+						  data_cont=data_cont.replace("%", "");
+						  alert(data_cont);
 							 $("#validacion").html($('#editconte').elrte('val')); 
 							cadena = [ 	'idmenu='   + editidmenu,
 							             	'a=guardaredit',
 								            'titulo='+$('#edit-titulo').val(),
-								            'contenido='+$('#editconte').elrte('val')
+								            'contenido='+data_cont
 								        ].join('&');
-							 $("#validacion").html("1111111112"); 
+							 $("#validacion").html("No se ha actualizado"); 
 							  $.ajax({
 							        url: "../SMenu",
 							        data: cadena,
@@ -75,6 +79,8 @@
 							        }
 								
 							    }); 
+							  
+							  
 					  }else{
 						  $("#validacion").html("El titulo no puede estar vacio");
 					  }

@@ -1,6 +1,10 @@
 /**
  * 
  */
+	
+	function menuarea(idarea){
+		$("#menu-principal").load("portal/menu_area.jsp?idarea="+idarea);
+	}
 	$(function(){
 		$('#panel-texto-c').jScrollPane();			
 	});
@@ -25,10 +29,8 @@
 		        ].join('&');
 
 		    	$('#Cont-Panel-texto').load("portal/contenido.jsp?idmenu="+idmenu);
-	    
-
-		
 	}
+	
 	function initMenu() {
 	  $('#menu ul').hide();
 	  $('#menu ul:first').show();

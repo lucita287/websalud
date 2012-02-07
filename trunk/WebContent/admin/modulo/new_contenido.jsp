@@ -31,7 +31,7 @@
 						<% for(int j=0; j<list.size();j++){ 
 							CArea area=list.get(j);
 						%>
-							<option value="<%= area.getidarea()%> "><%= area.getdescripcion()%></option>
+							<option value="<%=area.getidarea()%>"><%= area.getdescripcion()%></option>
 						<% } %>
 					</select><br/>
 				Sub Parte: <select id="new-submenu"></select><br/>
