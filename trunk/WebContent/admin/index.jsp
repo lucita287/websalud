@@ -4,8 +4,6 @@
 
 <% 
 HttpSession sessiones = request.getSession(false);
-
-
 Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
 %>
 

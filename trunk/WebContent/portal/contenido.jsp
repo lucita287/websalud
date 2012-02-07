@@ -3,7 +3,6 @@
 <%@ page import="framework.CDataBase" %>
 <%@ page import="data.CMenu" %>
 <%
-
 int idmenu=1;
 try {
 idmenu=Integer.parseInt(request.getParameter("idmenu"));
