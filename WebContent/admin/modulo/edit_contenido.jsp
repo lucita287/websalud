@@ -54,15 +54,14 @@
 				  if(editidmenu>0){
 					  if($.trim($('#edit-titulo').val())!=""){
 							
-						  var data_cont=$('#editconte').elrte('val');
-						  
-						  data_cont=data_cont.replace("%", "");
-						  alert(data_cont);
+						  var data_cont=Base64.encode($('#editconte').elrte('val'));
+						  var titulo=Base64.encode($('#edit-titulo').val());
 							 $("#validacion").html($('#editconte').elrte('val')); 
 							cadena = [ 	'idmenu='   + editidmenu,
 							             	'a=guardaredit',
-								            'titulo='+$('#edit-titulo').val(),
-								            'contenido='+data_cont
+								            'titulo='+titulo,
+								            'contenido='+data_cont,
+								            'size='+$('#edit-tam').val()
 								        ].join('&');
 							 $("#validacion").html("No se ha actualizado"); 
 							  $.ajax({
@@ -98,13 +97,14 @@
 				        url: "../SMenu",
 				        data: cadena,
 				  	    type: 'post',
-				        dataType: 'json',
 				        success: function(data){
 				        	editidmenu=idmenu;
-							$('#edit-area').text(data.areanombre);	
-							$('#edit-submenu').text(data.submenu);
-				        	$('#edit-titulo').val(data.descripcion);
-							$('#editconte').elrte('val', data.contenido);
+							var result=eval("(" +Base64.decode(data)+")");
+							$('#edit-area').text(result.areanombre);	
+							$('#edit-submenu').text(result.submenu);
+				        	$('#edit-titulo').val(result.descripcion);
+							$('#editconte').elrte('val', result.contenido);
+							$('#edit-tam').val(result.size);
 							//$('#editconte').elrte('updateSource');
 				        }
 					

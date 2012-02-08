@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+
+import data.CArea;
 import data.CMenu;
 
 import framework.CDataBase;
@@ -52,13 +56,18 @@ public class SMenu extends HttpServlet {
 		if(action.equalsIgnoreCase("show")){
 		 int idmenu=Integer.parseInt(request.getParameter("idmenu"));
 		 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
-		 String result=(temp_menu!=null)?
-				 "{\"descripcion\":\""+temp_menu.getdescripcion()+"\",\"area\":\""+temp_menu.getareaidarea().getidarea()+"\"," +
-				 		"\"contenido\":\""+temp_menu.getcontenido()+"\",\"areanombre\":\""+
-				 temp_menu.getareaidarea().getdescripcion()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\"}"
-				 		
-				 :"";
-		 out.println(result);
+		 String result="";
+		 if(temp_menu!=null){
+			 
+			 
+			 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\"," +
+				 		"contenido:\""+temp_menu.getcontenido()+"\",areanombre:\""+
+				 temp_menu.getareaidarea().getdescripcion()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
+				 +"size:\""+temp_menu.getsize()+"\"}";
+		 }
+		 BASE64Encoder encoder = new BASE64Encoder();
+		 String contenido=encoder.encode(result.getBytes());
+		 out.println(contenido);
 		}else if(action.equalsIgnoreCase("admin")){
 			int idmenu=Integer.parseInt(request.getParameter("idmenu")==null?"1":request.getParameter("idmenu"));
 			 HttpSession session = request.getSession();
@@ -83,23 +92,29 @@ public class SMenu extends HttpServlet {
 			
 			int idmenu=Integer.parseInt(((request.getParameter("idmenu")==null)?"0":request.getParameter("idmenu")));
 				if(idmenu>0){
+					int size=Integer.parseInt(request.getParameter("size"));
 					String titulo=request.getParameter("titulo");
+					BASE64Decoder decoder = new BASE64Decoder();
+					byte[] decodedBytes = decoder.decodeBuffer(titulo);
+					titulo=new String(decodedBytes);
 					titulo=titulo.replace("\"", "\\\"");
-										
+					titulo=titulo.trim();					
 					if(titulo.trim()!=""){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
-							//if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
-								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));
+							if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().trim().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
+								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
+						        decodedBytes = decoder.decodeBuffer(contenido);
+						        contenido=new String(decodedBytes);
 								contenido=contenido.replace("\"", "'");
-								System.out.println(contenido);
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
-								boolean b=dbo.SafeMenu(temp_menu);
+								temp_menu.setsize(size);
+								boolean b=dbo.UpdateMenu(temp_menu);
 								if(b)result="{\"resultado\":\"OK\",\"mensaje\":\"ACTUALIZACI&Oacute;N\"}";
 								else result="{\"resultado\":\"ERROR\",\"mensaje\":\"PROBLEMA AL GUARDAR\"}";
-							//}else{
-							//	result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede cambiarse en el menu principal -"+temp_menu.getdescripcion()+"-"+titulo+"-\"}";
-							//}
+							}else{
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede cambiarse en el menu principal -"+temp_menu.getdescripcion()+"-"+titulo+"#\"}";
+							}
 					}else{
 						result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede estar vacio\"}";
 					}
@@ -119,6 +134,42 @@ public class SMenu extends HttpServlet {
 			
 				String result=	" {\"menus\": [  "+data+" ] }";
 				out.println(result);
+		}else if(action.equalsIgnoreCase("guardarnew")){
+			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";
+			String titulo=request.getParameter("titulo");
+			BASE64Decoder decoder = new BASE64Decoder();
+			byte[] decodedBytes = decoder.decodeBuffer(titulo);
+			titulo=new String(decodedBytes);
+			titulo=titulo.replace("\"", "\\\"");
+			titulo=titulo.trim();
+
+			if(!titulo.equalsIgnoreCase("")){
+				String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
+		        decodedBytes = decoder.decodeBuffer(contenido);
+		        contenido=new String(decodedBytes);
+				contenido=contenido.replace("\"", "'");
+				
+				int idsubmenu=0;
+				int size=4;
+				try{
+					idsubmenu=Integer.parseInt(request.getParameter("submenu"));
+					size=Integer.parseInt(request.getParameter("size"));
+				}catch(Exception e){}
+				if(idsubmenu>0){
+					int idarea=Integer.parseInt(request.getParameter("area"));
+					CMenu menu=dbo.getMenuEspecifico(idsubmenu);
+					CArea area=dbo.getCAreaEspecifico(idarea);
+					CMenu newmenu=new CMenu(0,titulo,area,contenido,size,menu);
+					boolean b=dbo.SafeMenu(newmenu);
+					if(b)result="{\"resultado\":\"OK\",\"mensaje\":\"ACTUALIZACI&Oacute;N\"}";
+					else result="{\"resultado\":\"ERROR\",\"mensaje\":\"PROBLEMA AL GUARDAR\"}";
+				}else{
+					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un submenu\"}";
+				}
+			}else{
+				result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede estar vacio\"}";
+			}	
+			out.println(result);
 		}
 		dbo.Close();
 	}
