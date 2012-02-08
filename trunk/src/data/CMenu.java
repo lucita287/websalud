@@ -9,17 +9,21 @@ public class CMenu {
 	private String contenido;
 	private CArea areaidarea;
 	private CMenu idmenu_rec;
+	private int size;
 	private ArrayList<CMenu> list_menu=new ArrayList<CMenu>();
 	
-	public CMenu(int idmenu, String descripcion, CArea areaidarea,String contenido, ArrayList<CMenu> list_menu){
+	public CMenu(int idmenu, String descripcion, CArea areaidarea,String contenido, int size,ArrayList<CMenu> list_menu){
 		this.idmenu=idmenu;
+		this.size=size;
 		this.descripcion=descripcion;
 		this.areaidarea=areaidarea;
 		this.list_menu=list_menu;
 		this.contenido=contenido;
 	}
-	public CMenu(int idmenu, String descripcion, CArea areaidarea,String contenido, CMenu idmenu_rec){
+	
+	public CMenu(int idmenu, String descripcion, CArea areaidarea,String contenido,int size, CMenu idmenu_rec){
 		this.idmenu=idmenu;
+		this.size=size;
 		this.descripcion=descripcion;
 		this.areaidarea=areaidarea;
 		this.idmenu_rec=idmenu_rec;
@@ -49,5 +53,10 @@ public class CMenu {
 	public CMenu getidmenu_rec(){
 		return this.idmenu_rec;
 	}
-	
+	public int getsize(){
+		return this.size;
+	}
+	public int setsize(int size){
+		return this.size=size;
+	}
 }
