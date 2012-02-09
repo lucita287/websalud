@@ -34,10 +34,22 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 </div>
 <div id="contenido">
 <% if(portal==1){ %>
-<jsp:include page="modulo/edit_contenido.jsp" />
+<jsp:include page="modulo/perfil.jsp" />
 <% }else if(portal==2){ %>
+<jsp:include page="modulo/edit_contenido.jsp" />
+<% }else if(portal==3){ %>
 <jsp:include page="modulo/new_contenido.jsp" />
-<% } %>
+<% }else if(portal==6){ %>
+<jsp:include page="modulo/header_area.jsp" />
+<% }else if(portal==4){ %>
+<jsp:include page="modulo/noticia.jsp" />
+<% }else if(portal==5){ %>
+<jsp:include page="modulo/actividad.jsp" />
+<% }else if(portal==7){ %>
+<jsp:include page="modulo/usuario.jsp" />
+<% }else if(portal==8){ %>
+<jsp:include page="modulo/permiso.jsp" />
+<%} %>
 </div>
 <div style="clear: both;"></div>
 

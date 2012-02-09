@@ -3,8 +3,9 @@
 <%@ page import="framework.CDataBase" %>
 <%@ page import="data.CMenu" %>
 <%@ page import="java.util.ArrayList" %>
-<%  
-
+<% 
+HttpSession sessiones = request.getSession(false);
+Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
 %>
 	<style type="text/css">
 #contenido {width:75%; float:left; }
@@ -50,61 +51,64 @@ ul#menu li ul li a:hover {
 
 	</style>
 	
-<ul id="menu">
-	<li>
-	<a >Perfil</a>
+<ul id="menu"  >
+	<li >
+	<a id="1">Perfil</a>
 	</li>
 
 	<li>
-	<a  >Administrar Contenido</a>
+	<a   >Administrar Contenido</a>
 			
 			
-			<ul>
+			<ul id="admin_conte">
 				<li  >
-					<a id="1" >Editar Contenido</a>
+					<a id="2" >Editar Contenido</a>
 				</li>
 				<li >
-					<a  id="2" >Nuevo Contenido</a>
+					<a  id="3" >Nuevo Contenido</a>
 				</li>
 				<li>
-					<a >Gestionar Noticias</a>
+					<a id="4">Gestionar Noticias</a>
 				</li>
 				<li>
-					<a >Gestionar Actividades</a>
+					<a id="5">Gestionar Actividades</a>
+				</li>
+				<li>
+					<a  id="6">Gestionar Areas</a>
 				</li>
 			</ul>
 	</li>
-	<li>
+	<li >
 	<a >Administrar </a>
-			<ul>
-				<li>
-					<a >Gestionar Usuarios</a>
+			<ul id="admin">
+				<li >
+					<a id="7">Gestionar Usuarios</a>
 				</li>
 				<li>
-					<a >Gestionar Permisos</a>
+					<a id="8">Gestionar Permisos</a>
 				</li>
 			</ul>	
 	</li>
 	<li>
 		<a >Examen de Salud</a>
-			<ul>
+			<ul id="exam">
 				<li>
-					<a >Examen de autoevaluaci&oacute;n</a>
+					<a id="9" >Examen de autoevaluaci&oacute;n</a>
 				</li>
 				<li>
-					<a >Examen Multif&aacute;setico</a>
-				</li>
+					<a id="10">Examen Multif&aacute;setico</a>
+				</li >
 			</ul>
 	
 	</li>
 	<li>
 	<a >Reportes</a>
-			<ul>
+			<ul id="report">
 				<li>
-					<a >Reportes</a>
+					<a id="11">Reportes</a>
 				</li>
 				<li>
-					<a >Dashboard</a>
+					<a id="12" >Dashboard</a>
 				</li>
 			</ul>	
 	</li>
@@ -115,7 +119,18 @@ ul#menu li ul li a:hover {
 	
 	function initMenu() {
 	  $('#menu ul').hide();
-	  $('#menu ul:first').show();
+	  
+	  <% if(portal>1 && portal<7){%>
+	  $('#admin_conte').show();
+	  <% }else if(portal>6 && portal<9){ %>
+	  $('#admin').show();
+	  <% }else if(portal>8 && portal<11){ %>
+	  $('#exam').show();
+	  <% }else if(portal>10 && portal<13){ %>
+	  $('#report').show();
+	  <%} %>
+	  
+	  
 	  $('#menu li a').click(
 	    function() {
 	    	
