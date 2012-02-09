@@ -7,49 +7,6 @@
 HttpSession sessiones = request.getSession(false);
 Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
 %>
-	<style type="text/css">
-#contenido {width:75%; float:left; }
-		#menu-principal {  width:25%;  float:left; }
-ul#menu, ul#menu ul {
-  list-style-type:none;
-  margin: 0;
-  padding: 0;
-  width: 20em;
-}
-
-ul#menu a {
-  display: block;
-  text-decoration: none;	
-}
-
-ul#menu li {
-  margin-top: 1px;
-}
-
-ul#menu li a {
-  background: #333;
-  color: #fff;	
-  padding: 0.5em;
-}
-
-ul#menu li a:hover {
-  background: #000;
-}
-
-ul#menu li ul li a {
-  background: #ccc;
-  color: #000;
-  padding-left: 20px;
-}
-
-ul#menu li ul li a:hover {
-  background: #aaa;
-  border-left: 5px #000 solid;
-  padding-left: 15px;
-}
-
-
-	</style>
 	
 <ul id="menu"  >
 	<li >
