@@ -49,6 +49,8 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 <jsp:include page="modulo/usuario.jsp" />
 <% }else if(portal==8){ %>
 <jsp:include page="modulo/permiso.jsp" />
+<% }else if(portal==9){ %>
+<jsp:include page="modulo/exam_auto.jsp" />
 <%} %>
 </div>
 <div style="clear: both;"></div>
