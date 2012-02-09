@@ -64,6 +64,9 @@
 			  }
 			  
 			</script>
+			<div class="centerd">
+			<H2>Nuevo Contenido</H2>
+			</div>
 				<div id="validacion"></div>
 				Titulo: <input id="new-titulo" type="text" size="60" /><br/>
 				Area Pertenece:

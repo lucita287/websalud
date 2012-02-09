@@ -69,8 +69,11 @@ public class SMenu extends HttpServlet {
 		 String contenido=encoder.encode(result.getBytes());
 		 out.println(contenido);
 		}else if(action.equalsIgnoreCase("admin")){
-			int idmenu=Integer.parseInt(request.getParameter("idmenu")==null?"1":request.getParameter("idmenu"));
-			 HttpSession session = request.getSession();
+			int idmenu=0;
+			try{
+				idmenu=Integer.parseInt(request.getParameter("idmenu")==null?"1":request.getParameter("idmenu"));
+			}catch (Exception e){} 
+			HttpSession session = request.getSession();
 			 session.setAttribute("portal", new Integer(idmenu));
 		}else if(action.equalsIgnoreCase("editmenu")){
 			ArrayList<CMenu> list=dbo.getMenuLista();	

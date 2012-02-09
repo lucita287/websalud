@@ -113,8 +113,9 @@
 				}	
 
 			</script>
-			<h1>Editar Contenido</h1>
-			
+			<div class="centerd">
+			<h2>Editar Contenido</h2>
+			</div>
 			<table id="flex1" style="display:none"></table>
 			<div id="validacion"></div>
 				ID:  <label id="edit-id"></label><br/>
@@ -134,6 +135,22 @@
 						<a href="#" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 					<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 				</div>
-			
+				<br/><br/>
+				<h1>Subir Imagenes</h1>
+				<input type="file" name="fichero"></input>
+				<br/><br/>
+				<div class="centerd">
+						<a href="#" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>					
+				</div>
+				<br/><br/>
+				
+				<h1>Subir PDF</h1>
+				<input type="file" name="fichero" ></input>
+								<br/><br/>
+				<div class="centerd">
+						<a href="#" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>					
+				</div>
 				<br/><br/>
 			<div style="clear: both;"></div>
+			
+			
