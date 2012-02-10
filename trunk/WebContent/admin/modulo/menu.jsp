@@ -50,7 +50,7 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 		<a >Examen de Salud</a>
 			<ul id="exam">
 				<li>
-					<a id="9" >Examen de autoevaluaci&oacute;n</a>
+					<a id="9" >Gestionar Examen de autoevaluaci&oacute;n</a>
 				</li>
 				<li>
 					<a id="10">Examen Multif&aacute;setico</a>
@@ -71,7 +71,15 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 	</li>
 </ul>
 	<script>
+	$('#menu').hover(function() {
 		
+		$(this).css('cursor','pointer');
+		
+		}, function() {
+		
+		$(this).css('cursor','auto');
+		
+	});		
 
 	
 	function initMenu() {

@@ -45,7 +45,23 @@ border:1px solid #FFF8DC;
 					    width: 600,
 					    height: 200
 					});
-			      
+			      $("#flex2").flexigrid
+					({
+					    dataType: 'json',
+					    colModel: [
+						{display: 'Seleccionar', name : 'chkDelete', width : 30, sortable : false, align: 'left'},           
+						{ display: 'ID', name: 'idrango_exa_auto', width: 40, sortable: true, align: 'left' },
+						{ display: 'MIN', name: 'minimo', width: 80, sortable: true, align: 'left' },
+						{ display: 'MAX', name: 'maximo', width: 80, sortable: true, align: 'left' },
+						{ display: 'Categoria', name: 'categoria', width: 100, sortable: true, align: 'left' }
+						],
+					    
+					    title: 'Preguntas',
+					    useRp: true,
+					    showTableToggleBtn: true,
+					    width: 600,
+					    height: 200
+					});
 			  });  
 			  function selec_categoria(id){
 				  cadena = [ 	'a=show',
@@ -77,7 +93,8 @@ border:1px solid #FFF8DC;
 			<ul>
 				<li><a href="#tabs-1">Nueva Pregunta</a></li>
 				<li><a href="#tabs-2">Editar Pregunta</a></li>
-				<li><a href="#tabs-3">Rango de evaluaci&oacute;n</a></li>
+				<li><a href="#tabs-4">Nuevo Rango de evaluaci&oacute;n</a></li>
+				<li><a href="#tabs-3">Editar Rango de evaluaci&oacute;n</a></li>
 			</ul>
 			<div id="tabs-2" style="width:1000px; ">
 
@@ -102,7 +119,7 @@ border:1px solid #FFF8DC;
 					<tr>
 						<td>CATEGORIA</td>
 						<td>
-								<select id="new-categoria" >
+								<select  >
 									<% for(int j=0; j<list.size();j++){ 
 										CCategoria area=list.get(j);
 									%>
@@ -209,6 +226,75 @@ border:1px solid #FFF8DC;
 			<%  }%>
 					
 			</div>
-		
+			<table id="flex2" style="display:none"></table>
+			<table>
+				<tr>
+					<td>ID</td><td>ID</td>
+					
+				</tr>
+				<tr>
+					<td>Minimo</td><td><input type="text"  size="5"/></td>
+				</tr>
+				<tr>
+					<td>Maximo</td><td><input type="text"  size="5"/></td>
+				</tr>
+				<tr>
+					<td>Interpretaci&oacute;n</td><td><textarea rows="4" cols="50"></textarea></td>
+				</tr>
+				<tr>
+						<td>CATEGORIA</td>
+						<td>
+								<select  >
+									<% for(int j=0; j<list.size();j++){ 
+										CCategoria area=list.get(j);
+									%>
+										<option value="<%=area.getidcategoria()%>" ><%= area.getdescripcion()%></option>
+									<% } %>
+								</select>
+						</td>
+				</tr>
+			</table>
+					<br/>
+					<br/>
+							<div class="centerd">
+									<a href="#" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+								<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+							</div>
+					<br/>
+					<br/>
+		</div>
+		<div id="tabs-4" style="width:1000px; ">
+			
+			<table>
+				<tr>
+					<td>Minimo</td><td><input type="text"  size="5"/></td>
+				</tr>
+				<tr>
+					<td>Maximo</td><td><input type="text"  size="5"/></td>
+				</tr>
+				<tr>
+					<td>Interpretaci&oacute;n</td><td><textarea rows="4" cols="50"></textarea></td>
+				</tr>
+				<tr>
+						<td>CATEGORIA</td>
+						<td>
+								<select  >
+									<% for(int j=0; j<list.size();j++){ 
+										CCategoria area=list.get(j);
+									%>
+										<option value="<%=area.getidcategoria()%>" ><%= area.getdescripcion()%></option>
+									<% } %>
+								</select>
+						</td>
+				</tr>
+			</table>
+					<br/>
+					<br/>
+							<div class="centerd">
+									<a href="#" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+							</div>
+					<br/>
+					<br/>
+			
 		</div>
 	</div>
