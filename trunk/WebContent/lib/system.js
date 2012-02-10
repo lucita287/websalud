@@ -5,6 +5,9 @@
 	function menuarea(idarea){
 		$("#menu-principal").load("portal/menu_area.jsp?idarea="+idarea);
 	}
+	function back_inicio(){
+		$("#menu-principal").load("portal/menu.jsp");
+	}
 	$(function(){
 		$('#panel-texto-c').jScrollPane();			
 	});

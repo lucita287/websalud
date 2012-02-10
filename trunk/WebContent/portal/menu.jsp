@@ -79,16 +79,27 @@ ul#menu li ul li a:hover {
 			<ul>
 				<% for(int h=0; h<list_area.size(); h++){ 
 					CArea temp_area=list_area.get(h);
+					if(temp_area.getidarea()!=1){
 					%>
 					<li>
 					<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getdescripcion()%></a>
 					</li>
-				<% } %>
+				<% 		}
+					} %>
 			</ul>	
 	</li>
 	
 </ul>
 <script>
+$('#menu').hover(function() {
+	
+	$(this).css('cursor','pointer');
+	
+	}, function() {
+	
+	$(this).css('cursor','auto');
+	
+});		
 function initMenu() {
 	  $('#menu ul').hide();
 	  $('#menu ul:first').show();
