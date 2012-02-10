@@ -10,8 +10,11 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import data.CArea;
+import data.CCategoria;
 import data.CMenu;
 import data.CNoticia;
+import data.CPregunta;
+import data.CSubcategoria;
 
 public class CDataBase {
 
@@ -50,7 +53,81 @@ public class CDataBase {
 		
 		
 	}
+	public CCategoria getEspecificoCategoria(int idcategoria){
+		CCategoria temp=null;
+		try{    
+        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idcategoria,descripcion FROM Categoria where idcategoria =? ");
+        	stm.setInt(1,idcategoria);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                                
+                                temp=new CCategoria( rs.getInt("idcategoria"),rs.getString("descripcion"));
+                               
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return temp;
+	}
+	public CSubcategoria getEspecificosubcategoria(int idsubcategoria){
+		CSubcategoria temp=null;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idsubcategoria,descripcion FROM subcategoria where  idsubcategoria=? ");
+			stm.setInt(1, idsubcategoria);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+				temp=new CSubcategoria( rs2.getInt("idsubcategoria"),rs2.getString("descripcion"));
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public ArrayList<CPregunta> getPreguntas(int idcategoria){
+		ArrayList<CPregunta> list=new ArrayList<CPregunta>();
+		
+		try {
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idpregunta, descripcion, categoriaidcategoria, subcategoriaidsubcategoria from pregunta where categoriaidcategoria=? ");
+        	stm.setInt(1,idcategoria);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                				CCategoria cate= this.getEspecificoCategoria(idcategoria);
+                				CSubcategoria subcate=this.getEspecificosubcategoria(rs.getInt("subcategoriaidsubcategoria"));
+                                CPregunta preg=null;
+                				preg=new CPregunta( rs.getInt("idpregunta"),rs.getString("descripcion"),cate,subcate);
+                               list.add(preg);
+                }
+                rs.close();
+                stm.close();
+		} catch (SQLException e) {
 	
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public int getPreguntasTotal(int idcategoria){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT max(idpregunta) cant  FROM pregunta where categoriaidcategoria= ?");
+			stm.setInt(1,idcategoria);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
 	public ArrayList<CNoticia> getNoticias(){
 		ArrayList<CNoticia> ret=new ArrayList<CNoticia>();
 		try{
@@ -217,6 +294,44 @@ public class CDataBase {
                                 temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp_menu);
                         ret.add(temp_menu);
                         
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
+	public ArrayList<CCategoria> getListaCategoria(){
+        ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idcategoria,descripcion FROM Categoria ");
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                                CCategoria temp=null;
+                                temp=new CCategoria( rs.getInt("idcategoria"),rs.getString("descripcion"));
+                                ret.add(temp);
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
+	public ArrayList<CSubcategoria> getListaSubCategoria(){
+        ArrayList<CSubcategoria> ret=new ArrayList<CSubcategoria>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idsubcategoria,descripcion FROM subcategoria ");
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                				CSubcategoria temp=null;
+                                temp=new CSubcategoria( rs.getInt("idsubcategoria"),rs.getString("descripcion"));
+                                ret.add(temp);
                 }
                 rs.close();
                 stm.close();
