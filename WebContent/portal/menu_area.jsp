@@ -13,6 +13,7 @@ ArrayList<CArea> list_area=dbo.getAreaLista();
 dbo.Close();
 %>
 <style>
+
 ul#menu, ul#menu ul {
   list-style-type:none;
   margin: 0;
@@ -72,10 +73,22 @@ ul#menu li ul li a:hover {
 				<% } %>
 			</ul>
 	</li>
+
 	
 	<%} %>
+	<li><a onclick="back_inicio()">REGRESAR A MENU</a></li>
 </ul>
+
 <script>
+$('#menu').hover(function() {
+	
+	$(this).css('cursor','pointer');
+	
+	}, function() {
+	
+	$(this).css('cursor','auto');
+	
+});		
 function initMenu() {
 	  $('#menu ul').hide();
 	  $('#menu ul:first').show();
