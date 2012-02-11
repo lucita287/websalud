@@ -13,23 +13,15 @@
 %>
 
 			<script  type="text/javascript">
-			  $(document).ready(function () {
-			              
-			      $('.editor').elrte({
-						cssClass : 'el-rte',
-						lang     : 'es',
-						width	 : 600,
-					    height	 : 200,
-					    toolbar  : 'complete',
-						cssfiles : ['../css/elrte-inner.css']
-					});
+			  $(document).ready(function () {              
+				  $("#cont-text").cleditor()[0].focus();
 			  });
 			  
 			  function Guardarnew(){
 
 					  if($.trim($('#new-titulo').val())!=""){
 						  if($('#new-submenu').val()>0){	
-								  var data_cont=Base64.encode($('#cont-text').elrte('val'));
+								  var data_cont=Base64.encode($('#cont-text').val());
 								  var titulo=Base64.encode($('#new-titulo').val());
 								  var submenu=$('#new-submenu').val();
 									cadena = [ 	'a=guardarnew',
@@ -91,7 +83,7 @@
 						<option value="1">Peque&ntilde;o</option>
 						<option value="0">Sin Texto</option>
 				</select>
-				<div id="cont-text" class="editor"></div>
+				<textarea id="cont-text" class="editor"> Texto </textarea>
 				<br/><br/>
 				<div class="centerd">
 						<a href="#" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
