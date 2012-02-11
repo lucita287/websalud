@@ -31,22 +31,9 @@
 			              arr = eval("(" + data + ")");                    
 			              $('#flex1').flexAddData(arr);                    
 			       });            
-			      $('#editconte').elrte({
-						cssClass : 'el-rte',
-						//lang     : 'es',
-						width	 : 600,
-					    height	 : 200,
-					    toolbar  : 'complete',
-						cssfiles : ['../css/elrte-inner.css']
-					    
-					});
-			      
-			      //Sacar un mensaje según el explorador 
-			    if (navigator.appName.indexOf("Explorer") != -1) { 
-
-			    	$("#validacion").html("POR FAVOR UTILIZAR OTRO NAVEGADOR PARA ESTA AREA");
-			    } 
-
+			     
+			      $("#editconte").cleditor({width:600, height:250});
+			      $("#editconte").cleditor()[0].focus();
 			      
 			  });
 			  var editidmenu=0;
@@ -54,9 +41,8 @@
 				  if(editidmenu>0){
 					  if($.trim($('#edit-titulo').val())!=""){
 							
-						  var data_cont=Base64.encode($('#editconte').elrte('val'));
+						  var data_cont=Base64.encode($('#editconte').val());
 						  var titulo=Base64.encode($('#edit-titulo').val());
-							 $("#validacion").html($('#editconte').elrte('val')); 
 							cadena = [ 	'idmenu='   + editidmenu,
 							             	'a=guardaredit',
 								            'titulo='+titulo,
@@ -103,9 +89,9 @@
 							$('#edit-area').text(result.areanombre);	
 							$('#edit-submenu').text(result.submenu);
 				        	$('#edit-titulo').val(result.descripcion);
-							$('#editconte').elrte('val', result.contenido);
-							$('#edit-tam').val(result.size);
-							//$('#editconte').elrte('updateSource');
+				        	$("#editconte").cleditor()[0].clear();
+							$("#editconte").cleditor()[0].execCommand("inserthtml", result.contenido, null, null);
+							//$("#editconte").cleditor()[0].focus();
 				        }
 					
 				    });
@@ -128,7 +114,7 @@
 						<option value="1">Peque&ntilde;o</option>
 						<option value="0">Sin Texto</option>
 				</select>
-				<textarea id="editconte" class="editor"> Texto </textarea>
+				<textarea id="editconte" class="editor"></textarea>
 				
 				<br/><br/>
 				<div class="centerd">

@@ -362,6 +362,46 @@ public class CDataBase {
         }
         return ret;
 	}
+	public ArrayList<CArea> getAreaListaMenu(){
+        ArrayList<CArea> ret=new ArrayList<CArea>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion from area where areaidarea is null and idarea!=1");
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CArea temp_menu=null;
+                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"));
+                        ret.add(temp_menu);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
+	public ArrayList<CArea> getAreaListaMenuSubmenu(){
+        ArrayList<CArea> ret=new ArrayList<CArea>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion from area where areaidarea is not null");
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CArea temp_menu=null;
+                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"));
+                        ret.add(temp_menu);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
 	public void Close(){
 		try{
 			conn.close();
