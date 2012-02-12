@@ -1,8 +1,30 @@
-			
+			<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 			
 			
 			<script  type="text/javascript">
 			
+			function replaceAll( text, busca, reemplaza ){
+				  while (text.toString().indexOf(busca) != -1)
+				      text = text.toString().replace(busca,reemplaza);
+				  return text;
+				}
+			
+			function convertirCaracter(caracter){
+				caracter=replaceAll(caracter,"á","&aacute;");
+				caracter=replaceAll(caracter,"é","&eacute;");
+				caracter=replaceAll(caracter,"í","&iacute;");
+				caracter=replaceAll(caracter,"ó","&oacute;");
+				caracter=replaceAll(caracter,"ú","&uacute;");
+				caracter=replaceAll(caracter,"Á","&Aacute;");
+				caracter=replaceAll(caracter,"É","&Eacute;");
+				caracter=replaceAll(caracter,"Í","&Iacute;");
+				caracter=replaceAll(caracter,"Ó","&Oacute;");
+				caracter=replaceAll(caracter,"Ú","&Uacute;");
+				caracter=replaceAll(caracter,"ñ","&nacute;");
+				caracter=replaceAll(caracter,"Ñ","&Nacute;");
+				return caracter;
+			}
 			  $(document).ready(function () {
 			      $("#flex1").flexigrid
 					({
@@ -40,8 +62,8 @@
 			  function Guardaredit(){
 				  if(editidmenu>0){
 					  if($.trim($('#edit-titulo').val())!=""){
-							
-						  var data_cont=Base64.encode($('#editconte').val());
+							var contenido=convertirCaracter($('#editconte').val());
+						  var data_cont=Base64.encode(contenido);
 						  var titulo=Base64.encode($('#edit-titulo').val());
 							cadena = [ 	'idmenu='   + editidmenu,
 							             	'a=guardaredit',
@@ -56,11 +78,8 @@
 							  	    type: 'post',
 							        dataType: 'json',
 							        success: function(data){
-							        	if(data.resultado=="OK"){
 							        		$("#validacion").html(data.mensaje);
-							        	}else{
-							        		$("#validacion").html(data.mensaje);	
-							        	}
+							        	
 							        }
 								
 							    }); 
@@ -114,7 +133,7 @@
 						<option value="1">Peque&ntilde;o</option>
 						<option value="0">Sin Texto</option>
 				</select>
-				<textarea id="editconte" class="editor"></textarea>
+				<textarea onfocus="javascript:window.clipboardData.clearData()" id="editconte" class="editor"></textarea>
 				
 				<br/><br/>
 				<div class="centerd">

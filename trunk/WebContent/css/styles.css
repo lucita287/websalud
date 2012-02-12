@@ -1,8 +1,4 @@
 
-*{
-margin: 0px;
-padding: 0px;
-}
 
 
 body {
@@ -134,13 +130,7 @@ h2 span {color:#13c5ff}
 
 
 /************* PORTAL ******************/
-		#panel-texto-c {
-					width: 80%;
-					height: 150px;
-					overflow: auto;
-					background: #ccc;
-					margin: 0px auto 0px auto;
-				}
+
 				#menu-principal {  width:25%;  float:left; }
 
 		#noticias {width:75%; float:left; }

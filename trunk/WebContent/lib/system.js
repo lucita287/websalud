@@ -8,9 +8,7 @@
 	function back_inicio(){
 		$("#menu-principal").load("portal/menu.jsp");
 	}
-	$(function(){
-		$('#panel-texto-c').jScrollPane();			
-	});
+
 
 	$(function() {
 		$(".jCarouselLite2").jCarouselLite({

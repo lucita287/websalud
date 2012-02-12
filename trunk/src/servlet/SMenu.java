@@ -105,10 +105,13 @@ public class SMenu extends HttpServlet {
 					if(titulo.trim()!=""){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 							if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().trim().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
+								
 								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
-						        decodedBytes = decoder.decodeBuffer(contenido);
+								contenido=contenido.replaceAll(" ","+");
+								decodedBytes = decoder.decodeBuffer(contenido);
 						        contenido=new String(decodedBytes);
 								contenido=contenido.replace("\"", "'");
+								
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
 								temp_menu.setsize(size);
@@ -148,7 +151,8 @@ public class SMenu extends HttpServlet {
 
 			if(!titulo.equalsIgnoreCase("")){
 				String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
-		        decodedBytes = decoder.decodeBuffer(contenido);
+				contenido=contenido.replaceAll(" ","+");
+				decodedBytes = decoder.decodeBuffer(contenido);
 		        contenido=new String(decodedBytes);
 				contenido=contenido.replace("\"", "'");
 				
