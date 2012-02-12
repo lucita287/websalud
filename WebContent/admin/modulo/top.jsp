@@ -18,6 +18,8 @@
 <script src="../lib/base64.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="../lib/flexigrid.js" charset="utf-8"></script>
 <script type="text/javascript" src="../lib/jquery.cleditor.min.js"></script>
+<script type="text/javascript" src="../lib/jquery.caret.1.02.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery-catchpaste-1.0.0.js"></script>
 	<script>
 	
 	</script>
