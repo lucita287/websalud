@@ -25,6 +25,7 @@
 				caracter=replaceAll(caracter,"Ñ","&Nacute;");
 				return caracter;
 			}
+			 
 			  $(document).ready(function () {
 			      $("#flex1").flexigrid
 					({
@@ -115,7 +116,20 @@
 					
 				    });
 					
-				}	
+				}
+			  $( function(){
+
+			  
+			  var cledDesc = $("#editconte").cleditor()[0];
+			  var frameDesc =  cledDesc.$frame[0].contentWindow.document;
+
+			  $(frameDesc).catchpaste( 
+						function (pasted,options){
+							
+							 return null; 
+							} );
+			      } );
+
 
 			</script>
 			<div class="centerd">
