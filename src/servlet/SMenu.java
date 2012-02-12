@@ -75,21 +75,6 @@ public class SMenu extends HttpServlet {
 			}catch (Exception e){} 
 			HttpSession session = request.getSession();
 			 session.setAttribute("portal", new Integer(idmenu));
-		}else if(action.equalsIgnoreCase("editmenu")){
-			ArrayList<CMenu> list=dbo.getMenuLista();	
-			 
-			 String info="{";
-			 info+="total: "+dbo.getCMenuTotal();
-			 info+=", page: 1,";
-			 info+="rows: [";
-			 String data="";
-			 for(int i=0; i<list.size();i++){
-					CMenu temp=list.get(i);
-					data+=(data=="")?"":",";
-					data+="{ cell: [\"<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />\",\""+temp.getidmenu()+"\", \""+temp.getdescripcion()+"\" , \""+temp.getareaidarea().getdescripcion()+"\"  , \""+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"\" ] }";
-			 }
-			 info+=data+"] }";
-			 out.println(info);
 		}else if(action.equalsIgnoreCase("guardaredit")){
 			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";
 			
