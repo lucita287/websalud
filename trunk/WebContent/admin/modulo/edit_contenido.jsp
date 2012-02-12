@@ -21,15 +21,17 @@
 				caracter=replaceAll(caracter,"Í","&Iacute;");
 				caracter=replaceAll(caracter,"Ó","&Oacute;");
 				caracter=replaceAll(caracter,"Ú","&Uacute;");
-				caracter=replaceAll(caracter,"ñ","&nacute;");
-				caracter=replaceAll(caracter,"Ñ","&Nacute;");
+				caracter=replaceAll(caracter,"ñ","&ntilde;");
+				caracter=replaceAll(caracter,"Ñ","&Ntilde;");
 				return caracter;
 			}
 			 
 			  $(document).ready(function () {
 			      $("#flex1").flexigrid
 					({
-					    dataType: 'json',
+						method: 'POST',
+						 url: '../SMenuTable',
+						 dataType : 'xml',
 					    colModel: [
 						{display: 'Seleccionar', name : 'chkDelete', width : 30, sortable : false, align: 'left'},           
 						{ display: 'idmenu', name: 'idmenu', width: 40, sortable: true, align: 'left' },
@@ -37,25 +39,49 @@
 						{ display: 'area', name: 'area', width: 100, sortable: true, align: 'left' },
 						{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' }
 						],
-					    sortname: "idmenu",
-					    sortorder: "asc",
 					    usepager: true,
+					    sortname: "idmenu",
+						sortorder: "asc",
 					    title: 'Contenido',
 					    useRp: true,
 					    rp: 15,
 					    showTableToggleBtn: true,
 					    width: 600,
-					    height: 200
+					    height: 200,
+					    searchitems : [
+						{display: 'Area', name : 'area'},
+						{display: 'Descripcion', name : 'descripcion', isdefault: true}
+						]
 					});
 		      
-			      $.post("../SMenu", {a:"editmenu"},
-			          function (data) {                    
-			              var arr = Array();
-			              arr = eval("(" + data + ")");                    
-			              $('#flex1').flexAddData(arr);                    
-			       });            
+			      //  $.post("../SMenu", {a:"editmenu"},
+			    		  // function (data) {                    
+			    	  // var arr = Array();
+			              // arr = eval("(" + data + ")");                    
+			              //         $('#flex1').flexAddData(arr);                    
+			     //  });            
 			     
-			      $("#editconte").cleditor({width:600, height:250});
+			     
+			      
+			      
+			      
+			      
+			      $("#editconte").cleditor({
+			          width:        600,
+			          height:       250,
+			          controls:     // controls to add to the toolbar
+			                        "bold italic underline strikethrough subscript superscript | font size " +
+			                        "style | color highlight removeformat | bullets numbering | outdent " +
+			                        "indent | alignleft center alignright justify | undo redo | " +
+			                        "rule image link unlink | cut copy paste pastetext | print source"
+			          });
+			      
+			      
+			      
+			      
+			      
+			      
+			      
 			      $("#editconte").cleditor()[0].focus();
 			      
 			  });

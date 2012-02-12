@@ -282,18 +282,22 @@ public class CDataBase {
 		
 		return false;
 	}
-	public ArrayList<CMenu> getMenuLista(){
+	public ArrayList<CMenu> getMenuLista(int min,int max,int ordenar,int asc){
         ArrayList<CMenu> ret=new ArrayList<CMenu>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,ifnull(idmenu_rec,0) idmenu_rec,size FROM Menu ");
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("select * from (SELECT @rownum:=@rownum+1 rownum, idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,ifnull(idmenu_rec,0) idmenu_rec,size FROM Menu, (SELECT @rownum:=0) ro )  data where rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC"));
+                
+                
+                stm.setInt(1, min);
+                stm.setInt(2, max);
+                stm.setInt(3, ordenar);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                                 CMenu temp_menu=null;
                                 temp_menu=this.getMenuEspecifico(rs.getInt("idmenu_rec"));
                                 CArea temp_c=this.getCAreaEspecifico(rs.getInt("areaidarea"));
                                 temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp_menu);
-                        ret.add(temp_menu);
-                        
+                        ret.add(temp_menu);                        
                 }
                 rs.close();
                 stm.close();
