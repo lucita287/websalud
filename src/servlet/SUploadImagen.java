@@ -63,7 +63,7 @@ public class SUploadImagen extends HttpServlet {
 					name=file2.getName();
 					File file = new File("C:\\Users\\lucita\\Desktop\\up\\"+name);
 					item.write(file);
-					writer.write("{\"name\":\""+ name + "\",\"type\":\"" + item.getContentType() + "\",\"size\":\"" + item.getSize() + "\"}");
+					writer.write("{\"result\":\"OK\",\"name\":\""+"C:\\\\Users\\\\lucita\\\\Desktop\\\\up\\\\"+ name + "\",\"type\":\"" + item.getContentType() + "\",\"size\":\"" + item.getSize() + "\"}");
 					//break; // assume we only get one file at a time
 				} else {
 			        System.out.println("File field " + item.getString() + " with file name "
@@ -72,9 +72,9 @@ public class SUploadImagen extends HttpServlet {
 			    }
 			}
 		} catch (FileUploadException e) {
-			throw new RuntimeException(e);
+			writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"type\":\"\",\"size\":\"\"}");
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"type\":\"\",\"size\":\"\"}");
 		} finally {
 			writer.close();
 		}

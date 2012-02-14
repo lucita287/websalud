@@ -24,7 +24,7 @@ $(function () {
         formData: {area: '1'},
         done: function (e, data) {
             $.each(data.result, function (index, file) {
-            	$('<p/>').text(file).appendTo(document.body);
+            	$('#validacion_imagen').html(file+"<br/>");
             });
         }
     });
