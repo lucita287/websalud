@@ -9,5 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
- 
+  <servlet>
+    <description></description>
+    <display-name>SUploadImagen</display-name>
+    <servlet-name>SUploadImagen</servlet-name>
+    <servlet-class>servlet.SUploadImagen</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SUploadImagen</servlet-name>
+    <url-pattern>/uploadimagen</url-pattern>
+  </servlet-mapping>
 </web-app>
