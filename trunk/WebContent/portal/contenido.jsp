@@ -13,13 +13,27 @@ dbo.Connect();
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 %>
 <style>
- 				#panel-texto-c {
-                                        width: 95%;
-                                        height: 150px;
-                                        overflow: auto;
-                                        background: #ccc;
-                                        margin: 0px auto 0px auto;
-                                }
+ 				#panel-texto-c1 {
+                    width: 95%;
+                    height: 150px;
+                    overflow: auto;
+                    background: #ccc;
+   					margin: 0px 20px 20px 20px;
+               }
+               #panel-texto-c2 {
+                    width: 95%;
+                    height: 220px;
+                    overflow: auto;
+                    background: #ccc;
+   					margin: 0px 20px 20px 20px;
+               }
+               #panel-texto-c3 {
+                    width: 95%;
+                    height: 300px;
+                    overflow: auto;
+                    background: #ccc;
+   					margin: 0px 20px 20px 20px;
+               }
 </style>
 <script>
 $(function(){
@@ -28,10 +42,12 @@ $(function(){
 </script>
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
 		<br/>
-		<div id="panel-texto-c" class="panel-texto-desc" style="margin-left:20px;margin-right:20px;">
+		<% if(temp_menu.getsize()>0 & temp_menu.getsize()<4){ %>
+		<div id="panel-texto-c<%=temp_menu.getsize()%>" class="panel-texto-desc" >
 				<div style="margin-left:20px;margin-right:20px;">
 					<%=temp_menu.getcontenido()%>				
 				</div>
 		</div>
+		<% } %>
 		<br/>
 	<div style="clear: both;"></div>					
