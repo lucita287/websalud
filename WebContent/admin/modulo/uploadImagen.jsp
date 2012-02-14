@@ -17,6 +17,18 @@ $(document).ready(function () {
 	    
 	});
 });
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        url: '../uploadimagen',
+        formData: {area: '1'},
+        done: function (e, data) {
+            $.each(data.result, function (index, file) {
+            	$('<p/>').text(file).appendTo(document.body);
+            });
+        }
+    });
+});
 </script>
 <form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
     			<h2>Subir Imagenes</h2>
@@ -38,8 +50,8 @@ $(document).ready(function () {
 					<tr>
 						<td>Imagen</td>
 						<td>
-						<input id="file_1" type="file" name="file_1" >
-						<label id="filename">NO SE HA SELECCIONADO ARCHIVO</label> 
+						<input id="fileupload" type="file" name="files[]" >
+						 
 						</td>	
 					</tr>	
 				</table>
