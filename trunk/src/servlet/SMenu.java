@@ -11,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
-
 import data.CArea;
 import data.CMenu;
 
+import framework.Base64core;
 import framework.CDataBase;
 
 /**
@@ -46,10 +43,11 @@ public class SMenu extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 response.setContentType("text/html;charset=UTF-8"); 
+		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
 		
 		String action=request.getParameter("a");
+		Base64core base64=new Base64core();
 		
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
@@ -58,16 +56,12 @@ public class SMenu extends HttpServlet {
 		 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 		 String result="";
 		 if(temp_menu!=null){
-			 
-			 
 			 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\"," +
 				 		"contenido:\""+temp_menu.getcontenido()+"\",areanombre:\""+
 				 temp_menu.getareaidarea().getdescripcion()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
 				 +"size:\""+temp_menu.getsize()+"\"}";
 		 }
-		 BASE64Encoder encoder = new BASE64Encoder();
-		 String contenido=encoder.encode(result.getBytes());
-		 out.println(contenido);
+		 out.println(base64.codificar(result));
 		}else if(action.equalsIgnoreCase("admin")){
 			int idmenu=0;
 			try{
@@ -82,20 +76,16 @@ public class SMenu extends HttpServlet {
 				if(idmenu>0){
 					int size=Integer.parseInt(request.getParameter("size"));
 					String titulo=request.getParameter("titulo");
-					BASE64Decoder decoder = new BASE64Decoder();
-					byte[] decodedBytes = decoder.decodeBuffer(titulo);
-					titulo=new String(decodedBytes);
-					titulo=titulo.replace("\"", "\\\"");
+					titulo=base64.decodificar(titulo);
+					titulo=titulo.replaceAll("\"", "\\\"");
 					titulo=titulo.trim();					
 					if(titulo.trim()!=""){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 							if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().trim().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
 								
 								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
-								contenido=contenido.replaceAll(" ","+");
-								decodedBytes = decoder.decodeBuffer(contenido);
-						        contenido=new String(decodedBytes);
-								contenido=contenido.replace("\"", "'");
+								contenido=base64.decodificar(contenido);
+								contenido=contenido.replaceAll("\"", "'");
 								
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
@@ -128,18 +118,14 @@ public class SMenu extends HttpServlet {
 		}else if(action.equalsIgnoreCase("guardarnew")){
 			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";
 			String titulo=request.getParameter("titulo");
-			BASE64Decoder decoder = new BASE64Decoder();
-			byte[] decodedBytes = decoder.decodeBuffer(titulo);
-			titulo=new String(decodedBytes);
-			titulo=titulo.replace("\"", "\\\"");
+			titulo=base64.decodificar(titulo);
+			titulo=titulo.replaceAll("\"", "\\\"");
 			titulo=titulo.trim();
 
 			if(!titulo.equalsIgnoreCase("")){
 				String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
-				contenido=contenido.replaceAll(" ","+");
-				decodedBytes = decoder.decodeBuffer(contenido);
-		        contenido=new String(decodedBytes);
-				contenido=contenido.replace("\"", "'");
+				contenido=base64.decodificar(contenido);
+				contenido=contenido.replaceAll("\"", "'");
 				
 				int idsubmenu=0;
 				int size=4;

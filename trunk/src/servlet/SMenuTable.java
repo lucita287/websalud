@@ -25,7 +25,6 @@ public class SMenuTable extends HttpServlet {
      */
     public SMenuTable() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,6 +47,13 @@ public class SMenuTable extends HttpServlet {
 		 int rp=Integer.parseInt(request.getParameter("rp"));
 		 String order=request.getParameter("sortname").trim();
 		 String typeorder=request.getParameter("sortorder").trim();
+		 String qtype=request.getParameter("qtype").trim();
+		 String busqueda=request.getParameter("query").trim();
+		 int pqtype=1;
+		 if(qtype.equalsIgnoreCase("area")){
+			 pqtype=2;
+		 }
+		 
 		 int min=((page-1)*rp)+1;
 		 int max=page*(rp);
 		 int ordenar=2;
@@ -68,10 +74,10 @@ public class SMenuTable extends HttpServlet {
 		 }
 		 
 		 
-		ArrayList<CMenu> list=dbo.getMenuLista(min,max,ordenar,asc);
+		ArrayList<CMenu> list=dbo.getMenuLista(min,max,pqtype,busqueda,ordenar,asc);
 		
 		 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-		 info+="<rows><page>"+page+"</page><total>"+dbo.getCMenuTotal()+"</total>";
+		 info+="<rows><page>"+page+"</page><total>"+dbo.getCMenuTotal(pqtype,busqueda)+"</total>";
 		 
 		 String data="";
 		 for(int i=0; i<list.size();i++){

@@ -181,22 +181,6 @@ public class CDataBase {
 		return temp;
 	}
 	
-	public int getCMenuTotal(){
-		int temp=0;
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT max(idmenu) cant  FROM menu ");
-			ResultSet rs2=stm.executeQuery();
-			if(rs2.next())
-			temp=rs2.getInt("cant");
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		
-		return temp;
-	}
-	
 	public ArrayList<CMenu> getMenu(int area){
 		ArrayList<CMenu> ret=new ArrayList<CMenu>();
 		try{
@@ -282,22 +266,34 @@ public class CDataBase {
 		
 		return false;
 	}
-	public ArrayList<CMenu> getMenuLista(int min,int max,int ordenar,int asc){
+	public ArrayList<CMenu> getMenuLista(int min,int max,int type,String busqueda ,int ordenar,int asc){
         ArrayList<CMenu> ret=new ArrayList<CMenu>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("select * from (SELECT @rownum:=@rownum+1 rownum, idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,ifnull(idmenu_rec,0) idmenu_rec,size FROM Menu, (SELECT @rownum:=0) ro )  data where rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC"));
-                
-                
-                stm.setInt(1, min);
-                stm.setInt(2, max);
-                stm.setInt(3, ordenar);
+        	String query="select * from "
+				+"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion,m.contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
+				+"a.idarea,a.descripcion descripcion_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
+				+"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
+				+"where a.idarea=m.areaidarea and"
+				+" if(? <>'',if(?=1,upper(m.descripcion) like upper(?),upper(a.descripcion) like upper(?)),true )"
+				+") data "
+				+"where rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC");
+
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
+                stm.setString(1,busqueda.trim());
+                stm.setInt(2,type);
+                stm.setString(3,"%"+busqueda.trim()+"%");
+                stm.setString(4,"%"+busqueda.trim()+"%");
+                stm.setInt(5, min);
+                stm.setInt(6, max);
+                stm.setInt(7, ordenar);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
-                                CMenu temp_menu=null;
-                                temp_menu=this.getMenuEspecifico(rs.getInt("idmenu_rec"));
-                                CArea temp_c=this.getCAreaEspecifico(rs.getInt("areaidarea"));
-                                temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp_menu);
-                        ret.add(temp_menu);                        
+                				ArrayList<CMenu> templist=null;
+                				
+                                CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist);
+                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("descripcion_area"));
+                                CMenu temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp);
+                                ret.add(temp_menu);                        
                 }
                 rs.close();
                 stm.close();
@@ -308,6 +304,32 @@ public class CDataBase {
         }
         return ret;
 	}
+	
+	public int getCMenuTotal(int type,String busqueda){
+		int temp=0;
+		try {
+			String query="SELECT count(m.idmenu) cant "
+					+"FROM Menu m , Area a "
+					+"where a.idarea=m.areaidarea and"
+					+" if(? <>'',if(?=1,upper(m.descripcion) like upper(?),upper(a.descripcion) like upper(?)),true )";
+
+	                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
+	                stm.setString(1,busqueda.trim());
+	                stm.setInt(2,type);
+	                stm.setString(3,"%"+busqueda.trim()+"%");
+	                stm.setString(4,"%"+busqueda.trim()+"%");
+	                
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	
 	public ArrayList<CCategoria> getListaCategoria(){
         ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
         try{
