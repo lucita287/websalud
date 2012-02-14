@@ -94,7 +94,7 @@ ul#menu li ul li ul li  a:hover {
 						<a>SubAreas Medicina</a>
 							<ul>
 								<% for(int h=0; h<list_area_sub.size(); h++){ 
-									CArea temp_area=list_area.get(h);
+									CArea temp_area=list_area_sub.get(h);
 								%>
 								<li>
 									<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getdescripcion()%></a>
