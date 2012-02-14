@@ -1,6 +1,25 @@
-<form id="file_upload" action="../SUploadContenido" method="POST" enctype="multipart/form-data">
-    <div id="drop_zone_1">
-    			<h1>Subir Imagenes</h1>
+<script  type="text/javascript">
+$(document).ready(function () {
+	$("#imagenes").flexigrid
+	({
+		method: 'POST',
+		 url: '',
+		 dataType : 'xml',
+	    colModel: [
+		{display: 'Seleccionar', name : 'chkimagen', width : 30, sortable : false, align: 'left'},           
+		{ display: 'ID', name: 'idcontenido', width: 40, sortable: true, align: 'left' },
+		{ display: 'Titulo', name: 'titulo', width: 100, sortable: true, align: 'left' },
+		{ display: 'Archivo', name: 'direccion', width: 100, sortable: true, align: 'left' }
+		],
+	    title: 'IMAGENES',
+	    width: 600,
+	    height: 200
+	    
+	});
+});
+</script>
+<form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
+    			<h2>Subir Imagenes</h2>
 				<div id="validacion_imagen" class="validacion"></div>
 				<table id="imagenes" style="display:none"></table>
 				<table  width="80%" CELLSPACING="8">
@@ -20,40 +39,10 @@
 						<td>Imagen</td>
 						<td>
 						<input id="file_1" type="file" name="file_1" >
-						<table id="files_1" style="background:yellow;"></table> 
+						<label id="filename">NO SE HA SELECCIONADO ARCHIVO</label> 
 						</td>	
 					</tr>	
 				</table>
-	</div>			
-
+	
     
 </form>
-
-
-<script>
-
-/*global $ */
-$(function () {
-    var initFileUpload = function (suffix) {
-        $('#file_upload').fileUploadUI({
-            namespace: 'file_upload_' + suffix,
-            fileInputFilter: '#file_' + suffix,
-            dropZone: $('#drop_zone_' + suffix),
-            uploadTable: $('#files_' + suffix),
-            downloadTable: $('#files_' + suffix),
-            buildUploadRow: function (files, index) {
-                return $('<tr><td>' + files[index].name + '<\/td>' +
-                        '<td class="file_upload_progress"><div><\/div><\/td>' +
-                        '<td class="file_upload_cancel">' +
-                        '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-                        '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                        '<\/button><\/td><\/tr>');
-            },
-            buildDownloadRow: function (file) {
-                return $('<tr><td>' + file.name + '<\/td><\/tr>');
-            }
-        });
-    };
-    initFileUpload(1);
-});
-</script> 

@@ -28,7 +28,7 @@
 
 			 
 			  $(document).ready(function () {
-			      $("#flex1").flexigrid
+				  $("#flex1").flexigrid
 					({
 						method: 'POST',
 						 url: '../SMenuTable',
@@ -53,36 +53,14 @@
 						{display: 'Area', name : 'area'},
 						{display: 'Descripcion', name : 'descripcion', isdefault: true}
 						]
-					});
-		      
-			      $("#imagenes").flexigrid
-					({
-						method: 'POST',
-						 url: '',
-						 dataType : 'xml',
-					    colModel: [
-						{display: 'Seleccionar', name : 'chkimagen', width : 30, sortable : false, align: 'left'},           
-						{ display: 'ID', name: 'idcontenido', width: 40, sortable: true, align: 'left' },
-						{ display: 'Titulo', name: 'titulo', width: 100, sortable: true, align: 'left' },
-						{ display: 'Archivo', name: 'direccion', width: 100, sortable: true, align: 'left' }
-						],
-					    title: 'IMAGENES',
-					    width: 600,
-					    height: 200
-					    
-					});
-			      //  $.post("../SMenu", {a:"editmenu"},
-			    		  // function (data) {                    
-			    	  // var arr = Array();
-			              // arr = eval("(" + data + ")");                    
-			              //         $('#flex1').flexAddData(arr);                    
-			     //  });            
-			    
+					});				  
+			  
+					
+					
 			  });
 			  
-
-
-
+			  
+			  
 			</script>
 			<div class="centerd">
 			<h2>Editar Contenido</h2>
@@ -91,6 +69,8 @@
 			<div id="validacion_prin" class="validacion"></div>
 			<table id="flex1" style="display:none"></table>
 			</div>
+			
+			
 			<div id="tabs">
 			<ul>
 				<li><a href="#tabs-1">Contenido</a></li>
@@ -98,15 +78,15 @@
 				<li><a href="#tabs-3">PDF</a></li>
 			</ul>
 			
-			<div id="tabs-1" style="width:1000px; ">			
-				<jsp:include page="editDatos.jsp" />
-			<div style="clear: both;"></div>
+			<div id="tabs-1" style="width:1000px; ">
+				<jsp:include page="editDatos.jsp" />			
+				<div style="clear: both;"></div>
 			</div>
 			<div id="tabs-2" style="width:1000px; ">
 				<jsp:include page="uploadImagen.jsp" />
+				<div style="clear: both;"></div>
 			</div>
 			<div id="tabs-3" style="width:1000px; ">
 				
 			</div>
 			</div>
-			
