@@ -4,7 +4,6 @@
 <%@ page import="data.CMenu" %>
 <%@ page import="data.CArea" %>
 <%@ page import="java.util.ArrayList" %>
-<script type="text/javascript" src="../lib/jquery-1.5.2.min.js"></script>
 <%  
 CDataBase dbo=new CDataBase();
 dbo.Connect();

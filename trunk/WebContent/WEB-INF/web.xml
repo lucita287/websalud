@@ -19,4 +19,5 @@
     <servlet-name>SUploadImagen</servlet-name>
     <url-pattern>/uploadimagen</url-pattern>
   </servlet-mapping>
+
 </web-app>
