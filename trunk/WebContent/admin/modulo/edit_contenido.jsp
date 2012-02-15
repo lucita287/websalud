@@ -4,6 +4,7 @@
 			<script  type="text/javascript">
 			var editidmenu=0;
 			var editidimagen=0;
+			var editarea=0;
 			function replaceAll( text, busca, reemplaza ){
 				  while (text.toString().indexOf(busca) != -1)
 				      text = text.toString().replace(busca,reemplaza);

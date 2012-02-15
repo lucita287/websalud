@@ -18,14 +18,18 @@ $(document).ready(function () {
 	});
 });
 $(function () {
+	var input = $('#input');
     $('#fileupload').fileupload({
         dataType: 'json',
         url: '../uploadimagen',
-        formData: {area: '1'},
+        formData: {"area": editarea},
         done: function (e, data) {
+        	
+        	cadena="";
             $.each(data.result, function (index, file) {
-            	$('#validacion_imagen').html(file+"<br/>");
+            	cadena=cadena+file+"<br/>";	
             });
+            $('#validacion_imagen').html(cadena);
         }
     });
 });
@@ -37,9 +41,10 @@ $(function () {
 				<table  width="80%" CELLSPACING="8">
 					<tr>
 						<td>IDEN</td>
-						<td><label id="idimagen">NEW</label> </td>	
+						<td><label id="idimagen">NEW</label> <input type="hidden" id="" value="3"></td>	
 					</tr>
 					<tr>
+						
 						<td>Titulo</td>
 						<td><input id="tituloimagen" type="text" size="40"/> </td>	
 					</tr>
