@@ -1,6 +1,10 @@
 			<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-					
+	<%
+
+HttpSession ss=request.getSession(false); 
+if(ss!=null && session.getAttribute("user")!=null){
+%>				
 			<script  type="text/javascript">
 			var editidmenu=0;
 			var editidimagen=0;
@@ -91,3 +95,4 @@
 				
 			</div>
 			</div>
+<% } %>			

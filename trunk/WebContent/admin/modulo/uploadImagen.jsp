@@ -17,8 +17,10 @@ $(document).ready(function () {
 	    
 	});
 });
+var idimagen=0;
 $(function () {
 	var input = $('#input');
+	
     $('#fileupload').fileupload({
         dataType: 'json',
         url: '../uploadimagen',
@@ -26,8 +28,22 @@ $(function () {
         done: function (e, data) {
         	
         	cadena="";
+        	ok=false;
             $.each(data.result, function (index, file) {
-            	cadena=cadena+file+"<br/>";	
+            	if(index=='result' ){
+            		cadena=cadena+file+"<br/>";	
+            		if(file=='OK')ok=true;
+            	}
+            	if(index=='name'&&ok==true){
+            		$('#pathimagen').text(file);
+            	}
+            	if(index=='idsafe'&&ok==true){
+            		idimagen=file;
+            	}
+            	if(index=='Mensaje'&&ok==false){
+            		cadena=cadena+file+"<br/>";	
+            	}
+            	
             });
             $('#validacion_imagen').html(cadena);
         }
@@ -55,8 +71,8 @@ $(function () {
 					<tr>
 						<td>Imagen</td>
 						<td>
-						<input id="fileupload" type="file" name="files[]" >
-						 
+						<input id="fileupload" type="file" name="files[]" ><BR/>
+						<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
 						</td>	
 					</tr>	
 				</table>

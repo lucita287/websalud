@@ -12,6 +12,7 @@ import com.mysql.jdbc.PreparedStatement;
 import data.CArea;
 import data.CCategoria;
 import data.CConfiguracion;
+import data.CImagen;
 import data.CMenu;
 import data.CNoticia;
 import data.CPregunta;
@@ -137,7 +138,7 @@ public class CDataBase {
 		int temp=0;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT max(idpregunta) cant  FROM pregunta where categoriaidcategoria= ?");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(max(idpregunta),0) cant  FROM pregunta where categoriaidcategoria= ?");
 			stm.setInt(1,idcategoria);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
@@ -458,6 +459,57 @@ public class CDataBase {
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
 				temp=new CConfiguracion( rs2.getInt("idconfiguracion"),rs2.getString("telefono"),rs2.getString("correo_electronico"),rs2.getString("fax"),rs2.getString("direccion_imagen"),rs2.getString("direccion_pdf"),rs2.getInt("tamanio_sub"),rs2.getString("dir_rel_imagen"),rs2.getString("dir_rel_pdf"),rs2.getString("direccion"));
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public int getImagenTotal(){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(max(idimagen),0) cant  FROM imagen");
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public boolean SafeImagen(CImagen imagen){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO imagen   ( direccion, direccion_relativa, tamanio, usuarioidusuario) VALUES ( ?, ?, ?, ?)");
+			
+			stm.setString(1, imagen.getdireccion());
+			stm.setString(2, imagen.getdireccion_relativa());
+			stm.setInt(3, imagen.gettamanio());
+			stm.setInt(4, imagen.getusuarioidusuario().getidusuario());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public CImagen getImagenEspecifica(String path){
+		CImagen temp=null;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idimagen, direccion, direccion_relativa, tamanio, usuarioidusuario FROM imagen where  direccion = ?");
+			stm.setString(1, path);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+				temp=new CImagen( rs2.getInt("idimagen"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),rs2.getInt("tamanio"),null);
 			}
 		} catch (SQLException e) {
 
