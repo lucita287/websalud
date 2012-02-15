@@ -16,6 +16,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import framework.CDataBase;
+
 /**
  * Servlet implementation class SUploadImagen
  */
@@ -46,12 +48,14 @@ public class SUploadImagen extends HttpServlet {
 			throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
 		}
 		
-		
+		CDataBase dbo=new CDataBase();
+		 dbo.Connect();
 		ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
-			
-		
+		String repositorio="C:\\Users\\lucita\\Desktop\\PATH_IMAGEN\\";
+		String repositorio_relativo="C:\\Users\\lucita\\Desktop\\PATH_IMAGEN\\";
+		repositorio_relativo=repositorio_relativo.replace("\\", "\\\\");
 		///////////ESCRIBIR ARCHIVOS
 		try {
 			
@@ -61,15 +65,11 @@ public class SUploadImagen extends HttpServlet {
 					String name=item.getName();
 					File file2 = new File(name);
 					name=file2.getName();
-					File file = new File("C:\\Users\\lucita\\Desktop\\up\\"+name);
+					File file = new File(repositorio+name);
 					item.write(file);
-					writer.write("{\"result\":\"OK\",\"name\":\""+"C:\\\\Users\\\\lucita\\\\Desktop\\\\up\\\\"+ name + "\",\"type\":\"" + item.getContentType() + "\",\"size\":\"" + item.getSize() + "\"}");
-					//break; // assume we only get one file at a time
-				} else {
-			        System.out.println("File field " + item.getString() + " with file name "
-			            + item.getFieldName() + " detected.");
-			        
-			    }
+					writer.write("{\"result\":\"OK\",\"name\":\""+repositorio_relativo+ name + "\",\"type\":\"" + item.getContentType() + "\",\"size\":\"" + item.getSize() + "\"}");
+					break; // assume we only get one file at a time
+				} 
 			}
 		} catch (FileUploadException e) {
 			writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"type\":\"\",\"size\":\"\"}");

@@ -57,7 +57,7 @@ public class SMenu extends HttpServlet {
 		 String result="";
 		 if(temp_menu!=null){
 			 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\"," +
-				 		"contenido:\""+temp_menu.getcontenido()+"\",areanombre:\""+
+				 		"contenido:\""+temp_menu.getcontenido()+"\",idarea:\""+temp_menu.getareaidarea().getidarea()+"\",areanombre:\""+
 				 temp_menu.getareaidarea().getdescripcion()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
 				 +"size:\""+temp_menu.getsize()+"\"}";
 		 }

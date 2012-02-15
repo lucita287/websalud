@@ -37,6 +37,7 @@ $( function(){
 					$('#edit-submenu').text(result.submenu);
 		        	$('#edit-titulo').val(result.descripcion);
 					$("#editconte").cleditor()[0].execCommand("inserthtml", result.contenido,null,null);
+					editarea=result.idarea;
 					//$("#editconte").cleditor()[0].focus();
 		        }
 			

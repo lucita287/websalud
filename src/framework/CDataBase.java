@@ -170,11 +170,11 @@ public class CDataBase {
 		CArea temp=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion  FROM area where  idarea=? ");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea  FROM area where  idarea=? ");
 			stm.setInt(1, idarea);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
-			temp=new CArea( rs2.getInt("idarea"),rs2.getString("descripcion"));
+			temp=new CArea( rs2.getInt("idarea"),rs2.getString("descripcion"),null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -291,7 +291,7 @@ public class CDataBase {
                 				ArrayList<CMenu> templist=null;
                 				
                                 CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist);
-                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("descripcion_area"));
+                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("descripcion_area"),null);
                                 CMenu temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp);
                                 ret.add(temp_menu);                        
                 }
@@ -371,11 +371,11 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaLista(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion from area");
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea, direccion,direccion_relativa from area");
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                 		CArea temp_menu=null;
-                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"));
+                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"),null );
                         ret.add(temp_menu);
                         
                 }
@@ -391,11 +391,11 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion from area where areaidarea is null and idarea!=1");
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea, direccion,direccion_relativa from area where areaidarea is null and idarea!=1");
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                 		CArea temp_menu=null;
-                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"));
+                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"),null);
                         ret.add(temp_menu);
                         
                 }
@@ -411,11 +411,11 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenuSubmenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion from area where areaidarea is not null");
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea, direccion,direccion_relativa  from area where areaidarea is not null");
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                 		CArea temp_menu=null;
-                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"));
+                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"),null);
                         ret.add(temp_menu);
                         
                 }
