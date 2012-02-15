@@ -5,7 +5,41 @@ $("#editconte").cleditor({
     height:       250
     });
 $("#editconte").cleditor()[0].focus();
-});         
+});
+
+function Guardaredit(){
+	  if(editidmenu>0){
+		  if($.trim($('#edit-titulo').val())!=""){
+				var contenido=convertirCaracter($('#editconte').val());
+			  var data_cont=Base64.encode(contenido);
+			  var titulo=Base64.encode($('#edit-titulo').val());
+				cadena = [ 	'idmenu='   + editidmenu,
+				             	'a=guardaredit',
+					            'titulo='+titulo,
+					            'contenido='+data_cont,
+					            'size='+$('#edit-tam').val()
+					        ].join('&');
+				 $("#validacion").html("No se ha actualizado"); 
+				  $.ajax({
+				        url: "../SMenu",
+				        data: cadena,
+				  	    type: 'post',
+				        dataType: 'json',
+				        success: function(data){
+				        		$("#validacion").html(data.mensaje);
+				        	
+				        }
+					
+				    }); 
+				  
+				  
+		  }else{
+			  $("#validacion").html("El titulo no puede estar vacio");
+		  }
+	  }else{
+		  $("#validacion").html("Debe Seleccionar un item");
+		    }
+}
 
 $( function(){
 

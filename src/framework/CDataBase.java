@@ -16,6 +16,7 @@ import data.CMenu;
 import data.CNoticia;
 import data.CPregunta;
 import data.CSubcategoria;
+import data.CUsuario;
 
 public class CDataBase {
 
@@ -53,6 +54,25 @@ public class CDataBase {
 			
 		
 		
+	}
+	public CUsuario getUsuario(String user){
+		CUsuario temp=null;
+		try{    
+        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idusuario, nombre, apellido, nick, password, telefono, email, areaidarea FROM usuario where nick=? ");
+        	stm.setString(1,user);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){                							
+                                temp=new CUsuario(rs.getInt("idusuario"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("nick"),rs.getString("password"),rs.getString("telefono"),rs.getString("email"),null);
+                               
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+		return temp;
 	}
 	public CCategoria getEspecificoCategoria(int idcategoria){
 		CCategoria temp=null;
