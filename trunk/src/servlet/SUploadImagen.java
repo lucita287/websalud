@@ -16,6 +16,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import data.CConfiguracion;
+
 import framework.CDataBase;
 
 /**
@@ -53,8 +55,9 @@ public class SUploadImagen extends HttpServlet {
 		ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
-		String repositorio="C:\\Users\\lucita\\Desktop\\PATH_IMAGEN\\";
-		String repositorio_relativo="C:\\Users\\lucita\\Desktop\\PATH_IMAGEN\\";
+		CConfiguracion config=dbo.getConfiguracion();
+		String repositorio=config.getdireccion_imagen();
+		String repositorio_relativo=config.getdir_rel_imagen();
 		repositorio_relativo=repositorio_relativo.replace("\\", "\\\\");
 		///////////ESCRIBIR ARCHIVOS
 		try {

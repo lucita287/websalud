@@ -11,6 +11,7 @@ idmenu=Integer.parseInt(request.getParameter("idmenu"));
 CDataBase dbo=new CDataBase();
 dbo.Connect();
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
+dbo.Close();
 %>
 <style>
  				#panel-texto-c1 {
