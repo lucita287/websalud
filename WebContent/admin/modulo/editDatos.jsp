@@ -54,7 +54,10 @@ $( function(){
 						} );
 		    } );
 		function editar(idmenu){
+			var $tabs = $('#tabs').tabs();
+			$tabs.tabs('select', 0);
 			$("#editconte").cleditor()[0].clear();
+			
 			$('#edit-id').text(idmenu);
 			 cadena = [ 'idmenu='     + idmenu,
 			            'a=show',
