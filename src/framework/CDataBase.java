@@ -11,6 +11,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import data.CArea;
 import data.CCategoria;
+import data.CConfiguracion;
 import data.CMenu;
 import data.CNoticia;
 import data.CPregunta;
@@ -427,6 +428,23 @@ public class CDataBase {
                 
         }
         return ret;
+	}
+	public CConfiguracion getConfiguracion(){
+		CConfiguracion temp=null;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement(" SELECT idconfiguracion, telefono, correo_electronico, fax, direccion_imagen, direccion_pdf, tamanio_sub, dir_rel_imagen, dir_rel_pdf, direccion FROM configuracion where idconfiguracion=? ");
+			stm.setInt(1, 1);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+				temp=new CConfiguracion( rs2.getInt("idconfiguracion"),rs2.getString("telefono"),rs2.getString("correo_electronico"),rs2.getString("fax"),rs2.getString("direccion_imagen"),rs2.getString("direccion_pdf"),rs2.getInt("tamanio_sub"),rs2.getString("dir_rel_imagen"),rs2.getString("dir_rel_pdf"),rs2.getString("direccion"));
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
 	}
 	public void Close(){
 		try{

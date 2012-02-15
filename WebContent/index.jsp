@@ -1,3 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+<%@ page import="framework.CDataBase" %>
+<%@ page import="data.CConfiguracion" %>
+<%
+CDataBase dbo=new CDataBase();
+dbo.Connect();
+CConfiguracion temp=dbo.getConfiguracion();
+dbo.Close();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -47,48 +57,36 @@
 </div>
 <!--footer begins -->
 
-<div class="row-top">
+				<div class="row-top">
 					<div class="row-padding">
 						<div class="wrapper">
-							<div class="col-1">
-								<h2>Address:</h2>
-								<dl class="address">
-									<dt><span>Country:</span> USA</dt>
-									<dd><span>City:</span> Faucibus</dd>
-									<dd><span>Address:</span> Bearchmond dr. 32</dd>
-									<dd><span>Email:</span><a href="#"> yourmail@mail.com</a></dd>
-								</dl>
+							<div id="contactanos">
+								<h2>CONTACTANOS</h2>
+									<table>
+										<tr>
+											<td><span>Direccion:</span></td> <td><%=temp.getdireccion()%></td>
+										</tr>
+										<tr>
+											<td><span>Telefono:</span></td><td><%=temp.gettelefono()%></td>
+										</tr>
+										<tr>
+											<td><span>Fax:</span></td><td><%=temp.getfax()%></td>
+										</tr>	
+									 	<tr>
+											<td><span>Email:</span></td><td><%=temp.getcorreo_electronico()%></td>
+										</tr>
+									</table>	
 							</div>
-							<div class="col-2">
-								<h2>Follow Us:</h2>
-								<ul class="list-services">
-									<li class="item-1"><a href="#">Facebook</a></li>
-									<li class="item-2"><a href="#">Twitter</a></li>
-									<li class="item-3"><a href="#">LinkedIn</a></li>
-								</ul>
-							</div>
-							<div class="col-3">
-								<h2>Why Us:</h2>
-								<ul class="list-1">
-									<li><a href="#">Lorem ipsum dolor</a></li>
-									<li><a href="#">Aonsect adipisic</a></li>
-									<li><a href="#">Eiusmjkod tempor</a></li> 
-									<li><a href="#">Incididunt ut labore</a></li>
-								</ul>
-							</div>
-							<div class="col-4">
-								<div class="indent3">
-									<strong class="footer-logo">Company Name</strong>
-									<strong class="phone"><strong>Toll Free:</strong> 1-800-343-5454</strong>
-								</div>
-							</div>
+							<div id="ppivs">
+								<img src="images/final_user/PPIVS.jpg" width="550px" heigth="300px"/>
+							</div>	
 						</div>
 					</div>
 				</div>
 
 <div id="footer">
-<p>Copyright &copy; 2011. <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" title="This page validates as CSS"><abbr title="Cascading Style Sheets">CSS</abbr></a></p> 
-	<p><!-- Do not remove -->Designed by <a href="http://www.metamorphozis.com/" title="Free Web Templates">Free Web Templates</a>, coded by <a href="http://www.myfreecsstemplates.com/" title="Free CSS Templates">Free CSS Templates</a><!-- end -->               
+<p>Unidad de Salud 2012. | <a href="http://www.usac.edu.gt/">USAC</a>  </p> 
+	              
 		</p>
 	</div>
 </div>
