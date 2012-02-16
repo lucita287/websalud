@@ -19,5 +19,14 @@
     <servlet-name>SUploadImagen</servlet-name>
     <url-pattern>/uploadimagen</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>SUploadPDF</display-name>
+    <servlet-name>SUploadPDF</servlet-name>
+    <servlet-class>servlet.SUploadPDF</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SUploadPDF</servlet-name>
+    <url-pattern>/uploadpdf</url-pattern>
+  </servlet-mapping>
 </web-app>

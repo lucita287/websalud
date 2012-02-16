@@ -20,20 +20,19 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import data.CConfiguracion;
 import data.CMultimedia;
 import data.CUsuario;
-
 import framework.CDataBase;
 
 /**
- * Servlet implementation class SUploadImagen
+ * Servlet implementation class SUploadPDF
  */
-@WebServlet("/SUploadImagen")
-public class SUploadImagen extends HttpServlet {
+@WebServlet("/SUploadPDF")
+public class SUploadPDF extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SUploadImagen() {
+    public SUploadPDF() {
         super();
     }
 
@@ -69,8 +68,8 @@ public class SUploadImagen extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("text/plain");
 			CConfiguracion config=dbo.getConfiguracion();
-			String repositorio=config.getdireccion_imagen();
-			String repositorio_relativo=config.getdir_rel_imagen();
+			String repositorio=config.getdireccion_pdf();
+			String repositorio_relativo=config.getdir_rel_pdf();
 			repositorio_relativo=repositorio_relativo.replace("\\", "\\\\");
 			int tam_max=config.gettamanio_sub();
 			///////////ESCRIBIR ARCHIVOS
@@ -88,8 +87,8 @@ public class SUploadImagen extends HttpServlet {
 								name=name.replaceAll(" ","");
 								name=name.toLowerCase();
 								
-								if(name.endsWith(".png")||name.endsWith(".gif")||name.endsWith(".jpg")){
-										CMultimedia imagen=new CMultimedia(0, repositorio+name,repositorio_relativo+ name,item.getSize(),1,usuario);						
+								if(name.endsWith(".pdf")){
+										CMultimedia imagen=new CMultimedia(0, repositorio+name,repositorio_relativo+ name,item.getSize(),2,usuario);						
 										File file = new File(imagen.getdireccion());
 										item.write(file);
 										boolean b=dbo.SafeMultimedia(imagen);
@@ -114,7 +113,7 @@ public class SUploadImagen extends HttpServlet {
 			} finally {
 				writer.close();
 			}
-		}
 	}
 
+	}
 }
