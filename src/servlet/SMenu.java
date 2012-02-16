@@ -56,10 +56,9 @@ public class SMenu extends HttpServlet {
 		 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 		 String result="";
 		 if(temp_menu!=null){
-			 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\"," +
-				 		"contenido:\""+temp_menu.getcontenido()+"\",idarea:\""+temp_menu.getareaidarea().getidarea()+"\",areanombre:\""+
+			 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\",idarea:\""+temp_menu.getareaidarea().getidarea()+"\",areanombre:\""+
 				 temp_menu.getareaidarea().getdescripcion()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
-				 +"size:\""+temp_menu.getsize()+"\"}";
+				 +"size:\""+temp_menu.getsize()+"\",contenido:\""+temp_menu.getcontenido()+" \"}";
 		 }
 		 out.println(base64.codificar(result));
 		}else if(action.equalsIgnoreCase("admin")){
@@ -77,7 +76,7 @@ public class SMenu extends HttpServlet {
 					int size=Integer.parseInt(request.getParameter("size"));
 					String titulo=request.getParameter("titulo");
 					titulo=base64.decodificar(titulo);
-					titulo=titulo.replaceAll("\"", "\\\"");
+					titulo=titulo.replaceAll("\"", "'");
 					titulo=titulo.trim();					
 					if(titulo.trim()!=""){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
@@ -86,7 +85,6 @@ public class SMenu extends HttpServlet {
 								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
 								contenido=base64.decodificar(contenido);
 								contenido=contenido.replaceAll("\"", "'");
-								
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
 								temp_menu.setsize(size);

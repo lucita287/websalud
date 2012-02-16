@@ -7,10 +7,19 @@ $("#editconte").cleditor({
 $("#editconte").cleditor()[0].focus();
 });
 
+function CargarImagenes(){
+	$.post("../SContenidoTable", {ptipo:1,pmenu:editidmenu},
+	          function (data) {                    
+	              var arr = Array();
+	              arr = eval("(" + data + ")");                    
+	              $('#imagenes').flexAddData(arr);                    
+	       });  	 							
+}
+
 function Guardaredit(){
 	  if(editidmenu>0){
 		  if($.trim($('#edit-titulo').val())!=""){
-				var contenido=convertirCaracter($('#editconte').val());
+			  var contenido=convertirCaracter($('#editconte').val());
 			  var data_cont=Base64.encode(contenido);
 			  var titulo=Base64.encode($('#edit-titulo').val());
 				cadena = [ 	'idmenu='   + editidmenu,
@@ -26,7 +35,7 @@ function Guardaredit(){
 				  	    type: 'post',
 				        dataType: 'json',
 				        success: function(data){
-				        		$("#validacion").html(data.mensaje);
+				        	mensaje(data.mensaje);
 				        	
 				        }
 					
@@ -41,18 +50,6 @@ function Guardaredit(){
 		    }
 }
 
-$( function(){
-
-
-		var cledDesc = $("#editconte").cleditor()[0];
-		var frameDesc =  cledDesc.$frame[0].contentWindow.document;
-
-		$(frameDesc).catchpaste( 
-					function (pasted,options){
-						
-						 return null; 
-						} );
-		    } );
 		function editar(idmenu){
 			var $tabs = $('#tabs').tabs();
 			$tabs.tabs('select', 0);
@@ -67,20 +64,28 @@ $( function(){
 		        url: "../SMenu",
 		        data: cadena,
 		  	    type: 'post',
-		        success: function(data){
-		        	editidmenu=idmenu;
-					var result=eval("(" +Base64.decode(data)+")");
-					$('#edit-area').text(result.areanombre);	
+		  	  	success: function(data){
+		  	  		var data_desc=Base64.decode( data );
+		        	result=eval("("+data_desc+")");
+		        	$('#edit-area').text(result.areanombre);	
 					$('#edit-submenu').text(result.submenu);
+					
 		        	$('#edit-titulo').val(result.descripcion);
-					$("#editconte").cleditor()[0].execCommand("inserthtml", result.contenido,null,null);
+					editidmenu=idmenu;
 					editarea=result.idarea;
-					//$("#editconte").cleditor()[0].focus();
-		        }
-			
-		    });
+					//$("#editconte").cleditor()[0].execCommand("pastetext");
+					contenido=replaceAll(result.contenido,"'","\"");
+					//$("#editconte").cleditor({width:600, height:300, updateTextArea:function (){}})[0].execCommand("inserthtml",contenido, null, null);
+		        	
+					$("#editconte").cleditor()[0].execCommand("inserthtml", contenido,null,null);
+					$("#editconte").cleditor()[0].focus();
+		        }});	
+
+			CargarImagenes();
+			limpiar();		    
 			
 		}
+		
 </script>
 				
 				ID:  <label id="edit-id"></label><br/>

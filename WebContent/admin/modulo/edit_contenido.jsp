@@ -7,8 +7,6 @@ if(ss!=null && session.getAttribute("user")!=null){
 %>				
 			<script  type="text/javascript">
 			var editidmenu=0;
-			var editidimagen=0;
-			var editarea=0;
 			function replaceAll( text, busca, reemplaza ){
 				  while (text.toString().indexOf(busca) != -1)
 				      text = text.toString().replace(busca,reemplaza);
@@ -33,6 +31,7 @@ if(ss!=null && session.getAttribute("user")!=null){
 
 			 
 			  $(document).ready(function () {
+				  $( "#dialog:ui-dialog" ).dialog( "destroy" );
 				  $("#flex1").flexigrid
 					({
 						method: 'POST',
@@ -61,12 +60,24 @@ if(ss!=null && session.getAttribute("user")!=null){
 					});				  
 			  
 					
-					
 			  });
 			  
-			  
-			  
+			  function mensaje(mens){
+				  
+				  $( "#dialog-message" ).html(mens);
+					$( "#dialog-message" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+			  }
 			</script>
+			<div id="dialog-message" title="Mensaje de Informaci&oacute;n">
+		
+			</div>
 			<div class="centerd">
 			<h2>Editar Contenido</h2>
 			</div>
@@ -92,7 +103,7 @@ if(ss!=null && session.getAttribute("user")!=null){
 				<div style="clear: both;"></div>
 			</div>
 			<div id="tabs-3" style="width:1000px; ">
-				
+				<jsp:include page="uploadPDF.jsp" />
 			</div>
 			</div>
 <% } %>			

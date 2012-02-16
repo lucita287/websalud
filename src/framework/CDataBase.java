@@ -12,7 +12,8 @@ import com.mysql.jdbc.PreparedStatement;
 import data.CArea;
 import data.CCategoria;
 import data.CConfiguracion;
-import data.CImagen;
+import data.CContenido;
+import data.CMultimedia;
 import data.CMenu;
 import data.CNoticia;
 import data.CPregunta;
@@ -138,7 +139,7 @@ public class CDataBase {
 		int temp=0;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(max(idpregunta),0) cant  FROM pregunta where categoriaidcategoria= ?");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(idpregunta),0) cant  FROM pregunta where categoriaidcategoria= ?");
 			stm.setInt(1,idcategoria);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
@@ -467,11 +468,11 @@ public class CDataBase {
 		
 		return temp;
 	}
-	public int getImagenTotal(){
+	public int getMultimediaTotal(){
 		int temp=0;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(max(idimagen),0) cant  FROM imagen");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(idmultimedia),0) cant  FROM multimedia");
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
 			temp=rs2.getInt("cant");
@@ -482,15 +483,16 @@ public class CDataBase {
 		
 		return temp;
 	}
-	public boolean SafeImagen(CImagen imagen){
+	public boolean SafeMultimedia(CMultimedia imagen){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO imagen   ( direccion, direccion_relativa, tamanio, usuarioidusuario) VALUES ( ?, ?, ?, ?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO multimedia   ( direccion, direccion_relativa, tamanio, usuarioidusuario,tipo) VALUES ( ?, ?, ?, ?,?)");
 			
 			stm.setString(1, imagen.getdireccion());
 			stm.setString(2, imagen.getdireccion_relativa());
 			stm.setInt(3, imagen.gettamanio());
 			stm.setInt(4, imagen.getusuarioidusuario().getidusuario());
+			stm.setInt(5, imagen.gettipo());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -501,15 +503,15 @@ public class CDataBase {
 		
 		return false;
 	}
-	public CImagen getImagenEspecifica(String path){
-		CImagen temp=null;
+	public CMultimedia getMultimediaEspecifica(String path){
+		CMultimedia temp=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idimagen, direccion, direccion_relativa, tamanio, usuarioidusuario FROM imagen where  direccion = ?");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idmultimedia, direccion, direccion_relativa, tamanio, usuarioidusuario, tipo FROM multimedia where  direccion = ?");
 			stm.setString(1, path);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
-				temp=new CImagen( rs2.getInt("idimagen"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),rs2.getInt("tamanio"),null);
+				temp=new CMultimedia( rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),rs2.getInt("tamanio"),rs2.getInt("tipo"),null);
 			}
 		} catch (SQLException e) {
 
@@ -517,6 +519,104 @@ public class CDataBase {
 		}
 		
 		return temp;
+	}
+	public CMultimedia getMultimediaEspecifica(int idmultimedia){
+		CMultimedia temp=null;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idmultimedia, direccion, direccion_relativa, tamanio, usuarioidusuario, tipo FROM multimedia where  idmultimedia = ?");
+			stm.setInt(1, idmultimedia);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+				temp=new CMultimedia( rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),rs2.getInt("tamanio"),rs2.getInt("tipo"),null);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return temp;
+	}
+	public boolean SafeContenido(CContenido conte){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO contenido(menuidmenu,  descripcion, titulo,  multimediaidmultimedia) VALUES  (?, ?, ?, ?)");
+			
+			stm.setInt(1, conte.getidmenu().getidmenu());
+			stm.setString(2, conte.getdescripcion());
+			stm.setString(3, conte.gettitulo());
+			stm.setInt(4, conte.getmultimedia().getidimagen());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public int getContenidoTotal(int tipo,int idmenu){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(idcontenido),0) cant  FROM contenido c,multimedia m where  c.multimediaidmultimedia=m.idmultimedia and m.tipo=? and  c.menuidmenu=?");
+			stm.setInt(1, tipo);
+			stm.setInt(2, idmenu);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public ArrayList<CContenido> getContenidoLista(int tipo,int idmenu){
+		
+		
+		ArrayList<CContenido> ret=new ArrayList<CContenido>();
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT c.idcontenido,c.descripcion, c.titulo, m.idmultimedia, m.direccion, m.direccion_relativa FROM contenido c,multimedia m  where  c.multimediaidmultimedia=m.idmultimedia and m.tipo=? and  c.menuidmenu=?");
+                stm.setInt(1, tipo);
+    			stm.setInt(2, idmenu);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CMultimedia temp_mult=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0,0,null);
+                        CContenido temp=new CContenido( rs.getInt("idcontenido"),rs.getString("descripcion"),rs.getString("titulo"),temp_mult,null);
+                        ret.add(temp);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+        	e.printStackTrace();
+        }
+        return ret;
+	}
+public CContenido getContenido(int idcontenido){
+		
+		
+		CContenido temp=null;
+        try{
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT c.idcontenido,c.descripcion, c.titulo, m.idmultimedia, m.direccion, m.direccion_relativa FROM contenido c,multimedia m  where  c.multimediaidmultimedia=m.idmultimedia and  c.idcontenido=?");
+                stm.setInt(1, idcontenido);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CMultimedia temp_mult=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0,0,null);
+                        temp=new CContenido( rs.getInt("idcontenido"),rs.getString("descripcion"),rs.getString("titulo"),temp_mult,null);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+        	e.printStackTrace();
+        }
+        return temp;
 	}
 	public void Close(){
 		try{
@@ -526,4 +626,24 @@ public class CDataBase {
 
 		}
 	}
+	public boolean UpdateContenido(CContenido contenido){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE contenido SET descripcion = ?, titulo = ?, multimediaidmultimedia = ? WHERE idcontenido =?");
+			
+			stm.setString(1, contenido.getdescripcion());
+			stm.setString(2, contenido.gettitulo());
+			stm.setInt(3, contenido.getmultimedia().getidimagen());
+			stm.setInt(4, contenido.getidcontenido());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 }

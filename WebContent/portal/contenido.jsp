@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataBase" %>
 <%@ page import="data.CMenu" %>
+<%@ page import="data.CContenido" %>
+<%@ page import="java.util.ArrayList" %>
 <%
 int idmenu=1;
 try {
@@ -11,6 +13,7 @@ idmenu=Integer.parseInt(request.getParameter("idmenu"));
 CDataBase dbo=new CDataBase();
 dbo.Connect();
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
+ArrayList<CContenido> list=dbo.getContenidoLista(1, idmenu);
 dbo.Close();
 %>
 <style>
@@ -51,4 +54,75 @@ $(function(){
 		</div>
 		<% } %>
 		<br/>
+		
+	<style>
+
+		#gallery img {
+			border: none;
+		}
+
+		#gallery_nav {
+			float: left;
+			width: 150px;
+			text-align: center;
+		}
+
+		#gallery_output {
+			float: left;
+			width: 600px;
+			height: 550px;
+			overflow: hidden;
+		}
+
+		#gallery_output img {
+			display: block;
+			margin: 20px auto 0 auto;
+		}
+
+	</style>
+	<script language="javascript">
+	
+		$(document).ready(function() {
+			$("#gallery_output img").not(":first").hide();
+
+			$("#gallery a").click(function() {
+				if ( $("#" + this.rel).is(":hidden") ) {
+					$("#gallery_output img").slideUp();
+					$("#" + this.rel).slideDown();
+				}
+			});
+		});
+
+	</script>
+				
+		
+		<div id="gallery">
+			<div id="gallery_nav">
+			<% for(int h=0; h<list.size(); h++){ 
+									CContenido conte=list.get(h);
+								%>
+				<a rel="img"<%=h%> href="javascript:;"><img src="<%=conte.getmultimedia().getdireccion_relativa()%>"></a>
+	
+			<% } %>
+			</div>
+			
+			<div id="gallery_output">
+				<% for(int h=0; h<list.size(); h++){ 
+									CContenido conte=list.get(h);
+						if(h==0){%>
+							<img id="img"<%=h%> src="<%=conte.getmultimedia().getdireccion_relativa()%>">
+						<% }else{%>
+							<img style="display: none;" id="img<%=h%>" src="<%=conte.getmultimedia().getdireccion_relativa()%>">
+						<%}%>
+
+				<% 
+					
+					}
+				%>
+			</div>
+		</div>	
+		
+
+		
+		
 	<div style="clear: both;"></div>					
