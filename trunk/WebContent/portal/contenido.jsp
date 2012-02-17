@@ -38,10 +38,20 @@ dbo.Close();
                     background: #ccc;
    					margin: 0px 20px 20px 20px;
                }
+               
+						#gallery_nav {
+						width: 80%;
+						height: 130px;
+						overflow: auto;
+						max-height: 150px;
+						background: #eeeef4;
+						}	
 </style>
 <script>
 $(function(){
-	$('#panel-texto-c').jScrollPane();			
+	$('#panel-texto-c1').jScrollPane();
+	$('#panel-texto-c2').jScrollPane();
+	$('#panel-texto-c3').jScrollPane();
 });
 </script>
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
@@ -61,11 +71,7 @@ $(function(){
 			border: none;
 		}
 
-		#gallery_nav {
-			float: left;
-			width: 150px;
-			text-align: center;
-		}
+
 
 		#gallery_output {
 			float: left;
@@ -96,31 +102,34 @@ $(function(){
 	</script>
 				
 		
-		<div id="gallery">
-			<div id="gallery_nav">
-			<% for(int h=0; h<list.size(); h++){ 
-									CContenido conte=list.get(h);
-								%>
-				<a rel="img"<%=h%> href="javascript:;"><img src="<%=conte.getmultimedia().getdireccion_relativa()%>"></a>
-	
-			<% } %>
+<div id="gallery">
+			<div id="container">
+				<div id="gallery_nav" >
+					<p style="width: <%=list.size()*150%>px;">
+					<% for(int h=0; h<list.size(); h++){ 
+					CContenido temp=list.get(h);
+					%>
+						<a rel="img<%=h %>" href="javascript:;"><img src="<%=temp.getmultimedia().getdireccion_relativa()%>" width="120px" heigth="120px"></a>
+						
+					<% }%>	
+					</p>
+				<div style="clear: both;"></div>	
+				</div>
+				
 			</div>
-			
 			<div id="gallery_output">
-				<% for(int h=0; h<list.size(); h++){ 
-									CContenido conte=list.get(h);
-						if(h==0){%>
-							<img id="img"<%=h%> src="<%=conte.getmultimedia().getdireccion_relativa()%>">
-						<% }else{%>
-							<img style="display: none;" id="img<%=h%>" src="<%=conte.getmultimedia().getdireccion_relativa()%>">
-						<%}%>
-
-				<% 
+			<% for(int h=0; h<list.size(); h++){ 
+					CContenido temp=list.get(h);
+					if(h==0){
+					%>
+				<img id="img<%=h %>" width="600px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					<%}else{ %>
 					
-					}
-				%>
-			</div>
-		</div>	
+				<img style="display: none;" id="img<%=h %>" width="600px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					<%}
+				} %>
+			</div>	
+	</div>
 		
 
 		
