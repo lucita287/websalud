@@ -29,7 +29,7 @@ dbo.Close();
 									</table>	
 							</div>
 							<div id="ppivs">
-								<img src="images/final_user/PPIVS.jpg" width="550px" heigth="300px"/>
+								<img src="images/final_user/PPIVS.png" width="450px" heigth="158px"/>
 							</div>	
 						</div>
 					</div>
