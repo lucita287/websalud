@@ -46,13 +46,42 @@ dbo.Close();
 						max-height: 150px;
 						background: #eeeef4;
 						}	
+						#gallery img {
+							border: none;
+						}
+				
+				
+				
+						#gallery_output {
+							float: left;
+							width: 600px;
+							height: 550px;
+							overflow: hidden;
+						}
+				
+						#gallery_output img {
+							display: block;
+							margin: 20px auto 0 auto;
+						}
 </style>
-<script>
+<script language="javascript">
 $(function(){
 	$('#panel-texto-c1').jScrollPane();
 	$('#panel-texto-c2').jScrollPane();
 	$('#panel-texto-c3').jScrollPane();
+	$('#gallery_nav').jScrollPane();
 });
+$(document).ready(function() {
+	$("#gallery_output img").not(":first").hide();
+
+	$("#gallery a").click(function() {
+		if ( $("#" + this.rel).is(":hidden") ) {
+			$("#gallery_output img").slideUp();
+			$("#" + this.rel).slideDown();
+		}
+	});
+});
+
 </script>
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
 		<br/>
@@ -65,41 +94,7 @@ $(function(){
 		<% } %>
 		<br/>
 		
-	<style>
 
-		#gallery img {
-			border: none;
-		}
-
-
-
-		#gallery_output {
-			float: left;
-			width: 600px;
-			height: 550px;
-			overflow: hidden;
-		}
-
-		#gallery_output img {
-			display: block;
-			margin: 20px auto 0 auto;
-		}
-
-	</style>
-	<script language="javascript">
-	
-		$(document).ready(function() {
-			$("#gallery_output img").not(":first").hide();
-
-			$("#gallery a").click(function() {
-				if ( $("#" + this.rel).is(":hidden") ) {
-					$("#gallery_output img").slideUp();
-					$("#" + this.rel).slideDown();
-				}
-			});
-		});
-
-	</script>
 				
 		
 <div id="gallery">
