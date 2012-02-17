@@ -62,11 +62,9 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 
 
 
-<div id="footer">
-<p>Copyright &copy; 2011. <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" title="This page validates as CSS"><abbr title="Cascading Style Sheets">CSS</abbr></a></p> 
-	<p><!-- Do not remove -->Designed by <a href="http://www.metamorphozis.com/" title="Free Web Templates">Free Web Templates</a>, coded by <a href="http://www.myfreecsstemplates.com/" title="Free CSS Templates">Free CSS Templates</a><!-- end -->               
-		</p>
-	</div>
+
+<jsp:include page="../portal/footer.jsp" />
+
 </div>
 
 <!-- footer ends-->

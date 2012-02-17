@@ -14,6 +14,7 @@ CDataBase dbo=new CDataBase();
 dbo.Connect();
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 ArrayList<CContenido> list=dbo.getContenidoLista(1, idmenu);
+int total_imag=dbo.getContenidoTotal(1, idmenu);
 dbo.Close();
 %>
 <style>
@@ -83,6 +84,9 @@ $(document).ready(function() {
 });
 
 </script>
+
+
+
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
 		<br/>
 		<% if(temp_menu.getsize()>0 & temp_menu.getsize()<4){ %>
@@ -95,7 +99,7 @@ $(document).ready(function() {
 		<br/>
 		
 
-				
+<% if(total_imag>0){ %>				
 		
 <div id="gallery">
 			<div id="container">
@@ -126,7 +130,7 @@ $(document).ready(function() {
 			</div>	
 	</div>
 		
-
+<% } %>
 		
 		
 	<div style="clear: both;"></div>					

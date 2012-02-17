@@ -1,13 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="framework.CDataBase" %>
-<%@ page import="data.CConfiguracion" %>
-<%
-CDataBase dbo=new CDataBase();
-dbo.Connect();
-CConfiguracion temp=dbo.getConfiguracion();
-dbo.Close();
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -57,38 +49,9 @@ dbo.Close();
 </div>
 <!--footer begins -->
 
-				<div class="row-top">
-					<div class="row-padding">
-						<div class="wrapper">
-							<div id="contactanos">
-								<h2>CONTACTANOS</h2>
-									<table>
-										<tr>
-											<td><span>Direccion:</span></td> <td><%=temp.getdireccion()%></td>
-										</tr>
-										<tr>
-											<td><span>Telefono:</span></td><td><%=temp.gettelefono()%></td>
-										</tr>
-										<tr>
-											<td><span>Fax:</span></td><td><%=temp.getfax()%></td>
-										</tr>	
-									 	<tr>
-											<td><span>Email:</span></td><td><%=temp.getcorreo_electronico()%></td>
-										</tr>
-									</table>	
-							</div>
-							<div id="ppivs">
-								<img src="images/final_user/PPIVS.jpg" width="550px" heigth="300px"/>
-							</div>	
-						</div>
-					</div>
-				</div>
-
-<div id="footer">
-<p>Unidad de Salud 2012. | <a href="http://www.usac.edu.gt/">USAC</a>  </p> 
-	              
-		</p>
-	</div>
+<jsp:include page="portal/addInfo.jsp" />				
+	<div style="clear: both;"></div>
+<jsp:include page="portal/footer.jsp" />
 </div>
 
 <!-- footer ends-->
