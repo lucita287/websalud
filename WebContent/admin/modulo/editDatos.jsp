@@ -51,15 +51,14 @@ function Guardaredit(){
 }
 
 		function editar(idmenu){
+			$("#editconte").cleditor()[0].clear();
+			editidmenu=idmenu;
 			var $tabs = $('#tabs').tabs();
 			$tabs.tabs('select', 0);
-			$("#editconte").cleditor()[0].clear();
-			
 			$('#edit-id').text(idmenu);
 			 cadena = [ 'idmenu='     + idmenu,
 			            'a=show',
 			        ].join('&');
-			
 			$.ajax({
 		        url: "../SMenu",
 		        data: cadena,
@@ -69,14 +68,9 @@ function Guardaredit(){
 		        	result=eval("("+data_desc+")");
 		        	$('#edit-area').text(result.areanombre);	
 					$('#edit-submenu').text(result.submenu);
-					
 		        	$('#edit-titulo').val(result.descripcion);
-					editidmenu=idmenu;
 					editarea=result.idarea;
-					//$("#editconte").cleditor()[0].execCommand("pastetext");
 					contenido=replaceAll(result.contenido,"'","\"");
-					//$("#editconte").cleditor({width:600, height:300, updateTextArea:function (){}})[0].execCommand("inserthtml",contenido, null, null);
-		        	
 					$("#editconte").cleditor()[0].execCommand("inserthtml", contenido,null,null);
 					$("#editconte").cleditor()[0].focus();
 		        }});	

@@ -17,7 +17,6 @@ $(document).ready(function () {
 	
 });
 function editar_conte(idconte){
-	mensaje("HOlaaaaaaa");
 	$("#idimagen").text(idconte);
 	idmultimedia=idconte;
 	 cadena = [ 'idcontenido='     + idconte,
@@ -40,9 +39,7 @@ function editar_conte(idconte){
 var idimagen=0;
 var idmultimedia=0;
 $(function () {
-	var input = $('#input');
-	
-    $('#fileupload').fileupload({
+	 $('#fileupload').fileupload({
         dataType: 'json',
         url: '../uploadimagen',
         done: function (e, data) {
@@ -65,7 +62,7 @@ $(function () {
             	}
             	
             });
-            $('#validacion_imagen').html(cadena);
+            $("#validacion_imagen").html(cadena);
         }
     });
 });
@@ -80,55 +77,55 @@ function limpiar(){
 function guardarImagen(){
 	var titulo=convertirCaracter($.trim($("#tituloimagen").val()));
 	var descripcion=convertirCaracter($.trim($("#descripcionimagen").val()));	
-	
-	if(idmultimedia==0){
-		cadena = [ 	'idimagen='   + idimagen,
-	             	'a=guardaredit',
-		            'titulo='+Base64.encode(titulo),
-		            'contenido='+Base64.encode(descripcion),
-		            'idmenu='     + editidmenu
-		        ].join('&');
-
 		if(titulo!=''){
 			if(descripcion!=""){
-			 $("#validacion").html("No se ha actualizado"); 
-			  $.ajax({
+			
+			if(idmultimedia==0){
+				cadena = [ 	'idimagen='   + idimagen,
+			             	'a=guardaredit',
+				            'titulo='+Base64.encode(titulo),
+				            'contenido='+Base64.encode(descripcion),
+				            'idmenu='     + editidmenu
+				        ].join('&');
+			
+			
+						  $.ajax({
+						        url: "../SContenido",
+						        data: cadena,
+						  	    type: 'post',
+						        dataType: 'json',
+						        success: function(data){
+						        	mensaje(data.mensaje); 	
+						        		CargarImagenes();
+						        }
+						    });
+			}else{
+				cadena = [ 	'idimagen='   + idimagen,
+			             	'a=updateedit',
+				            'titulo='+Base64.encode(titulo),
+				            'contenido='+Base64.encode(descripcion),
+				            'idmenu='     + editidmenu,
+				            'idconte='+idmultimedia
+				        ].join('&');
+				$.ajax({
 			        url: "../SContenido",
 			        data: cadena,
 			  	    type: 'post',
 			        dataType: 'json',
 			        success: function(data){
-			        		$("#validacion").html(data.mensaje); 	
+			        	mensaje(data.mensaje); 	
+			        		limpiar();
+			        		CargarImagenes();
 			        }
 			    });
+			}		  
 			}else{
-				$('#validacion_imagen').html("Debe ingresar la descripcion");
+				$("#validacion_imagen").html("Debe ingresar la descripcion");
 			}
 		}else{
-			$('#validacion_imagen').html("Debe ingresar el titulo");	
+			$("#validacion_imagen").html("Debe ingresar el titulo");	
 		}
-	}else{
-		cadena = [ 	'idimagen='   + idimagen,
-	             	'a=updateedit',
-		            'titulo='+Base64.encode(titulo),
-		            'contenido='+Base64.encode(descripcion),
-		            'idmenu='     + editidmenu,
-		            'idconte='+idmultimedia
-		        ].join('&');
-		$.ajax({
-	        url: "../SContenido",
-	        data: cadena,
-	  	    type: 'post',
-	        dataType: 'json',
-	        success: function(data){
-	        		$("#validacion").html(data.mensaje); 	
-	        		limpiar();
-	        }
-	    });
-		
-	}
-	CargarImagenes();
-	
+
 }
 
 </script>
