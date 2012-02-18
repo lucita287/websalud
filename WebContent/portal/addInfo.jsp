@@ -28,8 +28,8 @@ dbo.Close();
 										</tr>
 									</table>	
 							</div>
-							<div id="ppivs">
-								<img src="images/final_user/PPIVS.png" width="450px" heigth="158px"/>
+							<div id="ppivs" onclick="ppivs()" >
+								<a href="#Cont-Panel-texto"><img src="images/final_user/PPIVS.png" width="450px" heigth="158px"/></a>
 							</div>	
 						</div>
 					</div>
