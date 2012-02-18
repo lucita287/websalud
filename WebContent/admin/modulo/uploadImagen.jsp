@@ -73,6 +73,7 @@ function limpiar(){
 	   $('#tituloimagen').val('');
 	   $('#descripcionimagen').val('');
 	   $('#validacion_prin').html("");
+	   $("#validacion_data").html("");
 	   $('#pathimagen').text('NO SE HA SUBIDO IMAGEN');
 	   $("#validacion_imagen").html("");
 }

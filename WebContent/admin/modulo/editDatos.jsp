@@ -28,14 +28,14 @@ function Guardaredit(){
 					            'contenido='+data_cont,
 					            'size='+$('#edit-tam').val()
 					        ].join('&');
-				 $("#validacion_prin").html("No se ha actualizado"); 
+				 $("#validacion_data").html("No se ha actualizado"); 
 				  $.ajax({
 				        url: "../SMenu",
 				        data: cadena,
 				  	    type: 'post',
 				        dataType: 'json',
 				        success: function(data){
-				        	$("#validacion_prin").html("");
+				        	$("#validacion_data").html("");
 				        	mensaje(data.mensaje);
 				        	
 				        }
@@ -44,10 +44,10 @@ function Guardaredit(){
 				  
 				  
 		  }else{
-			  $("#validacion_prin").html("El titulo no puede estar vacio");
+			  $("#validacion_data").html("El titulo no puede estar vacio");
 		  }
 	  }else{
-		  $("#validacion_prin").html("Debe Seleccionar un item");
+		  $("#validacion_data").html("Debe Seleccionar un item");
 		  
 		    }
 	  
@@ -73,9 +73,8 @@ function Guardaredit(){
 		        	$('#edit-area').text(result.areanombre);	
 					$('#edit-submenu').text(result.submenu);
 		        	$('#edit-titulo').val(result.descripcion);
-					contenido=replaceAll(result.contenido,"'","\"");
-					$('#edit-tam').val(result.size);
-					$("#editconte").cleditor()[0].execCommand("inserthtml", contenido,null,null);
+		        	$('#edit-tam').val(result.size);
+		        	$("#editconte").cleditor()[0].execCommand("inserthtml",result.contenido,null,null);
 					$("#editconte").cleditor()[0].focus();
 					
 					
@@ -85,16 +84,22 @@ function Guardaredit(){
 			limpiar();		    
 			
 		}
+		
 		function eliminar_conte(){
-			if(editidmenu>0){
-				
-			}else{
-				$("#validacion_prin").html("Debe seleccionar un item");
+			 if(editidmenu>0){
+					if(!confirm("Confirma que desea eliminar, tambien las imagenes y pdf ")) {	 
+					}else {
+				         
+				    }
+			 }else{
+				  $("#validacion_data").html("Debe Seleccionar un item");
+				  
 			}
+				
 		}
 		
 </script>
-				
+				<div id="validacion_data" class="validacion"></div>
 				ID:  <label id="edit-id"></label><br/>
 				Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
 				Area Pertenece: <label id="edit-area"></label><br/>
@@ -109,7 +114,7 @@ function Guardaredit(){
 				
 				<br/><br/>
 				<div class="centerd">
-						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-					<a href="#validacion_prin"  class="ui-state-default ui-corner-all button-delete" onclick="eliminar_conte()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+						<a href="#validacion_data" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+					<a href="#validacion_data"  class="ui-state-default ui-corner-all button-delete" onclick="eliminar_conte()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 				</div>
 				<br/><br/>
