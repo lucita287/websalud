@@ -16,6 +16,7 @@ import data.CMenu;
 
 import framework.Base64core;
 import framework.CDataBase;
+import framework.CValidation;
 
 /**
  * Servlet implementation class SMenu
@@ -48,11 +49,11 @@ public class SMenu extends HttpServlet {
 		
 		String action=request.getParameter("a");
 		Base64core base64=new Base64core();
-		
+		CValidation valid=new CValidation();
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
 		if(action.equalsIgnoreCase("show")){
-		 int idmenu=Integer.parseInt(request.getParameter("idmenu"));
+		 int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
 		 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 		 String result="";
 		 if(temp_menu!=null){
@@ -62,29 +63,28 @@ public class SMenu extends HttpServlet {
 		 }
 		 out.println(base64.codificar(result));
 		}else if(action.equalsIgnoreCase("admin")){
-			int idmenu=0;
-			try{
-				idmenu=Integer.parseInt(request.getParameter("idmenu")==null?"1":request.getParameter("idmenu"));
-			}catch (Exception e){} 
+			int idmenu=valid.ConvertEntero(request.getParameter("idmenu")==null?"1":request.getParameter("idmenu"));
 			HttpSession session = request.getSession();
-			 session.setAttribute("portal", new Integer(idmenu));
+			session.setAttribute("portal", new Integer(idmenu));
 		}else if(action.equalsIgnoreCase("guardaredit")){
-			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";
+			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";			
+			int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
 			
-			int idmenu=Integer.parseInt(((request.getParameter("idmenu")==null)?"0":request.getParameter("idmenu")));
-				if(idmenu>0){
-					int size=Integer.parseInt(request.getParameter("size"));
-					String titulo=request.getParameter("titulo");
-					titulo=base64.decodificar(titulo);
-					titulo=titulo.replaceAll("\"", "'");
-					titulo=titulo.trim();					
-					if(titulo.trim()!=""){
+			int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
+			String titulo=valid.ValidarRequest(request.getParameter("titulo"));
+			titulo=base64.decodificar(titulo);
+			titulo=valid.Limpiarvalor(titulo);
+			String contenido=(valid.ValidarRequest(request.getParameter("contenido")));		
+			contenido=base64.decodificar(contenido);
+			contenido=valid.Limpiarvalor(contenido);
+			String validacion=valid.ValidarSiesMayor(idmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "titulo"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 3990, "Contenido"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 3, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
+				if(validacion.compareTo("")==0){
 						CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 							if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().trim().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
-								
-								String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
-								contenido=base64.decodificar(contenido);
-								contenido=contenido.replaceAll("\"", "'");
 								temp_menu.setcontenido(contenido);
 								temp_menu.setdescripcion(titulo);
 								temp_menu.setsize(size);
@@ -94,15 +94,10 @@ public class SMenu extends HttpServlet {
 							}else{
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede cambiarse en el menu principal -"+temp_menu.getdescripcion()+"-"+titulo+"#\"}";
 							}
-					}else{
-						result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede estar vacio\"}";
-					}
-				}else{
-					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}";
-				}
+				}else result=validacion;
 				out.println(result);
 		}else if(action.equalsIgnoreCase("showsubmenu")){
-			int idarea=Integer.parseInt((request.getParameter("idarea")==null)?"1":request.getParameter("idarea"));
+			int idarea=valid.ConvertEntero((request.getParameter("idarea")==null)?"1":request.getParameter("idarea"));
 			ArrayList<CMenu> list_menu=dbo.getMenu(idarea);
 			String data="";
 			for(int i=0; i<list_menu.size(); i++){
@@ -115,24 +110,22 @@ public class SMenu extends HttpServlet {
 				out.println(result);
 		}else if(action.equalsIgnoreCase("guardarnew")){
 			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";
-			String titulo=request.getParameter("titulo");
+			String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 			titulo=base64.decodificar(titulo);
-			titulo=titulo.replaceAll("\"", "\\\"");
-			titulo=titulo.trim();
-
-			if(!titulo.equalsIgnoreCase("")){
-				String contenido=(request.getParameter("contenido")==null?"":request.getParameter("contenido"));		
-				contenido=base64.decodificar(contenido);
-				contenido=contenido.replaceAll("\"", "'");
-				
-				int idsubmenu=0;
-				int size=4;
-				try{
-					idsubmenu=Integer.parseInt(request.getParameter("submenu"));
-					size=Integer.parseInt(request.getParameter("size"));
-				}catch(Exception e){}
-				if(idsubmenu>0){
-					int idarea=Integer.parseInt(request.getParameter("area"));
+			titulo=valid.Limpiarvalor(titulo);
+			String contenido=valid.ValidarRequest(request.getParameter("contenido"));
+			contenido=base64.decodificar(contenido);
+			contenido=valid.Limpiarvalor(contenido);
+			int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
+			int idsubmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("submenu")));
+			String validacion=valid.ValidarCampoVacio(titulo, "titulo");
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 3990, "Contenido"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 3, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idsubmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un submenu\"}"):validacion;
+								
+				if(validacion.compareTo("")==0){
+					int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("area")));
 					CMenu menu=dbo.getMenuEspecifico(idsubmenu);
 					CArea area=dbo.getCAreaEspecifico(idarea);
 					CMenu newmenu=new CMenu(0,titulo,area,contenido,size,menu);
@@ -140,11 +133,8 @@ public class SMenu extends HttpServlet {
 					if(b)result="{\"resultado\":\"OK\",\"mensaje\":\"ACTUALIZACI&Oacute;N\"}";
 					else result="{\"resultado\":\"ERROR\",\"mensaje\":\"PROBLEMA AL GUARDAR\"}";
 				}else{
-					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un submenu\"}";
+					result=validacion;
 				}
-			}else{
-				result="{\"resultado\":\"ERROR\",\"mensaje\":\"El titulo no puede estar vacio\"}";
-			}	
 			out.println(result);
 		}
 		dbo.Close();
