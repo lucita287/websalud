@@ -74,6 +74,7 @@ if(ss!=null && session.getAttribute("user")!=null){
 						}
 					});
 			  }
+			  
 			</script>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n">
 		
