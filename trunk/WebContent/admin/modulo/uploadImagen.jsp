@@ -72,9 +72,12 @@ function limpiar(){
 	   $('#idimagen').text('NEW');
 	   $('#tituloimagen').val('');
 	   $('#descripcionimagen').val('');
+	   $('#validacion_prin').html("");
 	   $('#pathimagen').text('NO SE HA SUBIDO IMAGEN');
+	   $("#validacion_imagen").html("");
 }
 function guardarImagen(){
+	if(editidmenu>0){
 	var titulo=convertirCaracter($.trim($("#tituloimagen").val()));
 	var descripcion=convertirCaracter($.trim($("#descripcionimagen").val()));	
 		if(titulo!=''){
@@ -97,6 +100,7 @@ function guardarImagen(){
 						        success: function(data){
 						        	mensaje(data.mensaje); 	
 						        		CargarImagenes();
+						        		limpiar();
 						        }
 						    });
 			}else{
@@ -125,8 +129,12 @@ function guardarImagen(){
 		}else{
 			$("#validacion_imagen").html("Debe ingresar el titulo");	
 		}
-
+	}else{
+		$("#validacion_imagen").html("Debe seleccionar un item");
+	}
 }
+
+
 
 </script>
 <form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
@@ -158,9 +166,9 @@ function guardarImagen(){
 								
 				<br/><br/>
 				<div class="centerd">
-						<a href="#" onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
-						<a href="#" onclick="guardarImagen()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-						<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+						<a href="#validacion_imagen"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+						<a href="#validacion_imagen" onclick="guardarImagen()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+						<a href="#validacion_imagen"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 							
 				</div>
 				<br/><br/>

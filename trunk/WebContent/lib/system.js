@@ -32,7 +32,11 @@
 
 		    	$('#Cont-Panel-texto').load("portal/contenido.jsp?idmenu="+idmenu);
 	}
-	
+	function ppivs(){
+		
+
+		    	$('#Cont-Panel-texto').load("portal/ppivs.jsp");
+	}
 
     $(window).load(function() {
 

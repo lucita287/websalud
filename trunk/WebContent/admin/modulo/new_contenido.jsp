@@ -13,7 +13,11 @@
 %>
 
 			<script  type="text/javascript">
-			  $(document).ready(function () {              
+			  $(document).ready(function () {
+				  $("#cont-text").cleditor({
+					    width:        600,
+					    height:       250
+					    });
 				  $("#cont-text").cleditor()[0].focus();
 			  });
 			  
@@ -38,28 +42,40 @@
 									  	    type: 'post',
 									        dataType: 'json',
 									        success: function(data){
+									        	mensaje(data.mensaje);
 									        	if(data.resultado=="OK"){
-									        		$("#validacion").html(data.mensaje);
-									        	}else{
-									        		$("#validacion").html(data.mensaje);	
+									        		$('#new-tam').val(3);
+									        		$('#new-area').val(0);
 									        	}
 									        }
 										
 									    }); 
 						  }else{
-							  $("#validacion").html("Debe seleccionar un SubMenu");
+							  $("#validacion_prin").html("Debe seleccionar un SubMenu");
 						  }		  
 							  
 					  }else{
-						  $("#validacion").html("El titulo no puede estar vacio");
+						  $("#validacion_prin").html("El titulo no puede estar vacio");
 					  }
 			  }
-			  
+			function mensaje(mens){
+				  
+				  $( "#dialog-message" ).html(mens);
+					$( "#dialog-message" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+			  }
 			</script>
+			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<div class="centerd">
 			<H2>Nuevo Contenido</H2>
 			</div>
-				<div id="validacion"></div>
+				<div id="validacion_prin" class="validacion"></div>
 				Titulo: <input id="new-titulo" type="text" size="60" /><br/>
 				Area Pertenece:
 					<select id="new-area" onchange="cambiarArea()">
@@ -78,16 +94,16 @@
 						</select>
 				<br/>
 				Tama&ntilde;o:<select id="new-tam"> 
-						<option value="4">Grande</option>
-						<option value="3">Mediano</option>
+						<option value="3">Grande</option>
+						<option value="2">Mediano</option>
 						<option value="1">Peque&ntilde;o</option>
 						<option value="0">Sin Texto</option>
 				</select>
-				<textarea id="cont-text" class="editor"> Texto </textarea>
+				<textarea id="cont-text" class="editor"></textarea>
 				<br/><br/>
 				<div class="centerd">
-						<a href="#" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-					<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+					<a href="#validacion_prin" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
 				</div>
 				<br/><br/>	
 				<div style="clear: both;"></div>

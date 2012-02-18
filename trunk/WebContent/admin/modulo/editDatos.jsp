@@ -28,13 +28,14 @@ function Guardaredit(){
 					            'contenido='+data_cont,
 					            'size='+$('#edit-tam').val()
 					        ].join('&');
-				 $("#validacion").html("No se ha actualizado"); 
+				 $("#validacion_prin").html("No se ha actualizado"); 
 				  $.ajax({
 				        url: "../SMenu",
 				        data: cadena,
 				  	    type: 'post',
 				        dataType: 'json',
 				        success: function(data){
+				        	$("#validacion_prin").html("");
 				        	mensaje(data.mensaje);
 				        	
 				        }
@@ -43,11 +44,14 @@ function Guardaredit(){
 				  
 				  
 		  }else{
-			  $("#validacion").html("El titulo no puede estar vacio");
+			  $("#validacion_prin").html("El titulo no puede estar vacio");
 		  }
 	  }else{
-		  $("#validacion").html("Debe Seleccionar un item");
+		  $("#validacion_prin").html("Debe Seleccionar un item");
+		  
 		    }
+	  
+	
 }
 
 		function editar(idmenu){
@@ -69,15 +73,24 @@ function Guardaredit(){
 		        	$('#edit-area').text(result.areanombre);	
 					$('#edit-submenu').text(result.submenu);
 		        	$('#edit-titulo').val(result.descripcion);
-					editarea=result.idarea;
 					contenido=replaceAll(result.contenido,"'","\"");
+					$('#edit-tam').val(result.size);
 					$("#editconte").cleditor()[0].execCommand("inserthtml", contenido,null,null);
 					$("#editconte").cleditor()[0].focus();
+					
+					
 		        }});	
 
 			CargarImagenes();
 			limpiar();		    
 			
+		}
+		function eliminar_conte(){
+			if(editidmenu>0){
+				
+			}else{
+				$("#validacion_prin").html("Debe seleccionar un item");
+			}
 		}
 		
 </script>
@@ -96,7 +109,7 @@ function Guardaredit(){
 				
 				<br/><br/>
 				<div class="centerd">
-						<a href="#" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-					<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+					<a href="#validacion_prin"  class="ui-state-default ui-corner-all button-delete" onclick="eliminar_conte()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 				</div>
 				<br/><br/>
