@@ -104,7 +104,7 @@ $(document).ready(function() {
 <div id="gallery">
 			<div id="container">
 				<div id="gallery_nav" >
-					<p style="width: <%=list.size()*150%>px;">
+					<p style="width: <%=((list.size()+1)*130)%>px;">
 					<% for(int h=0; h<list.size(); h++){ 
 					CContenido temp=list.get(h);
 					%>

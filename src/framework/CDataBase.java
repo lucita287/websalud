@@ -645,11 +645,27 @@ public CContenido getContenido(int idcontenido){
 		
 		return false;
 	}
-	public int deleteContenido(int idcontenido){
+	public int deleteMenu(int idmenu){
 		int temp=0;
 		PreparedStatement stm;
 		try {
 			stm = (PreparedStatement)conn.prepareStatement("select EliminarMenu(?) result");
+			stm.setInt(1, idmenu);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("result");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public int deleteContenido(int idcontenido){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select EliminarContenido(?) result");
 			stm.setInt(1, idcontenido);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())

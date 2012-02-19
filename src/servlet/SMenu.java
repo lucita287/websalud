@@ -67,7 +67,7 @@ public class SMenu extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("portal", new Integer(idmenu));
 		}else if(action.equalsIgnoreCase("guardaredit")){
-			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";			
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";			
 			int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
 			
 			int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
@@ -109,7 +109,7 @@ public class SMenu extends HttpServlet {
 				String result=	" {\"menus\": [  "+data+" ] }";
 				out.println(result);
 		}else if(action.equalsIgnoreCase("guardarnew")){
-			String result="{\"resultado\":\""+"\"OK\",\"mensaje\":\"Almacenado\"}";
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 			titulo=base64.decodificar(titulo);
 			titulo=valid.Limpiarvalor(titulo);
@@ -135,6 +135,17 @@ public class SMenu extends HttpServlet {
 				}else{
 					result=validacion;
 				}
+			out.println(result);
+		}else if(action.equalsIgnoreCase("deletemenu")){
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Borrado\"}";
+			int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
+			String validacion=valid.ValidarSiesMayor(idmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+			if(validacion.compareTo("")==0){
+				int res=dbo.deleteMenu(idmenu);
+				if(res==0){
+					result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se puede eliminar el elemento seleccionado\"}";
+				} else result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+			}else result=validacion;
 			out.println(result);
 		}
 		dbo.Close();

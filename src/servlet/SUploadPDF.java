@@ -99,10 +99,10 @@ public class SUploadPDF extends HttpServlet {
 											writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"idsafe\":0,\"Mensaje\":\"Error al guardar\"}");	
 										break; // assume we only get one file at a time
 								}else{
-									writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"idsafe\":0,\"Mensaje\":\"Unicamente se aceptan imagenes del tipo png, gif, jpg\"}");
+									writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"idsafe\":0,\"Mensaje\":\"Unicamente se aceptan imagenes del tipo PDF\"}");
 								}	
 						}else{
-							writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"idsafe\":0,\"Mensaje\":\"La imagen es mas grande de lo permitido, el maximo permitido es "+tam_max+"MB \"}");
+							writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"idsafe\":0,\"Mensaje\":\"El pdf es mas grande de lo permitido, el maximo permitido es "+tam_max+"MB \"}");
 						}	
 					} 
 				}

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import data.CMenu;
 import framework.CDataBase;
+import framework.CValidation;
 
 /**
  * Servlet implementation class SMenuTable
@@ -42,13 +43,13 @@ public class SMenuTable extends HttpServlet {
 			PrintWriter out = response.getWriter(); 
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
-	
-		 int page=Integer.parseInt(request.getParameter("page"));
-		 int rp=Integer.parseInt(request.getParameter("rp"));
-		 String order=request.getParameter("sortname").trim();
-		 String typeorder=request.getParameter("sortorder").trim();
-		 String qtype=request.getParameter("qtype").trim();
-		 String busqueda=request.getParameter("query").trim();
+		 CValidation valid=new CValidation();
+		 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
+		 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
+		 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
+		 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
+		 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")));
+		 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
 		 int pqtype=1;
 		 if(qtype.equalsIgnoreCase("area")){
 			 pqtype=2;
@@ -82,7 +83,7 @@ public class SMenuTable extends HttpServlet {
 		 String data="";
 		 for(int i=0; i<list.size();i++){
 			 CMenu temp=list.get(i);
-		data+="<row id='"+temp.getidmenu()+"'><cell><![CDATA[<input type='radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />]]></cell><cell><![CDATA["+temp.getidmenu()+"]]></cell><cell><![CDATA["+temp.getdescripcion()+"]]></cell><cell><![CDATA["+temp.getareaidarea().getdescripcion()+"]]></cell><cell><![CDATA["+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"]]></cell></row>";	 
+		data+="<row id='"+temp.getidmenu()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />]]></cell><cell><![CDATA["+temp.getidmenu()+"]]></cell><cell><![CDATA["+temp.getdescripcion()+"]]></cell><cell><![CDATA["+temp.getareaidarea().getdescripcion()+"]]></cell><cell><![CDATA["+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"]]></cell></row>";	 
 
 		 }
 		 info+=data+"</rows>";

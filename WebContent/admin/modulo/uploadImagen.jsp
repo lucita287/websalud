@@ -15,8 +15,24 @@ $(document).ready(function () {
 	    
 	});
 	
+	
 });
-function editar_conte(idconte){
+function CargarImagenes(){
+	$.post("../SContenidoTable", {ptipo:1,pmenu:editidmenu},
+	          function (data) {                    
+	              var arr = Array();
+	              arr = eval("(" + data + ")");                    
+	              $('#imagenes').flexAddData(arr);                    
+	       });  	 							
+}
+function LimpiarImagenes(){
+				data="{total: 0, page: 1,rows: [] }";
+	              var arr = Array();
+	              arr = eval("(" + data + ")");                    
+	              $('#imagenes').flexAddData(arr);                    
+	        	 							
+}
+function editar_conte1(idconte){
 	$("#idimagen").text(idconte);
 	idmultimedia=idconte;
 	 cadena = [ 'idcontenido='     + idconte,
@@ -76,6 +92,13 @@ function limpiar(){
 	   $("#validacion_data").html("");
 	   $('#pathimagen').text('NO SE HA SUBIDO IMAGEN');
 	   $("#validacion_imagen").html("");
+	   idpdf=0;
+	   idmultimedia2=0;
+	   $('#idpdf').text('NEW');
+	   $('#titulopdf').val('');
+	   $('#descripcionpdf').val('');
+	   $('#pathpdf').text('NO SE HA SUBIDO PDF');
+	   $("#validacion_pdf").html("");
 }
 function guardarImagen(){
 	if(editidmenu>0){
@@ -135,7 +158,39 @@ function guardarImagen(){
 	}
 }
 
+function eliminar_Contenido(id){
+	var idenviar=0;
+	if(id==1)
+		idenviar=idmultimedia;
+	else
+		idenviar=idmultimedia2;
+	
+	
+	 if(idenviar>0){
+			if(confirm("Confirma que desea eliminar el archivo ")) {
+				cadena = [ 'idcontenido='     + idenviar,
+				            'a=deleteconte',
+				        ].join('&');
+				$.ajax({
+			        url: "../SContenido",
+			        data: cadena,
+			  	    type: 'post',
+			  	  	dataType: 'json',
+			  	  	success: function(data){
+			  	  		mensaje(data.mensaje);
+			  	  		if(data.resultado=='OK'){
+				  	  		limpiar();
+				  	  		CargarImagenes(); CargarPDF();
+			  	  		}	
+			        }});
+				
+			}
+	 }else{
+		 mensaje("Debe Seleccionar un archivo");
 
+	}
+		
+}
 
 </script>
 <form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
@@ -145,7 +200,7 @@ function guardarImagen(){
 				<table  width="80%" CELLSPACING="8">
 					<tr>
 						<td>IDEN</td>
-						<td><label id="idimagen">NEW</label> <input type="hidden" id="" value="3"></td>	
+						<td><label id="idimagen">NEW</label> </td>	
 					</tr>
 					<tr>
 						
@@ -169,7 +224,7 @@ function guardarImagen(){
 				<div class="centerd">
 						<a href="#validacion_imagen"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 						<a href="#validacion_imagen" onclick="guardarImagen()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-						<a href="#validacion_imagen"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+						<a href="#validacion_imagen"  onclick="eliminar_Contenido(1)"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 							
 				</div>
 				<br/><br/>

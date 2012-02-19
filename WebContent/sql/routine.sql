@@ -33,3 +33,17 @@ BEGIN
     RETURN eliminar;
 END
 $$
+DELIMITER $$
+DROP FUNCTION IF EXISTS `EliminarContenido`$$
+CREATE FUNCTION EliminarContenido(pidcontenido int ) RETURNS int
+    DETERMINISTIC
+BEGIN
+    declare vidmultimedia int;
+    
+        SELECT multimediaidmultimedia INTO vidmultimedia FROM contenido where idcontenido=pidcontenido;
+        DELETE FROM contenido WHERE idcontenido=pidcontenido ;
+        DELETE FROM Multimedia WHERE idmultimedia=vidmultimedia;
+    
+    RETURN 1;
+END
+$$
