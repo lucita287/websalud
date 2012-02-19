@@ -193,11 +193,17 @@ public class CDataBase {
 		CArea temp=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea  FROM area where  idarea=? ");
+			
+			String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
+					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" 
+					+"where  idarea=? ";
+			stm = (PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1, idarea);
 			ResultSet rs2=stm.executeQuery();
-			if(rs2.next())
-			temp=new CArea( rs2.getInt("idarea"),rs2.getString("descripcion"),null);
+			if(rs2.next()){
+			CMultimedia multi=new CMultimedia(rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),0L,1,null);	
+			temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),rs2.getString("descripcion"),rs2.getInt("size"),multi,null);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -294,7 +300,7 @@ public class CDataBase {
         try{
         	String query="select * from "
 				+"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion,m.contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
-				+"a.idarea,a.descripcion descripcion_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
+				+"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
 				+"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
 				+"where a.idarea=m.areaidarea and"
 				+" if(? <>'',if(?=1,upper(m.descripcion) like upper(?),upper(a.descripcion) like upper(?)),true )"
@@ -314,7 +320,8 @@ public class CDataBase {
                 				ArrayList<CMenu> templist=null;
                 				
                                 CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist);
-                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("descripcion_area"),null);
+                                
+                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
                                 CMenu temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp);
                                 ret.add(temp_menu);                        
                 }
@@ -394,12 +401,14 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaLista(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea, direccion,direccion_relativa from area");
+        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
+					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" ;
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
-                		CArea temp_menu=null;
-                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"),null );
-                        ret.add(temp_menu);
+                	CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);	
+                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,null);
+                	ret.add(temp);
                         
                 }
                 rs.close();
@@ -414,15 +423,18 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea, direccion,direccion_relativa from area where areaidarea is null and idarea!=1");
-                ResultSet rs=stm.executeQuery();
-                while(rs.next()){
-                		CArea temp_menu=null;
-                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"),null);
-                        ret.add(temp_menu);
+        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
+					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" 
+					+"where  areaidarea is null and idarea!=1";
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                ResultSet rs2=stm.executeQuery();
+                while(rs2.next()){
+                	CMultimedia multi=new CMultimedia(rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),0L,1,null);	
+        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),rs2.getString("descripcion"),rs2.getInt("size"),multi,null);
+                	ret.add(temp);
                         
                 }
-                rs.close();
+                rs2.close();
                 stm.close();
         }
         
@@ -434,15 +446,18 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenuSubmenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idarea,descripcion, ifnull(areaidarea,0) areaidarea, direccion,direccion_relativa  from area where areaidarea is not null");
-                ResultSet rs=stm.executeQuery();
-                while(rs.next()){
-                		CArea temp_menu=null;
-                        temp_menu=new CArea( rs.getInt("idarea"),rs.getString("descripcion"),null);
-                        ret.add(temp_menu);
+        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
+					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" 
+					+"where  areaidarea is not null ";
+        		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                ResultSet rs2=stm.executeQuery();
+                while(rs2.next()){
+                	CMultimedia multi=new CMultimedia(rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),0L,1,null);	
+        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),rs2.getString("descripcion"),rs2.getInt("size"),multi,null);
+                	ret.add(temp);
                         
                 }
-                rs.close();
+                rs2.close();
                 stm.close();
         }
         

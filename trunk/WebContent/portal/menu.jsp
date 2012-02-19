@@ -85,7 +85,7 @@ ul#menu li ul li ul li  a:hover {
 					CArea temp_area=list_area.get(h);
 					%>
 					<li>
-					<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getdescripcion()%></a>
+					<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getnombre()%></a>
 							
 					</li>
 				<% 	} %>
@@ -96,7 +96,7 @@ ul#menu li ul li ul li  a:hover {
 									CArea temp_area=list_area_sub.get(h);
 								%>
 								<li>
-									<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getdescripcion()%></a>
+									<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%=temp_area.getnombre()%></a>
 								</li>
 								<% } %>
 							</ul>
