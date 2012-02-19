@@ -25,8 +25,8 @@
 
 					  if($.trim($('#new-titulo').val())!=""){
 						  if($('#new-submenu').val()>0){	
-								  var data_cont=Base64.encode($('#cont-text').val());
-								  var titulo=Base64.encode($('#new-titulo').val());
+								  var data_cont=Base64.encode(convertirCaracter($('#cont-text').val()));
+								  var titulo=Base64.encode(convertirCaracter($('#new-titulo').val()));
 								  var submenu=$('#new-submenu').val();
 									cadena = [ 	'a=guardarnew',
 										            'titulo='+titulo,
@@ -44,8 +44,7 @@
 									        success: function(data){
 									        	mensaje(data.mensaje);
 									        	if(data.resultado=="OK"){
-									        		$('#new-tam').val(3);
-									        		$('#new-area').val(0);
+									        		limpiar();
 									        	}
 									        }
 										
@@ -70,6 +69,10 @@
 						}
 					});
 			  }
+			function limpiar(){
+				$("#cont-text").cleditor()[0].clear();
+        		$('#new-titulo').val('');
+			}
 			</script>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<div class="centerd">
@@ -103,7 +106,7 @@
 				<br/><br/>
 				<div class="centerd">
 						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-					<a href="#validacion_prin" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
+					<a href="#validacion_prin" class="ui-state-default ui-corner-all button-delete" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
 				</div>
 				<br/><br/>	
 				<div style="clear: both;"></div>

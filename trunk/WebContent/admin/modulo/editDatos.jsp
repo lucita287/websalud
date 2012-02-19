@@ -7,14 +7,6 @@ $("#editconte").cleditor({
 $("#editconte").cleditor()[0].focus();
 });
 
-function CargarImagenes(){
-	$.post("../SContenidoTable", {ptipo:1,pmenu:editidmenu},
-	          function (data) {                    
-	              var arr = Array();
-	              arr = eval("(" + data + ")");                    
-	              $('#imagenes').flexAddData(arr);                    
-	       });  	 							
-}
 
 function Guardaredit(){
 	  if(editidmenu>0){
@@ -80,17 +72,38 @@ function Guardaredit(){
 					
 		        }});	
 
-			CargarImagenes();
+			CargarImagenes(); CargarPDF();
 			limpiar();		    
 			
 		}
 		
 		function eliminar_conte(){
 			 if(editidmenu>0){
-					if(!confirm("Confirma que desea eliminar, tambien las imagenes y pdf ")) {	 
-					}else {
-				         
-				    }
+					if(confirm("Confirma que desea eliminar, tambien las imagenes y pdf ")) {
+						cadena = [ 'idmenu='     + editidmenu,
+						            'a=deletemenu',
+						        ].join('&');
+						$.ajax({
+					        url: "../SMenu",
+					        data: cadena,
+					  	    type: 'post',
+					  	  	dataType: 'json',
+					  	  	success: function(data){
+					  	  		mensaje(data.mensaje);
+					  	  		if(data.resultado=='OK'){
+						  	  		editidmenu=0;
+							  	  	$("#editconte").cleditor()[0].clear();
+						  	  		$('#flex1').flexReload();
+						  	  		limpiar();
+							  	  	$('#edit-area').text('');	
+									$('#edit-submenu').text('');
+						        	$('#edit-titulo').val('');
+						        	$('#edit-id').text('');
+						        	LimpiarImagenes();
+					  	  		}	
+					        }});
+						
+					}
 			 }else{
 				  $("#validacion_data").html("Debe Seleccionar un item");
 				  

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import data.CContenido;
 
 import framework.CDataBase;
+import framework.CValidation;
 
 /**
  * Servlet implementation class SContenidoTable
@@ -44,8 +45,9 @@ public class SContenidoTable extends HttpServlet {
 		 PrintWriter out = response.getWriter(); 
 		 CDataBase dbo=new CDataBase();
 		 dbo.Connect(); 
-		 int tipo=Integer.parseInt(request.getParameter("ptipo"));
-		 int idmenu=Integer.parseInt(request.getParameter("pmenu"));
+		 CValidation valid=new CValidation();
+		 int tipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("ptipo")));
+		 int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pmenu")));
 		 
 		 String info="{";
          info+="total: "+dbo.getContenidoTotal(tipo,idmenu);
@@ -57,7 +59,7 @@ public class SContenidoTable extends HttpServlet {
          for(int i=0; i<list.size();i++){
         	 CContenido temp=list.get(i);
                         data+=(data=="")?"":",";
-                                          data+="{ cell: [\"<input type='radio' onclick='editar_conte("+temp.getidcontenido()+")' name='idconte_radio' value='"+temp.getidcontenido()+"' />\",\""+temp.getidcontenido()+"\", \""+temp.gettitulo()+"\" , \""+temp.getmultimedia().getdireccion_relativa()+"\"  ] }";
+                                          data+="{ cell: [\"<input type='radio' onclick='editar_conte"+tipo+"("+temp.getidcontenido()+")' name='idconte_radio' value='"+temp.getidcontenido()+"' />\",\""+temp.getidcontenido()+"\", \""+temp.gettitulo()+"\" , \""+temp.getmultimedia().getdireccion_relativa()+"\"  ] }";
          }
          info+=data+"] }";
          
