@@ -13,9 +13,11 @@ idmenu=Integer.parseInt(request.getParameter("idmenu"));
 CDataBase dbo=new CDataBase();
 dbo.Connect();
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
+if(temp_menu!=null){
 ArrayList<CContenido> list=dbo.getContenidoLista(1, idmenu);
 ArrayList<CContenido> listpdf=dbo.getContenidoLista(2, idmenu);
 dbo.Close();
+
 %>
 
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
@@ -53,7 +55,7 @@ dbo.Close();
 			<% for(int h=0; h<list.size(); h++){ 
 					CContenido temp=list.get(h);%>	
 				<%if(h==0){%>
-					<img id="img<%=h %>" width="600px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					<img id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
 				<%}else{ %>					
 					<img style="display: none;" id="img<%=h %>" width="600px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
 				<%}
@@ -208,3 +210,4 @@ $(document).ready(function() {
 });
 
 </script>
+<%} %>

@@ -5,9 +5,11 @@
 	function menuarea(idarea){
 		$("#menu-principal").load("portal/menu_area.jsp?idarea="+idarea);
 		$("#header_carousel").load("portal/header.jsp?idarea="+idarea);
+		$('#Cont-Panel-texto').load("portal/inicio.jsp?idarea="+idarea);
 	}
 	function back_inicio(){
-		$("#menu-principal").load("portal/menu.jsp");
+		$("#menu-principal").load("portal/menu.jsp?idarea=1");
+		$('#Cont-Panel-texto').load("portal/inicio.jsp?idarea=1");
 	}
 
 
