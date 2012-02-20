@@ -7,9 +7,11 @@
 <%  
 CDataBase dbo=new CDataBase();
 dbo.Connect();
-int idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
+int idarea=1;
+try{
+idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
+}catch(Exception e){}
 ArrayList<CMenu> list_menu=dbo.getMenu(idarea);
-ArrayList<CArea> list_area=dbo.getAreaLista();
 dbo.Close();
 %>
 <style>
@@ -76,7 +78,7 @@ ul#menu li ul li a:hover {
 
 	
 	<%} %>
-	<li><a onclick="back_inicio()">REGRESAR A MENU</a></li>
+	<li><a href="index.jsp">REGRESAR A MENU</a></li>
 </ul>
 
 <script>

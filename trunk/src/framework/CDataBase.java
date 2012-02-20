@@ -429,7 +429,7 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-        	String sql="SELECT a.idarea,a.nombre  FROM area a where  areaidarea is null and idarea!=1";
+        	String sql="SELECT a.idarea,a.nombre  FROM area a where  areaidarea is null and idarea!=1 order by nombre asc";
                 PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
@@ -449,7 +449,7 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenuSubmenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-        	String sql="SELECT a.idarea,a.nombre  FROM area where  areaidarea is not null ";
+        	String sql="SELECT a.idarea,a.nombre  FROM area a where  areaidarea is not null order by nombre asc ";
         		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
