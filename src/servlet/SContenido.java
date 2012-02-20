@@ -125,6 +125,7 @@ public class SContenido extends HttpServlet {
 			}else result=validacion;
 			out.println(result);
 		}
+		
 		dbo.Close();
 	}
 

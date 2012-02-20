@@ -122,9 +122,11 @@ function guardarImagen(){
 						  	    type: 'post',
 						        dataType: 'json',
 						        success: function(data){
-						        	mensaje(data.mensaje); 	
+						        	mensaje(data.mensaje);
+						        	if(data.resultado=='OK'){
 						        		CargarImagenes();
 						        		limpiar();
+						        	}
 						        }
 						    });
 			}else{
@@ -142,8 +144,10 @@ function guardarImagen(){
 			        dataType: 'json',
 			        success: function(data){
 			        	mensaje(data.mensaje); 	
+			        	if(data.resultado=='OK'){
 			        		limpiar();
 			        		CargarImagenes();
+			        	}
 			        }
 			    });
 			}		  

@@ -47,3 +47,14 @@ BEGIN
     RETURN 1;
 END
 $$
+DELIMITER $$
+DROP FUNCTION IF EXISTS `EliminarEncabezado`$$
+CREATE FUNCTION EliminarEncabezado(pidarea int,pidmultimedia int ) RETURNS int
+    DETERMINISTIC
+BEGIN
+        DELETE FROM encabezado WHERE areaidarea=pidarea and multimediaidmultimedia=pidmultimedia ;
+        DELETE FROM Multimedia WHERE idmultimedia=pidmultimedia;
+    
+    RETURN 1;
+END
+$$

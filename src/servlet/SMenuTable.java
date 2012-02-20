@@ -88,6 +88,7 @@ public class SMenuTable extends HttpServlet {
 		 }
 		 info+=data+"</rows>";
 		 out.println(info);
+		 dbo.Close();
 	}
 
 }
