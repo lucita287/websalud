@@ -113,6 +113,7 @@ public class SUploadImagen extends HttpServlet {
 				writer.write("{\"result\":\"ERROR\",\"name\":\"\",\"idsafe\":0,\"Mensaje\":\"Error al guardar\"}");
 			} finally {
 				writer.close();
+				dbo.Close();
 			}
 		}
 	}

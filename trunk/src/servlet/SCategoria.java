@@ -67,7 +67,7 @@ public class SCategoria extends HttpServlet {
 				 info+=data+"] }";
 				 out.println(info);
 			}
-	
+			dbo.Close();
 	}
 
 }

@@ -20,6 +20,8 @@ if(ss!=null && session.getAttribute("user")!=null){
 					caracter=replaceAll(caracter,"Ú","&Uacute;");
 					caracter=replaceAll(caracter,"ñ","&ntilde;");
 					caracter=replaceAll(caracter,"Ñ","&Ntilde;");
+					caracter=replaceAll(caracter,"Ü","&Uuml;");
+					caracter=replaceAll(caracter,"ü","&uuml;");
 					return caracter;
 				}
 			  function replaceAll( text, busca, reemplaza ){

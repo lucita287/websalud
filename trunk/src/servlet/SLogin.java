@@ -60,6 +60,7 @@ public class SLogin extends HttpServlet {
 		 }else{
 			 response.sendRedirect("index.jsp?e=1");
 		 }
+		 dbo.Close();
 	}
 
 }

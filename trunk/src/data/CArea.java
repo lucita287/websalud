@@ -31,6 +31,9 @@ public class CArea {
 	public void setareaidarea(CArea areaidarea){
 		this.areaidarea=areaidarea;
 	}
+	public void setsize(int size){
+		this.size=size;
+	}
 	public int getidarea(){
 		return this.idarea;
 	}

@@ -13,6 +13,7 @@ import data.CArea;
 import data.CCategoria;
 import data.CConfiguracion;
 import data.CContenido;
+import data.CEncabezado;
 import data.CMultimedia;
 import data.CMenu;
 import data.CNoticia;
@@ -194,15 +195,18 @@ public class CDataBase {
 		PreparedStatement stm;
 		try {
 			
-			String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
-					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" 
-					+"where  idarea=? ";
+			String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,' ') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , ifnull(m.idmultimedia,0) idmultimedia , "
+					+" ifnull(m.direccion,'') direccion, ifnull(m.direccion_relativa,'No se ha seleccionado Imagen') direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre "
+					+" FROM area a left outer join multimedia m on a.multimediaidmultimedia=m.idmultimedia " 
+					+" where  a.idarea=? ";
 			stm = (PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1, idarea);
-			ResultSet rs2=stm.executeQuery();
-			if(rs2.next()){
-			CMultimedia multi=new CMultimedia(rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),0L,1,null);	
-			temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),rs2.getString("descripcion"),rs2.getInt("size"),multi,null);
+			ResultSet rs=stm.executeQuery();
+			if(rs.next()){
+				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);
+            	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null);
+            	temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea);
+            	
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -401,13 +405,15 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaLista(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
-					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" ;
+        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia, "+
+        				"m.direccion, m.direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre " +
+        				"FROM area a left outer join multimedia m on a.multimediaidmultimedia=m.idmultimedia" ;
                 PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
-                	CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);	
-                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,null);
+                	CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);
+                	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null);
+                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea);
                 	ret.add(temp);
                         
                 }
@@ -423,14 +429,11 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
-					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" 
-					+"where  areaidarea is null and idarea!=1";
+        	String sql="SELECT a.idarea,a.nombre  FROM area a where  areaidarea is null and idarea!=1";
                 PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
-                	CMultimedia multi=new CMultimedia(rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),0L,1,null);	
-        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),rs2.getString("descripcion"),rs2.getInt("size"),multi,null);
+        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null);
                 	ret.add(temp);
                         
                 }
@@ -446,14 +449,11 @@ public class CDataBase {
 	public ArrayList<CArea> getAreaListaMenuSubmenu(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-        	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia,"
-					+"m.direccion, m.direccion_relativa FROM area a inner join multimedia m on a.multimediaidmultimedia=m.idmultimedia" 
-					+"where  areaidarea is not null ";
+        	String sql="SELECT a.idarea,a.nombre  FROM area where  areaidarea is not null ";
         		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
-                	CMultimedia multi=new CMultimedia(rs2.getInt("idmultimedia"),rs2.getString("direccion"),rs2.getString("direccion_relativa"),0L,1,null);	
-        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),rs2.getString("descripcion"),rs2.getInt("size"),multi,null);
+                	CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null);
                 	ret.add(temp);
                         
                 }
@@ -692,5 +692,89 @@ public CContenido getContenido(int idcontenido){
 		
 		return temp;
 	}
-	
+	public boolean UpdateArea(CArea area){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE area SET descripcion = ?, size = ?, multimediaidmultimedia = ? WHERE idarea=?");
+			
+			stm.setString(1, area.getdescripcion());
+			stm.setInt(2, area.getsize());
+			if(area.getidmultimedia()!=null)
+				stm.setInt(3, area.getidmultimedia().getidimagen());
+			else stm.setNull(3, java.sql.Types.INTEGER);
+			stm.setInt(4, area.getidarea());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public ArrayList<CEncabezado> getEncabezadoLista(int idarea){
+		
+		
+		ArrayList<CEncabezado> ret=new ArrayList<CEncabezado>();
+        try{
+        	String sql="SELECT a.idarea,a.nombre, a.areaidarea, a.descripcion, a.size,"+
+				" m.idmultimedia, m.direccion, m.direccion_relativa "+
+				" FROM encabezado e Inner join area a on a.idarea=e.areaidarea "+
+				" inner join multimedia m on e.multimediaidmultimedia=m.idmultimedia " +
+				" where idarea=? ";
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                stm.setInt(1, idarea);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CMultimedia temp_mult=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0,0,null);
+                        CArea temp=new CArea(rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),temp_mult,null);
+                        CEncabezado encabezado=new CEncabezado(temp,temp_mult);
+                        ret.add(encabezado);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+        	e.printStackTrace();
+        }
+        return ret;
+	}
+	public boolean SafeEncabezado(CEncabezado enca){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO encabezado (areaidarea,multimediaidmultimedia) VALUES (?,?)");
+			
+			stm.setInt(1, enca.getAreaidarea().getidarea());
+			stm.setInt(2, enca.getMultimediaidmultimedia().getidimagen());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public int deleteEncabezado(int idarea,int idmultimedia){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select EliminarEncabezado(?,? ) result");
+			stm.setInt(1, idarea);
+			stm.setInt(2, idmultimedia);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("result");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
 }

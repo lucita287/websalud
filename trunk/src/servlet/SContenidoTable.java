@@ -64,6 +64,7 @@ public class SContenidoTable extends HttpServlet {
          info+=data+"] }";
          
          out.print(info);
+         dbo.Close();
 	}
 
 }
