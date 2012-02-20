@@ -4,6 +4,7 @@
 	
 	function menuarea(idarea){
 		$("#menu-principal").load("portal/menu_area.jsp?idarea="+idarea);
+		$("#header_carousel").load("portal/header.jsp?idarea="+idarea);
 	}
 	function back_inicio(){
 		$("#menu-principal").load("portal/menu.jsp");
@@ -26,9 +27,6 @@
 	});
 	});
 	function Actualizar(idmenu){
-		 cadena = [
-		           'idmenu='     + idmenu,
-		        ].join('&');
 
 		    	$('#Cont-Panel-texto').load("portal/contenido.jsp?idmenu="+idmenu);
 	}
@@ -43,13 +41,3 @@
         $('#slider').nivoSlider();
 
     });
-
-	$(function() {
-		$(".menu_header").jCarouselLite({
-			hoverPause:true,
-			visible: 5,
-			auto:500,
-			speed:1000,
-			scroll:1
-			});
-		});	

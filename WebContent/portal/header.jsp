@@ -1,10 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataBase" %>
-<%@ page import="data.CNoticia" %>
+<%@ page import="data.CArea" %>
+<%@ page import="data.CEncabezado" %>
 <%@ page import="java.util.ArrayList" %>
+<%
+int idarea=1;
+try {
+idarea=Integer.parseInt(request.getParameter("idarea"));
+} catch (NumberFormatException e) {
+}
+CDataBase dbo=new CDataBase();
+dbo.Connect();
+ArrayList<CEncabezado> lista=dbo.getEncabezadoLista(idarea);
+CArea area=dbo.getCAreaEspecifico(idarea);
+dbo.Close();
+%>
 	<script>
 
+	$(function() {
+		$(".menu_header").jCarouselLite({
+			hoverPause:true,
+			visible: 5,
+			auto:500,
+			speed:1000,
+			scroll:1
+			});
+		});	
     </script>
 	<style type="text/css">
 		#header_carousel { float:right; }
@@ -15,53 +37,24 @@
 	<div class="menu_header">
 
 									<ul>
-
+					<% for(int h=0; h<lista.size(); h++){ 
+					CEncabezado temp=lista.get(h);
+					%>
 										<li>
 										<div class="foto-inicio" >
 												
-													<img src="images/fotos/1.jpg" width="160px" height="120px" />												
+													<img src="<%=temp.getMultimediaidmultimedia().getdireccion_relativa()%>" width="160px" height="120px" />												
 	
 											
 										</div>
 										</li>
-										
-										<li>
-										<div class="foto-inicio"  >	
-												
-												<img src="images/fotos/2.png" width="160px" height="120px" />												
-
-												
-										</div>
-										</li>
-										
-										<li>
-										<div class="foto-inicio"  >
-												
-												<img src="images/fotos/3.png" width="160px" height="120px" />
-												
-										</div>		
-										</li>
-										<li>
-										<div class="foto-inicio"  >
-												
-												<img src="images/fotos/4.png" width="160px" height="120px" />
-												
-										</div>		
-										</li>
-										<li>
-										<div class="foto-inicio"  >
-												
-												<img src="images/fotos/5.png" width="160px" height="120px" />
-												
-										</div>		
-										</li>
-										
+					<%} %>					
 									</ul>
 
 								</div>
 	
 	
-<h3>Unidad de Salud	</h3>
+<h2><%=(area!=null)?area.getnombre().toUpperCase():""%></h2>
 	
 	
 			
