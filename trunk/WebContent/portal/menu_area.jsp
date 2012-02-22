@@ -12,6 +12,7 @@ try{
 idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
 }catch(Exception e){}
 ArrayList<CMenu> list_menu=dbo.getMenu(idarea);
+ArrayList<CArea> list_submenu=dbo.getAreaListaMenuSubmenu(idarea);
 dbo.Close();
 %>
 <style>
@@ -78,7 +79,22 @@ ul#menu li ul li a:hover {
 
 	
 	<%} %>
-	<li><a href="index.jsp">REGRESAR A MENU</a></li>
+	<%if(list_submenu.size()>0){ %>
+		
+
+	<li><a >Programas</a>
+		<ul>
+			<% for(int j=0; j<list_submenu.size();j++){ 
+					CArea temp=list_submenu.get(j);
+					%>
+				<li>
+					<a onclick="menuarea(<%= temp.getidarea()%>);"><%= temp.getnombre()%></a>
+				</li>
+				<% } %>
+		</ul>
+	</li>
+		<% } %>
+	<li><a href="index.jsp">REGRESAR A MENU</a></li>	
 </ul>
 
 <script>

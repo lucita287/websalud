@@ -446,11 +446,12 @@ public class CDataBase {
         }
         return ret;
 	}
-	public ArrayList<CArea> getAreaListaMenuSubmenu(){
+	public ArrayList<CArea> getAreaListaMenuSubmenu(int idarea){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
-        	String sql="SELECT a.idarea,a.nombre  FROM area a where  areaidarea is not null order by nombre asc ";
+        	String sql="SELECT a.idarea,a.nombre  FROM area a where  areaidarea is not null and  areaidarea=? order by nombre asc ";
         		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+        		stm.setInt(1,idarea);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
                 	CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null);
