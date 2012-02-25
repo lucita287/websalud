@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -155,11 +154,17 @@ public class CDataBase {
 	public ArrayList<CNoticia> getNoticias(){
 		ArrayList<CNoticia> ret=new ArrayList<CNoticia>();
 		try{
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idnoticia,titulo, descripcion, imagen FROM noticia");
+			String sql="SELECT noti.idnoticia, noti.titulo noti_titulo, noti.descripcion noti_descripcion,descripcion_corta, noti.areaidarea idarea, noti.fecha_inicio fecha_inicio, "+
+"noti.fecha_fin fecha_fin, noti.prioridad prioridad, a.nombre nombre_area, m.idmultimedia idmultimedia, m.direccion direccion_m, m.direccion_relativa direccion_rel  "+
+  "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
+  "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CNoticia news=null;
-				news=new CNoticia( rs.getInt("idnoticia"), rs.getString("titulo"),rs.getString("descripcion"),rs.getString("imagen"));
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
+				CNoticia news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
+						new java.util.Date(rs.getDate("fecha_inicio").getTime()),new java.util.Date(rs.getDate("fecha_fin").getTime()),rs.getInt("prioridad"),rs.getInt("idnoticia"),area);
 				ret.add(news);
 				
 			}
@@ -303,7 +308,7 @@ public class CDataBase {
         ArrayList<CMenu> ret=new ArrayList<CMenu>();
         try{
         	String query="select * from "
-				+"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion,m.contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
+				+"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion, '' contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
 				+"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
 				+"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
 				+"where a.idarea=m.areaidarea and"
@@ -777,5 +782,107 @@ public CContenido getContenido(int idcontenido){
 		}
 		
 		return temp;
+	}
+	public ArrayList<CNoticia> getListaNoticias(){
+		ArrayList<CNoticia> ret=new ArrayList<CNoticia>();
+		try{
+			String sql="SELECT noti.idnoticia, noti.titulo noti_titulo, noti.descripcion noti_descripcion,descripcion_corta, noti.areaidarea idarea, noti.fecha_inicio fecha_inicio, "+
+"noti.fecha_fin fecha_fin, noti.prioridad prioridad, a.nombre nombre_area, m.idmultimedia idmultimedia, m.direccion direccion_m, m.direccion_relativa direccion_rel  "+
+  "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
+  "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
+				CNoticia news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
+						new java.util.Date(rs.getDate("fecha_inicio").getTime()),new java.util.Date(rs.getDate("fecha_fin").getTime()),rs.getInt("prioridad"),rs.getInt("idnoticia"),area);;
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
+	public boolean SafeNoticia(CNoticia noti){
+		PreparedStatement stm;
+		try {
+
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO noticia   (titulo, descripcion, areaidarea, fecha_inicio, fecha_fin, prioridad, multimediaidmultimedia,descripcion_corta)  VALUES    (?,    ?,    ?,    ?,    ?,    ?,    ?,?)");
+			stm.setString(1, noti.getTitulo());
+			stm.setString(2, noti.getDescripcion());
+			stm.setInt(3,noti.getAreaidarea().getidarea());
+			stm.setDate(4, new java.sql.Date(noti.getFecha_inicio().getTime()));
+			stm.setDate(5,new java.sql.Date(noti.getFecha_fin().getTime()));
+			stm.setInt(6,noti.getPrioridad());
+			if(noti.getMultimediaidmultimedia()!=null &&noti.getMultimediaidmultimedia().getidimagen()>0){
+				stm.setInt(7,noti.getMultimediaidmultimedia().getidimagen());
+			}else stm.setNull(7, java.sql.Types.INTEGER);
+			stm.setString(8,noti.getDescripcion_corta());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public CNoticia getNoticiaEspecifica(int idnoticia){
+		CNoticia news=null;
+		try{
+			String sql="SELECT noti.idnoticia, noti.titulo noti_titulo, noti.descripcion noti_descripcion, noti.descripcion_corta, noti.areaidarea idarea, noti.fecha_inicio fecha_inicio, "+
+"noti.fecha_fin fecha_fin, noti.prioridad prioridad, a.nombre nombre_area, ifnull( m.idmultimedia,0) idmultimedia, ifnull(m.direccion,'') direccion_m, ifnull(m.direccion_relativa,'NO SE HA SUBIDO IMAGEN') direccion_rel  "+
+  "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
+  "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia where noti.idnoticia=?  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idnoticia);
+			ResultSet rs=stm.executeQuery();
+			if(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
+				news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
+						new java.util.Date(rs.getDate("fecha_inicio").getTime()),new java.util.Date(rs.getDate("fecha_fin").getTime()),rs.getInt("prioridad"),rs.getInt("idnoticia"),area);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return news;
+	}
+	public boolean UpdateNoticia(CNoticia noti){
+		PreparedStatement stm;
+		try {
+			String sql="UPDATE noticia SET   titulo = ?, descripcion = ?, areaidarea = ?, fecha_inicio = ?, fecha_fin = ?, prioridad = ?,   multimediaidmultimedia = ?, descripcion_corta=?  WHERE  idnoticia = ?";
+			stm = (PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1, noti.getTitulo());
+			stm.setString(2, noti.getDescripcion());
+			stm.setInt(3,noti.getAreaidarea().getidarea());
+			stm.setDate(4, new java.sql.Date(noti.getFecha_inicio().getTime()));
+			stm.setDate(5,new java.sql.Date(noti.getFecha_fin().getTime()));
+			stm.setInt(6,noti.getPrioridad());
+			if(noti.getMultimediaidmultimedia()!=null &&noti.getMultimediaidmultimedia().getidimagen()>0){
+				stm.setInt(7,noti.getMultimediaidmultimedia().getidimagen());
+			}else stm.setNull(7, java.sql.Types.INTEGER);
+			stm.setString(8,noti.getDescripcion_corta());
+			stm.setInt(9,noti.getIdnoticia());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

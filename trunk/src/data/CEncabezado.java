@@ -32,8 +32,6 @@ public class CEncabezado {
 	 */
 	public void setMultimediaidmultimedia(CMultimedia multimediaidmultimedia) {
 		this.multimediaidmultimedia = multimediaidmultimedia;
-	}
-	
-	
+	}	
 	
 }
