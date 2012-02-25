@@ -10,9 +10,10 @@
 		CDataBase dbo=new CDataBase();
 		dbo.Connect();
 		CNoticia info_new=dbo.getNoticiaEspecifica(idnoticia);
+		ArrayList<CNoticia> list_news=dbo.getNoticias();
 		dbo.Close();
 		
-		if(info_new!=null){
+		
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,7 +21,7 @@
 
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title> <%=info_new.getTitulo()%>/Unidad de Salud</title>
+<title> <%=(info_new!=null)?info_new.getTitulo():"NOTICIAS"%>/Unidad de Salud</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
@@ -30,6 +31,8 @@
 </head>
 <style>
 	#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
+	.button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
+	.news-inicio{margin-top:5px;	 border-style:solid; border-width:1px;	}
 </style>
 <body>
 <div class="back_all">
@@ -50,11 +53,15 @@
 <!-- header begins -->
 
  <div id="main">
-
-
+<br/>
+<br/>
+<a href="index.jsp" class="ui-state-default ui-corner-all button">UNIDAD DE SALUD</a> <a href="noticia.jsp" class="ui-state-default ui-corner-all button">NOTICIAS</a> 
+<br/>
+<br/>
+<br/>						
 
 		<% if(info_new!=null){ %>
-		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=info_new.getTitulo()%></h3>
+		<h3 id="Panel-texto-tit" class="ui-widget-header ui-corner-all"><%=info_new.getTitulo()%></h3>
 		<br/>
 
 				<div style="margin-left:20px;margin-right:20px;">
@@ -62,11 +69,23 @@
 				</div>
 			<br/>
 			<%if(info_new.getMultimediaidmultimedia()!=null &&info_new.getMultimediaidmultimedia().getidimagen()>0){ %>
-				<img src="<%=info_new.getMultimediaidmultimedia().getdireccion_relativa() %>"/>		
+				
+				<center>
+				<img width="750px"  src="<%=info_new.getMultimediaidmultimedia().getdireccion_relativa() %>"/>		
+				</center>
 			<%} %>	
-		<% } %>
+		<% }else{ 
+		for(int i=0; i<list_news.size();i++){
+				CNoticia temp_news=list_news.get(i);
+				String sub_descrip=temp_news.getDescripcion_corta()+" [...]";
+		%>
+		<div class="news-inicio">
+		<a href="noticia.jsp?idnoticia=<%=temp_news.getIdnoticia()%>"><b><%=temp_news.getTitulo()%></b></a>
+		<div style="border-top: 1px dotted #6699CC; height: 20px; "></div>
+		<%=temp_news.getDescripcion_corta()%>
 		
-		
+		</div>
+		<%} } %>
 
 
 
@@ -85,4 +104,4 @@
 </div>
 </body>
 </html>
-			<%} %>
+			
