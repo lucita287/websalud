@@ -13,6 +13,7 @@
 		dbo.Close();
 		if(info_new!=null){
 		%>
+		<link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />
 		<div id="widget-info"> 
 					<h3><%=info_new.getTitulo()%></h3>
 					<div style="border-top: 1px dotted #6699CC; height: 20px; margin-top: 20px;"></div>
@@ -23,15 +24,3 @@
 			</div>
 		<%} %>
 		
-		<style>
-		#news_descripcion {
-		width:450px; 
-		float:left; 
-		height: 220px;
-        overflow: auto;
-        margin: 0px 20px 20px 20px;
-		}
-		#news_vermas{
-		float:right;
-		}
-		</style>

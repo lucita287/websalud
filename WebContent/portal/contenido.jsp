@@ -19,7 +19,7 @@ ArrayList<CContenido> listpdf=dbo.getContenidoLista(2, idmenu);
 dbo.Close();
 
 %>
-
+<link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
 		<br/>
 		<% if(temp_menu.getsize()>0 & temp_menu.getsize()<4){ %>
@@ -137,77 +137,4 @@ $(document).ready(function() {
 });
 
 </script>
-		<style>
-			  #pdf_titulo{
-			  	font-weight:bold;
-			  	font-size:1.2em;
-			  	text-transform: uppercase;
-			  }
-			  #pdf_descripcion{
-			  	width: 400%;
-                    border-style:solid;
-					border-width:1px;
-					margin: 0px 20px 20px 20px;
-			  }
-			  #pdf_div{
-			  		margin:0 auto 0 auto;
-					width: 500px;
-					background: #eeeef4;
-					height: 180px;
-					overflow: auto;
-			  }	
- 				#first_conte{
-               		width: 95%;
-                    border-style:solid;
-					border-width:1px;
-               }
- 				#panel-texto-c1 {
-                    width: 95%;
-                    height: 150px;
-                    overflow: auto;
-                    background: #ccc;
-   					margin: 0px 20px 20px 20px;
-               }
-               
-               #panel-texto-c2 {
-                    width: 95%;
-                    height: 220px;
-                    overflow: auto;
-                    background: #ccc;
-   					margin: 0px 20px 20px 20px;
-               }
-               #panel-texto-c3 {
-                    width: 95%;
-                    height: 300px;
-                    overflow: auto;
-                    background: #ccc;
-   					margin: 0px 20px 20px 20px;
-               }
-               
-				#gallery_nav {
-					width: 80%;
-					height: 130px;
-					overflow: auto;
-					max-height: 150px;
-					background: #eeeef4;
-					margin:0 auto 0 auto;
-				}	
-				#gallery img {
-					border: none;
-				}
-				
-				
-				
-				#gallery_output {
-					margin:0 auto 0 auto;
-					width: 600px;
-					height: 550px;
-					overflow: hidden;
-				}
-				
-				#gallery_output img {
-					display: block;
-					margin: 20px auto 0 auto;
-				}
-		</style>
 <%} %>
