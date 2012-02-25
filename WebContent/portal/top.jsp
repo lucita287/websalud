@@ -10,9 +10,7 @@
 <link href="css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />
 <link rel="stylesheet" type="text/css" media="all" href="css/jScrollPane.css" />
-<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
 <script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="lib/jquery.nivo.slider.pack.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.17.custom.min.js"></script>
 <script type="text/javascript" src="lib/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="lib/jScrollPane.js"></script>

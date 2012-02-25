@@ -25,7 +25,7 @@
 	$(function() {	
 	$(".news-inicio").click(function() {
 
-		$("#widget-info").html($(this).attr("name"));
+		$("#widget-info").load("portal/noticia_descripcion.jsp?idnoticia="+$(this).attr("name"));
 	});
 	});
 	function Actualizar(idmenu){
@@ -38,8 +38,4 @@
 		    	$('#Cont-Panel-texto').load("portal/ppivs.jsp");
 	}
 
-    $(window).load(function() {
 
-        $('#slider').nivoSlider();
-
-    });
