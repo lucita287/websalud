@@ -10,27 +10,19 @@ dbo.Close();
 %>
 <div class="row-top">
 					<div class="row-padding">
-						<div class="wrapper">
-							<div id="contactanos">
-								<h2>CONTACTANOS</h2>
 									<table>
 										<tr>
-											<td><span>Direccion:</span></td> <td><%=temp.getdireccion()%></td>
+											<td><b>DIRECCI&Oacute;n:</b></td > <td colspan=4><%=temp.getdireccion()%></td>
+										</tr>
+										<tr >
+											<td><b>TELEFONO:</b></td><td><%=temp.gettelefono()%></td>
+											<td><b>CORREO ELECTRONICO:</b></td><td><%=temp.getcorreo_electronico()%></td>
 										</tr>
 										<tr>
-											<td><span>Telefono:</span></td><td><%=temp.gettelefono()%></td>
-										</tr>
-										<tr>
-											<td><span>Fax:</span></td><td><%=temp.getfax()%></td>
-										</tr>	
-									 	<tr>
-											<td><span>Email:</span></td><td><%=temp.getcorreo_electronico()%></td>
+											<td><b>FAX:</b></td><td><%=temp.getfax()%></td>
+											
 										</tr>
 									</table>	
 							</div>
-							<div id="ppivs" onclick="ppivs()" >
-								<a href="#Cont-Panel-texto"><img src="images/final_user/PPIVS.png" width="450px" heigth="158px"/></a>
-							</div>	
-						</div>
-					</div>
-				</div>
+							
+</div>
