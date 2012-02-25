@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
- <style>
-#Panel-login { width:230px;  padding: 0.4em; background: #fff; }
-#Panel-login h3 { margin: 0; padding: 0.4em; text-align: center; }	
-</style>  
 	<form id="MainForm" name="MainForm" action="SLogin" method="post">
     <div class="header-inicio">
 						

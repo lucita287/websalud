@@ -7,17 +7,8 @@
 CDataBase dbo=new CDataBase();
 dbo.Connect();
 ArrayList<CNoticia> list_news=dbo.getNoticias();
-
-
 dbo.Close();
 %>
-<style>
-#Panel-inicio { width:723px;  padding: 0.4em; background: #fff; }
-#Panel-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }	
-#tabs1-inicio-info { width:253px; float:left; }
-#widget-info { width:450px; float:left; }
-.news-inicio{	width:250px; height:80px; border-style:solid; border-width:1px;	}
-</style>    
 
 <% if(list_news.size()>0){ %>
 <div id="Panel-inicio" class="ui-widget-content ui-corner-all">

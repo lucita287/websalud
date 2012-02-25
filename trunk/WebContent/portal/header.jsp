@@ -21,7 +21,7 @@ dbo.Close();
 	$(function() {
 		$(".menu_header").jCarouselLite({
 			hoverPause:true,
-			visible: 5,
+			visible: <%=(lista.size()>5?"5":lista.size())%>,
 			auto:500,
 			speed:1000,
 			scroll:1
@@ -55,8 +55,5 @@ dbo.Close();
 	
 	
 <h2><%=(area!=null)?area.getnombre().toUpperCase():""%></h2>
-	
-	
-			
-    
+
     </div>	
