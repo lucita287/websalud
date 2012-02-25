@@ -102,7 +102,41 @@ if(listpdf.size()>0){ %>
 	</div>
 <% }%>	
 	<br/>
-	<div style="clear: both;"></div>
+						
+<script language="javascript">
+$(function(){
+	$('#panel-texto-c1').jScrollPane();
+	$('#panel-texto-c2').jScrollPane();
+	$('#panel-texto-c3').jScrollPane();
+	$('#gallery_nav').jScrollPane();
+	$('#pdf_div').jScrollPane();
+});
+var ArrayContenido=new Array(<%=list.size()%>);
+$(document).ready(function() {
+	<% for(int h=0; h<list.size(); h++){ 
+	CContenido temp=list.get(h);%>
+	ArrayContenido[<%=h%>]=new Array(2);
+	ArrayContenido[<%=h%>][0]="<%= temp.gettitulo()%>";
+	ArrayContenido[<%=h%>][1]="<%= temp.getdescripcion()%>";
+	<% } %>
+	<% if(list.size()>0) {%>
+	$("#first_imagen").text(ArrayContenido[0][0]);
+	$("#first_conte").html(ArrayContenido[0][1]);
+	<%}%>
+	$("#gallery_output img").not(":first").hide();
+
+	$("#gallery a").click(function() {
+		if ( $("#" + this.rel).is(":hidden") ) {
+			$("#gallery_output img").slideUp();
+			$("#" + this.rel).slideDown();
+			id=this.rel.replace("img","");
+			$("#first_imagen").text(ArrayContenido[id][0]);
+			$("#first_conte").html(ArrayContenido[id][1]);
+		}
+	});
+});
+
+</script>
 		<style>
 			  #pdf_titulo{
 			  	font-weight:bold;
@@ -175,39 +209,5 @@ if(listpdf.size()>0){ %>
 					display: block;
 					margin: 20px auto 0 auto;
 				}
-		</style>						
-<script language="javascript">
-$(function(){
-	$('#panel-texto-c1').jScrollPane();
-	$('#panel-texto-c2').jScrollPane();
-	$('#panel-texto-c3').jScrollPane();
-	$('#gallery_nav').jScrollPane();
-	$('#pdf_div').jScrollPane();
-});
-var ArrayContenido=new Array(<%=list.size()%>);
-$(document).ready(function() {
-	<% for(int h=0; h<list.size(); h++){ 
-	CContenido temp=list.get(h);%>
-	ArrayContenido[<%=h%>]=new Array(2);
-	ArrayContenido[<%=h%>][0]="<%= temp.gettitulo()%>";
-	ArrayContenido[<%=h%>][1]="<%= temp.getdescripcion()%>";
-	<% } %>
-	<% if(list.size()>0) {%>
-	$("#first_imagen").text(ArrayContenido[0][0]);
-	$("#first_conte").html(ArrayContenido[0][1]);
-	<%}%>
-	$("#gallery_output img").not(":first").hide();
-
-	$("#gallery a").click(function() {
-		if ( $("#" + this.rel).is(":hidden") ) {
-			$("#gallery_output img").slideUp();
-			$("#" + this.rel).slideDown();
-			id=this.rel.replace("img","");
-			$("#first_imagen").text(ArrayContenido[id][0]);
-			$("#first_conte").html(ArrayContenido[id][1]);
-		}
-	});
-});
-
-</script>
+		</style>
 <%} %>

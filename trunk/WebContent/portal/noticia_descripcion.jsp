@@ -16,13 +16,22 @@
 		<div id="widget-info"> 
 					<h3><%=info_new.getTitulo()%></h3>
 					<div style="border-top: 1px dotted #6699CC; height: 20px; margin-top: 20px;"></div>
-					<div>
-					<div id="news_imagen">
-					<img src="images/info.png" width="150px" height="180px">
-					</div>
 					<div id="news_descripcion">
 						<%=info_new.getDescripcion()%>
 					</div>
-					</div>
+					<div id="news_vermas"><a id="news_mas"  target="_blank" href="noticia.jsp?idnoticia=<%=idnoticia%>">VER MAS</a></div>
 			</div>
-		<%} %>	
+		<%} %>
+		
+		<style>
+		#news_descripcion {
+		width:450px; 
+		float:left; 
+		height: 220px;
+        overflow: auto;
+        margin: 0px 20px 20px 20px;
+		}
+		#news_vermas{
+		float:right;
+		}
+		</style>

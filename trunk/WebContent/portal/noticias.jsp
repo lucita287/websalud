@@ -17,9 +17,6 @@ dbo.Close();
 #tabs1-inicio-info { width:253px; float:left; }
 #widget-info { width:450px; float:left; }
 .news-inicio{	width:250px; height:80px; border-style:solid; border-width:1px;	}
-#news_descripcion {width:300px; float:left; }
-#news_imagen { width:150px; float:left;  }
-
 </style>    
 
 <% if(list_news.size()>0){ %>
