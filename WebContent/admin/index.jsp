@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-
 <% 
-HttpSession sessiones = request.getSession(false);
-Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
+HttpSession sessiones=request.getSession(false); 
+if(sessiones!=null && sessiones.getAttribute("user")!=null){
+	Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
 %>
 
+<head>
 <jsp:include page="modulo/top.jsp" />
 </head>
 <body>
@@ -71,4 +71,8 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 
 </div>
 </body>
+<% }else{
+	response.sendRedirect("../index.jsp");
+	
+} %>
 </html>
