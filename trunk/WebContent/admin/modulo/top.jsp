@@ -21,3 +21,4 @@
 <script src="../lib/fileupload/vendor/jquery.ui.widget.js"></script>
 <script src="../lib/fileupload/jquery.iframe-transport.js"></script>
 <script src="../lib/fileupload/jquery.fileupload.js"></script>
+<script src="../lib/jquery.maskedinput-1.2.2.js"></script>

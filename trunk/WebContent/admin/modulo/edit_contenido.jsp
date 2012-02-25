@@ -22,6 +22,10 @@ if(ss!=null && session.getAttribute("user")!=null){
 					caracter=replaceAll(caracter,"Ñ","&Ntilde;");
 					caracter=replaceAll(caracter,"Ü","&Uuml;");
 					caracter=replaceAll(caracter,"ü","&uuml;");
+					caracter=replaceAll(caracter,String.fromCharCode(8211),"&#8211;");
+					caracter=replaceAll(caracter,String.fromCharCode(8212),"&#8212;");
+					caracter=replaceAll(caracter,String.fromCharCode(8226),"&#8226;");
+					caracter=replaceAll(caracter,String.fromCharCode(183),"&#183;");
 					return caracter;
 				}
 			  function replaceAll( text, busca, reemplaza ){
