@@ -53,6 +53,7 @@ public class SLogin extends HttpServlet {
 				 HttpSession session = request.getSession(true);
 					session.setAttribute("username", user);
 					session.setAttribute("user", user);
+					session.setAttribute("portal",1);
 					response.sendRedirect("admin/index.jsp");
 			 }else{
 				 response.sendRedirect("index.jsp?e=1");
