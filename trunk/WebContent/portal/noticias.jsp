@@ -11,9 +11,18 @@ ArrayList<CNoticia> list_news=dbo.getNoticias();
 
 dbo.Close();
 %>
+<style>
+#Panel-inicio { width:723px;  padding: 0.4em; background: #fff; }
+#Panel-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }	
+#tabs1-inicio-info { width:253px; float:left; }
+#widget-info { width:450px; float:left; }
+.news-inicio{	width:250px; height:80px; border-style:solid; border-width:1px;	}
+#news_descripcion {width:300px; float:left; }
+#news_imagen { width:150px; float:left;  }
 
-     
+</style>    
 
+<% if(list_news.size()>0){ %>
 <div id="Panel-inicio" class="ui-widget-content ui-corner-all">
 						<h3 class="ui-widget-header ui-corner-all">Noticias</h3>				
 
@@ -34,22 +43,19 @@ dbo.Close();
 		<% 
 		for(int i=0; i<list_news.size();i++){
 				CNoticia temp_news=list_news.get(i);
-				String sub_descrip=(temp_news.getdescripcion().length()>100)?temp_news.getdescripcion().substring(0,100):temp_news.getdescripcion();
-				sub_descrip=sub_descrip+" [...]";
+				String sub_descrip=temp_news.getDescripcion_corta()+" [...]";
 		%>
 										<li>
-										<div class="news-inicio" name="<%=temp_news.getidnoticia()%>">
+										<div class="news-inicio" name="<%=temp_news.getIdnoticia()%>">
 												
 												<div class="news-text"  >
-												<b><%=temp_news.gettitulo() %></b> 
+												<b><%=temp_news.getTitulo() %></b> 
 												<br/><%= sub_descrip %>
 												</div>
 										</div>
 										<div style="clear: both;"></div>
 										</li>										
-		<% 
-			}
-		%>	
+		<% } %>	
 									</ul>
 
 								</div>
@@ -62,30 +68,12 @@ dbo.Close();
 							
 					</div>
 				</div>
-			<% if(list_news.size()>0){ 
-				CNoticia info_new=list_news.get(1);
-			%>
-			<div id="widget-info"> 
-					<h3><%=info_new.gettitulo()%></h3>
-					<div style="border-top: 1px dotted #6699CC; height: 20px; margin-top: 20px;"></div>
-					<div>
-					<div id="news_imagen">
-					<img src="images/info.png" width="150px" height="180px">
-					</div>
-					<div id="news_descripcion">
-						<%=info_new.getdescripcion()%>
-					</div>
-					</div>
-			</div>
-			<%} %>
+			<jsp:include page="noticia_descripcion.jsp" >
+			    <jsp:param name="idnoticia" value="<%=list_news.get(0).getIdnoticia() %>" />
+			</jsp:include>	
+		
 
-
-
-
-
-
-
+<% } %>
 <div style="clear: both;"></div>
-
 </div>
 <div style="clear: both;"></div>

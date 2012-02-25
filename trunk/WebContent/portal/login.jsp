@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-   
+ <style>
+#Panel-login { width:230px;  padding: 0.4em; background: #fff; }
+#Panel-login h3 { margin: 0; padding: 0.4em; text-align: center; }	
+</style>  
 	<form id="MainForm" name="MainForm" action="SLogin" method="post">
     <div class="header-inicio">
 						
 								<div class="toggler">
-									<div id="Panel-inicio" class="ui-widget-content ui-corner-all">
+									<div id="Panel-login" class="ui-widget-content ui-corner-all">
 									
 										<h3 class="ui-widget-header ui-corner-all">Ingreso</h3>
 										<br/>
