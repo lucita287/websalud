@@ -1,3 +1,41 @@
+<form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
+    			<h2>Subir Imagenes</h2>
+				<div id="validacion_imagen" class="validacion"></div>
+				<table id="imagenes" style="display:none"></table>
+				<table  width="80%" CELLSPACING="8">
+					<tr>
+						<td>IDEN</td>
+						<td><label id="idimagen">NEW</label> </td>	
+					</tr>
+					<tr>
+						
+						<td>Titulo</td>
+						<td><input id="tituloimagen" type="text" size="40"/> </td>	
+					</tr>
+					<tr>
+						<td>Descripci&oacute;n</td>
+						<td><textarea id="descripcionimagen" rows="2" cols="40"></textarea> </td>	
+					</tr>
+					<tr>
+						<td>Imagen</td>
+						<td>
+						<input id="fileupload" type="file" name="files[]" ><BR/>
+						<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
+						</td>	
+					</tr>	
+				</table>
+								
+				<br/><br/>
+				<div class="centerd">
+						<a href="#validacion_imagen"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+						<a href="#validacion_imagen" onclick="guardarImagen()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+						<a href="#validacion_imagen"  onclick="eliminar_Contenido(1)"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+							
+				</div>
+				<br/><br/>
+	
+    
+</form>
 <script  type="text/javascript">
 $(document).ready(function () {
 	$("#imagenes").flexigrid
@@ -101,12 +139,20 @@ function limpiar(){
 	   $("#validacion_pdf").html("");
 }
 function guardarImagen(){
-	if(editidmenu>0){
 	var titulo=convertirCaracter($.trim($("#tituloimagen").val()));
 	var descripcion=convertirCaracter($.trim($("#descripcionimagen").val()));	
-		if(titulo!=''){
-			if(descripcion!=""){
-			
+	b=editidmenu<1;
+	if(b) $("#validacion_imagen").html("Debe seleccionar un item");
+	else{ b=titulo=="";
+		if(b) $("#validacion_imagen").html("Debe ingresar el titulo");
+			else{ b=descripcion=="";
+					if(b) $("#validacion_imagen").html("Debe ingresar la descripcion");
+				}
+		}
+	if(!b){
+	
+		$("#validacion_imagen").html("");
+	var cadena="";
 			if(idmultimedia==0){
 				cadena = [ 	'idimagen='   + idimagen,
 			             	'a=guardaredit',
@@ -116,19 +162,7 @@ function guardarImagen(){
 				        ].join('&');
 			
 			
-						  $.ajax({
-						        url: "../SContenido",
-						        data: cadena,
-						  	    type: 'post',
-						        dataType: 'json',
-						        success: function(data){
-						        	mensaje(data.mensaje);
-						        	if(data.resultado=='OK'){
-						        		CargarImagenes();
-						        		limpiar();
-						        	}
-						        }
-						    });
+		
 			}else{
 				cadena = [ 	'idimagen='   + idimagen,
 			             	'a=updateedit',
@@ -137,28 +171,22 @@ function guardarImagen(){
 				            'idmenu='     + editidmenu,
 				            'idconte='+idmultimedia
 				        ].join('&');
-				$.ajax({
+		
+			}
+			
+			  $.ajax({
 			        url: "../SContenido",
 			        data: cadena,
 			  	    type: 'post',
 			        dataType: 'json',
 			        success: function(data){
-			        	mensaje(data.mensaje); 	
+			        	mensaje(data.mensaje);
 			        	if(data.resultado=='OK'){
-			        		limpiar();
 			        		CargarImagenes();
+			        		limpiar();
 			        	}
 			        }
 			    });
-			}		  
-			}else{
-				$("#validacion_imagen").html("Debe ingresar la descripcion");
-			}
-		}else{
-			$("#validacion_imagen").html("Debe ingresar el titulo");	
-		}
-	}else{
-		$("#validacion_imagen").html("Debe seleccionar un item");
 	}
 }
 
@@ -197,41 +225,3 @@ function eliminar_Contenido(id){
 }
 
 </script>
-<form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
-    			<h2>Subir Imagenes</h2>
-				<div id="validacion_imagen" class="validacion"></div>
-				<table id="imagenes" style="display:none"></table>
-				<table  width="80%" CELLSPACING="8">
-					<tr>
-						<td>IDEN</td>
-						<td><label id="idimagen">NEW</label> </td>	
-					</tr>
-					<tr>
-						
-						<td>Titulo</td>
-						<td><input id="tituloimagen" type="text" size="40"/> </td>	
-					</tr>
-					<tr>
-						<td>Descripci&oacute;n</td>
-						<td><textarea id="descripcionimagen" rows="2" cols="40"></textarea> </td>	
-					</tr>
-					<tr>
-						<td>Imagen</td>
-						<td>
-						<input id="fileupload" type="file" name="files[]" ><BR/>
-						<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
-						</td>	
-					</tr>	
-				</table>
-								
-				<br/><br/>
-				<div class="centerd">
-						<a href="#validacion_imagen"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
-						<a href="#validacion_imagen" onclick="guardarImagen()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-						<a href="#validacion_imagen"  onclick="eliminar_Contenido(1)"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
-							
-				</div>
-				<br/><br/>
-	
-    
-</form>
