@@ -11,8 +11,44 @@
 		ArrayList<CMenu> list_me=data.getMenu(1); 
 		data.Close();
 %>
-
-			<script  type="text/javascript">
+			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
+			<div class="centerd">
+			<H2>Nuevo Contenido</H2>
+			</div>
+				<div id="validacion_prin" class="validacion"></div>
+				Titulo: <input id="new-titulo" type="text" size="60" /><br/>
+				Area Pertenece:
+					<select id="new-area" onchange="cambiarArea()">
+						<% for(int j=0; j<list.size();j++){ 
+							CArea area=list.get(j);
+						%>
+							<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
+						<% } %>
+					</select><br/>
+				Sub Parte: <select id="new-submenu">
+						<% for(int i=0; i<list_me.size(); i++){
+							CMenu men=list_me.get(i);%>
+							<option value="<%=men.getidmenu()%>"><%= men.getdescripcion()%></option>
+						<%} %> 
+						
+						</select>
+				<br/>
+				Tama&ntilde;o:<select id="new-tam"> 
+						<option value="3">Grande</option>
+						<option value="2">Mediano</option>
+						<option value="1">Peque&ntilde;o</option>
+						<option value="0">Sin Texto</option>
+				</select>
+				<textarea id="cont-text" class="editor"></textarea>
+				<br/><br/>
+				<div class="centerd">
+						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+					<a href="#validacion_prin" class="ui-state-default ui-corner-all button-delete" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
+				</div>
+				<br/><br/>	
+				<div style="clear: both;"></div>
+				
+				<script  type="text/javascript">
 			 function convertirCaracter(caracter){
 					caracter=replaceAll(caracter,"á","&aacute;");
 					caracter=replaceAll(caracter,"é","&eacute;");
@@ -96,39 +132,3 @@
         		$('#new-titulo').val('');
 			}
 			</script>
-			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
-			<div class="centerd">
-			<H2>Nuevo Contenido</H2>
-			</div>
-				<div id="validacion_prin" class="validacion"></div>
-				Titulo: <input id="new-titulo" type="text" size="60" /><br/>
-				Area Pertenece:
-					<select id="new-area" onchange="cambiarArea()">
-						<% for(int j=0; j<list.size();j++){ 
-							CArea area=list.get(j);
-						%>
-							<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
-						<% } %>
-					</select><br/>
-				Sub Parte: <select id="new-submenu">
-						<% for(int i=0; i<list_me.size(); i++){
-							CMenu men=list_me.get(i);%>
-							<option value="<%=men.getidmenu()%>"><%= men.getdescripcion()%></option>
-						<%} %> 
-						
-						</select>
-				<br/>
-				Tama&ntilde;o:<select id="new-tam"> 
-						<option value="3">Grande</option>
-						<option value="2">Mediano</option>
-						<option value="1">Peque&ntilde;o</option>
-						<option value="0">Sin Texto</option>
-				</select>
-				<textarea id="cont-text" class="editor"></textarea>
-				<br/><br/>
-				<div class="centerd">
-						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-					<a href="#validacion_prin" class="ui-state-default ui-corner-all button-delete" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
-				</div>
-				<br/><br/>	
-				<div style="clear: both;"></div>

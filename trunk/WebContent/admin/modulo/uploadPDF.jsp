@@ -1,3 +1,41 @@
+<form id="file_uploadPDF" action="../uploadpdf" method="POST" enctype="multipart/form-data">
+    			<h2>Subir PDF</h2>
+				<div id="validacion_pdf" class="validacion"></div>
+				<table id="pdfs" style="display:none"></table>
+				<table  width="80%" CELLSPACING="8">
+					<tr>
+						<td>IDEN</td>
+						<td><label id="idpdf">NEW</label></td>	
+					</tr>
+					<tr>
+						
+						<td>Titulo</td>
+						<td><input id="titulopdf" type="text" size="40"/> </td>	
+					</tr>
+					<tr>
+						<td>Descripci&oacute;n</td>
+						<td><textarea id="descripcionpdf" rows="2" cols="40"></textarea> </td>	
+					</tr>
+					<tr>
+						<td>Imagen</td>
+						<td>
+						<input id="fileupload_pdf" type="file" name="files[]" ><BR/>
+						<label id="pathpdf">NO SE HA SUBIDO PDF</label><br/>
+						</td>	
+					</tr>	
+				</table>
+								
+				<br/><br/>
+				<div class="centerd">
+						<a href="#validacion_pdf"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+						<a href="#validacion_pdf" onclick="guardarPDF()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+						<a href="#validacion_pdf"  onclick="eliminar_Contenido(2)"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+							
+				</div>
+				<br/><br/>
+	
+    
+</form>
 <script  type="text/javascript">
 $(document).ready(function () {
 	$("#pdfs").flexigrid
@@ -12,7 +50,6 @@ $(document).ready(function () {
 	    title: 'PDF',
 	    width: 600,
 	    height: 200
-	    
 	});
 	
 });
@@ -83,101 +120,53 @@ $(function () {
 });
 
 function guardarPDF(){
-	if(editidmenu>0){
+	
 	var titulo=convertirCaracter($.trim($("#titulopdf").val()));
 	var descripcion=convertirCaracter($.trim($("#descripcionpdf").val()));	
-		if(titulo!=''){
-			if(descripcion!=""){
-			
-			if(idmultimedia2==0){
-				cadena = [ 	'idimagen='   + idpdf,
+	b=editidmenu<1;
+	if(b) $("#validacion_pdf").html("Debe seleccionar un item");
+	else{ b=titulo=="";
+		if(b) $("#validacion_pdf").html("Debe ingresar el titulo");
+			else{ b=descripcion=="";
+					if(b) $("#validacion_pdf").html("Debe ingresar la descripcion");
+				}
+		}
+	
+	if(!b){
+		
+		$("#validacion_pdf").html("");	
+		cadena ="";	
+		if(idmultimedia2==0){
+					cadena = [ 	'idimagen='   + idpdf,
 			             	'a=guardaredit',
 				            'titulo='+Base64.encode(titulo),
 				            'contenido='+Base64.encode(descripcion),
 				            'idmenu='     + editidmenu
 				        ].join('&');
-			
-			
-						  $.ajax({
-						        url: "../SContenido",
-						        data: cadena,
-						  	    type: 'post',
-						        dataType: 'json',
-						        success: function(data){
-						        	mensaje(data.mensaje); 	
-						        		CargarPDF();
-						        		limpiar();
-						        }
-						    });
-			}else{
-				cadena = [ 	'idimagen='   + idpdf,
+				}else{
+					cadena = [ 	'idimagen='   + idpdf,
 			             	'a=updateedit',
 				            'titulo='+Base64.encode(titulo),
 				            'contenido='+Base64.encode(descripcion),
 				            'idmenu='     + editidmenu,
 				            'idconte='+idmultimedia2
 				        ].join('&');
-				$.ajax({
-			        url: "../SContenido",
-			        data: cadena,
-			  	    type: 'post',
-			        dataType: 'json',
-			        success: function(data){
-			        	mensaje(data.mensaje); 	
-			        		limpiar();
-			        		CargarPDF();
-			        }
-			    });
-			}		  
-			}else{
-				$("#validacion_pdf").html("Debe ingresar la descripcion");
 			}
-		}else{
-			$("#validacion_pdf").html("Debe ingresar el titulo");	
-		}
-	}else{
-		$("#validacion_pdf").html("Debe seleccionar un item");
+		 $.ajax({
+		        url: "../SContenido",
+		        data: cadena,
+		  	    type: 'post',
+		        dataType: 'json',
+		        success: function(data){
+		        	mensaje(data.mensaje); 	
+		        		CargarPDF();
+		        		limpiar();
+		        }
+		    });
+			
 	}
 }
 
 
 
 </script>
-<form id="file_uploadPDF" action="../uploadpdf" method="POST" enctype="multipart/form-data">
-    			<h2>Subir PDF</h2>
-				<div id="validacion_pdf" class="validacion"></div>
-				<table id="pdfs" style="display:none"></table>
-				<table  width="80%" CELLSPACING="8">
-					<tr>
-						<td>IDEN</td>
-						<td><label id="idpdf">NEW</label></td>	
-					</tr>
-					<tr>
-						
-						<td>Titulo</td>
-						<td><input id="titulopdf" type="text" size="40"/> </td>	
-					</tr>
-					<tr>
-						<td>Descripci&oacute;n</td>
-						<td><textarea id="descripcionpdf" rows="2" cols="40"></textarea> </td>	
-					</tr>
-					<tr>
-						<td>Imagen</td>
-						<td>
-						<input id="fileupload_pdf" type="file" name="files[]" ><BR/>
-						<label id="pathpdf">NO SE HA SUBIDO PDF</label><br/>
-						</td>	
-					</tr>	
-				</table>
-								
-				<br/><br/>
-				<div class="centerd">
-						<a href="#validacion_pdf"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
-						<a href="#validacion_pdf" onclick="guardarPDF()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-						<a href="#validacion_pdf"  onclick="eliminar_Contenido(2)"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
-							
-				</div>
-				<br/><br/>
-	
-    
-</form>

@@ -9,18 +9,22 @@ $("#editconte").cleditor()[0].focus();
 
 
 function Guardaredit(){
-	  if(editidmenu>0){
-		  if($.trim($('#edit-titulo').val())!=""){
-			  var contenido=convertirCaracter($('#editconte').val());
-			  var data_cont=Base64.encode(contenido);
-			  var titulo=Base64.encode($('#edit-titulo').val());
-				cadena = [ 	'idmenu='   + editidmenu,
+	var titulo=convertirCaracter($.trim($('#edit-titulo').val()));
+	var descripcion=convertirCaracter($.trim($('#editconte').val()));
+	
+	b=editidmenu<1;
+	if(b) $("#validacion_data").html("Debe seleccionar un item");
+	else{ b=titulo=="";
+			if(b) $("#validacion_data").html("Debe ingresar el titulo");
+		}
+	  if(!b){
+		  	$("#validacion_data").html("No se ha actualizado");
+			  		cadena = ['idmenu='   + editidmenu,
 				             	'a=guardaredit',
-					            'titulo='+titulo,
-					            'contenido='+data_cont,
+					            'titulo='+Base64.encode(titulo),
+					            'contenido='+Base64.encode(descripcion),
 					            'size='+$('#edit-tam').val()
-					        ].join('&');
-				 $("#validacion_data").html("No se ha actualizado"); 
+					        ].join('&');	  
 				  $.ajax({
 				        url: "../SMenu",
 				        data: cadena,
@@ -35,15 +39,7 @@ function Guardaredit(){
 				    }); 
 				  
 				  
-		  }else{
-			  $("#validacion_data").html("El titulo no puede estar vacio");
-		  }
-	  }else{
-		  $("#validacion_data").html("Debe Seleccionar un item");
-		  
-		    }
-	  
-	
+		  }	
 }
 
 		function editar(idmenu){
