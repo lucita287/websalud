@@ -7,7 +7,7 @@ if(sessiones!=null && sessiones.getAttribute("user")!=null){
 %>
 
 <head>
-<jsp:include page="modulo/top.jsp" />
+<jsp:include page="modulo_contenido/top.jsp" />
 </head>
 <body>
 <div class="back_all">
@@ -30,27 +30,27 @@ if(sessiones!=null && sessiones.getAttribute("user")!=null){
  <div id="main">
 <div style="clear: both;"></div>
 <div id="menu-principal" >
-<jsp:include page="modulo/menu.jsp" />
+<jsp:include page="modulo_contenido/menu.jsp" />
 </div>
 <div id="contenido">
 <% if(portal==1){ %>
-<jsp:include page="modulo/perfil.jsp" />
+<jsp:include page="modulo_contenido/perfil.jsp" />
 <% }else if(portal==2){ %>
-<jsp:include page="modulo/edit_contenido.jsp" />
+<jsp:include page="modulo_contenido/edit_contenido.jsp" />
 <% }else if(portal==3){ %>
-<jsp:include page="modulo/new_contenido.jsp" />
+<jsp:include page="modulo_contenido/new_contenido.jsp" />
 <% }else if(portal==6){ %>
-<jsp:include page="modulo/header_area.jsp" />
+<jsp:include page="modulo_contenido/header_area.jsp" />
 <% }else if(portal==4){ %>
-<jsp:include page="modulo/noticia.jsp" />
+<jsp:include page="modulo_contenido/noticia.jsp" />
 <% }else if(portal==5){ %>
-<jsp:include page="modulo/actividad.jsp" />
+<jsp:include page="modulo_contenido/actividad.jsp" />
 <% }else if(portal==7){ %>
-<jsp:include page="modulo/usuario.jsp" />
+<jsp:include page="modulo_contenido/usuario.jsp" />
 <% }else if(portal==8){ %>
-<jsp:include page="modulo/permiso.jsp" />
+<jsp:include page="modulo_contenido/permiso.jsp" />
 <% }else if(portal==9){ %>
-<jsp:include page="modulo/exam_auto.jsp" />
+<jsp:include page="modulo_contenido/exam_auto.jsp" />
 <%} %>
 </div>
 <div style="clear: both;"></div>
