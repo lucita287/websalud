@@ -1,36 +1,41 @@
 CREATE TABLE noticia (
-  idnoticia    int(11) NOT NULL AUTO_INCREMENT, 
-  titulo       varchar(100) NOT NULL, 
-  descripcion  varchar(400) NOT NULL, 
-  imagen       varchar(255), 
-  areaidarea   int(11) NOT NULL, 
-  fecha_inicio datetime NOT NULL, 
-  fecha_fin    datetime NOT NULL, 
-  tipo         int(10) NOT NULL comment '1-> noticia
-2-> informacion', 
+  idnoticia              int(11) NOT NULL AUTO_INCREMENT, 
+  titulo                 varchar(100) NOT NULL, 
+  descripcion            varchar(400) NOT NULL, 
+  areaidarea             int(11) NOT NULL, 
+  fecha_inicio           datetime NOT NULL, 
+  fecha_fin              datetime NOT NULL, 
+  prioridad              int(11) DEFAULT 1 NOT NULL, 
+  multimediaidmultimedia int(11), 
+  descripcion_corta      varchar(100) NOT NULL, 
+  estado                 int(10) DEFAULT 1 NOT NULL comment '1-> activo, 0 -> inactivo', 
+  createtime             timestamp DEFAULT CURRENT_TIMESTAMP, 
   PRIMARY KEY (idnoticia));
 CREATE TABLE menu (
   idmenu      int(11) NOT NULL AUTO_INCREMENT, 
   descripcion varchar(50) NOT NULL, 
   areaidarea  int(11) NOT NULL, 
-  contenido   varchar(4000), 
+  contenido   text, 
   idmenu_rec  int(11), 
   size        int(11) DEFAULT 4 NOT NULL, 
   PRIMARY KEY (idmenu));
 CREATE TABLE area (
-  idarea      int(11) NOT NULL AUTO_INCREMENT, 
-  descripcion varchar(60) NOT NULL, 
-  areaidarea  int(11), 
+  idarea                 int(11) NOT NULL AUTO_INCREMENT, 
+  nombre                 varchar(60) NOT NULL, 
+  areaidarea             int(11), 
+  descripcion            text, 
+  size                   int(11) DEFAULT 3 NOT NULL comment '0-> sin texto, 1 -> pequeño , 2 -> mediano, 3 -> Grande', 
+  multimediaidmultimedia int(11), 
   PRIMARY KEY (idarea));
 CREATE TABLE encabezado (
-  idencabezado int(11) NOT NULL AUTO_INCREMENT, 
-  imagen       varchar(150) NOT NULL, 
-  areaidarea   int(11) NOT NULL, 
-  PRIMARY KEY (idencabezado));
+  areaidarea             int(11) NOT NULL, 
+  multimediaidmultimedia int(11) NOT NULL, 
+  PRIMARY KEY (areaidarea, 
+  multimediaidmultimedia));
 CREATE TABLE contenido (
   menuidmenu             int(11) NOT NULL, 
   idcontenido            int(11) NOT NULL AUTO_INCREMENT, 
-  descripcion            varchar(100) NOT NULL, 
+  descripcion            text NOT NULL, 
   titulo                 varchar(100) NOT NULL, 
   multimediaidmultimedia int(11) NOT NULL, 
   PRIMARY KEY (idcontenido));
@@ -95,3 +100,6 @@ ALTER TABLE usuario_permisos ADD INDEX FKusuario_pe436420 (permisosidpermiso), A
 ALTER TABLE area ADD INDEX FKarea245370 (areaidarea), ADD CONSTRAINT FKarea245370 FOREIGN KEY (areaidarea) REFERENCES area (idarea);
 ALTER TABLE multimedia ADD INDEX FKmultimedia696932 (usuarioidusuario), ADD CONSTRAINT FKmultimedia696932 FOREIGN KEY (usuarioidusuario) REFERENCES usuario (idusuario);
 ALTER TABLE contenido ADD INDEX FKcontenido417686 (multimediaidmultimedia), ADD CONSTRAINT FKcontenido417686 FOREIGN KEY (multimediaidmultimedia) REFERENCES multimedia (idmultimedia);
+ALTER TABLE area ADD INDEX FKarea432514 (multimediaidmultimedia), ADD CONSTRAINT FKarea432514 FOREIGN KEY (multimediaidmultimedia) REFERENCES multimedia (idmultimedia);
+ALTER TABLE encabezado ADD INDEX FKencabezado219439 (multimediaidmultimedia), ADD CONSTRAINT FKencabezado219439 FOREIGN KEY (multimediaidmultimedia) REFERENCES multimedia (idmultimedia);
+ALTER TABLE noticia ADD INDEX FKnoticia914947 (multimediaidmultimedia), ADD CONSTRAINT FKnoticia914947 FOREIGN KEY (multimediaidmultimedia) REFERENCES multimedia (idmultimedia);
