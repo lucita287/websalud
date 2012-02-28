@@ -49,6 +49,7 @@ dbo.Close();
 				</div>
 				
 			</div>
+			
 			<div id="gallery_output">
 			<h3><label id="first_imagen" ></label></h3>
 			<div id="first_conte"></div>
@@ -57,13 +58,13 @@ dbo.Close();
 				<%if(h==0){%>
 					<img id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
 				<%}else{ %>					
-					<img style="display: none;" id="img<%=h %>" width="600px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					<img style="display: none;" id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
 				<%}
 			} %>
 				<div style="clear: both;"></div>	
 				
 			
-			</div>	
+			</div>
 					
 	</div>
 		
@@ -76,24 +77,23 @@ if(listpdf.size()>0){ %>
 				
 					<tr>
 						<td rowspan="2">		
-						<a href="<%=temp.getmultimedia().getdireccion_relativa()%>">
-						<img src="images/pdf.png" width="64px" height="64px"/> 
-						</a>
-						</td>
 						<td>
 							
 							<div id="pdf_titulo">
-							<a href="<%=temp.getmultimedia().getdireccion_relativa()%>">
+							<a  target="_blank" href="<%=temp.getmultimedia().getdireccion_relativa()%>">
 								<%= temp.gettitulo() %>
 							</a>
 							</div>
 						</td>
 					</tr>
+					
 					<tr>
 						<td>
-						<div id="pdf_descripcion">
-						<%= temp.getdescripcion() %>
-						</div>
+							<%if(temp.getdescripcion().length()>0){ %>
+							<div id="pdf_descripcion">
+								<%= temp.getdescripcion() %>
+							</div>
+							<% }%>
 						</td>
 					</tr>		
 				

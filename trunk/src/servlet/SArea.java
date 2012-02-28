@@ -66,7 +66,7 @@ public class SArea extends HttpServlet {
 			int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmultimedia")));
 			int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 			String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
-			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 2990, "Contenido"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 3, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
 			
 			if(validacion.compareTo("")==0){

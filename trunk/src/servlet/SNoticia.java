@@ -58,6 +58,7 @@ public class SNoticia extends HttpServlet {
 			int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 			int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 			int prioridad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("prioridad")));
+			int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 			String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 			titulo=base64.decodificar(titulo);
 			titulo=valid.Limpiarvalor(titulo);
@@ -75,7 +76,7 @@ public class SNoticia extends HttpServlet {
 			String validacion=valid.ValidarCampoVacio(titulo, "titulo");
 			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "Descripcion"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 3990, "Descripcion"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Descripcion"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(descripcion, "Descripcion corta"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descripcion, 100, "Descripcion corta"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.isFechaValida(fecha_inicio,  "Fecha inicio"):validacion;
@@ -86,7 +87,7 @@ public class SNoticia extends HttpServlet {
 				Date ffecha_fin=valid.CambiarFormatoddmmyy(fecha_fin);
 				CArea area=dbo.getCAreaEspecifico(idarea);
 				CMultimedia multi=dbo.getMultimediaEspecifica(idmultimedia);
-				CNoticia noti=new CNoticia(titulo,contenido,descripcion,multi, ffecha_inicio, ffecha_fin,  prioridad, 0, area);
+				CNoticia noti=new CNoticia(titulo,contenido,descripcion,multi, ffecha_inicio, ffecha_fin,  prioridad, 0,estado, area);
 				boolean b=dbo.SafeNoticia(noti);
 				if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";
@@ -102,7 +103,7 @@ public class SNoticia extends HttpServlet {
 			 if(noti!=null){
 				 result= "{descripcion:\""+noti.getDescripcion()+"\",idarea:\""+noti.getAreaidarea().getidarea()+"\",areanombre:\""+
 						 noti.getAreaidarea().getnombre()+"\",idimagen:"+noti.getMultimediaidmultimedia().getidimagen()+",idimagendir:\""+noti.getMultimediaidmultimedia().getdireccion_relativa()+"\","
-					 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+noti.getTitulo()+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+noti.getDescripcion_corta()+"\"}";
+					 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+noti.getTitulo()+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+noti.getDescripcion_corta()+"\",estado:"+noti.getEstado()+"}";
 			 }
 			 out.println(base64.codificar(result));
 		}else if(action.equalsIgnoreCase("safe_noticia")){
@@ -111,6 +112,7 @@ public class SNoticia extends HttpServlet {
 			int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 			int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 			int prioridad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("prioridad")));
+			int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 			String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 			titulo=base64.decodificar(titulo);
 			titulo=valid.Limpiarvalor(titulo);
@@ -124,6 +126,7 @@ public class SNoticia extends HttpServlet {
 			String descripcion=(valid.ValidarRequest(request.getParameter("descripcion")));		
 			descripcion=base64.decodificar(descripcion);
 			descripcion=valid.Limpiarvalor(descripcion);
+			
 			String validacion=valid.ValidarSiesMayor(idnoticia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "Contenido"):validacion;
@@ -149,7 +152,7 @@ public class SNoticia extends HttpServlet {
 				noti.setDescripcion_corta(descripcion);
 				noti.setTitulo(titulo);
 				noti.setPrioridad(prioridad);
-				
+				noti.setEstado(estado);
 				boolean b=dbo.UpdateNoticia(noti);
 				if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";

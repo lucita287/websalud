@@ -62,6 +62,18 @@ dbo.Close();
 		
 
 <% } %>
+
+<script>
+
+$(function() {
+	$(".jCarouselLite2").jCarouselLite({
+		vertical: true,
+		btnNext: "#next_info",
+		btnPrev: "#prev_info",
+		visible: <%=(list_news.size()<3)?list_news.size():3%>
+	});
+});
+</script>
 <div style="clear: both;"></div>
 </div>
 <div style="clear: both;"></div>

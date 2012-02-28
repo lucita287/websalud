@@ -86,6 +86,10 @@ public class CValidation {
 	}
 	public String Limpiarvalor(String campo){
 		campo=campo.replaceAll("\"", "'");
+		campo=campo.replaceAll("\t", " ");
+		campo=campo.replaceAll("\r", " ");
+		campo=campo.replaceAll("\f", " ");
+		campo=campo.replaceAll("\n", " ");
 		campo=campo.trim();
 		return campo;
 	}
@@ -125,7 +129,7 @@ public class CValidation {
 		String result="";
 		campo=campo.trim();
 		if(campo.length()>longitud){
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" tiene una longitud mayor \"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" tiene una longitud mayor, la longitu maxima es "+longitud+" \"}";
 		}
 		return result;
 	}

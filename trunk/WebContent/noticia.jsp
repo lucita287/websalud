@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-
+<link rel="shortcut icon" href="favi.ico" type="image/x-icon" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title> <%=(info_new!=null)?info_new.getTitulo():"NOTICIAS"%>/Unidad de Salud</title>
 <meta name="keywords" content="" />

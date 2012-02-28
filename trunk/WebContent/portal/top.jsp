@@ -6,6 +6,7 @@
 <title>Unidad de Salud / USAC</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
+<link rel="shortcut icon" href="favi.ico" type="image/x-icon" />
 <link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 <link href="css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />
