@@ -62,9 +62,8 @@ public class SContenido extends HttpServlet {
 			String validacion=valid.ValidarSiesMayor(idmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idmultimedia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un archivo\"}"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "titulo"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "titulo"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 100, "Contenido"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 100, "Titulo"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 1000, "Contenido"):validacion;
 			
 				if(validacion.compareTo("")==0){
 					CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
@@ -84,20 +83,21 @@ public class SContenido extends HttpServlet {
 		}else if(action.equalsIgnoreCase("editconte")){
 			int idcontenido=Integer.parseInt(request.getParameter("idcontenido"));
 			CContenido contenido=dbo.getContenido(idcontenido);
-			String  result="{\"titulo\":\""+base64.codificar(contenido.gettitulo())+"\",\"descripcion\":\""+base64.codificar(contenido.getdescripcion())+"\",\"idimagen\":\""+contenido.getmultimedia().getidimagen()+"\",\"direccion\":\""+contenido.getmultimedia().getdireccion_relativa()+"\"}";
-			out.println(result);
+			String result="{titulo:\""+contenido.gettitulo()+"\",descripcion:\""+contenido.getdescripcion()+"\",idimagen:"+contenido.getmultimedia().getidimagen()+",direccion:\""+contenido.getmultimedia().getdireccion_relativa()+"\"}";
+			out.println(base64.codificar(result));
 		}else if(action.equalsIgnoreCase("updateedit")){
 			String titulo=base64.decodificar(request.getParameter("titulo"));
 			String contenido=base64.decodificar(request.getParameter("contenido"));
+			contenido=valid.Limpiarvalor(contenido);
+			titulo=valid.Limpiarvalor(titulo);
 			int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 			int idcontenido=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idconte")));
 			
 			String validacion=valid.ValidarSiesMayor(idcontenido, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un archivo de la tabla\"}");
 			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idmultimedia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un archivo\"}"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "titulo"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "titulo"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 100, "Contenido"):validacion;			
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 100, "Titulo"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 1000, "Contenido"):validacion;			
 			String result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe llenar todos los campos\"}";
 			
 			if(validacion.compareTo("")==0){

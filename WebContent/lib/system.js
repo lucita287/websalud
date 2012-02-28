@@ -13,15 +13,6 @@
 	}
 
 
-	$(function() {
-		
-		$(".jCarouselLite2").jCarouselLite({
-			vertical: true,
-			btnNext: "#next_info",
-			btnPrev: "#prev_info",
-			visible: 3
-		});
-	});
 	$(function() {	
 	$(".news-inicio").click(function() {
 

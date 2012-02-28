@@ -15,9 +15,11 @@ public class CNoticia {
 	private int idnoticia;
 	private CArea areaidarea;
 	private String descripcion_corta;
+	private int estado;
+	
 	public CNoticia(String titulo, String descripcion,String descripcion_corta,
 			CMultimedia multimediaidmultimedia, Date fecha_inicio,
-			Date fecha_fin, int prioridad, int idnoticia, CArea areaidarea) {
+			Date fecha_fin, int prioridad, int idnoticia, int estado,CArea areaidarea) {
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.multimediaidmultimedia = multimediaidmultimedia;
@@ -27,8 +29,21 @@ public class CNoticia {
 		this.idnoticia = idnoticia;
 		this.areaidarea = areaidarea;
 		this.descripcion_corta=descripcion_corta;
+		this.estado=estado;
+	}
+	/**
+	 * @return the estado
+	 */
+	public int getEstado() {
+		return estado;
 	}
 
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
 	/**
 	 * @return the descripcion_corta
 	 */

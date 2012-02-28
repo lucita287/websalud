@@ -51,7 +51,7 @@ public class SMenuTable extends HttpServlet {
 		 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")));
 		 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
 		 int pqtype=1;
-		 if(qtype.equalsIgnoreCase("area")){
+		 if(qtype.trim().equalsIgnoreCase("area")){
 			 pqtype=2;
 		 }
 		 
@@ -74,7 +74,7 @@ public class SMenuTable extends HttpServlet {
 			 asc=0;
 		 }
 		 
-		 
+		
 		ArrayList<CMenu> list=dbo.getMenuLista(min,max,pqtype,busqueda,ordenar,asc);
 		
 		 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";

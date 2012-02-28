@@ -59,34 +59,36 @@ public class SNoticiaTable extends HttpServlet {
 		 
 		 int min=((page-1)*rp)+1;
 		 int max=page*(rp);
-		 int ordenar=2;
+		 int ordenar=6;
 		 
-		 //if(order.equalsIgnoreCase("idmenu")){
-		 //	 ordenar=2;
-		 //}else if(order.equalsIgnoreCase("descripcion")){
-		 //	 ordenar=3;
-		 //}else if(order.equalsIgnoreCase("area")){
-		 //	 ordenar=8;
-		 //}else if(order.equalsIgnoreCase("menu_rec")){
-		 //	 ordenar=9;
-		 //}
+		 if(order.equalsIgnoreCase("idnoticia")){
+		 	 ordenar=1;
+		 }else if(order.equalsIgnoreCase("titulo")){
+		 	 ordenar=3;
+		 }else if(order.equalsIgnoreCase("area")){
+		 	 ordenar=9;
+		 }else if(order.equalsIgnoreCase("fecha")){
+		 	 ordenar=6;
+		 }else if(order.equalsIgnoreCase("estado")){
+		 	 ordenar=6;
+		 }
 		 
-		 int asc=1;
-		 if(typeorder.equalsIgnoreCase("desc")){
-			 asc=0;
+		 int asc=0;
+		 if(typeorder.equalsIgnoreCase("asc")){
+			 asc=1;
 		 }
 		 
 		 
-		ArrayList<CNoticia> list=dbo.getListaNoticias();
+		ArrayList<CNoticia> list=dbo.getListaNoticias(ordenar,asc,min,max,pqtype,busqueda);
 		
 		 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-		 info+="<rows><page>"+page+"</page><total>"+list.size()+"</total>";
+		 info+="<rows><page>"+page+"</page><total>"+dbo.getNoticiasTotal(pqtype,busqueda)+"</total>";
 		 
 		 String data="";
 		 for(int i=0; i<list.size();i++){
 			 CNoticia temp=list.get(i);
 			 
-		data+="<row id='"+temp.getIdnoticia()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editarnoticia("+temp.getIdnoticia()+")' name='idmenu_radio' value='"+temp.getIdnoticia()+"' />]]></cell><cell><![CDATA["+temp.getIdnoticia()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell><cell><![CDATA["+temp.getAreaidarea().getnombre()+"]]></cell><cell><![CDATA["+temp.getFormatoFecha(temp.getFecha_inicio())+"]]></cell></row>";	 
+		data+="<row id='"+temp.getIdnoticia()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editarnoticia("+temp.getIdnoticia()+")' name='idmenu_radio' value='"+temp.getIdnoticia()+"' />]]></cell><cell><![CDATA["+temp.getIdnoticia()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell><cell><![CDATA["+temp.getAreaidarea().getnombre()+"]]></cell><cell><![CDATA["+temp.getFormatoFecha(temp.getFecha_inicio())+"]]></cell><cell><![CDATA["+(temp.getEstado()==1?"ACTIVO":"DESACTIVADO")+"]]></cell></row>";	 
 
 		 }
 		 info+=data+"</rows>";
