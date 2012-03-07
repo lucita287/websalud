@@ -49,28 +49,7 @@
 				<div style="clear: both;"></div>
 				
 				<script  type="text/javascript">
-			 function convertirCaracter(caracter){
-					caracter=replaceAll(caracter,"á","&aacute;");
-					caracter=replaceAll(caracter,"é","&eacute;");
-					caracter=replaceAll(caracter,"í","&iacute;");
-					caracter=replaceAll(caracter,"ó","&oacute;");
-					caracter=replaceAll(caracter,"ú","&uacute;");
-					caracter=replaceAll(caracter,"Á","&Aacute;");
-					caracter=replaceAll(caracter,"É","&Eacute;");
-					caracter=replaceAll(caracter,"Í","&Iacute;");
-					caracter=replaceAll(caracter,"Ó","&Oacute;");
-					caracter=replaceAll(caracter,"Ú","&Uacute;");
-					caracter=replaceAll(caracter,"ñ","&ntilde;");
-					caracter=replaceAll(caracter,"Ñ","&Ntilde;");
-					caracter=replaceAll(caracter,"Ü","&Uuml;");
-					caracter=replaceAll(caracter,"ü","&uuml;");
-					return caracter;
-				}
-			  function replaceAll( text, busca, reemplaza ){
-				  while (text.toString().indexOf(busca) != -1)
-				      text = text.toString().replace(busca,reemplaza);
-				  return text;
-				}
+
 			  $(document).ready(function () {
 				  $("#cont-text").cleditor({
 					    width:        600,
@@ -78,6 +57,24 @@
 					    });
 				  $("#cont-text").cleditor()[0].focus();
 			  });
+			  $( function(){
+					
+				  var cledit = $("#cont-text").cleditor()[0];
+				  $(cledit.$frame[0]).attr("id","cleditCool");
+
+				  var cleditFrame;
+				  if(!document.frames) cleditFrame = $("#cleditCool")[0].contentWindow.document;
+				  else cleditFrame = document.frames["cleditCool"].document;
+				    
+			$(cleditFrame).contents().find('body').bind('paste', function(){
+				  
+			      setTimeout(function() {
+			          mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
+			      	$("#cont-text").cleditor()[0].clear();
+			      }, 100);
+			     
+			});
+			} );
 			  
 			  function Guardarnew(){
 

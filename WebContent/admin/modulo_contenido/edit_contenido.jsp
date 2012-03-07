@@ -7,32 +7,7 @@ if(ss!=null && session.getAttribute("user")!=null){
 %>				
 			<script  type="text/javascript">
 			var editidmenu=0;
-			 function convertirCaracter(caracter){
-					caracter=replaceAll(caracter,"á","&aacute;");
-					caracter=replaceAll(caracter,"é","&eacute;");
-					caracter=replaceAll(caracter,"í","&iacute;");
-					caracter=replaceAll(caracter,"ó","&oacute;");
-					caracter=replaceAll(caracter,"ú","&uacute;");
-					caracter=replaceAll(caracter,"Á","&Aacute;");
-					caracter=replaceAll(caracter,"É","&Eacute;");
-					caracter=replaceAll(caracter,"Í","&Iacute;");
-					caracter=replaceAll(caracter,"Ó","&Oacute;");
-					caracter=replaceAll(caracter,"Ú","&Uacute;");
-					caracter=replaceAll(caracter,"ñ","&ntilde;");
-					caracter=replaceAll(caracter,"Ñ","&Ntilde;");
-					caracter=replaceAll(caracter,"Ü","&Uuml;");
-					caracter=replaceAll(caracter,"ü","&uuml;");
-					caracter=replaceAll(caracter,String.fromCharCode(8211),"&#8211;");
-					caracter=replaceAll(caracter,String.fromCharCode(8212),"&#8212;");
-					caracter=replaceAll(caracter,String.fromCharCode(8226),"&#8226;");
-					caracter=replaceAll(caracter,String.fromCharCode(183),"&#183;");
-					return caracter;
-				}
-			  function replaceAll( text, busca, reemplaza ){
-				  while (text.toString().indexOf(busca) != -1)
-				      text = text.toString().replace(busca,reemplaza);
-				  return text;
-				}					 
+					 
 			  $(document).ready(function () {
 				  $( "#dialog:ui-dialog" ).dialog( "destroy" );
 				  $("#flex1").flexigrid

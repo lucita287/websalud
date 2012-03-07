@@ -49,7 +49,7 @@ public class SLogin extends HttpServlet {
 		 if(perfil.equalsIgnoreCase("2")){
 			 
 			 CUsuario usuario=dbo.getUsuario(user);
-			 if( usuario!=null && usuario.getpassword().compareTo(pass)==0){
+			 if( usuario!=null && usuario.getpassword().compareTo(pass)==0&& usuario.getEstado()==1){
 				 HttpSession session = request.getSession(true);
 					session.setAttribute("username", user);
 					session.setAttribute("user", user);

@@ -10,7 +10,8 @@ ArrayList<CNoticia> list_news=dbo.getNoticias();
 dbo.Close();
 %>
 
-<% if(list_news.size()>0){ %>
+<% 
+if(list_news.size()>0){ %>
 <div id="Panel-inicio" class="ui-widget-content ui-corner-all">
 						<h3 class="ui-widget-header ui-corner-all">Noticias</h3>				
 
