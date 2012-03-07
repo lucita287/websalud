@@ -16,6 +16,7 @@ import data.CEncabezado;
 import data.CMultimedia;
 import data.CMenu;
 import data.CNoticia;
+import data.CPermiso;
 import data.CPregunta;
 import data.CSubcategoria;
 import data.CUsuario;
@@ -60,11 +61,11 @@ public class CDataBase {
 	public CUsuario getUsuario(String user){
 		CUsuario temp=null;
 		try{    
-        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idusuario, nombre, apellido, nick, password, telefono, email, areaidarea FROM usuario where nick=? ");
+        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idusuario, nombre, apellido, nick, password, telefono, email, areaidarea, estado FROM usuario where nick=? ");
         	stm.setString(1,user);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){                							
-                                temp=new CUsuario(rs.getInt("idusuario"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("nick"),rs.getString("password"),rs.getString("telefono"),rs.getString("email"),null);
+                                temp=new CUsuario(rs.getInt("idusuario"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("nick"),rs.getString("password"),rs.getString("telefono"),rs.getString("email"),rs.getInt("estado"),null);
                                
                 }
                 rs.close();
@@ -158,7 +159,7 @@ public class CDataBase {
 "noti.fecha_fin fecha_fin, noti.prioridad prioridad, a.nombre nombre_area, m.idmultimedia idmultimedia, m.direccion direccion_m, m.direccion_relativa direccion_rel, noti.estado  "+
   "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
   "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia "+
-  "  where estado = 1 and fecha_inicio<=now() and fecha_fin>=now()  order by prioridad desc ";
+  "  where estado = 1 and fecha_inicio<=now() and adddate(fecha_fin,1)>=now()  order by prioridad desc ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
@@ -173,7 +174,7 @@ public class CDataBase {
 			stm.close();
 		}
 		catch(Throwable e){
-			
+			e.printStackTrace();
 		}
 		return ret;
 	}
@@ -791,13 +792,13 @@ public CContenido getContenido(int idcontenido){
 						"FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
 						"left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia, (SELECT @rownum:=0) ro "+
 						"where  upper("+(type==1?"noti.titulo":"a.nombre")+") like ? "+
-						"order by ? "+((asc==1)?"ASC":"DESC") +") table1 "+
-						" where rownum>=? and rownum<=? ";
+						" ) table1 "+
+						" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
-			stm.setInt(2,ordenar);
-			stm.setInt(3,min);
-			stm.setInt(4,max);
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
@@ -913,4 +914,228 @@ public CContenido getContenido(int idcontenido){
 		
 		return false;
 	}
+	public ArrayList<CUsuario> getListaUsuarios(int ordenar,int asc,int min,int max,int type, String busqueda){
+		ArrayList<CUsuario> ret=new ArrayList<CUsuario>();
+		try{
+			String pqtype="nick";
+			 if(type==2)
+				 pqtype="nombre";
+			 else if(type==3)
+				 pqtype="apellido";
+			
+			String sql=" select * from "+
+						"(SELECT  "+
+						"@rownum:=@rownum+1 rownum, idusuario,nombre,apellido,nick,telefono,email,estado "+ 
+						"FROM usuario, (SELECT @rownum:=0) ro "+
+						"where "+
+						"upper("+pqtype+") like ? "+
+						") subselect "+
+						" where rownum>=? and rownum<=? "+
+						" order by ? "+((asc==1)?"ASC":"DESC") +" ";
+			
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+			
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CUsuario user=new CUsuario(rs.getInt("idusuario"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("nick"),"",rs.getString("telefono"),rs.getString("email"),rs.getInt("estado"),null);
+				ret.add(user);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public int getUsuarioTotal(int type,String busqueda){
+		int temp=0;
+		try {
+			String pqtype="nick";
+			 if(type==2)
+				 pqtype="nombre";
+			 else if(type==3)
+				 pqtype="apellido";
+
+			String query="";
+
+        		query="select count(m.idusuario) cant from "
+				+" Usuario m "
+				+"where  upper("+pqtype+") like ?";
+        		
+			
+	                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
+	                stm.setString(1,"%"+busqueda.toUpperCase().trim()+"%");
+	                
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public CUsuario getUsuarioEspecifico(int iduser){
+		CUsuario temp=null;
+		try{    
+        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idusuario, nombre, apellido, nick,  telefono, email, areaidarea,estado FROM usuario where idusuario=? ");
+        	stm.setInt(1,iduser);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                				CArea area=new CArea(rs.getInt("idusuario"),"","",0,null,null);
+                				//CArea(int idarea,String nombre,String descripcion, int size, CMultimedia idmultimedia,CArea areaidarea)
+                                temp=new CUsuario(rs.getInt("idusuario"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("nick"),"",rs.getString("telefono"),rs.getString("email"),rs.getInt("estado"),area);
+                               
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+        	e.printStackTrace();
+        }
+		return temp;
+	}
+	public boolean UpdateUsuario(CUsuario user,int idusuario){
+		PreparedStatement stm;
+		try {
+		String sql="";	
+			if(user.getpassword().compareTo("")==0){
+				sql="UPDATE  usuario SET  nombre  = ?, apellido  = ?, nick  = ?,  telefono  = ?, email  = ?, areaidarea  = ?,  updateusuario =?, estado=? WHERE idusuario=?";
+				stm = (PreparedStatement)conn.prepareStatement(sql);
+				stm.setString(1, user.getnombre());
+				stm.setString(2, user.getapellido());
+				stm.setString(3, user.getnick());
+				stm.setString(4, user.gettelefono());
+				stm.setString(5, user.getemail());
+				stm.setInt(6, user.getAreaidarea().getidarea());
+				stm.setInt(7, idusuario);
+				stm.setInt(8, user.getEstado());
+				stm.setInt(9,user.getidusuario());
+			}else{
+				sql="UPDATE  usuario SET  nombre  = ?, apellido  = ?, nick  = ?, password  = ?, telefono  = ?, email  = ?, areaidarea  = ?,  updateusuario =?, estado=? WHERE idusuario=?";	
+				stm = (PreparedStatement)conn.prepareStatement(sql);
+				stm.setString(1, user.getnombre());
+				stm.setString(2, user.getapellido());
+				stm.setString(3, user.getnick());
+				stm.setString(4, user.getpassword());
+				stm.setString(5, user.gettelefono());
+				stm.setString(6, user.getemail());
+				stm.setInt(7, user.getAreaidarea().getidarea());
+				stm.setInt(8, idusuario);
+				stm.setInt(9, user.getEstado());
+				stm.setInt(10,user.getidusuario());
+			}
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean SafeUser(CUsuario user,int idusuario){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO usuario (nombre,apellido,nick,password,telefono,email,areaidarea,estado,updateusuario) VALUES (?,?,?,?,?,?,?,?,?)");
+			
+			stm.setString(1,user.getnombre());
+			stm.setString(2, user.getapellido());
+			stm.setString(3, user.getnick());
+			stm.setString(4, user.getpassword());
+			stm.setString(5, user.gettelefono());
+			stm.setString(6, user.getemail());
+			stm.setInt(7, user.getAreaidarea().getidarea());
+			stm.setInt(8, user.getEstado());
+			stm.setInt(9, idusuario);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+public ArrayList<CPermiso> getListaPermiso(){
+		
+		
+		ArrayList<CPermiso> ret=new ArrayList<CPermiso>();
+        try{
+        	String sql="SELECT idpermiso, descripcion FROM permiso ";
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"));
+                        ret.add(permiso);
+                        
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+        	e.printStackTrace();
+        }
+        return ret;
+	}
+public ArrayList<CPermiso> getListaPermiso(int idusuario){
+	
+	
+	ArrayList<CPermiso> ret=new ArrayList<CPermiso>();
+    try{
+    	String sql="SELECT p.idpermiso, p.descripcion FROM usuario_permisos up inner join  permiso p on p.idpermiso=up.permisosidpermiso where usuarioidusuario = ?";
+            PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+            stm.setInt(1, idusuario);
+            ResultSet rs=stm.executeQuery();
+            while(rs.next()){
+            		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"));
+                    ret.add(permiso);
+                    
+            }
+            rs.close();
+            stm.close();
+    }
+    
+    catch(Throwable e){
+    	e.printStackTrace();
+    }
+    return ret;
+}
+public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list){
+	PreparedStatement stm;
+	boolean b=true;
+	try {
+		
+		stm = (PreparedStatement)conn.prepareStatement("DELETE FROM usuario_permisos WHERE  usuarioidusuario=?");
+		stm.setInt(1, idusuario);
+		 stm.executeUpdate();
+	 
+		
+		 for(int j=0; j<list.size();j++){ 
+			 stm = (PreparedStatement)conn.prepareStatement("INSERT INTO usuario_permisos(usuarioidusuario,permisosidpermiso) VALUES (?,?)");
+				stm.setInt(1, idusuario);
+				stm.setInt(2, list.get(j));
+			 if(stm.executeUpdate()>0)
+				 b= true;
+			 else  return false;
+		 }
+	} catch (SQLException e) {
+
+		e.printStackTrace();
+	}
+	
+	return b;
+}
 }

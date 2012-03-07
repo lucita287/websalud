@@ -2,12 +2,17 @@ package framework;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
+import data.CUsuario;
 
 
 public class CValidation {
@@ -29,6 +34,20 @@ public class CValidation {
 			return valor;
 		}
 	}
+	 //metodo para validar correo electronio
+	public String ValidarEmail(String correo){
+		Pattern pat = null;
+        Matcher mat = null;        
+        pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        mat = pat.matcher(correo);
+        if (mat.find()) {
+            return "";
+        }else{
+            return "{\"resultado\":\"ERROR\",\"mensaje\":\"Debe ingresar un correo electornico valido\"}";
+        }
+	}
+	
+	 	
 	public String isFechaValida(String fechax,String nombre_fecha) {
 		  try {
 		      SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -132,5 +151,73 @@ public class CValidation {
 			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" tiene una longitud mayor, la longitu maxima es "+longitud+" \"}";
 		}
 		return result;
+	}
+	public String ValidarNoLongintud(String campo,int longitud,String nombre_campo){
+		String result="";
+		campo=campo.trim();
+		if(campo.length()<longitud){
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" debe tener una longitud mayor a "+longitud+" \"}";
+		}
+		return result;
+	}
+	public String ValidarPassword(String pass,String pass2){
+		String result="";
+		if(pass.compareTo(pass2)==0){
+			if(pass.length()>=6){
+				try{
+					Integer.parseInt(pass);
+					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe contener almenos una letra\"}";	
+				}catch(Exception e){
+					result="";
+				}
+				
+			}else{
+				result="{\"resultado\":\"ERROR\",\"mensaje\":\"El password debe contener almenos 6 caracteres\"}";
+			}
+		}else{
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\" El password no coincide\"}";
+		}
+		return result;
+	}
+	public String ValidarNick(String nick,int idusuario){
+		String result="";
+		nick=nick.toLowerCase();
+		CDataBase dbo=new CDataBase();
+		dbo.Connect();
+		CUsuario usuario=dbo.getUsuario(nick);
+	if(usuario==null||(usuario!=null && idusuario==usuario.getidusuario())){
+			result="";
+		}else{
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya existe otro usuario con ese nickname\"}";
+		}
+		dbo.Close();
+		return result;
+	}
+	public String ValidarNick(String nick){
+		String result="";
+		nick=nick.toLowerCase();
+		CDataBase dbo=new CDataBase();
+		dbo.Connect();
+		CUsuario usuario=dbo.getUsuario(nick);
+	if(usuario==null){
+			result="";
+		}else{
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya existe otro usuario con ese nickname\"}";
+		}
+		dbo.Close();
+		return result;
+	}
+	public ArrayList<Integer> ValidarListaNumeros(String numeros){
+		ArrayList<Integer> lista=new ArrayList<Integer>();
+		String[]  splittArray = numeros.split(",");
+		for(String value:splittArray){
+			try{
+				int num=Integer.parseInt(value);
+				lista.add(num);	
+			}catch(Exception e){
+				
+			}
+		}
+		return lista;
 	}
 }
