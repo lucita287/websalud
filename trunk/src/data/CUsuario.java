@@ -54,6 +54,7 @@ public class CUsuario {
 	public String getapellido(){
 		return this.apellido;
 	}
+	
 	public String getnick(){
 		return this.nick;
 	}

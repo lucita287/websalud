@@ -16,7 +16,7 @@
 </div>
 <div style="float:left">
 <h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Administraci&oacute;n</a></h2>
+<h2><a href="#" id="metamorph">Portal</a></h2>
 </div>
 <div style="clear: both;"></div>
 </div>

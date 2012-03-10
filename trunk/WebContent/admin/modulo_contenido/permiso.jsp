@@ -86,7 +86,7 @@ div.col
 				 
 				$('select#allpermiso').find('option').each(function() {
 		                var value=$("#allpermiso option[value="+$(this).val()+"]").text();
-		                $('#userpermiso').append('<option value="'+$(this).val()+'" >'+value+'</option>');
+		                $('#userpermiso').append('<option value="'+$(this).val()+'" selected="selected" >'+value+'</option>');
 						$("#allpermiso option[value="+$(this).val()+"]").remove();
 		        });
 				  
@@ -94,7 +94,7 @@ div.col
 			  function backall_permiso(){
 				  $('select#userpermiso').find('option').each(function() {
 		                var value=$("#userpermiso option[value="+$(this).val()+"]").text();
-		                $('#allpermiso').append('<option value="'+$(this).val()+'" >'+value+'</option>');
+		                $('#allpermiso').append('<option value="'+$(this).val()+'" selected="selected" >'+value+'</option>');
 						$("#userpermiso option[value="+$(this).val()+"]").remove();
 		        	});
 			  }

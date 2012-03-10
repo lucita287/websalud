@@ -77,6 +77,24 @@ public class CDataBase {
         }
 		return temp;
 	}
+	public ArrayList<CUsuario> getListaUsuarios(){
+		ArrayList<CUsuario> lista=new ArrayList<CUsuario>();
+		try{    
+        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idusuario, nombre, apellido, nick, telefono, email, areaidarea, estado FROM usuario where estado=1 ");
+        	    ResultSet rs=stm.executeQuery();
+                while(rs.next()){                	
+                	CUsuario temp=new CUsuario(rs.getInt("idusuario"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("nick"),"",rs.getString("telefono"),rs.getString("email"),rs.getInt("estado"),null);
+                	lista.add(temp);           
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+		return lista;
+	}
 	public CCategoria getEspecificoCategoria(int idcategoria){
 		CCategoria temp=null;
 		try{    
@@ -886,6 +904,31 @@ public CContenido getContenido(int idcontenido){
 		}
 		return news;
 	}
+	public CNoticia getNoticiaEspecificaV(int idnoticia){
+		CNoticia news=null;
+		try{
+			String sql="SELECT noti.idnoticia, noti.titulo noti_titulo, noti.descripcion noti_descripcion, noti.descripcion_corta, noti.areaidarea idarea, noti.fecha_inicio fecha_inicio, "+
+"noti.fecha_fin fecha_fin, noti.prioridad prioridad, noti.estado, a.nombre nombre_area, ifnull( m.idmultimedia,0) idmultimedia, ifnull(m.direccion,'') direccion_m, ifnull(m.direccion_relativa,'NO SE HA SUBIDO IMAGEN') direccion_rel  "+
+  "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
+  "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia where noti.idnoticia=? and noti.estado=1  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idnoticia);
+			ResultSet rs=stm.executeQuery();
+			if(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
+				news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
+						new java.util.Date(rs.getDate("fecha_inicio").getTime()),new java.util.Date(rs.getDate("fecha_fin").getTime()),rs.getInt("prioridad"),rs.getInt("idnoticia"),rs.getInt("estado"),area);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return news;
+	}
 	public boolean UpdateNoticia(CNoticia noti){
 		PreparedStatement stm;
 		try {
@@ -1113,6 +1156,28 @@ public ArrayList<CPermiso> getListaPermiso(int idusuario){
     }
     return ret;
 }
+public ArrayList<Integer> getListaPermisoInt(int idusuario){
+	
+	
+	ArrayList<Integer> ret=new ArrayList<Integer>();
+    try{
+    	String sql="SELECT p.idpermiso FROM usuario_permisos up inner join  permiso p on p.idpermiso=up.permisosidpermiso where usuarioidusuario = ?";
+            PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+            stm.setInt(1, idusuario);
+            ResultSet rs=stm.executeQuery();
+            while(rs.next()){
+            		ret.add(rs.getInt("idpermiso"));
+                    
+            }
+            rs.close();
+            stm.close();
+    }
+    
+    catch(Throwable e){
+    	e.printStackTrace();
+    }
+    return ret;
+}
 public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list){
 	PreparedStatement stm;
 	boolean b=true;
@@ -1138,4 +1203,21 @@ public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list){
 	
 	return b;
 }
+public int deleteNoticia(int idnoticia){
+	int temp=0;
+	PreparedStatement stm;
+	try {
+		stm = (PreparedStatement)conn.prepareStatement("select EliminarNoticia(?) result");
+		stm.setInt(1, idnoticia);
+		ResultSet rs2=stm.executeQuery();
+		if(rs2.next())
+		temp=rs2.getInt("result");
+	} catch (SQLException e) {
+
+		e.printStackTrace();
+	}
+	
+	return temp;
+}
+
 }

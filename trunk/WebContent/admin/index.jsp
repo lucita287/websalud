@@ -2,8 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <% 
 HttpSession sessiones=request.getSession(false); 
-if(sessiones!=null && sessiones.getAttribute("user")!=null){
+if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAttribute("user_permiso")!=null){
 	Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
+	
+	
 %>
 
 <head>
@@ -20,6 +22,7 @@ if(sessiones!=null && sessiones.getAttribute("user")!=null){
 <div style="float:left">
 <h1><a href="#">Unidad de Salud</a></h1>
 <h2><a href="#" id="metamorph">Administraci&oacute;n</a></h2>
+<h2><a href="#">Bienvenido <%=sessiones.getAttribute("username")%></a></h2>
 </div>
 <div style="clear: both;"></div>
 </div>

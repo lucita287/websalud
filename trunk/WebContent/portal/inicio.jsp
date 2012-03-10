@@ -26,9 +26,9 @@ dbo.Close();
 		<% } %>
 		<br/>
 		<% if(area.getidmultimedia().getidimagen()>0){ %>
-			<div id="center_img">
+			<center>
 			<img src="<%=area.getidmultimedia().getdireccion_relativa()%>" width="550" heigth="440">
-			</div>
+			</center>
 		<%} %>
 	<div style="clear: both;"></div>						
 <script language="javascript">

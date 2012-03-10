@@ -3,18 +3,27 @@
 <%@ page import="framework.CDataBase" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="data.CArea" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
 	CDataBase	data=new CDataBase();
 		data.Connect();
 		ArrayList<CArea> list=data.getAreaLista();
 		data.Close();
-%>
+		
+		HttpSession sessiones = request.getSession(false);
+		if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+			
+			CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+			if (user_permiso.getIdpermiso().indexOf(225)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
+
 			<div class="centerd">
 			<H2>Noticias</H2>
 			</div>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>			
-			<div id="validacion_imagen" class="validacion"></div>
-			<table id="flex1" style="display:none"></table>		
+			
+			<table id="flex1" style="display:none"></table>
+			<div id="validacion_imagen" class="validacion"></div>		
 					<table width="80%" CELLSPACING="8">
 								<tr >
 									<td>ID</td><td><label id="idnew">NEW</label></td>
@@ -72,8 +81,14 @@
 								<BR/>
 								<BR/>	
 									<div class="centerd">
+									 	
 										<a href="#validacion_imagen"  class="ui-state-default ui-corner-all button-new" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+									<%if (user_permiso.getIdpermiso().indexOf(226)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 										<a href="#validacion_imagen" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+									<% }%>
+									<%if (user_permiso.getIdpermiso().indexOf(227)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
+										<a href="#validacion_imagen"  onclick="eliminarnoti()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
+									<% }%>	
 									</div>
 								<BR/>
 								<BR/>
@@ -108,7 +123,7 @@
 					    usepager: true,
 					    sortname: "idnoticia",
 						sortorder: "desc",
-					    title: 'Contenido',
+					    title: 'Noticia',
 					    useRp: true,
 					    rp: 15,
 					    showTableToggleBtn: true,
@@ -178,32 +193,6 @@
 				  $("#pathimagen").text("NO SE HA SUBIDO IMAGEN");
 				  idimagen=0;
 			  }
-			  function convertirCaracter(caracter){
-					caracter=replaceAll(caracter,"á","&aacute;");
-					caracter=replaceAll(caracter,"é","&eacute;");
-					caracter=replaceAll(caracter,"í","&iacute;");
-					caracter=replaceAll(caracter,"ó","&oacute;");
-					caracter=replaceAll(caracter,"ú","&uacute;");
-					caracter=replaceAll(caracter,"Á","&Aacute;");
-					caracter=replaceAll(caracter,"É","&Eacute;");
-					caracter=replaceAll(caracter,"Í","&Iacute;");
-					caracter=replaceAll(caracter,"Ó","&Oacute;");
-					caracter=replaceAll(caracter,"Ú","&Uacute;");
-					caracter=replaceAll(caracter,"ñ","&ntilde;");
-					caracter=replaceAll(caracter,"Ñ","&Ntilde;");
-					caracter=replaceAll(caracter,"Ü","&Uuml;");
-					caracter=replaceAll(caracter,"ü","&uuml;");
-					caracter=replaceAll(caracter,String.fromCharCode(8211),"&#8211;");
-					caracter=replaceAll(caracter,String.fromCharCode(8212),"&#8212;");
-					caracter=replaceAll(caracter,String.fromCharCode(8226),"&#8226;");
-					caracter=replaceAll(caracter,String.fromCharCode(183),"&#183;");
-					return caracter;
-				}
-			  function replaceAll( text, busca, reemplaza ){
-				  while (text.toString().indexOf(busca) != -1)
-				      text = text.toString().replace(busca,reemplaza);
-				  return text;
-				}
 			  function limpiar(){
 				  $("#titulo_noticia").val('');
 				  $("#editnoti").cleditor()[0].clear();
@@ -303,4 +292,24 @@
 						}
 					});
 			  }
+			 function eliminarnoti(){
+				 cadena = [ 'a=eliminar_noticia',
+				            'idnoticia='     + idnoticia,
+				        ].join('&');
+				 
+				 $.ajax({
+				        url: "../SNoticia",
+				        data: cadena,
+				  	    type: 'post',
+				  	  	dataType: 'json',
+				        success: function(data){
+				        	mensaje(data.mensaje);
+				        	if(data.resultado=='OK'){
+				        		limpiar();
+				        	}
+				        }
+				    });
+			 }
 			</script>
+<%			}		
+	} %>			
