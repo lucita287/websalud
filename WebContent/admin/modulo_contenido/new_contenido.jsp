@@ -4,13 +4,20 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="data.CMenu" %>
 <%@ page import="data.CArea" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
 	CDataBase	data=new CDataBase();
 		data.Connect();
 		ArrayList<CArea> list=data.getAreaLista();
 		ArrayList<CMenu> list_me=data.getMenu(1); 
 		data.Close();
-%>
+
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+
+CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<div class="centerd">
 			<H2>Nuevo Contenido</H2>
@@ -129,3 +136,5 @@
         		$('#new-titulo').val('');
 			}
 			</script>
+	<%	}
+} %>			

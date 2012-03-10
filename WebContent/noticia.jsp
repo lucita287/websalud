@@ -9,7 +9,7 @@
 		int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 		CDataBase dbo=new CDataBase();
 		dbo.Connect();
-		CNoticia info_new=dbo.getNoticiaEspecifica(idnoticia);
+		CNoticia info_new=dbo.getNoticiaEspecificaV(idnoticia);
 		ArrayList<CNoticia> list_news=dbo.getNoticias();
 		dbo.Close();
 		

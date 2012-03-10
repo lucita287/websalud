@@ -49,7 +49,7 @@ public class SUploadPDF extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		if(session!=null && session.getAttribute("user")!=null){
+		if(session!=null && session.getAttribute("username")!=null){
 
 			
 			if (!ServletFileUpload.isMultipartContent(request)) {
@@ -61,7 +61,7 @@ public class SUploadPDF extends HttpServlet {
 			CDataBase dbo=new CDataBase();
 			 dbo.Connect();
 			
-			CUsuario usuario=dbo.getUsuario(session.getAttribute("user").toString()); 
+			CUsuario usuario=dbo.getUsuario(session.getAttribute("username").toString()); 
 			
 			
 			ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());

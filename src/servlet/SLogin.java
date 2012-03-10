@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CUsuario;
+import data.CUsuarioPermiso;
 
 
 import framework.CDataBase;
@@ -54,7 +56,12 @@ public class SLogin extends HttpServlet {
 					session.setAttribute("username", user);
 					session.setAttribute("user", user);
 					session.setAttribute("portal",1);
+					usuario.setPassword("");
+					ArrayList<Integer> lista_permisos=dbo.getListaPermisoInt(usuario.getidusuario());
+					CUsuarioPermiso user_permiso=new CUsuarioPermiso(usuario,lista_permisos);
+					session.setAttribute("user_permiso",user_permiso);
 					response.sendRedirect("admin/index.jsp");
+					
 			 }else{
 				 response.sendRedirect("index.jsp?e=1");
 			 }

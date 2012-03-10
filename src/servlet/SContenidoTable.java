@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import data.CContenido;
+import data.CUsuarioPermiso;
 
 import framework.CDataBase;
 import framework.CValidation;
@@ -42,29 +44,36 @@ public class SContenidoTable extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 response.setContentType("text/html;charset=UTF-8"); 
-		 PrintWriter out = response.getWriter(); 
-		 CDataBase dbo=new CDataBase();
-		 dbo.Connect(); 
-		 CValidation valid=new CValidation();
-		 int tipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("ptipo")));
-		 int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pmenu")));
+		 PrintWriter out = response.getWriter();
 		 
-		 String info="{";
-         info+="total: "+dbo.getContenidoTotal(tipo,idmenu);
-         info+=", page: 1,";
-         info+="rows: [";
-         String data="";
-         
-         ArrayList<CContenido> list=dbo.getContenidoLista(tipo, idmenu);
-         for(int i=0; i<list.size();i++){
-        	 CContenido temp=list.get(i);
-                        data+=(data=="")?"":",";
-                                          data+="{ cell: [\"<input type='radio' onclick='editar_conte"+tipo+"("+temp.getidcontenido()+")' name='idconte_radio' value='"+temp.getidcontenido()+"' />\",\""+temp.getidcontenido()+"\", \""+temp.gettitulo()+"\" , \""+temp.getmultimedia().getdireccion_relativa()+"\"  ] }";
-         }
-         info+=data+"] }";
-         
-         out.print(info);
-         dbo.Close();
+		 HttpSession sessiones = request.getSession(false);
+		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+				CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+				if( (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						 CDataBase dbo=new CDataBase();
+						 dbo.Connect(); 
+						 CValidation valid=new CValidation();
+						 int tipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("ptipo")));
+						 int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pmenu")));
+						 
+						 String info="{";
+				         info+="total: "+dbo.getContenidoTotal(tipo,idmenu);
+				         info+=", page: 1,";
+				         info+="rows: [";
+				         String data="";
+				         
+				         ArrayList<CContenido> list=dbo.getContenidoLista(tipo, idmenu);
+				         for(int i=0; i<list.size();i++){
+				        	 CContenido temp=list.get(i);
+				                        data+=(data=="")?"":",";
+				                                          data+="{ cell: [\"<input type='radio' onclick='editar_conte"+tipo+"("+temp.getidcontenido()+")' name='idconte_radio' value='"+temp.getidcontenido()+"' />\",\""+temp.getidcontenido()+"\", \""+temp.gettitulo()+"\" , \""+temp.getmultimedia().getdireccion_relativa()+"\"  ] }";
+				         }
+				         info+=data+"] }";
+				         
+				         out.print(info);
+				         dbo.Close();
+				}
+		 }		
 	}
 
 }

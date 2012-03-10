@@ -2,10 +2,15 @@
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataBase" %>
 <%@ page import="data.CMenu" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%@ page import="java.util.ArrayList" %>
 <% 
 HttpSession sessiones = request.getSession(false);
-Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
+if(sessiones!=null && sessiones.getAttribute("portal")!=null&& sessiones.getAttribute("user_permiso")!=null){
+
+Integer portal=(Integer)sessiones.getAttribute("portal");
+CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
 %>
 	
 <ul id="menu"  >
@@ -13,28 +18,44 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 	<a id="1">Perfil</a>
 	</li>
 
+	<%if (user_permiso.getIdpermiso().indexOf(221)>-1  
+		||user_permiso.getIdpermiso().indexOf(224)>-1
+		||user_permiso.getIdpermiso().indexOf(225)>-1
+		||user_permiso.getIdpermiso().indexOf(228)>-1
+		||user_permiso.getIdpermiso().indexOf(231)>-1
+			|| user_permiso.getIdusuario().getidusuario()==1){%>
 	<li>
 	<a   >Administrar Contenido</a>
 			
 			
 			<ul id="admin_conte">
+			<%if (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li  >
 					<a id="2" >Editar Contenido</a>
 				</li>
+			<%} if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
 				<li >
 					<a  id="3" >Nuevo Contenido</a>
 				</li>
+			<%} if (user_permiso.getIdpermiso().indexOf(225)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
 					<a id="4">Gestionar Noticias</a>
 				</li>
+			<%} if (user_permiso.getIdpermiso().indexOf(228)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
 					<a id="5">Gestionar Actividades</a>
 				</li>
+			<%} if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
 					<a  id="6">Gestionar Areas</a>
 				</li>
+			<%}%>	
 			</ul>
 	</li>
+	<%}%>
+		<%if (user_permiso.getIdpermiso().indexOf(233)>-1  
+		||user_permiso.getIdpermiso().indexOf(235)>-1
+		||user_permiso.getIdusuario().getidusuario()==1){%>	
 	<li >
 	<a >Administrar </a>
 			<ul id="admin">
@@ -46,6 +67,8 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 				</li>
 			</ul>	
 	</li>
+	<% } %>
+	
 	<li>
 		<a >Examen de Salud</a>
 			<ul id="exam">
@@ -58,6 +81,9 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 			</ul>
 	
 	</li>
+	<%if (user_permiso.getIdpermiso().indexOf(237)>-1  
+		||user_permiso.getIdpermiso().indexOf(238)>-1
+		||user_permiso.getIdusuario().getidusuario()==1){%>	
 	<li>
 	<a >Reportes</a>
 			<ul id="report">
@@ -68,6 +94,11 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 					<a id="12" >Dashboard</a>
 				</li>
 			</ul>	
+	</li>
+	<% }%>
+	<li>
+	<a  href="../SunLogin">Salir</a>
+			
 	</li>
 </ul>
 	<script>
@@ -127,3 +158,4 @@ Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getA
 	  }
 	$(document).ready(function() {initMenu();});
 	</script>
+<%} %>	

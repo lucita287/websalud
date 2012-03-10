@@ -58,3 +58,17 @@ BEGIN
     RETURN 1;
 END
 $$
+DELIMITER $$
+DROP FUNCTION IF EXISTS `EliminarNoticia`$$
+CREATE FUNCTION EliminarNoticia(pidnoticia int ) RETURNS int
+    DETERMINISTIC
+BEGIN
+    declare vidmultimedia int;
+    
+        SELECT multimediaidmultimedia INTO vidmultimedia FROM noticia where idnoticia=pidnoticia;
+        DELETE FROM noticia WHERE idnoticia=pidnoticia;
+        DELETE FROM Multimedia WHERE idmultimedia=vidmultimedia;
+    
+    RETURN 1;
+END
+$$

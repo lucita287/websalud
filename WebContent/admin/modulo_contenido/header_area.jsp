@@ -1,4 +1,77 @@
-	<script  type="text/javascript">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+    <%@ page import="java.util.ArrayList" %>
+    <%@ page import="data.CUsuarioPermiso" %>
+    
+    <%
+
+	HttpSession sessiones = request.getSession(false);
+	if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+		
+		CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
+
+			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
+			<div class="centerd">
+			<h2>Editar Areas Profesionales</h2>
+			</div>
+			<div style="width: 600px; margin:0 auto 0 auto;">
+			<div id="validacion_prin" class="validacion"></div>
+			<table id="flex1" style="display:none"></table>
+			</div>
+			<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Editar Area</a></li>
+				<li><a href="#tabs-2">Encabezado de Imagenes</a></li>
+				
+			</ul>
+			
+			<div id="tabs-1" style="width:1000px; ">
+							<table>
+								<tr>
+									<td>IDEN</td>
+									<td><label id="idarea"></label> </td>	
+								</tr>
+								<tr>
+									
+									<td>Nombre</td>
+									<td><label id="tituloarea"></label> </td>	
+								</tr>
+							<tr>
+								<td>Tama&ntilde;o:</td>
+								<td><select id="edit-tam"> 
+									<option value="3">Grande</option>
+									<option value="2">Mediano</option>
+									<option value="1">Peque&ntilde;o</option>
+									<option value="0">Sin Texto</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Imagen Principal</td>
+								<td>
+									<input id="fileup_prin" type="file" name="files[]" ><BR/>
+									<img  id="hiddenimg" onclick="EliminarImagen()" width="24px"  height="24px" src="../images/delete.png"/>
+									<label id="pathimagen_prin">NO SE HA SUBIDO IMAGEN</label><br/>
+								</td>
+							</tr>
+							
+							</table>		
+							<textarea id="cont-text" class="editor"></textarea>
+							<br/><br/>
+							<div class="centerd">
+									<a href="#validacion_prin" onclick="GuardarArea()" class="ui-state-default ui-corner-all button-save" onclick="GuardarArea()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+							</div>
+							<br/><br/>
+			</div>
+			<div id="tabs-2" style="width:1000px; ">
+				<jsp:include page="uploadencabezado.jsp" />
+			</div>	
+			</div>				
+				<div style="clear: both;"></div>
+				
+			<script  type="text/javascript">
 
 			var editiarea=0;
 			var idmultimedia=0;
@@ -146,61 +219,4 @@
 			  }
 			  
 			</script>
-			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
-			<div class="centerd">
-			<h2>Editar Areas Profesionales</h2>
-			</div>
-			<div style="width: 600px; margin:0 auto 0 auto;">
-			<div id="validacion_prin" class="validacion"></div>
-			<table id="flex1" style="display:none"></table>
-			</div>
-			<div id="tabs">
-			<ul>
-				<li><a href="#tabs-1">Editar Area</a></li>
-				<li><a href="#tabs-2">Encabezado de Imagenes</a></li>
-				
-			</ul>
-			
-			<div id="tabs-1" style="width:1000px; ">
-							<table>
-								<tr>
-									<td>IDEN</td>
-									<td><label id="idarea"></label> </td>	
-								</tr>
-								<tr>
-									
-									<td>Nombre</td>
-									<td><label id="tituloarea"></label> </td>	
-								</tr>
-							<tr>
-								<td>Tama&ntilde;o:</td>
-								<td><select id="edit-tam"> 
-									<option value="3">Grande</option>
-									<option value="2">Mediano</option>
-									<option value="1">Peque&ntilde;o</option>
-									<option value="0">Sin Texto</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>Imagen Principal</td>
-								<td>
-									<input id="fileup_prin" type="file" name="files[]" ><BR/>
-									<img  id="hiddenimg" onclick="EliminarImagen()" width="24px"  height="24px" src="../images/delete.png"/>
-									<label id="pathimagen_prin">NO SE HA SUBIDO IMAGEN</label><br/>
-								</td>
-							</tr>
-							
-							</table>		
-							<textarea id="cont-text" class="editor"></textarea>
-							<br/><br/>
-							<div class="centerd">
-									<a href="#validacion_prin" onclick="GuardarArea()" class="ui-state-default ui-corner-all button-save" onclick="GuardarArea()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-							</div>
-							<br/><br/>
-			</div>
-			<div id="tabs-2" style="width:1000px; ">
-				<jsp:include page="uploadencabezado.jsp" />
-			</div>	
-			</div>				
-				<div style="clear: both;"></div>
+	<% }	} %>			
