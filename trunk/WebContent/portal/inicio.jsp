@@ -31,7 +31,7 @@ dbo.Close();
 			</center>
 		<%} %>
 	<div style="clear: both;"></div>						
-<script language="javascript">
+<script >
 $(function(){
 	$('#panel-texto-c1').jScrollPane();
 	$('#panel-texto-c2').jScrollPane();

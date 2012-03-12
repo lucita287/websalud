@@ -103,7 +103,7 @@ if(listpdf.size()>0){ %>
 <% }%>	
 	<br/>
 						
-<script language="javascript">
+<script >
 $(function(){
 	$('#panel-texto-c1').jScrollPane();
 	$('#panel-texto-c2').jScrollPane();

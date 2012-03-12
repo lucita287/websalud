@@ -106,7 +106,12 @@
 			  $(document).ready(function () {
 				  $("#cont-text").cleditor({
 					    width:        600,
-					    height:       250
+					    height:       250,
+					    controls:     // controls to add to the toolbar
+					    	                        "bold italic underline strikethrough subscript superscript | font size " +
+					    	                        "style | color highlight removeformat | bullets numbering | outdent " +
+					    	                        "indent | alignleft center alignright justify | undo redo | " +
+					    	                        "rule image link unlink | cut copy paste pastetext | print"					    
 					    });
 				  $("#cont-text").cleditor()[0].focus();
 				  $( "#dialog:ui-dialog" ).dialog( "destroy" );
