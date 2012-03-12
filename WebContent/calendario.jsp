@@ -57,7 +57,7 @@
 <div style="float:right">
 <div id="datepicker"></div>
 </div>
-<center><h1></>ODONTOLOG&Iacute;A</h1> </center>
+<center><h1>ODONTOLOG&Iacute;A</h1> </center>
 
 <div style="clear: both;"></div>
 	
@@ -78,7 +78,7 @@
 </div>
 </body>
 </html>
-<script type='text/javascript'>
+<script>
 
  
 	var year = new Date().getFullYear();

@@ -104,7 +104,12 @@
 			  $(document).ready(function () {
 				  $("#editnoti").cleditor({
 					    width:        450,
-					    height:       200
+					    height:       200,
+					    controls:     // controls to add to the toolbar
+	                        "bold italic underline strikethrough subscript superscript | font size " +
+	                        "style | color highlight removeformat | bullets numbering | outdent " +
+	                        "indent | alignleft center alignright justify | undo redo | " +
+	                        "rule image link unlink | cut copy paste pastetext | print"
 				      });
 				  $("#editnoti").cleditor()[0].focus();
 				  $("#flex1").flexigrid

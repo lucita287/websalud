@@ -28,12 +28,13 @@
 <link href="css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.17.custom.min.js"></script>
-</head>
 <style>
 	#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
 	.button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
 	.news-inicio{margin-top:5px;	 border-style:solid; border-width:1px;	}
 </style>
+</head>
+
 <body>
 <div class="back_all">
 <div id="content">

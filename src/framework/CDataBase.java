@@ -18,6 +18,7 @@ import data.CMenu;
 import data.CNoticia;
 import data.CPermiso;
 import data.CPregunta;
+import data.CResponsable;
 import data.CSubcategoria;
 import data.CUsuario;
 
@@ -1219,5 +1220,151 @@ public int deleteNoticia(int idnoticia){
 	
 	return temp;
 }
+public ArrayList<CResponsable> getListaResponsables(int ordenar,int asc,int min,int max,int type, String busqueda){
+	ArrayList<CResponsable> ret=new ArrayList<CResponsable>();
+	try{
+		String pqtype="respon.nombre";
+		 if(type==2)
+			 pqtype="respon.apellido";
+		 else if(type==3)
+			 pqtype="a.nombre";
+		
+		String sql="select * from (SELECT respon.idresponsable, respon.nombre nombre, respon.apellido apellido,a.idarea ,a.nombre nombre_area, @rownum:=@rownum+1 rownum "+
+	" FROM responsable respon inner join area a on a.idarea=respon.areaidarea, (SELECT @rownum:=0) ro "+
+	" where  upper("+pqtype+") like ? " +
+	" ) table1 "+
+	" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC");
+		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+		stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+		stm.setInt(2,min);
+		stm.setInt(3,max);
+		stm.setInt(4,ordenar);
+		ResultSet rs=stm.executeQuery();
+		while(rs.next()){
+			CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+			CResponsable cr=new CResponsable(rs.getInt("idresponsable"),rs.getString("nombre"),rs.getString("apellido"),null,area);
+			ret.add(cr);
+			
+		}
+		rs.close();
+		stm.close();
+	}
+	catch(Throwable e){
+		
+	}
+	return ret;
+}
 
+public int getResponsableTotal(int type,String busqueda){
+	int temp=0;
+	try {
+		String pqtype="respon.nombre";
+		 if(type==2)
+			 pqtype="respon.apellido";
+		 else if(type==3)
+			 pqtype="a.nombre";
+		String sql="SELECT count(*) cant FROM responsable respon inner join area a on a.idarea=respon.areaidarea "+
+				" where  upper("+ pqtype+") like ? ";
+		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+		stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+		ResultSet rs2=stm.executeQuery();
+		if(rs2.next())
+		temp=rs2.getInt("cant");
+	} catch (SQLException e) {
+
+		e.printStackTrace();
+	}
+	
+	return temp;
+}
+	public boolean SafeResponsable(CResponsable respon){
+	PreparedStatement stm;
+	try {
+		stm = (PreparedStatement)conn.prepareStatement(" INSERT INTO responsable (nombre, apellido, usuarioidusuario, areaidarea) VALUES ( ?, ?, ?, ?)");
+		
+		stm.setString(1, respon.getNombre());
+		stm.setString(2, respon.getApellido());
+		
+		if(respon.getUsuariosidusuario()==null){
+			stm.setNull(3,java.sql.Types.INTEGER);
+		}else {
+			stm.setInt(3, respon.getUsuariosidusuario().getidusuario());
+		}
+		stm.setInt(4,respon.getAreaidarea().getidarea());
+		if(stm.executeUpdate()>0)
+			return true;
+		
+	} catch (SQLException e) {
+
+		e.printStackTrace();
+	}
+	
+	return false;
+}
+	public CResponsable getResponsableEspecifica(int idresponsable){
+		CResponsable ret=null;
+		try{
+			
+			String sql="SELECT r.idresponsable, r.nombre r_nombre, r.apellido r_apellido, ifnull(r.usuarioidusuario,0) idusuario, "+
+					" r.areaidarea  idarea, a.nombre nombre_area, ifnull(u.nombre,'')  user_nombre, ifnull(u.apellido,'') user_apellido "+
+					" FROM responsable r inner join area a on  r.areaidarea=a.idarea "+
+					" left outer join usuario u on u.idusuario=r.usuarioidusuario "+
+					" where r.idresponsable=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idresponsable);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CUsuario user=new CUsuario(rs.getInt("idusuario"),rs.getString("user_nombre"),rs.getString("user_apellido"),"","","","",0,null);
+				ret=new CResponsable(rs.getInt("idresponsable"),rs.getString("r_nombre"),rs.getString("r_apellido"),user,area);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public boolean UpdateResponsable(CResponsable respon){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE responsable SET   nombre = ?,   apellido = ?,   usuarioidusuario = ?,   areaidarea = ?  WHERE  idresponsable = ?");
+			
+			stm.setString(1, respon.getNombre());
+			stm.setString(2, respon.getApellido());
+			
+			if(respon.getUsuariosidusuario()==null){
+				stm.setNull(3,java.sql.Types.INTEGER);
+			}else {
+				stm.setInt(3, respon.getUsuariosidusuario().getidusuario());
+			}
+			stm.setInt(4,respon.getAreaidarea().getidarea());
+			stm.setInt(5,respon.getIdresponsable());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean deleteResponsable(int idresponsable){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM responsable   WHERE idresponsable = ?");
+			stm.setInt(1, idresponsable);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }
