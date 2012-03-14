@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <%String area=request.getParameter("idarea");%>
+<title>Unidad de Salud / USAC</title>
 <jsp:include page="portal/top.jsp" />
 </head>
 <body>

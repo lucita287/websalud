@@ -12,6 +12,7 @@ import data.CArea;
 import data.CCategoria;
 import data.CConfiguracion;
 import data.CContenido;
+import data.CEdificio;
 import data.CEncabezado;
 import data.CMultimedia;
 import data.CMenu;
@@ -1357,6 +1358,172 @@ public int getResponsableTotal(int type,String busqueda){
 		try {
 			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM responsable   WHERE idresponsable = ?");
 			stm.setInt(1, idresponsable);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public ArrayList<CResponsable> getListaResponsables(){
+		ArrayList<CResponsable> ret=new ArrayList<CResponsable>();
+		try{
+			String sql="SELECT respon.idresponsable, respon.nombre nombre, respon.apellido apellido,a.idarea ,a.nombre nombre_area, @rownum:=@rownum+1 rownum "+
+		" FROM responsable respon inner join area a on a.idarea=respon.areaidarea order by 5 ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CResponsable cr=new CResponsable(rs.getInt("idresponsable"),rs.getString("nombre"),rs.getString("apellido"),null,area);
+				ret.add(cr);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
+	public ArrayList<CEdificio> getListaEdificio(int ordenar,int asc,int min,int max,int type, String busqueda){
+		ArrayList<CEdificio> ret=new ArrayList<CEdificio>();
+		try{
+			String pqtype="edi.nombre";
+			 if(type==1)
+				 pqtype="edi.direccion";
+			
+			String sql="select * from (SELECT edi.idedificio, edi.nombre nombre, edi.direccion direccion, edi.telefono telefono, @rownum:=@rownum+1 rownum "+
+		" FROM edificio edi, (SELECT @rownum:=0) ro "+
+		" where  upper("+pqtype+") like ? " +
+		" ) table1 "+
+		" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC");
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CEdificio cr=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre"),rs.getString("direccion"),rs.getString("telefono"));
+				ret.add(cr);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
+	public ArrayList<CEdificio> getListaEdificio(){
+		ArrayList<CEdificio> ret=new ArrayList<CEdificio>();
+		try{
+
+			String sql="SELECT edi.idedificio, edi.nombre nombre, edi.direccion direccion, edi.telefono telefono "+
+		" FROM edificio edi";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CEdificio cr=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre"),rs.getString("direccion"),rs.getString("telefono"));
+				ret.add(cr);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
+	public int getEdificioTotal(int type,String busqueda){
+		int temp=0;
+		try {
+			String pqtype="edi.nombre";
+			 if(type==1)
+				 pqtype="edi.direccion";
+			
+			String sql="SELECT count(*) cant FROM edificio edi  "+
+					" where  upper("+ pqtype+") like ? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public boolean SafeEdificio(CEdificio edi){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO edificio(nombre, direccion, telefono) VALUES ( ?, ?, ?)");
+			
+			stm.setString(1, edi.getNombre());
+			stm.setString(2, edi.getDireccion());
+			stm.setString(3, edi.getTelefono());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean UpdateEdificio(CEdificio edi){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE edificio SET nombre = ?, direccion = ?, telefono = ? WHERE idedificio = ?");
+			
+			stm.setString(1, edi.getNombre());
+			stm.setString(2, edi.getDireccion());
+			stm.setString(3, edi.getTelefono());
+			stm.setInt(4, edi.getIdedificio());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public CEdificio getEdificioEspecifica(int idedificio){
+		CEdificio ret=null;
+		try{
+			
+			String sql="SELECT idedificio , nombre, direccion, telefono from edificio where idedificio=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idedificio);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ret=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre"),rs.getString("direccion"),rs.getString("telefono"));
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public boolean deleteEdificio(int idedificio){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM edificio WHERE idedificio = ?");
+			stm.setInt(1, idedificio);
 			if(stm.executeUpdate()>0)
 				return true;
 			

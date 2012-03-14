@@ -54,3 +54,15 @@
 		      text = text.toString().replace(busca,reemplaza);
 		  return text;
 		}
+	  function mensaje(mens){
+		  
+		  $( "#dialog-message" ).html(mens);
+			$( "#dialog-message" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+	  }

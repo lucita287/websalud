@@ -12,19 +12,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<link rel="shortcut icon" href="favi.ico" type="image/x-icon" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title> <%="CALENDARIO"%>/Unidad de Salud</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link rel='stylesheet' type='text/css' href='css/custom-theme/jquery-ui-1.8.17.custom.css' />
-<link href="css/styles.css" rel="stylesheet" type="text/css" media="screen" />
-<link rel='stylesheet' type='text/css' href='css/jquery.weekcalendar.css' />
-<script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="lib/jquery-ui-1.8.17.custom.min.js"></script>
-<script type='text/javascript' src='lib/jquery.weekcalendar.js'></script>
-<script type='text/javascript' src='lib/date.js'></script>
-<script src="lib/i18n/ui.datepicker-es.js"></script>
+<jsp:include page="portal/top.jsp" />
 <style>
 	#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
 	.button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
