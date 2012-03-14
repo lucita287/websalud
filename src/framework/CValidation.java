@@ -188,7 +188,7 @@ public class CValidation {
 	if(usuario==null||(usuario!=null && idusuario==usuario.getidusuario())){
 			result="";
 		}else{
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya existe otro usuario con ese nickname\"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya existe otro usuario con ese mismo nombre\"}";
 		}
 		dbo.Close();
 		return result;
@@ -202,7 +202,7 @@ public class CValidation {
 	if(usuario==null){
 			result="";
 		}else{
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya existe otro usuario con ese nickname\"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya existe otro usuario con ese mismo nombre\"}";
 		}
 		dbo.Close();
 		return result;

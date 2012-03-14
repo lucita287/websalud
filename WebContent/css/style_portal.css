@@ -158,6 +158,8 @@
 #tabs1-inicio-info { width:253px; float:left; }
 #widget-info { width:450px; float:left; }
 .news-inicio{	width:250px; height:80px; border-style:solid; border-width:1px;	}
-
+#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
+.button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
+.news-todas{margin-top:5px;	 border-style:solid; border-width:1px;	}
 
 

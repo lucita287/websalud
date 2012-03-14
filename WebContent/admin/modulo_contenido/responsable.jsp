@@ -124,18 +124,7 @@
 			  $('#id_respon').text('NEW');
 			  $("#responsable").flexReload(); 
 			  idrespon=0;
-		  }
-		  function mensaje(mens){
-			  
-			  $( "#dialog-message" ).html(mens);
-				$( "#dialog-message" ).dialog({
-					modal: true,
-					buttons: {
-						Ok: function() {
-							$( this ).dialog( "close" );
-						}
-					}
-				});
+			  RecargarResponsable();
 		  }
 		</script>
 		<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>

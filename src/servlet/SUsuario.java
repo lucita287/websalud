@@ -86,18 +86,23 @@ public class SUsuario extends HttpServlet {
 			String pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
 			String pass2=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password2")));
 			String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Nombre"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(apellido, 150, "Apellido"):validacion;
 			CUsuario usuario=dbo.getUsuario(session.getAttribute("user").toString()); 
 			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(iduser, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(usuario.getidusuario(), 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe iniciar Session\"}"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(apellido, "Apellido"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nick, "Nick"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarNoLongintud(nick,4 ,"Nick"):validacion;
-			
+			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nick, "Usuario"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nick, 20, "Usuario"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarNoLongintud(nick,4 ,"Usuario"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(email, 100, "Correo Electronico"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(pass, 100, "Password"):validacion;
 			if(email.compareTo("")!=0)
 				validacion=(validacion.compareTo("")==0)?valid.ValidarEmail(email):validacion;
 			if(!pass.isEmpty())
 				validacion=	(validacion.compareTo("")==0)?valid.ValidarPassword(pass, pass2):validacion;
 				validacion=(validacion.compareTo("")==0)?valid.ValidarNick(nick, iduser):validacion;
+				
 			if(validacion.compareTo("")==0){
 				CUsuario user=dbo.getUsuarioEspecifico(iduser);
 				CArea area=dbo.getCAreaEspecifico(idarea);
@@ -132,8 +137,14 @@ public class SUsuario extends HttpServlet {
 			CUsuario usuario=dbo.getUsuario(session.getAttribute("user").toString()); 
 			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(usuario.getidusuario(), 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe iniciar Session\"}"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(apellido, "Apellido"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nick, "Nick"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarNoLongintud(nick,4 ,"Nick"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Nombre"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(apellido, 150, "Apellido"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nick, "Usuario"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nick, 20, "Usuario"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarNoLongintud(nick,4 ,"Usuario"):validacion;
+			
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(email, 100, "Correo Electronico"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(pass, 100, "Password"):validacion;
 			
 			if(email.compareTo("")!=0)
 				validacion=(validacion.compareTo("")==0)?valid.ValidarEmail(email):validacion;

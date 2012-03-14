@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -137,6 +138,17 @@ public class SResponsable extends HttpServlet {
 									
 									out.println(result);
 									
+								}else if(action.equalsIgnoreCase("show_list")&& (user_permiso.getIdpermiso().indexOf(228)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+									ArrayList<CResponsable> list_respon=dbo.getListaResponsables();
+									String result="{total:"+list_respon.size()+",rows:[";
+									String data="";
+									for(int j=0; j<list_respon.size();j++){ 
+										CResponsable respon=list_respon.get(j);
+										data+=(data.compareTo("")==0)?"":",";
+										data+="{value:"+respon.getIdresponsable()+",text:'"+respon.getAreaidarea().getnombre()+"/"+respon.getNombre()+" "+respon.getApellido()+"'}";
+									}
+									result+=data+"]}";
+									out.println(result);
 								}
 								dbo.Close();
 		 }				

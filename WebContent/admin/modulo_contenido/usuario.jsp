@@ -26,7 +26,7 @@
 						{ display: 'ID', name: 'idusuario', width: 40, sortable: true, align: 'left' },
 						{ display: 'Nombre', name: 'nombre', width: 100, sortable: true, align: 'left' },
 						{ display: 'Apellido', name: 'apellido', width: 100, sortable: true, align: 'left' },
-						{ display: 'Nick', name: 'nick', width: 100, sortable: true, align: 'left' },
+						{ display: 'Usuario', name: 'nick', width: 100, sortable: true, align: 'left' },
 						{ display: 'Email', name: 'email', width: 100, sortable: true, align: 'left' },
 						{ display: 'Telefono', name: 'telefono', width: 100, sortable: true, align: 'left' }
 						],
@@ -42,7 +42,7 @@
 					    searchitems : [
 										{display: 'Nombre', name : 'nombre'},
 										{display: 'Apellido', name : 'apellido'},
-										{display: 'Nick', name : 'nickname', isdefault: true}
+										{display: 'Usuario', name : 'nickname', isdefault: true}
 										]
 					});
 			  });  
@@ -113,8 +113,8 @@
 		        	$("#user_phone").val("");
 		        	$("#user_email").val("");
 		        	$("#user_area").val(1);
-		        	$("#pass").val("");
-		        	$("#pass2").val("");
+		        	$("#user_pass").val("");
+		        	$("#user_pass2").val("");
 		        	$("#idusuario").text("NEW");
 		        	$('#flex1').flexReload();
 		        	$('#user_estado').val(1);
@@ -145,7 +145,7 @@
 										<td>*Apellido</td><td><input id="user_last_name" type="text" size="40" /></td>
 									</tr>
 									<tr>
-										<td>*Nick Name</td><td><input id="nick" type="text" size="20" /></td>
+										<td>*Usuario </td><td><input id="nick" type="text" size="20" /></td>
 									</tr>	
 									<tr>
 										<td>Password</td><td><input id="user_pass" type="password" size="20" /></td>
@@ -182,8 +182,8 @@
 								<BR/>
 								<BR/>	
 									<div class="centerd">
-										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
-										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="guardaUser()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+										<a  class="ui-state-default ui-corner-all button-save" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+										<a  class="ui-state-default ui-corner-all button-save" onclick="guardaUser()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 										
 									</div>
 								<BR/>

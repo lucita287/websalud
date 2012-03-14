@@ -1,16 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="framework.CDataBase" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="data.CArea" %>
-<%@ page import="data.CUsuario" %>
-<%
-	CDataBase	data=new CDataBase();
-		data.Connect();
-		ArrayList<CArea> list=data.getAreaLista();
-		ArrayList<CUsuario> list_usuario=data.getListaUsuarios();
-		data.Close();
-%>
 			<div class="centerd">
 			<H2>Actividades</H2>
 			</div>
@@ -19,27 +8,7 @@
 				$( "#tabs" ).tabs();
 			});
 			  $(document).ready(function () {
-			      $("#flex1").flexigrid
-					({
-					    dataType: 'json',
-					    colModel: [
-						{display: 'Seleccionar', name : 'chkDelete', width : 30, sortable : false, align: 'left'},           
-						{ display: 'ID', name: 'idnoticia', width: 40, sortable: true, align: 'left' },
-						{ display: 'Titulo', name: 'titulo', width: 100, sortable: true, align: 'left' },
-						{ display: 'Area', name: 'area', width: 100, sortable: true, align: 'left' },
-						{ display: 'Lugar', name: 'area', width: 100, sortable: true, align: 'left' }
-						],
-					    sortname: "idmenu",
-					    sortorder: "asc",
-					    usepager: true,
-					    title: 'Contenido',
-					    useRp: true,
-					    rp: 15,
-					    showTableToggleBtn: true,
-					    width: 600,
-					    height: 200
-					});
-			      $("#fecha_actividad").flexigrid
+			     $("#fecha_actividad").flexigrid
 					({
 					    dataType: 'json',
 					    colModel: [
@@ -66,53 +35,18 @@
 					$(".datepicker").mask("99/99/9999");
 					$(".time").mask("99:99");
 				});
+			  
 			</script>
 	<div id="tabs">
 			<ul>
 				<li><a href="#tabs-1">Actividad</a></li>
 				<li><a href="#tabs-2">Fechas Actividades</a></li>
 				<li><a href="#tabs-3">Responsables</a></li>
+				<li><a href="#tabs-4">Lugar</a></li>
 			</ul>
 			<div id="tabs-1" style="width:700px; ">
 			
-			<table id="flex1" style="display:none"></table>			
-										<table width="80%" CELLSPACING="8">
-								<tr>
-									<td>Titulo</td><td><input type="text" size="50" /></td>
-								</tr>
-								<tr>
-									<td>Descripci&oacute;n</td><td><textarea rows="4" cols="50"></textarea></td>
-								</tr>
-								<tr>
-									<td>Lugar</td><td><input type="text" size="50" /></td>
-								</tr>
-								<tr>
-									<td>Salon</td><td><input type="text" size="30" /></td>
-								</tr>	
-								<tr>
-									<td>Responsable</td><td><textarea rows="4" cols="50"></textarea></td>
-								</tr>
-								<tr>
-									<td>Area</td><td>
-												<select id="new-area" onchange="cambiarArea()">
-													<% for(int j=0; j<list.size();j++){ 
-														CArea area=list.get(j);%>
-														<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
-													<% } %>
-												</select>
-												</td>
-								</tr>
-								
-							</table>		
-								<BR/>
-								<BR/>	
-									<div class="centerd">
-											<a href="#" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-										<a href="#" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
-									</div>
-								<BR/>
-								<BR/>
-			
+			<jsp:include page="edit_actividad.jsp" />
 			</div>
 			<div id="tabs-2" style="width:700px; ">
 						<div style="border: 3px gray solid; width:600px;">
@@ -191,6 +125,10 @@
 			</div>
 			<div id="tabs-3" style="width:700px; ">
 				<jsp:include page="responsable.jsp" />				
+			</div>
+			<div id="tabs-4" style="width:700px; ">
+			
+			<jsp:include page="edificio.jsp" />
 			</div>
 	</div>	
 	<div style="clear: both;"></div>	
