@@ -94,11 +94,12 @@
 			  }else{
 				  action='modificar_responsable';
 			  }
-			  
+			  var nombre=convertirCaracter($.trim($('#nombre_respon').val()));
+				var apellido=convertirCaracter($.trim($('#apellido_respon').val()));
 			  cadena = [ 'idresponsable='     + idrespon,
 				            'a='+action,
-				            'nombre='+$('#nombre_respon').val(),
-				            'apellido='+$('#apellido_respon').val(),
+				            'nombre='+Base64.encode(nombre),
+				            'apellido='+Base64.encode(apellido),
 				            'idarea='+$('#area_respon').val(),
 				            'usuario='+$('#usuario_respon').val(),
 				        ].join('&');
@@ -126,8 +127,8 @@
 			  idrespon=0;
 			  RecargarResponsable();
 		  }
+		  
 		</script>
-		<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 		<table id="responsable" style="display:none"></table>
 		<table>
 					<tr>
@@ -166,10 +167,8 @@
 						</td>
 					</tr>	
 				</table>
-				
 			<center>
 									<br/><br/>
-									
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="LimpiarResponsable()" > <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 									<%if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="GuardarResponsable()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
@@ -179,4 +178,4 @@
 									<%} %>
 									<br/><br/>		
 			</center>
-<% }	} %>				
+<% }	} %>				 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import data.CEdificio;
 import data.CUsuarioPermiso;
+import framework.Base64core;
 import framework.CDataBase;
 import framework.CValidation;
 
@@ -42,10 +43,10 @@ public class SEdificio extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
-    	String action=request.getParameter("a");
-		CValidation valid=new CValidation();
-		
+    	CValidation valid=new CValidation();
+		Base64core base64=new Base64core();
 		HttpSession sessiones = request.getSession(false);
+		String action=valid.ValidarRequest(request.getParameter("a"));
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 					 
@@ -55,8 +56,8 @@ public class SEdificio extends HttpServlet {
 								 //MODIFICAR EDIFICIO
 								 if(action.equalsIgnoreCase("guardar_edificio")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-									String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
-									String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
+									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))));
 									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")));
 
 									String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
@@ -87,8 +88,8 @@ public class SEdificio extends HttpServlet {
 									//MODIFICAR EDIFICIO 
 								}else if(action.equalsIgnoreCase("modificar_edificio")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-									String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
-									String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
+									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))));
 									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")));
 									int idedificio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idedificio")));
 									

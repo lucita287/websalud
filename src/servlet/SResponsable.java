@@ -15,6 +15,7 @@ import data.CArea;
 import data.CResponsable;
 import data.CUsuario;
 import data.CUsuarioPermiso;
+import framework.Base64core;
 import framework.CDataBase;
 import framework.CValidation;
 
@@ -47,7 +48,7 @@ public class SResponsable extends HttpServlet {
     	PrintWriter out = response.getWriter(); 
     	String action=request.getParameter("a");
 		CValidation valid=new CValidation();
-		
+		Base64core base64=new Base64core();
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
@@ -60,8 +61,8 @@ public class SResponsable extends HttpServlet {
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idusuario=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("usuario")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-									String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
-									String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
+									String apellido=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("apellido"))));
 
 									String validacion=valid.ValidarCampoVacio(nombre, "nombre");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Nombre"):validacion;
@@ -96,8 +97,8 @@ public class SResponsable extends HttpServlet {
 									int idresponsable=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idresponsable")));
 									int idusuario=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("usuario")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-									String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
-									String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
+									String apellido=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("apellido"))));
 
 									String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 											validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Nombre"):validacion;
@@ -119,7 +120,7 @@ public class SResponsable extends HttpServlet {
 									}else{
 										result=validacion;
 									}
-									
+									 
 									out.println(result);
 									//ELIMINAR RESPONSABLE
 								}else if(action.equalsIgnoreCase("eliminar_responsable")&& (user_permiso.getIdpermiso().indexOf(230)>-1  || user_permiso.getIdusuario().getidusuario()==1)){

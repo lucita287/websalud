@@ -14,11 +14,6 @@
 
 <title> <%="CALENDARIO"%>/Unidad de Salud</title>
 <jsp:include page="portal/top.jsp" />
-<style>
-	#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
-	.button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
-	.news-inicio{margin-top:5px;	 border-style:solid; border-width:1px;	}
-</style>
 </head>
 <body>
 <div class="back_all">
