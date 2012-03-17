@@ -5,11 +5,13 @@
 <%@ page import="data.CArea" %>
 <%@ page import="data.CUsuario" %>
 <%@ page import="data.CUsuarioPermiso" %>
+
 <%
 	CDataBase	data=new CDataBase();
 		data.Connect();
 		ArrayList<CArea> list=data.getAreaLista();
 		ArrayList<CUsuario> list_usuario=data.getListaUsuarios();
+		
 		data.Close();
 		
 		HttpSession sessiones = request.getSession(false);
@@ -55,6 +57,8 @@
 		  	$("#dir_lugar").val("");
 		  	$("#tel_lugar").val("");
 		  	$("#lugar").flexReload();
+		  	RecargarEdificio();
+		  	idedificio=0;
 		  }
 		  function GuardarEdificio(){
 			  var action='guardar_edificio';
@@ -64,10 +68,13 @@
 				  action='modificar_edificio';
 			  }
 			  
+			  
+			  var nombre=convertirCaracter($.trim($("#nombre_lugar").val()));
+			   var direccion=convertirCaracter($.trim($("#dir_lugar").val()));
 			  cadena = [ 'idedificio='     + idedificio,
 				            'a='+action,
-				            'nombre='+$("#nombre_lugar").val(),
-				            'direccion='+$("#dir_lugar").val(),
+				            'nombre='+Base64.encode(nombre),
+				            'direccion='+Base64.encode(direccion),
 				            'telefono='+$("#tel_lugar").val()
 				        ].join('&');
 			  $.ajax({
@@ -121,8 +128,7 @@
 			    });
 		  }
 		</script>
-		<div id="lugar" title="Mensaje de Informaci&oacute;n"></div>
-		<table id="responsable" style="display:none"></table>
+		<table id="lugar" style="display:none"></table>
 		<table>
 					<tr>
 						<td>ID</td>

@@ -1,5 +1,7 @@
 package data;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -172,13 +174,8 @@ public class CNoticia {
 		return c.get(java.util.Calendar.YEAR)+"-"+c.get(java.util.Calendar.MONTH)+"-"+c.get(java.util.Calendar.DAY_OF_MONTH);
 	}
 	public String getFormatoFechaddmmyy(Date date){
-		Calendar c = Calendar.getInstance();
-		c.setTime( date );
-		String day=c.get(java.util.Calendar.DAY_OF_MONTH)+"";
-		day=(day.length()==1)?"0"+day:day;
-		String month=(c.get(java.util.Calendar.MONTH)+1)+"";
-		month=(month.length()==1)?"0"+month:month;
-		String year=c.get(java.util.Calendar.YEAR)+"";
-		return day+"/"+month+"/"+year;
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return formatter.format(date);
 	}
 }

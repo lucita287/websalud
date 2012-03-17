@@ -53,4 +53,9 @@
 		  border-left: 5px #000 solid;
 		  padding-left: 15px;
 		}
-		
+		.flexigrid div.fbutton .delete {
+		background: url(../images/close.png) no-repeat center left;
+		}
+		.caja_gris{
+			border: 3px gray solid; width:600px;
+		}

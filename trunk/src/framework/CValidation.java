@@ -220,4 +220,78 @@ public class CValidation {
 		}
 		return lista;
 	}
+	public String ValidarFormatoHora(String horario,String campo){
+		String result="{\"resultado\":\"ERROR\",\"mensaje\":\"No tiene el formato de hora, "+campo+"\"}";
+		horario+=":";
+		String[]  splittArray = horario.split(":");
+		if(splittArray.length==2){
+			try{
+				int hora=Integer.parseInt(splittArray[0]);
+				int minuto=Integer.parseInt(splittArray[1]);
+				if(hora>=0&&hora<=12){
+					if(minuto>=0&&minuto<=60){
+						result="";
+					}
+				}
+					
+			}catch(Exception e){
+				
+			}
+		}
+		return result;
+	}
+	
+	public Integer[] getHorario(String horario){
+		horario+=":";
+		int hora=0;
+		int minuto=0;
+		String[]  splittArray = horario.split(":");
+		if(splittArray.length==2){
+			try{
+				hora=Integer.parseInt(splittArray[0]);
+			    minuto=Integer.parseInt(splittArray[1]);
+					
+			}catch(Exception e){
+				
+			}
+		}
+		Integer[] horas=new Integer[2];
+		horas[0]=hora;
+		horas[1]=minuto;
+		return horas;
+	}
+	public String validarHoraMayoraOtra(String fecha, String formato,String fecha1, String formato1,String mensaje){
+		String result="{\"resultado\":\"ERROR\",\"mensaje\":\"HORA MAYOR QUE OTRA, "+mensaje+"\"}";
+		DateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
+		Date date=null;
+		Date date2=null;
+		try {
+			date = (Date)formatter.parse(fecha+":00 "+formato);
+			date2 = (Date)formatter.parse(fecha1+":00 "+formato1);
+		} catch (java.text.ParseException e) {
+			
+		}
+	     if(date!=null&& date2!=null && date2.compareTo(date)>0){
+	    	 result="";
+	     }
+		return result;
+	}
+	public Date CambiarFormatohhmm(String hora, String formato){
+		Date date1=new Date();
+		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Integer[] horario=getHorario(hora);
+			if(horario[0]!=12&&formato.equalsIgnoreCase("PM")){
+				horario[0]+=12;
+			}else if(horario[0]==12&&formato.equalsIgnoreCase("AM")){
+				horario[0]=0;
+			}else if(horario[0]==0&&formato.equalsIgnoreCase("PM")){
+				horario[0]=12;
+			}
+			date1 = (Date)formatter.parse(horario[0]+":"+horario[1]+":00");
+			
+		} catch (java.text.ParseException e) {}
+		
+		return date1;
+	}
 }

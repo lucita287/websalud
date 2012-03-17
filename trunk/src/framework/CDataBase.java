@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import data.CActividad;
 import data.CArea;
 import data.CCategoria;
 import data.CConfiguracion;
 import data.CContenido;
+import data.CDetalleActividad;
 import data.CEdificio;
 import data.CEncabezado;
 import data.CMultimedia;
@@ -1533,5 +1535,356 @@ public int getResponsableTotal(int type,String busqueda){
 		}
 		
 		return false;
+	}
+	public ArrayList<CActividad> getListaActividades(int ordenar,int asc,int min,int max,int type, String busqueda){
+		ArrayList<CActividad> ret=new ArrayList<CActividad>();
+		try{
+			String pqtype="act.titulo";
+			if(type==2)
+				 pqtype="edi.nombre";
+			else if(type==3)
+				pqtype="a.nombre";
+			
+			String sql="select * from (SELECT act.idactividad, act.titulo act_titulo, act.descripcion act_descripcion, act.areaidarea idarea,act.salon , "+
+						" a.nombre nombre_area, edi.idedificio, edi.nombre edificio_nombre,  @rownum:=@rownum+1 rownum  "+
+						"FROM actividad act inner join area a on a.idarea=act.areaidarea "+
+						"inner join edificio edi on edi.idedificio=act.edificioidedificio,(SELECT @rownum:=0) ro "+
+						"where  upper("+pqtype+") like ? "+
+						" ) table1 "+
+						" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("edificio_nombre"),"","");
+				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"));
+				//CActividad(int idactividad, String titulo, CArea areaidarea,String descripcion, CResponsable responsableidresponsable,CEdificio edificioidedificio)
+				ret.add(act);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public int getActividadesTotal(int type,String busqueda){
+		int temp=0;
+		String pqtype="act.titulo";
+		if(type==2)
+			 pqtype="edi.nombre";
+		else if(type==3)
+			pqtype="a.nombre";
+		try {
+			String sql="SELECT count(*) cant FROM actividad act inner join area a on a.idarea=act.areaidarea "+
+					" inner join edificio edi on edi.idedificio=act.edificioidedificio "+
+					" where  upper("+pqtype+") like ? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public boolean saferesponsable_actividad(int idactividad,ArrayList<Integer> list){
+		PreparedStatement stm;
+		boolean b=true;
+		try {
+			
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM responsable_actividad WHERE actividadidactividad =?");
+			stm.setInt(1, idactividad);
+			 stm.executeUpdate();
+		 
+			
+			 for(int j=0; j<list.size();j++){ 
+				 stm = (PreparedStatement)conn.prepareStatement("INSERT INTO responsable_actividad(responsableidresponsable,actividadidactividad) VALUES(?,?)");
+				 stm.setInt(1, list.get(j));	
+				 stm.setInt(2, idactividad);
+					
+				 if(stm.executeUpdate()>0)
+					 b= true;
+				 else  return false;
+			 }
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
+	public boolean SafeActividad(CActividad act){
+		PreparedStatement stm;
+		try {
+
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO actividad ( titulo, areaidarea, descripcion, edificioidedificio, salon) VALUES ( ?, ?, ?, ?, ?)");
+			stm.setString(1, act.getTitulo());
+			stm.setInt(2,act.getAreaidarea().getidarea());
+			stm.setString(3,act.getDescripcion());
+			stm.setInt(4,act.getEdificioidedificio().getIdedificio());
+			stm.setString(5,act.getSalon());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public int BuscarActividad(CActividad act){
+		int temp=0;
+		try {
+			String sql="select max(idactividad) cant from actividad where titulo=? and areaidarea=? and edificioidedificio=?  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1, act.getTitulo());
+			stm.setInt(2,act.getAreaidarea().getidarea());
+			stm.setInt(3,act.getEdificioidedificio().getIdedificio());
+			
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public CActividad getActividadEspecifica(int idactividad){
+		CActividad news=null;
+		try{
+			String sql="SELECT act.idactividad, act.titulo act_titulo, act.descripcion act_descripcion, act.areaidarea idarea, act.salon, "+
+  " a.nombre nombre_area, edi.idedificio, edi.nombre edi_nombre  "+
+  "FROM actividad act inner join area a on a.idarea=act.areaidarea "+
+  " inner join edificio edi on edi.idedificio=act.edificioidedificio where idactividad=?  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			ResultSet rs=stm.executeQuery();
+			if(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("edi_nombre"),"","");
+				news=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"));
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return news;
+	}
+	public ArrayList<Integer> getActividadResponsableEspecifica(int idactividad){
+		ArrayList<Integer> ret=new ArrayList<Integer>();
+		try{
+			String sql="SELECT responsableidresponsable, actividadidactividad  FROM responsable_actividad where actividadidactividad=?  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ret.add(rs.getInt("responsableidresponsable"));
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public boolean UpdateActividad(CActividad act){
+		PreparedStatement stm;
+		try {
+
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE actividad SET titulo = ?, areaidarea = ?, descripcion = ?, edificioidedificio = ?, salon = ? WHERE idactividad = ?");
+			stm.setString(1, act.getTitulo());
+			stm.setInt(2,act.getAreaidarea().getidarea());
+			stm.setString(3,act.getDescripcion());
+			stm.setInt(4,act.getEdificioidedificio().getIdedificio());
+			stm.setString(5,act.getSalon());
+			stm.setInt(6, act.getIdactividad());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public int SafeActividadDetalle(int idactividad,java.util.Date fechaInicio,java.util.Date fechaFin, java.util.Date horaInicio, java.util.Date horaFin,int lunes,int martes,int miercoles,int jueves,int viernes, int sabado, int domingo){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select Rango_fechas(?,?,?,?,?,?,?,?,?,?,?,?) result");
+			stm.setInt(1, idactividad);
+			stm.setDate(2, new java.sql.Date(fechaInicio.getTime()));
+			stm.setDate(3, new java.sql.Date(fechaFin.getTime()));
+			stm.setTimestamp(4,new java.sql.Timestamp(horaInicio.getTime()));
+			stm.setTimestamp(5, new java.sql.Timestamp(horaFin.getTime()));
+			stm.setInt(6, lunes);
+			stm.setInt(7, martes);
+			stm.setInt(8, miercoles);
+			stm.setInt(9, jueves);
+			stm.setInt(10, viernes);
+			stm.setInt(11, sabado);
+			stm.setInt(12, domingo);
+			
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("result");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad,int ordenar,int asc,int min,int max){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+			String sql="select * from (SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, @rownum:=@rownum+1 rownum "+
+			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad,(SELECT @rownum:=0) ro "+
+			" where idactividad=?) table1 where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") ;
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"");
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
+	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+			String sql="SELECT count(da.iddetalleactividad) FROM detalleactividad  where da.actividadidactividad=? " ;
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"");
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
+	public int getDetalleActividadTotal(int idactividad){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(da.iddetalleactividad),0) cant FROM detalleactividad da  where da.actividadidactividad=?");
+			stm.setInt(1,idactividad);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public int SafeActividadDetalle(int idactividad,java.util.Date fecha, java.util.Date horaInicio, java.util.Date horaFin){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select InsertarActividadFecha(?,?,?,?) result");
+			stm.setInt(1, idactividad);
+			stm.setDate(2, new java.sql.Date(fecha.getTime()));
+			stm.setTimestamp(3,new java.sql.Timestamp(horaInicio.getTime()));
+			stm.setTimestamp(4, new java.sql.Timestamp(horaFin.getTime()));
+			
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("result");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public int DeleteActividadDetalle(int idactividad,ArrayList<Integer> detalleactividad){
+		int cant=0;
+		
+		try {
+		PreparedStatement stm;
+		 for(int j=0; j<detalleactividad.size();j++){ 
+			 stm = (PreparedStatement)conn.prepareStatement("DELETE FROM detalleactividad WHERE iddetalleactividad = ?");
+				stm.setInt(1, detalleactividad.get(j));
+			 if(stm.executeUpdate()>0)
+				 cant++;
+			 
+		 }
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} 
+		
+		return cant;
+	}
+	public int DeleteActividadDetalle(int idactividad){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select EliminarDetalleActividad(?) result");
+			stm.setInt(1, idactividad);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("result");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public int DeleteActividad(int idactividad){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select EliminarActividad(?) result");
+			stm.setInt(1, idactividad);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("result");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
 	}
 }

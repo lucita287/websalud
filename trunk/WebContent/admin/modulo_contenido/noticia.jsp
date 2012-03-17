@@ -216,34 +216,24 @@
 					var titulo=convertirCaracter($.trim($("#titulo_noticia").val()));
 					var descripcion=convertirCaracter($.trim($("#editnoti").val()));
 				    var descripcion_corta=convertirCaracter($.trim($("#descripcion_noti").val()));
-				if(idnoticia==0){	
-				  cadena = [ 'a=new_noticia',
-					            'idnoticia='     + idnoticia,
-					            'idimagen='   + idimagen,
-					            'titulo='+Base64.encode(titulo),
-					            'contenido='+Base64.encode(descripcion),
-					            'fecha_inicio='+Base64.encode($("#start_date").val()),
-					            'fecha_fin='+Base64.encode($("#end_date").val()),
-					            'idarea='+$("#selec-area").val(),
-					            'prioridad='+$("#prioridadnoti").val(),
-					            'descripcion='+Base64.encode(descripcion_corta),
-					            'estado='+$('#selec-estado').val()
-					        ].join('&');
+				    var action="new_noticia";
+				if(idnoticia==0){
+					action="new_noticia";
 				}else{
-					cadena = [ 'a=safe_noticia',
-					            'idnoticia='     + idnoticia,
-					            'idimagen='   + idimagen,
-					            'titulo='+Base64.encode(titulo),
-					            'contenido='+Base64.encode(descripcion),
-					            'fecha_inicio='+Base64.encode($("#start_date").val()),
-					            'fecha_fin='+Base64.encode($("#end_date").val()),
-					            'idarea='+$("#selec-area").val(),
-					            'prioridad='+$("#prioridadnoti").val(),
-					            'descripcion='+Base64.encode(descripcion_corta),
-					            'estado='+$('#selec-estado').val()
-					        ].join('&');
-					
+					action="safe_noticia";						
 				}
+				cadena = [ 'a='+action,
+				            'idnoticia='     + idnoticia,
+				            'idimagen='   + idimagen,
+				            'titulo='+Base64.encode(titulo),
+				            'contenido='+Base64.encode(descripcion),
+				            'fecha_inicio='+Base64.encode($("#start_date").val()),
+				            'fecha_fin='+Base64.encode($("#end_date").val()),
+				            'idarea='+$("#selec-area").val(),
+				            'prioridad='+$("#prioridadnoti").val(),
+				            'descripcion='+Base64.encode(descripcion_corta),
+				            'estado='+$('#selec-estado').val()
+				        ].join('&');
 				$.ajax({
 			        url: "../SNoticia",
 			        data: cadena,
@@ -285,19 +275,7 @@
 				        }
 				    });
 			 }
-			 function mensaje(mens){
-				  
-				  $( "#dialog-message" ).html(mens);
-					$( "#dialog-message" ).dialog({
-						modal: true,
-						buttons: {
-							Ok: function() {
-								$( this ).dialog( "close" );
-							}
-						}
-					});
-			  }
-			 function eliminarnoti(){
+			  function eliminarnoti(){
 				 cadena = [ 'a=eliminar_noticia',
 				            'idnoticia='     + idnoticia,
 				        ].join('&');
