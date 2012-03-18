@@ -20,6 +20,4 @@
 <script src="lib/base64.js" type="text/javascript" charset="utf-8"></script>
 <script src="lib/jcarousellite_1.0.1c4.js" type="text/javascript"></script>
 <script src="lib/system.js" type="text/javascript"></script>
-<script type='text/javascript' src='lib/jquery.weekcalendar.js'></script>
-<script type='text/javascript' src='lib/date.js'></script>
-<script src="lib/i18n/ui.datepicker-es.js"></script>
+

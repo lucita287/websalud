@@ -43,11 +43,12 @@ public class SArea extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
 		
-		String action=request.getParameter("a");
+		
 		Base64core base64=new Base64core();
 		CValidation valid=new CValidation();
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
+		 String action=valid.ValidarRequest(request.getParameter("a"));
 		if(action.equalsIgnoreCase("show")){
 		 int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 		 CArea temp_area=dbo.getCAreaEspecifico(idarea);

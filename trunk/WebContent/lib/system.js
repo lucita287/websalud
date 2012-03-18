@@ -1,7 +1,9 @@
 /**
  * 
  */
-
+	  $(function() {
+		$( "#tabs" ).tabs();
+	});
 	function menuarea(idarea){
 		$("#menu-principal").load("portal/menu_area.jsp?idarea="+idarea);
 		$("#header_carousel").load("portal/header.jsp?idarea="+idarea);

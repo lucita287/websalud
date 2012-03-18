@@ -50,6 +50,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  $( ".datepicker" ).datepicker();
 					$(".time").mask("99:99");
 					$(".datepicker").mask("99/99/9999");
+					$( ".datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy");
 				});
 			  
 			  function GuardarRango(){

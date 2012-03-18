@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataBase" %>
-<%@ page import="data.CNoticia" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="framework.CValidation" %>
+<%@ page import="data.CArea" %>
 <%
-		
-		
+CDataBase dbo=new CDataBase();
+dbo.Connect();
+int idarea=1;
+try{
+idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
+}catch(Exception e){}
+CArea area=dbo.getCAreaEspecifico(idarea);
+dbo.Close();
+
+if(area!=null){		
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,6 +21,9 @@
 
 <title> <%="CALENDARIO"%>/Unidad de Salud</title>
 <jsp:include page="portal/top.jsp" />
+<script type='text/javascript' src='lib/jquery.weekcalendar.js'></script>
+<script type='text/javascript' src='lib/date.js'></script>
+<script src="lib/i18n/ui.datepicker-es.js"></script>
 </head>
 <body>
 <div class="back_all">
@@ -26,7 +36,7 @@
 
 <div style="float:left">
 <h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Noticias</a></h2>
+<h2><a href="#" id="metamorph">Calendario de Actividades</a></h2>
 </div>
 <div style="clear: both;"></div>
 </div>
@@ -35,18 +45,33 @@
 <!-- header begins -->
 
  <div id="main">
-<div style="float:left; margin-top:15px;">
+<div id="retorna_unidad">
 <a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
 </div>
-<div style="float:right">
-<div id="datepicker"></div>
-</div>
-<center><h1>ODONTOLOG&Iacute;A</h1> </center>
-
+<div id="titulo_area_calendario"><%=area.getnombre() %></div>
 <div style="clear: both;"></div>
-	
 
-<div id='calendar'></div>
+
+   <div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">SEMANAL</a></li>
+				<li><a href="#tabs-2">MENSUAL</a></li>
+				<li><a href="#tabs-3">ACTIVIDADES</a></li>
+				
+			</ul>
+			<div id="tabs-1" style="width:950px; ">
+			<jsp:include page="portal/weekcalendar.jsp" />
+			</div>
+			<div id="tabs-2" style="width:950px; ">
+			hola
+			</div>
+			<div id="tabs-3" style="width:950px; ">
+			hola2
+			</div>
+	</div>	
+	<div style="clear: both;"></div>
+
+
 </div>	
 <!--content ends -->
 </div>
@@ -60,81 +85,8 @@
 <!-- footer ends-->
 
 </div>
+<% } %>
 </body>
+
 </html>
-<script>
-
- 
-	var year = new Date().getFullYear();
-	var month = new Date().getMonth();
-	var day = new Date().getDate();
-
-	var eventData = {
-		events : [
-		   {"id":1, "start": new Date(year, month, day, 12), "end": new Date(year, month, day, 13, 35),"title":"Primer evento"},
-		   {"id":2, "start": new Date(year, month, day, 14), "end": new Date(year, month, day, 14, 45),"title":"Evento 3"},
-		   {"id":3, "start": new Date(year, month, day + 1, 18), "end": new Date(year, month, day + 1, 18, 45),"title":"Evento 4"},
-		   {"id":4, "start": new Date(year, month, day - 1, 8), "end": new Date(year, month, day - 1, 9, 30),"title":"Como hablar en publico"},
-		   {"id":5, "start": new Date(year, month, day + 1, 14), "end": new Date(year, month, day + 1, 16),"title":"Otro evento"},
-		   {"id":5, "start": new Date(year, month, day + 1, 15), "end": new Date(year, month, day + 1, 17),"title":"Otro evento"}
-		]
-	};
-	$(function() {
-		$( "#datepicker" ).datepicker();
-	});
-
-	   
-	$(document).ready(function() {
-
-		$('#calendar').weekCalendar({
-			 // I18N
-	        firstDayOfWeek: $.datepicker.regional['es'].firstDay,
-	        shortDays: $.datepicker.regional['es'].dayNamesShort,
-	        longDays: $.datepicker.regional['es'].dayNames,
-	        shortMonths: $.datepicker.regional['es'].monthNamesShort,
-	        longMonths: $.datepicker.regional['es'].monthNames,
-	        dateFormat: "d F y",
 			
-			timeslotsPerHour: 2,
-			allowCalEventOverlap: true,
-			overlapEventsSeparate: true,
-			totalEventsWidthPercentInOneColumn : 95,
-
-			height: function($calendar){
-				return $(window).height() - $("h1").outerHeight(true);
-			},
-			eventRender : function(calEvent, $event) {
-				if(calEvent.end.getTime() < new Date().getTime()) {
-					$event.css("backgroundColor", "#aaa");
-					$event.find(".time").css({"backgroundColor": "#999", "border":"1px solid #888"});
-				}
-			},
-			eventNew : function(calEvent, $event) {
-				displayMessage("<strong>Added event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
-				alert("You've added a new event. You would capture this event, add the logic for creating a new event with your own fields, data and whatever backend persistence you require.");
-			},
-			eventDrop : function(calEvent, $event) {
-				displayMessage("<strong>Moved Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
-			},
-			eventResize : function(calEvent, $event) {
-				displayMessage("<strong>Resized Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
-			},
-			eventClick : function(calEvent, $event) {
-				displayMessage("<strong>Clicked Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
-			},
-			eventMouseover : function(calEvent, $event) {
-				displayMessage("<strong>Mouseover Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
-			},
-			eventMouseout : function(calEvent, $event) {
-				displayMessage("<strong>Mouseout Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
-			},
-			noEvents : function() {
-				displayMessage("There are no events for this week");
-			},
-			data:eventData
-		});
-
-		
-	});
-
-</script>			
