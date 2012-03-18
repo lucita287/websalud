@@ -294,4 +294,13 @@ public class CValidation {
 		
 		return date1;
 	}
+	public Long ConvertLong(String num){
+		Long result=0L;
+		try{
+			result=Long.parseLong(num);
+		}catch(Exception e){
+			
+		}
+		return result;
+	}
 }

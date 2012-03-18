@@ -11,8 +11,9 @@ try{
 idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
 }catch(Exception e){}
 CArea area=dbo.getCAreaEspecifico(idarea);
-if(area!=null){
 dbo.Close();
+if(area!=null){
+
 %>
 <link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />	
 <h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=area.getnombre()%></h3>

@@ -29,4 +29,14 @@
     <servlet-name>SUploadPDF</servlet-name>
     <url-pattern>/uploadpdf</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SCalendario</display-name>
+    <servlet-name>SCalendario</servlet-name>
+    <servlet-class>servlet.SCalendario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SCalendario</servlet-name>
+    <url-pattern>/SCalendario</url-pattern>
+  </servlet-mapping>
 </web-app>

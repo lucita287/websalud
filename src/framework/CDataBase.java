@@ -1887,4 +1887,30 @@ public int getResponsableTotal(int type,String busqueda){
 		
 		return temp;
 	}
+	
+	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idarea,java.util.Date fecha_inicio, java.util.Date fecha_fin){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo "+
+			 " FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad "+
+			" where act.areaidarea=? and (da.fecha>=? and da.fecha<=?) ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idarea);
+			stm.setDate(2, new java.sql.Date(fecha_inicio.getTime()));
+			stm.setDate(3, new java.sql.Date(fecha_fin.getTime()));
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,"",null,"");
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
 }
