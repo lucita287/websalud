@@ -56,6 +56,6 @@ dbo.Close();
 		</ul>
 	</li>
 		<% } %>
-	<li><a target="_blank" href="calendario.jsp">CALENDARIO</a></li>
-	<li><a href="index.jsp">REGRESAR A MENU</a></li>	
+	<li><a target="_blank" href="calendario.jsp?idarea=<%=idarea %>">Calendario</a></li>
+	<li><a href="index.jsp">Regresar a Menu</a></li>	
 </ul>

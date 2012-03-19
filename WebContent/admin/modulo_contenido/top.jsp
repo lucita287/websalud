@@ -15,7 +15,6 @@
 <script type="text/javascript" src="../lib/system_admin.js" charset="utf-8"></script>
 <script type="text/javascript" src="../lib/jquery-ui-1.8.17.custom.min.js" charset="utf-8"></script>
 <script src="../lib/i18n/ui.datepicker-es.js"></script>
-<script src="../lib/jcarousellite_1.0.1c4.js" type="text/javascript" charset="utf-8"></script>
 <script src="../lib/base64.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="../lib/flexigrid.js" charset="utf-8"></script>
 <script type="text/javascript" src="../lib/jquery.cleditor.min.js"></script>
