@@ -48,27 +48,16 @@ if(area!=null){
 <div id="retorna_unidad">
 <a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
 </div>
+<div class="bt_actividad_calendario"><a href="#" class="ui-state-default ui-corner-all button">SEMANAL</a></div>
+<div class="bt_actividad_calendario"><a href="#" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
+<div class="bt_actividad_calendario"><a href="#" class="ui-state-default ui-corner-all button">ACTIVIDADES</a></div>
 <div id="titulo_area_calendario"><%=area.getnombre() %></div>
+
 <div style="clear: both;"></div>
 
 
-   <div id="tabs">
-			<ul>
-				<li><a href="#tabs-1">SEMANAL</a></li>
-				<li><a href="#tabs-2">MENSUAL</a></li>
-				<li><a href="#tabs-3">ACTIVIDADES</a></li>
-				
-			</ul>
-			<div id="tabs-1" style="width:950px; ">
-			<jsp:include page="portal/weekcalendar.jsp" />
-			</div>
-			<div id="tabs-2" style="width:950px; ">
-			hola
-			</div>
-			<div id="tabs-3" style="width:950px; ">
-			hola2
-			</div>
-	</div>	
+   			<jsp:include page="portal/weekcalendar.jsp" />
+	
 	<div style="clear: both;"></div>
 
 

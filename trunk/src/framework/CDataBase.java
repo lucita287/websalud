@@ -1,6 +1,7 @@
 package framework;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -1391,6 +1392,29 @@ public int getResponsableTotal(int type,String busqueda){
 		}
 		return ret;
 	}
+	public ArrayList<CResponsable> getListaResponsables(int idactividad){
+		ArrayList<CResponsable> ret=new ArrayList<CResponsable>();
+		try{
+			String sql="SELECT respon.idresponsable, respon.nombre nombre, respon.apellido apellido,a.idarea ,a.nombre nombre_area, @rownum:=@rownum+1 rownum "+
+		" FROM responsable respon inner join area a on a.idarea=respon.areaidarea inner join responsable_actividad ra on ra.responsableidresponsable=respon.idresponsable  "+
+		" where ra.actividadidactividad=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CResponsable cr=new CResponsable(rs.getInt("idresponsable"),rs.getString("nombre"),rs.getString("apellido"),null,area);
+				ret.add(cr);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			
+		}
+		return ret;
+	}
 	public ArrayList<CEdificio> getListaEdificio(int ordenar,int asc,int min,int max,int type, String busqueda){
 		ArrayList<CEdificio> ret=new ArrayList<CEdificio>();
 		try{
@@ -1909,7 +1933,42 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}
 		catch(Throwable e){
-			
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	@SuppressWarnings("static-access")
+	public ArrayList<CDetalleActividad> getDetalleActividad(int idarea,java.util.Date fecha_inicio, java.util.Date fecha_fin){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+			GregorianCalendar  calendar=new GregorianCalendar();
+			calendar.setTime(fecha_inicio);
+			GregorianCalendar  calendar2=new GregorianCalendar();
+			calendar2.setTime(fecha_fin);
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre nombre_edificio, edi.direccion " +
+			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad inner join edificio edi on edi.idedificio=act.edificioidedificio "+
+			" where act.areaidarea=? and da.fecha=? and hour(horainicio)=? and minute(horainicio)=? "+
+            " and hour(horafin)=? and minute(horafin)=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idarea);
+			stm.setDate(2,new java.sql.Date(fecha_inicio.getTime()));
+			stm.setInt(3, calendar.get(calendar.HOUR_OF_DAY));
+			stm.setInt(4, calendar.get(calendar.MINUTE));
+			stm.setInt(5, calendar2.get(calendar.HOUR_OF_DAY));
+			stm.setInt(6, calendar2.get(calendar.MINUTE));
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
+				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,rs.getString("descripcion"),edi,rs.getString("salon"));
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
 		}
 		return ret;
 	}

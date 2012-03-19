@@ -36,6 +36,9 @@ dbo.Close();
 	
 	<%} %>
 	<li>
+		<a target="_blank" href="calendario.jsp?idarea=1">Calendario</a>
+	</li>
+	<li>
 		<a>Areas Profesionales</a>
 			<ul>
 				<% for(int h=0; h<list_area.size(); h++){ 

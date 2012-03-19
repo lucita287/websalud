@@ -1,4 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+<%@ page import="framework.CDataBase" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="data.CArea" %>
+<%
+CDataBase	data=new CDataBase();
+data.Connect();
+ArrayList<CArea> list=data.getAreaLista();
+int idarea=1;
+try{
+idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
+}catch(Exception e){}
 
+%>
+<hr />
+	<% for(int j=0; j<list.size();j++){  
+		CArea area=list.get(j);%>
+		<div class="bt_area_calendario"><a href="calendario.jsp?idarea=<%= area.getidarea()%>" class="ui-state-default ui-corner-all button"><%= area.getnombre()%></a></div>
+	<%} %>
 <div style="float:right">
 <div id="datepicker"></div>
 </div>
@@ -6,6 +25,7 @@
 
 <div style="clear: both;"></div>
 <div id='calendar'></div>
+
 <script>
 
  
@@ -21,20 +41,7 @@
 
 	   
 	$(document).ready(function() {
-		cadena = [ 'idarea=1',
-		            'a=showcalendar',
-		            'end=1332655200',
-		            'start=1332050400'
-		        ].join('&');
-		$.ajax({
-	        url: "SCalendario",
-	        data: cadena,
-	  	    type: 'post',
-	  	  	dataType: 'json',
-	  	  	success: function(datos){
-	  	  	events=datos;;	
-				
-	        }});
+		
 		$('#calendar').weekCalendar({
 			
 			// I18N
@@ -52,20 +59,31 @@
 			overlapEventsSeparate: true,
 			totalEventsWidthPercentInOneColumn : 95,
 			eventClick : function(calEvent, $event) {
-				displayMessage(calEvent.start.getTimezoneOffset()+"<strong>Clicked Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
+				cadena = [ 
+				           "idarea=<%=idarea%>",
+				           "a=especifico_calendar",
+				           "start="+calEvent.start.getTime(),
+				           "end="+calEvent.end.getTime(),
+				           ].join('&');
+				$.ajax({
+        	        url:        "SCalendario",
+        	        data: cadena,
+        	        type: 'POST',
+			  	  	success:    function(json) {
+			  	  	displayMessage(json);
+        	        }
+        	    });
+				
+			    //displayMessage(calEvent.start.getTimezoneOffset()+"<strong>Clicked Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
 			},
 			height: function($calendar){
 				return $(window).height() - $("h1").outerHeight(true);
 			},
-			changedate:function($calendar,$date){
-				
-			},
-	        //data:'portal/json_calendar.jsp?idarea=1&a=showcalendar',
 	        data: function(start, end, callback) {
 	        	  
 	        	
 	        	 $.ajax({
-	        	        url:        "SCalendario?idarea=1&a=showcalendar&start="+ start.getTime()+"&end="+end.getTime(),
+	        	        url:        "SCalendario?idarea=<%=idarea%>&a=showcalendar&start="+ start.getTime()+"&end="+end.getTime(),
 	        	        type: 'GET',
 	        	        dataType: 'json',
 				  	  	success:    function(json) {
@@ -84,9 +102,7 @@
 	        		}	
 			
 		});
-		  // $("#calendar").weekCalendar("refresh");
-			//   $("#calendar").weekCalendar("refresh");
-		
+		  
 	});
 	function displayMessage(message) {
 		$("#message").html(message).fadeIn();

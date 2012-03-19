@@ -38,10 +38,10 @@
 										 		<span class="error_label">Error en el usuario y/o password</span>
 										 		<br/>
 										 <% } %>
-										 
+										 <center>
 										<br/> <a href="http://rye.usac.edu.gt/">¿Olvid&oacute; su contraseña?</a>
 										<br/> <a href="http://rye.usac.edu.gt/">Obtener Usuario</a>
-										
+										</center>
 									</div>
 								</div>
 		</div>

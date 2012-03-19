@@ -1,8 +1,8 @@
 
 /************* PORTAL ******************/
 
-				#menu-principal {  width:25%;  float:left; }
-
+		#menu-principal {  width:25%;  float:left; }
+		#menu-salud{   background: #333;}
 		#noticias {width:75%; float:left; }
 		
 		
@@ -95,7 +95,7 @@
 				}
 				
 /************** MENU ***********************/
-
+			
 			ul#menu, ul#menu ul {
 			  list-style-type:none;
 			  margin: 0;
@@ -165,7 +165,7 @@
 
 /************** CALENDAR ******************************/
 #message {
-		font-size: 0.7em;
+		font-size: 0.9em;
 		width: 350px;
 		height: 150px;
 		padding: 1em;
@@ -173,6 +173,7 @@
 		border: 1px solid #dda;
 		float:left;
 		display: none;
+		overflow: auto;
 	}
 #retorna_unidad{
 	float:left; margin-top:15px;
@@ -184,4 +185,18 @@
 	margin: 0 auto 0 auto;
 	font-size: 1.5em;
 	text-transform:uppercase;
+}
+.bt_actividad_calendario{
+	float:right; margin-top:15px;
+	margin-bottom:20px;
+}
+.bt_area_calendario{
+	float:left; margin-top:15px;
+	margin-bottom:20px;
+}
+.wc-title{
+	font-size: 0.8em;
+}
+.wc-time{
+	font-size: 0.8em;
 }

@@ -32,10 +32,14 @@
 <div id="menu-principal" >
 
 	<%if(area==null){ %>
+	<div id="menu-salud" >
 	<jsp:include page="portal/menu.jsp" />
+	</div>
 	<jsp:include page="portal/login.jsp" />
 	<%}else { %>
+	<div id="menu-salud" >
 	<jsp:include page="portal/menu_area.jsp" />
+	</div>
 	<% }%>
 </div>
      <div id="noticias">
