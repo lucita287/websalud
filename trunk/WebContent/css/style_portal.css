@@ -194,9 +194,116 @@
 	float:left; margin-top:15px;
 	margin-bottom:20px;
 }
-.wc-title{
-	font-size: 0.8em;
+.wc-nav .wc-title{
+	font-size: 0.85em;
 }
 .wc-time{
-	font-size: 0.8em;
+	font-size: 0.85em;
+}
+	.calendario_ventana { width: 450px; height: 300px;  float:left;  margin:10px 10px 10px 20px;  overflow: auto;}
+	.calendario_ventana h3 { text-align: center; margin: 0; text-transform:uppercase; }
+	#calendario-frame {
+clear: right;
+border: 1px solid #DDD;
+overflow: auto;
+position: relative;
+}
+
+.calendario_actividad .tabla
+{
+	width:450px;
+	
+	margin: 0 auto;
+}
+
+.calendario_actividad .fila
+{
+	clear: both;
+}
+
+.calendario_actividad .col_titulo
+{
+	float: left;
+	padding: 5px;
+	background: #B0E0E6;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	width:410px;
+}
+
+.calendario_actividad .col
+{
+	float: left;
+	padding: 5px;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	width:410px;
+}
+.calendario_actividad .tr1
+{
+	text-align:center;
+	width:100px; float:left;
+}
+.calendario_actividad .tr2
+{
+width:280px; float:right;
+}
+.calendario_actividad .titulo_area
+{
+float:right;
+font-size: 1.5em;
+font-weight:bold;
+}
+	.mes_calendar { width: 910px;   margin:10px 10px 10px 10px; }
+	.day_calendar { margin:5px 5px 5px 5px; float:left;  width: 45px;   padding: 5px; font-size: 3em; border: 1px solid #000; background: #eee; color: #333; }
+	.year_calendar { font-size: 2em; text-align:center;}
+	.mes_calendar 
+	.tabla{
+	width:830px;
+	float: left;
+	 margin:5px 5px 5px 5px;
+	 
+}
+
+.mes_calendar .fila
+{
+	clear: both;
+}
+
+.mes_calendar .col_titulo
+{
+	float: left;
+	padding: 5px;
+	background: #B0E0E6;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	
+}
+
+.mes_calendar .col
+{
+	float: left;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+}
+.mes_calendar .tr1
+{
+	float:left;
+	padding: 2px;
 }

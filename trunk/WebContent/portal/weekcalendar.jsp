@@ -18,6 +18,7 @@ idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getP
 		CArea area=list.get(j);%>
 		<div class="bt_area_calendario"><a href="calendario.jsp?idarea=<%= area.getidarea()%>" class="ui-state-default ui-corner-all button"><%= area.getnombre()%></a></div>
 	<%} %>
+	
 <div style="float:right">
 <div id="datepicker"></div>
 </div>

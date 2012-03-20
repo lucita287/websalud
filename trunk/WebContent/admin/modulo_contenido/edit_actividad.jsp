@@ -147,6 +147,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								$("#id_actividad_f").text(idactividad);
 								$("#titulo_actividad_f").text(result.titulo);
 								var responsable=result.responsables;
+								
 					        	for (var x = 0 ; x < responsable.length ; x++) {
 					        		var id=responsable[x].idresponsable; 
 					        		$('#respon_actividad').find('option').each( function() {

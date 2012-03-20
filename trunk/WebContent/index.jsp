@@ -35,12 +35,13 @@
 	<div id="menu-salud" >
 	<jsp:include page="portal/menu.jsp" />
 	</div>
-	<jsp:include page="portal/login.jsp" />
+	
 	<%}else { %>
 	<div id="menu-salud" >
 	<jsp:include page="portal/menu_area.jsp" />
 	</div>
 	<% }%>
+	<jsp:include page="portal/login.jsp" />
 </div>
      <div id="noticias">
 <div id="Cont-Panel-texto" class="ui-widget-content ui-corner-all">
