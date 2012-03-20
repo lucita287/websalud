@@ -6,15 +6,22 @@
 <%
 CDataBase dbo=new CDataBase();
 dbo.Connect();
-int idarea=1;
-try{
-idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
-}catch(Exception e){}
-CArea area=dbo.getCAreaEspecifico(idarea);
-dbo.Close();
 
-if(area!=null){		
-%>    
+CArea area=null;
+
+String mes=request.getParameter("mes");
+
+
+if(request.getParameter("idarea")!=null){
+	try{
+		int idarea=Integer.parseInt(request.getParameter("idarea"));
+		area=dbo.getCAreaEspecifico(idarea);
+	}catch(Exception e){}
+	
+	dbo.Close();
+}
+%>
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -48,16 +55,23 @@ if(area!=null){
 <div id="retorna_unidad">
 <a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
 </div>
-<div class="bt_actividad_calendario"><a href="#" class="ui-state-default ui-corner-all button">SEMANAL</a></div>
-<div class="bt_actividad_calendario"><a href="#" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
-<div class="bt_actividad_calendario"><a href="#" class="ui-state-default ui-corner-all button">ACTIVIDADES</a></div>
+<div class="bt_actividad_calendario"><a href="calendario.jsp" class="ui-state-default ui-corner-all button">ACTIVIDADES</a></div>
+<div class="bt_actividad_calendario"><a href="calendario.jsp?mes=" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
+<div class="bt_actividad_calendario"><a href="calendario.jsp?idarea=1" class="ui-state-default ui-corner-all button">SEMANAL</a></div>
+<% if(area!=null){%> 
 <div id="titulo_area_calendario"><%=area.getnombre() %></div>
-
+<% }else{ %>
+<div id="titulo_area_calendario">UNIDAD DE SALUD</div>
+<% } %>
 <div style="clear: both;"></div>
 
-
+<% if(area!=null){%>  
    			<jsp:include page="portal/weekcalendar.jsp" />
-	
+<% }else if(mes!=null){ %>
+			<jsp:include page="portal/actividad_mes.jsp" />
+<% }else{ %>
+   			<jsp:include page="portal/actividad.jsp" />
+<% }%>	
 	<div style="clear: both;"></div>
 
 
@@ -74,7 +88,7 @@ if(area!=null){
 <!-- footer ends-->
 
 </div>
-<% } %>
+
 </body>
 
 </html>

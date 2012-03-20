@@ -1395,7 +1395,7 @@ public int getResponsableTotal(int type,String busqueda){
 	public ArrayList<CResponsable> getListaResponsables(int idactividad){
 		ArrayList<CResponsable> ret=new ArrayList<CResponsable>();
 		try{
-			String sql="SELECT respon.idresponsable, respon.nombre nombre, respon.apellido apellido,a.idarea ,a.nombre nombre_area, @rownum:=@rownum+1 rownum "+
+			String sql="SELECT respon.idresponsable, respon.nombre nombre, respon.apellido apellido,a.idarea ,a.nombre nombre_area "+
 		" FROM responsable respon inner join area a on a.idarea=respon.areaidarea inner join responsable_actividad ra on ra.responsableidresponsable=respon.idresponsable  "+
 		" where ra.actividadidactividad=? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -1411,7 +1411,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}
 		catch(Throwable e){
-			
+			e.printStackTrace();
 		}
 		return ret;
 	}
@@ -1961,6 +1961,107 @@ public int getResponsableTotal(int type,String busqueda){
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
 				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,rs.getString("descripcion"),edi,rs.getString("salon"));
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public ArrayList<CDetalleActividad> getDetalleActividad(int idactividad){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad  " +
+			"  FROM detalleactividad da where da.actividadidactividad=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),null);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public ArrayList<CActividad> getActividad(java.util.Date fecha_inicio){
+		ArrayList<CActividad> ret=new ArrayList<CActividad>();
+		try{
+			
+			String sql="SELECT act.idactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre nombre_edificio, edi.direccion, a.idarea, a.nombre area_nombre, min(da.fecha) " +
+			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad inner join edificio edi on edi.idedificio=act.edificioidedificio inner join area a on a.idarea=act.areaidarea "+
+			" where  da.fecha>=? group by act.idactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre, edi.direccion, a.idarea, a.nombre order by a.idarea, min(da.fecha)";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setDate(1,new java.sql.Date(fecha_inicio.getTime()));
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("area_nombre"),"",0,null,null);
+				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
+				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"));
+				ret.add(act);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<java.util.Date> getDetalleActividad(int month,int year){
+		ArrayList<java.util.Date> ret=new ArrayList<java.util.Date>();
+		try{
+			String sql="select distinct(fecha) dia "+
+					" from detalleactividad where month(fecha)=? and year(fecha)=? "+
+					" order by dia ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,month);
+			stm.setInt(2,year);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				
+				java.util.Date dacti=new java.util.Date(rs.getDate("dia").getTime());
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<CDetalleActividad> getDetalleActividad(java.util.Date fecha_inicio){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+
+			String sql="select act.idactividad,act.titulo,a.idarea, a.nombre nombre_area, act.descripcion, edi.idedificio, edi.nombre nombre_edificio,edi.direccion, act.salon,dc.iddetalleactividad,dc.horainicio,dc.horafin from actividad act "+
+					"inner join detalleactividad dc on dc.actividadidactividad=act.idactividad "+
+					"inner join area a on a.idarea=act.areaidarea "+
+					"inner join edificio edi on  edi.idedificio=act.edificioidedificio "+
+					"where dc.fecha=? order by dc.horainicio ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setDate(1,new java.sql.Date(fecha_inicio.getTime()));
+	
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"", 0,null,null);
+				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"));
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),fecha_inicio,new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);
 				
 			}

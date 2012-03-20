@@ -36,7 +36,7 @@ dbo.Close();
 	
 	<%} %>
 	<li>
-		<a target="_blank" href="calendario.jsp?idarea=1">Calendario</a>
+		<a target="_blank" href="calendario.jsp?mes=">Calendario</a>
 	</li>
 	<li>
 		<a>Areas Profesionales</a>
