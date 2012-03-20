@@ -2,7 +2,6 @@
 /************* PORTAL ******************/
 
 		#menu-principal {  width:25%;  float:left; }
-		#menu-salud{   background: #333;}
 		#noticias {width:75%; float:left; }
 		
 		
@@ -49,7 +48,7 @@
                     width: 95%;
                     height: 150px;
                     overflow: auto;
-                    background: #ccc;
+                    background: #B0E0E6;
    					margin: 0px 20px 20px 20px;
                }
                
@@ -57,14 +56,14 @@
                     width: 95%;
                     height: 220px;
                     overflow: auto;
-                    background: #ccc;
+                    background: #B0E0E6;
    					margin: 0px 20px 20px 20px;
                }
                #panel-texto-c3 {
                     width: 95%;
                     height: 300px;
                     overflow: auto;
-                    background: #ccc;
+                    background: #B0E0E6;
    					margin: 0px 20px 20px 20px;
                }
                
@@ -95,7 +94,7 @@
 				}
 				
 /************** MENU ***********************/
-			
+			#menu-salud{ background: #325179;}
 			ul#menu, ul#menu ul {
 			  list-style-type:none;
 			  margin: 0;
@@ -112,25 +111,30 @@
 			  margin-top: 1px;
 			}
 			
+			ul#menu li ul{
+				background: #B0E0E6;
+			}
 			ul#menu li a {
-			  background: #333;
+			   background: #325179;
 			  color: #fff;	
 			  padding: 0.5em;
 			}
 			
 			ul#menu li a:hover {
-			  background: #000;
+			  background: #151B54;
 			}
 			
+			
 			ul#menu li ul li a {
-			  background: #ccc;
-			  color: #000;
+			  background: #B0E0E6;
+			  color: #153E7E;
 			  padding-left: 20px;
 			}
 			
 			ul#menu li ul li a:hover {
-			  background: #aaa;
-			  border-left: 5px #000 solid;
+			  background: #1589FF;
+			  color: #fff;
+			  border-left: 5px #151B54 solid;
 			  padding-left: 15px;
 			}
 /************* noticias descripcion *****************/
