@@ -43,7 +43,7 @@
  <div id="main">
 <br/>
 <br/>
-<a href="index.jsp" class="ui-state-default ui-corner-all button">UNIDAD DE SALUD</a> <a href="noticia.jsp" class="ui-state-default ui-corner-all button">NOTICIAS</a> 
+<a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNAR A LA UNIDAD DE SALUD</a> <a href="noticia.jsp" class="ui-state-default ui-corner-all button">NOTICIAS</a> 
 <br/>
 <br/>
 <br/>						

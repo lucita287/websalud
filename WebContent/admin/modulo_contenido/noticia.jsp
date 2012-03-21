@@ -80,7 +80,7 @@
 							</table>
 								<BR/>
 								<BR/>	
-									<div class="centerd">
+									<center>
 									 	
 										<a href="#validacion_imagen"  class="ui-state-default ui-corner-all button-new" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 									<%if (user_permiso.getIdpermiso().indexOf(226)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
@@ -89,7 +89,7 @@
 									<%if (user_permiso.getIdpermiso().indexOf(227)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 										<a href="#validacion_imagen"  onclick="eliminarnoti()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
 									<% }%>	
-									</div>
+									</center>
 								<BR/>
 								<BR/>
 											

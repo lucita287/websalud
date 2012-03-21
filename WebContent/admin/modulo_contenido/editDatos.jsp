@@ -157,14 +157,14 @@
 										<textarea o id="editconte" class="editor"></textarea>
 										
 										<br/><br/>
-										<div class="centerd">
+										<center>
 											<% if (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 												<a href="#validacion_data" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 											<% }%>	
 											<% if (user_permiso.getIdpermiso().indexOf(223)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 											<a href="#validacion_data"  class="ui-state-default ui-corner-all button-delete" onclick="eliminar_conte()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 											<% }%>
-										</div>
+										</center>
 										<br/><br/>
 	<%}
 } %>				

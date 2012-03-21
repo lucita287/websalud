@@ -13,6 +13,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
     <script  type="text/javascript">
 			
 			  $(document).ready(function () {
+				  
+				  $( ".buscar" ).button({
+			            icons: {
+			                primary: "ui-icon-search"
+			            }}); 
 			     $("#fecha_actividad").flexigrid
 					({
 						method: 'POST',
@@ -42,7 +47,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    width: 600,
 					    height: 200,
 						params : [ 
-						          {name: 'idactividad', value: 0} 
+						          {name: 'idactividad', value: 0},{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} 
 						        ], 
 					});
 			  });  
@@ -113,6 +118,8 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  $("#r_fecha_fin").val("");
 				  $("#r_hora_inicio").val("");
 				  $("#r_hora_fin").val("");
+				  $("#fe_ini_buscar").val("");
+				  $("#fe_fin_buscar").val("");
 				  $(".semana").attr('checked', false);
 				  $('#fecha_actividad').flexReload();
 			  }
@@ -160,13 +167,21 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    });
 				  }		  
 			  }
+			  function BuscarFecha(){
+				  $('#fecha_actividad').flexOptions({params : [{name: 'idactividad', value: idactividad}, {name: 'f_ini', value: $("#fe_ini_buscar").val()},{name: 'f_fin', value: $("#fe_fin_buscar").val()} ]});
+				  $('#fecha_actividad').flexReload();
+			  }
 			</script>
 			<center>
 			<div style="width:600px;">
 			<B>ID: </B><label id="id_actividad_f"></label> <br><B>TITULO: </B><label id="titulo_actividad_f">SELECCIONE UNA ACTIVIDAD</label> 
+
 			</div>
 			</center>
+						Fecha Inicio: <input  type="text" id="fe_ini_buscar" size="10" class="datepicker"/> Fecha Fin: <input type="text" id="fe_fin_buscar" size="10" class="datepicker"/> 
+			<button class="buscar" onclick="BuscarFecha()">Buscar</button>
 			<div class="fecha_tabla">
+			
 			<table id="fecha_actividad" style="display:none"></table>
 			</div>
 			<% if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>

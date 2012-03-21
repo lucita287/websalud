@@ -22,3 +22,35 @@
 <script src="../lib/fileupload/jquery.iframe-transport.js"></script>
 <script src="../lib/fileupload/jquery.fileupload.js"></script>
 <script src="../lib/jquery.maskedinput-1.2.2.js"></script>
+
+<script type="text/javascript">
+     
+
+function onBlur() {
+	document.body.className = 'blurred';
+};
+function onFocus(){
+	document.body.className = 'focused';
+	$.ajax({
+        url: "../SValidLogin",
+  	    type: 'post',
+        success: function(data){
+        	    	if (data==1){	
+		                document.location='../index.jsp';
+		            }
+        }
+    });
+};
+
+if (/*@cc_on!@*/false) { 
+	document.onfocusin = onFocus;
+	document.onfocusout = onBlur;
+} else {
+	window.onfocus = onFocus;
+	window.onblur = onBlur;
+}
+
+     
+
+
+    </script>

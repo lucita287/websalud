@@ -3,14 +3,16 @@
 
 body {
 	
-	background: #000000;
+	background: #325179;
 	font: 12px Arial, Helvetica, sans-serif;
 	color: #000000;
 }
 
 .back_all
 {
-background: url(../images/bg.jpg) no-repeat center top;
+background: url(../images/bg.png)  center top;
+background-repeat:no-repeat;
+background-repeat:repeat-y;
 }
 
 .top
@@ -80,7 +82,7 @@ h2 {font-size:20px;line-height:1.2em;color:#666666;padding:1px 0 17px 10px;lette
 h2 span {color:#13c5ff}
 
 
-.row-top {width:100%;padding:33px 0 42px;color:#666666;}
+.row-top {width:100%;padding:33px 0 42px;color:#FFFFFF;}
 .row-padding {padding:0 62px}
 .indent3 {padding-top:28px}
 #contactanos{
