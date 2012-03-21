@@ -95,6 +95,15 @@ public class CValidation {
 		
 		return date1;
 	}
+	public Date CambiarFormatoNull(String fecha){
+		Date date1=null;
+		try {
+			date1 = new SimpleDateFormat("dd/MM/yy").parse(fecha);
+		} catch (java.text.ParseException e) {}
+		
+		return date1;
+	}
+	
 	public Date CambiarFormatoddmmyy(String fecha){
 		Date date1=new Date();
 		try {
@@ -103,6 +112,7 @@ public class CValidation {
 		
 		return date1;
 	}
+	
 	public String Limpiarvalor(String campo){
 		campo=campo.replaceAll("\"", "'");
 		campo=campo.replaceAll("\t", " ");

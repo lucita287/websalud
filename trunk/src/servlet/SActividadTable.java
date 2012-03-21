@@ -85,11 +85,11 @@ public class SActividadTable extends HttpServlet {
 						 asc=1;
 					 }
 					 
-					 
-					ArrayList<CActividad> list=dbo.getListaActividades(ordenar,asc,min,max,pqtype,busqueda);
+					 int maximo=dbo.getActividadesTotal(pqtype,busqueda);
+					ArrayList<CActividad> list=dbo.getListaActividades(ordenar,asc,min,max,pqtype,busqueda,maximo);
 					
 					 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-					 info+="<rows><page>"+page+"</page><total>"+dbo.getActividadesTotal(pqtype,busqueda)+"</total>";
+					 info+="<rows><page>"+page+"</page><total>"+maximo+"</total>";
 					 
 					 String data="";
 					 for(int i=0; i<list.size();i++){

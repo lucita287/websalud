@@ -58,7 +58,11 @@ public class SFecha_actividadTable extends HttpServlet {
 						 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
 						 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
 						 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
+						 String fecha_inicio=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_ini")));
+						 String fecha_fin=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_fin")));
 						 
+						 fecha_inicio=(fecha_inicio.trim().compareTo("")==0)?fecha_fin:fecha_inicio;
+						 fecha_fin=(fecha_fin.trim().compareTo("")==0)?fecha_inicio:fecha_fin;
 						 int idactividad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idactividad")));
 						
 						 						
@@ -82,11 +86,23 @@ public class SFecha_actividadTable extends HttpServlet {
 													 asc=1;
 												 }
 												 
+												 ArrayList<CDetalleActividad> list=new ArrayList<CDetalleActividad>();
+												 int maximo=0;
+												 if(fecha_inicio.compareTo("")==0){
+													 maximo=dbo.getDetalleActividadTotal(idactividad);
+													 list=dbo.getListaDetalleActividad(idactividad,ordenar,asc,min,max);
 												 
-												ArrayList<CDetalleActividad> list=dbo.getListaDetalleActividad(idactividad,ordenar,asc,min,max);
-												
+												 }else{
+													 
+													 java.util.Date fecha1=valid.CambiarFormatoNull(fecha_inicio);
+													 java.util.Date fecha2=valid.CambiarFormatoNull(fecha_fin);
+													 if(fecha1!=null && fecha2!=null){
+														 list=dbo.getListaDetalleActividad(idactividad,ordenar,asc,min,max,fecha1,fecha2);
+														 maximo=dbo.getDetalleActividadTotal(idactividad,fecha1,fecha2);
+													 }
+												 }
 												 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-												 info+="<rows><page>"+page+"</page><total>"+dbo.getDetalleActividadTotal(idactividad)+"</total>";
+												 info+="<rows><page>"+page+"</page><total>"+maximo+"</total>";
 												 
 												 String data="";
 												 for(int i=0; i<list.size();i++){

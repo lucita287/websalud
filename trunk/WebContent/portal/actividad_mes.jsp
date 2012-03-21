@@ -17,143 +17,31 @@ if(mes!=null){
 <script>
 $(document).ready(function () {
 $('#tabs').tabs({ selected: <%=month%> });
+$( "#tabs" ).tabs({
+	ajaxOptions: {
+		error: function( xhr, status, index, anchor ) {
+			$( anchor.hash ).html(
+				"NO SE PUEDE CARGAR LA PAGINA POR AHORA " );
+		}
+	}
 });
+});
+</script>
 </script>
 <div id="tabs">
 			<ul>
-				<li><a href="#tabs-1">Enero</a></li>
-				<li><a href="#tabs-2">Febrero</a></li>
-				<li><a href="#tabs-3">Marzo</a></li>
-				<li><a href="#tabs-4">Abril</a></li>
-				<li><a href="#tabs-5">Mayo</a></li>
-				<li><a href="#tabs-6">Junio</a></li>
-				<li><a href="#tabs-7">Julio</a></li>
-				<li><a href="#tabs-8">Agosto</a></li>
-				<li><a href="#tabs-9">Septiembre</a></li>
-				<li><a href="#tabs-10">Octubre</a></li>
-				<li><a href="#tabs-11">Noviembre</a></li>
-				<li><a href="#tabs-12">Diciembre</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=1">Enero</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=2">Febrero</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=3">Marzo</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=4">Abril</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=5">Mayo</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=6">Junio</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=7">Julio</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=8">Agosto</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=9">Septiembre</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=10">Octubre</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=11">Noviembre</a></li>
+				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=12">Diciembre</a></li>
 			</ul>
-			<div id="tabs-1" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="1" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="1" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-2" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="2" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="2" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-3" style="width:1000px; ">
 			
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="3" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="3" />	
-						</jsp:include>
-			
-			</div>
-			<div id="tabs-4" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="4" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="4" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-5" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="5" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="5" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-6" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="6" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="6" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-7" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="7" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="7" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-8" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="8" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="8" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-9" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="9" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="9" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-10" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="10" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="10" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-11" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="11" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="11" />	
-						</jsp:include>
-			</div>
-			<div id="tabs-12" style="width:1000px; ">
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)%>" />
-						   <jsp:param name="month" value="12" />	
-						</jsp:include>
-						<jsp:include page="mes.jsp">	
-						   <jsp:param name="year" value="<%=calendar.get(calendar.YEAR)+1%>" />
-						   <jsp:param name="month" value="12" />	
-						</jsp:include>
-			</div>
 </div>			

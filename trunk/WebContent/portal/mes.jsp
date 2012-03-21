@@ -6,12 +6,12 @@
 <%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="data.CDetalleActividad" %>
 <%
-int month=0;
-int year=0;
+
 
 CDataBase	data=new CDataBase();
 data.Connect();
-
+int month=0;
+int year=0;
 	try{
 		month=Integer.parseInt(request.getParameter("month"));
 		year=Integer.parseInt(request.getParameter("year"));

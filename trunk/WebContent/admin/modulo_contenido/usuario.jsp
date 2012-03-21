@@ -82,14 +82,14 @@
 				  
 					cadena = [ 	'idusuario='   + editiduser,
 				             	'a='+action,
-					            'name='+$("#user_name").val(),
-					            'apellido='+$("#user_last_name").val(),
-					            'nick='     + $("#nick").val(),
-					            'phone='     + $("#user_phone").val(),
-					            'email='     + $("#user_email").val(),
-					            'idarea='     + $("#user_area").val(),
-					            'password='+$("#user_pass").val(),
-					            'password2='+$("#user_pass2").val(),
+					            'name='+unescape($("#user_name").val()),
+					            'apellido='+unescape($("#user_last_name").val()),
+					            'nick='     + unescape($("#nick").val()),
+					            'phone='     + unescape($("#user_phone").val()),
+					            'email='     + unescape($("#user_email").val()),
+					            'idarea='     + unescape($("#user_area").val()),
+					            'password='+unescape($("#user_pass").val()),
+					            'password2='+unescape($("#user_pass2").val()),
 					            'estado='+$('#user_estado').val()
 					        ].join('&');
 					

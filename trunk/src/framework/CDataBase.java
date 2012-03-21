@@ -1560,26 +1560,27 @@ public int getResponsableTotal(int type,String busqueda){
 		
 		return false;
 	}
-	public ArrayList<CActividad> getListaActividades(int ordenar,int asc,int min,int max,int type, String busqueda){
+	public ArrayList<CActividad> getListaActividades(int ordenar,int asc,int min,int max,int type, String busqueda,int cantidad){
 		ArrayList<CActividad> ret=new ArrayList<CActividad>();
 		try{
 			String pqtype="act.titulo";
-			if(type==2)
+			if(type==2){
 				 pqtype="edi.nombre";
-			else if(type==3)
+			}else if(type==3){
 				pqtype="a.nombre";
-			
+			}
+			cantidad=cantidad+1;
 			String sql="select * from (SELECT act.idactividad, act.titulo act_titulo, act.descripcion act_descripcion, act.areaidarea idarea,act.salon , "+
-						" a.nombre nombre_area, edi.idedificio, edi.nombre edificio_nombre,  @rownum:=@rownum+1 rownum  "+
+						" a.nombre nombre_area, edi.idedificio, edi.nombre edificio_nombre,  @rownum:=@rownum+1 rownum "+
 						"FROM actividad act inner join area a on a.idarea=act.areaidarea "+
 						"inner join edificio edi on edi.idedificio=act.edificioidedificio,(SELECT @rownum:=0) ro "+
 						"where  upper("+pqtype+") like ? "+
-						" ) table1 "+
-						" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
+						"  ) table1 "+
+						" where rownum<=? and rownum>=? order by ?  "+((asc==1)?"ASC":"DESC") +" ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
-			stm.setInt(2,min);
-			stm.setInt(3,max);
+			stm.setInt(2,cantidad-min);
+			stm.setInt(3,cantidad-max);
 			stm.setInt(4,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
@@ -1824,12 +1825,58 @@ public int getResponsableTotal(int type,String busqueda){
 		}
 		return ret;
 	}
+	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad,int ordenar,int asc,int min,int max,java.util.Date fecha_inicio, java.util.Date fecha_fin){
+		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
+		try{
+			String sql="select * from (SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, @rownum:=@rownum+1 rownum "+
+			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad,(SELECT @rownum:=0) ro "+
+			" where idactividad=? and fecha>=? and fecha<=?) table1 where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") ;
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idactividad);
+			stm.setDate(2,new java.sql.Date(fecha_inicio.getTime()));
+			stm.setDate(3,new java.sql.Date(fecha_fin.getTime()));
+			stm.setInt(4,min);
+			stm.setInt(5,max);
+			stm.setInt(6,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"");
+				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
+				ret.add(dacti);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		return ret;
+	}
 	public int getDetalleActividadTotal(int idactividad){
 		int temp=0;
 		PreparedStatement stm;
 		try {
 			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(da.iddetalleactividad),0) cant FROM detalleactividad da  where da.actividadidactividad=?");
 			stm.setInt(1,idactividad);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
+	public int getDetalleActividadTotal(int idactividad,java.util.Date fecha_inicio, java.util.Date fecha_fin){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(da.iddetalleactividad),0) cant FROM detalleactividad da  where da.actividadidactividad=? and fecha>=? and fecha<=?");
+			stm.setInt(1,idactividad);
+			stm.setDate(2,new java.sql.Date(fecha_inicio.getTime()));
+			stm.setDate(3,new java.sql.Date(fecha_fin.getTime()));
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
 			temp=rs2.getInt("cant");

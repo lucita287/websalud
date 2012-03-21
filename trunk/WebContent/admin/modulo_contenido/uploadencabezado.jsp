@@ -165,12 +165,12 @@ function deleteenca(){
 				</table>
 								
 				<br/><br/>
-				<div class="centerd">
+				<center>
 						<a href="#validacion_imagen" onclick="limpiar()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 						<a href="#validacion_imagen" onclick="guardaareamulti()"   class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 						<a href="#validacion_imagen" onclick="deleteenca()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 							
-				</div>
+				</center>
 				<br/><br/>
 	
     

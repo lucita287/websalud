@@ -27,7 +27,7 @@
 				
 			</ul>
 			
-			<div id="tabs-1" style="width:1000px; ">
+			<div id="tabs-1" style="width:750px; ">
 							<table>
 								<tr>
 									<td>IDEN</td>
@@ -60,12 +60,12 @@
 							</table>		
 							<textarea id="cont-text" class="editor"></textarea>
 							<br/><br/>
-							<div class="centerd">
+							<center>
 									<a href="#validacion_prin" onclick="GuardarArea()" class="ui-state-default ui-corner-all button-save" onclick="GuardarArea()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-							</div>
+							</center>
 							<br/><br/>
 			</div>
-			<div id="tabs-2" style="width:1000px; ">
+			<div id="tabs-2" style="width:750px; ">
 				<jsp:include page="uploadencabezado.jsp" />
 			</div>	
 			</div>				

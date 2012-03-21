@@ -79,15 +79,15 @@
 				<li><a href="#tabs-3">PDF</a></li>
 			</ul>
 			
-			<div id="tabs-1" style="width:1000px; ">
+			<div id="tabs-1" style="width:750px; ">
 				<jsp:include page="editDatos.jsp" />			
 				<div style="clear: both;"></div>
 			</div>
-			<div id="tabs-2" style="width:1000px; ">
+			<div id="tabs-2" style="width:750px; ">
 				<jsp:include page="uploadImagen.jsp" />
 				<div style="clear: both;"></div>
 			</div>
-			<div id="tabs-3" style="width:1000px; ">
+			<div id="tabs-3" style="width:750px; ">
 				<jsp:include page="uploadPDF.jsp" />
 			</div>
 			</div>
