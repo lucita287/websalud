@@ -53,8 +53,16 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <% }else if(portal==8){ %>
 <jsp:include page="modulo_contenido/permiso.jsp" />
 <% }else if(portal==9){ %>
-<jsp:include page="modulo_contenido/exam_auto.jsp" />
-<%} %>
+<jsp:include page="modulo_contenido/configuracion.jsp" />
+<% }else if(portal==10){ %>
+<jsp:include page="modulo_examen/propiedades.jsp" />
+<% }else if(portal==11){ %>
+<jsp:include page="modulo_examen/carreras.jsp" />
+<% }else if(portal==12){ %>
+<jsp:include page="modulo_examen/auto_eva.jsp" />
+<% }else if(portal==13){ %>
+<jsp:include page="modulo_examen/multi_fa.jsp" />
+<% } %>
 </div>
 <div style="clear: both;"></div>
 
