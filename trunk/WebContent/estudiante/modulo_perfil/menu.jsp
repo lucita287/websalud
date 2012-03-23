@@ -4,12 +4,16 @@
 <%@ page import="data.CMenu" %>
 <%@ page import="data.CUsuarioPermiso" %>
 <%@ page import="java.util.ArrayList" %>
-
+<% 
+HttpSession sessiones=request.getSession(false); 
+if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
+	Integer portal=(Integer)(sessiones.getAttribute("examen")==null?1:sessiones.getAttribute("examen"));
+%>
 	
 <ul id="menu"  >
 	<li >
 		<a >PASO 1</a>
-			<ul id="admin">
+			<ul id="personal">
 				<li >
 					<a id="1">Datos personales</a>
 				</li>
@@ -20,50 +24,24 @@
 	</li>
 	<li >
 		<a >PASO 2</a>
-			<ul id="admin">
+			<ul id="examen_fa">
 				<li >
-					<a id="3">CABEZA</a>
-				</li>
-				<li>
-					<a id="2">OJO</a>
-				</li>
-				<li>
-					<a id="3">ODÍDOS, NARIZ y GARGANTA</a>
-				</li>
-				<li>
-					<a id="3">ALERGÍAS</a>
+					<a id="3">EXAMEN MULTIF&Aacute;SICO</a>
 				</li>
 			</ul>	
 	</li>
 	<li >
 		<a >PASO 2</a>
-			<ul id="admin">
+			<ul id="examen_auto">
 				<li >
-					<a id="3">Salud Oral</a>
+					<a id="3">EXAMEN AUTOEVALUACI&Oacute;N</a>
 				</li>
-				<li>
-					<a id="2">H&aacute;bitos Higi&eacute;nicos</a>
-				</li>
-				<li>
-					<a id="2">Salud Mental</a>
-				</li>
-				<li >
-					<a id="3">CABEZA</a>
-				</li>
-				<li>
-					<a id="2">OJO</a>
-				</li>
-				<li>
-					<a id="3">ODÍDOS, NARIZ y GARGANTA</a>
-				</li>
-				<li>
-					<a id="3">ALERGÍAS</a>
-				</li>
+				
 			</ul>	
 	</li>
 	<li >
 		<a >PASO 3</a>
-			<ul id="admin">
+			<ul id="cita">
 				<li >
 					<a id="3">Citas</a>
 				</li>
@@ -93,6 +71,9 @@
 	function initMenu() {
 	  $('#menu ul').hide();
 	  
+	  <% if(portal>0 && portal<3){%>
+	  $('#personal').show();
+	  <% }%>
 	  
 	  
 	  $('#menu li a').click(
@@ -126,3 +107,4 @@
 	  }
 	$(document).ready(function() {initMenu();});
 	</script>
+<% } %>

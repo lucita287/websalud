@@ -37,15 +37,17 @@ dbo.Close();
 <div id="gallery">
 			<div id="container">
 				<div id="gallery_nav" >
-					<p style="width: <%=((list.size()+1)*130)%>px;">
+					<div style="width:<%=((list.size()+1)*125)%>px;  " >
 					<% for(int h=0; h<list.size(); h++){ 
 					CContenido temp=list.get(h);
 					%>
+						<div style="float:left;">
 						<a rel="img<%=h %>" href="javascript:;"><img src="<%=temp.getmultimedia().getdireccion_relativa()%>" width="120px" heigth="120px"></a>
-						
-					<% }%>	
-					</p>
-				<div style="clear: both;"></div>	
+						</div>
+					<% }%>
+					<div style="clear: both;"></div>	
+					</div>
+					<div style="clear: both;"></div>
 				</div>
 				
 			</div>
@@ -56,9 +58,13 @@ dbo.Close();
 			<% for(int h=0; h<list.size(); h++){ 
 					CContenido temp=list.get(h);%>	
 				<%if(h==0){%>
-					<img id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
-				<%}else{ %>					
-					<img style="display: none;" id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					<a target="_blank" href="<%=temp.getmultimedia().getdireccion_relativa()%>">
+						<img id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					</a>				
+				<%}else{ %>
+					<a target="_blank" href="<%=temp.getmultimedia().getdireccion_relativa()%>">					
+						<img style="display: none;" id="img<%=h %>" width="550px" heigth="450px" src="<%=temp.getmultimedia().getdireccion_relativa()%>">
+					</a>	
 				<%}
 			} %>
 				<div style="clear: both;"></div>	
@@ -108,7 +114,6 @@ $(function(){
 	$('#panel-texto-c1').jScrollPane();
 	$('#panel-texto-c2').jScrollPane();
 	$('#panel-texto-c3').jScrollPane();
-	$('#gallery_nav').jScrollPane();
 	$('#pdf_div').jScrollPane();
 });
 var ArrayContenido=new Array(<%=list.size()%>);

@@ -68,7 +68,9 @@ public class SLogin extends HttpServlet {
 		 }else{
 			 HttpSession session = request.getSession(true);
 			 session.setAttribute("estudiante", user);
+			 session.setAttribute("examen",1);
 			 response.sendRedirect("estudiante/index.jsp");
+			 
 			 //response.sendRedirect("index.jsp?e=1");
 		 }
 		 dbo.Close();

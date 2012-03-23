@@ -69,12 +69,11 @@
                }
                
 				#gallery_nav {
-					width: 80%;
+					width: 580px;
 					height: 130px;
 					overflow: auto;
 					max-height: 150px;
 					background: #eeeef4;
-					margin:0 auto 0 auto;
 				}	
 				#gallery img {
 					border: none;
