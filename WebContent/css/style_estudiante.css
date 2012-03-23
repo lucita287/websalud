@@ -1,3 +1,5 @@
+		.button-sig { float:right; margin-bottom:20px; margin-top:20px; }
+		.button  { margin: 0; padding: 1.5em; text-align: center; text-transform: uppercase; TEXT-DECORATION: none; }
 		img {
 			border:0;
 		}
@@ -5,6 +7,12 @@
 			width: 95%;
             margin:0 auto 0 auto;
 		}
+		#cont_dato_personal { width:710px;   float:left;  }
+		.titulo_tabla { font-weight:bold; text-transform: uppercase; color:#325179;  }
+		#dato_personal {  padding: 0.4em; background: #fff; }
+		#dato_personal h3 { margin: 0; padding: 0.4em; text-align: center; }
+		
+		#menu-principal {  width:250px;   float:left; background: #325179;}
 		ul#menu, ul#menu ul {
 		  list-style-type:none;
 		  margin: 0;

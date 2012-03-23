@@ -1,6 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
+<% 
+HttpSession sessiones=request.getSession(false); 
+if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
+	Integer portal=(Integer)(sessiones.getAttribute("examen")==null?1:sessiones.getAttribute("examen"));
+	
+%>
 <head>
 <jsp:include page="modulo_perfil/top.jsp" />
 </head>
@@ -30,14 +36,11 @@
 </div>
 <div id="contenido">
 
-
-
-
-
-
-
-
-
+<% if(portal==1){ %>
+<jsp:include page="modulo_perfil/dato_personal.jsp" />
+<% }else if(portal==2){ %>
+<jsp:include page="modulo_perfil/estatus_estudiante.jsp" />
+<% } %>
 </div>
 <div style="clear: both;"></div>
 
@@ -57,5 +60,8 @@
 
 </div>
 </body>
-
+<% }else{
+	response.sendRedirect("../index.jsp");
+	
+} %>
 </html>

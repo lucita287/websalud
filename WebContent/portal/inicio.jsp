@@ -28,7 +28,9 @@ if(area!=null){
 		<br/>
 		<% if(area.getidmultimedia().getidimagen()>0){ %>
 			<center>
+			<a target="_blank" href="<%=area.getidmultimedia().getdireccion_relativa()%>">
 			<img src="<%=area.getidmultimedia().getdireccion_relativa()%>" width="550" heigth="440">
+			</a>
 			</center>
 		<%} %>
 	<div style="clear: both;"></div>						
