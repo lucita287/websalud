@@ -62,7 +62,7 @@
 		  }
 		  function GuardarEdificio(){
 			  var action='guardar_edificio';
-			  if(idrespon==0){
+			  if(idedificio==0){
 				  action='guardar_edificio';
 			  }else{
 				  action='modificar_edificio';

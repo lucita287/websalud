@@ -65,19 +65,38 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				<li>
 					<a id="8">Gestionar Permisos</a>
 				</li>
+				<li>
+					<a id="9">Configuraci&oacute;n</a>
+				</li>
 			</ul>	
 	</li>
 	<% } %>
 	
 	<li>
-		<a >Examen de Salud</a>
+		<a >Configurar Examen de Salud</a>
 			<ul id="exam">
 				<li>
-					<a id="9" >Gestionar Examen de autoevaluaci&oacute;n</a>
+					<a id="10" >Mantenimiento de Propiedades</a>
 				</li>
 				<li>
-					<a id="10">Examen Multif&aacute;setico</a>
+					<a id="11" >Mantenimiento de Carreras</a>
+				</li>
+				<li>
+					<a id="12" >Gestionar Examen de Autoevaluaci&oacute;n</a>
+				</li>
+				<li>
+					<a id="13">Gestionar Examen Multif&aacute;setico</a>
 				</li >
+			</ul>
+	
+	</li>
+	<li>
+		<a >Estudiantes</a>
+			<ul id="estudiante">
+				<li>
+					<a id="14" >Perfil de estudiantes</a>
+				</li>
+				
 			</ul>
 	
 	</li>
@@ -88,10 +107,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	<a >Reportes</a>
 			<ul id="report">
 				<li>
-					<a id="11">Reportes</a>
+					<a id="15">Reportes</a>
 				</li>
 				<li>
-					<a id="12" >Dashboard</a>
+					<a id="16" >Dashboard</a>
 				</li>
 			</ul>	
 	</li>
@@ -118,9 +137,9 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	  
 	  <% if(portal>1 && portal<7){%>
 	  $('#admin_conte').show();
-	  <% }else if(portal>6 && portal<9){ %>
+	  <% }else if(portal>6 && portal<10){ %>
 	  $('#admin').show();
-	  <% }else if(portal>8 && portal<11){ %>
+	  <% }else if(portal>9 && portal<14){ %>
 	  $('#exam').show();
 	  <% }else if(portal>10 && portal<13){ %>
 	  $('#report').show();
