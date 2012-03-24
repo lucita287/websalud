@@ -25,7 +25,7 @@ dbo.Close();
 				
 	%>								
 	<li>
-	<a onclick="Actualizar(<%= temp_menu.getidmenu()%>);" ><%= temp_menu.getdescripcion()%></a>
+	<a  href="#"  onclick="Actualizar(<%= temp_menu.getidmenu()%>);" ><%= temp_menu.getdescripcion()%></a>
 			
 			
 			<ul>
@@ -33,7 +33,7 @@ dbo.Close();
 					CMenu temp_menu1=temp_list.get(j);
 					%>
 				<li>
-					<a onclick="Actualizar(<%= temp_menu1.getidmenu()%>);"><%= temp_menu1.getdescripcion()%></a>
+					<a  href="#"  onclick="Actualizar(<%= temp_menu1.getidmenu()%>);"><%= temp_menu1.getdescripcion()%></a>
 				</li>
 				<% } %>
 			</ul>
@@ -50,12 +50,12 @@ dbo.Close();
 					CArea temp=list_submenu.get(j);
 					%>
 				<li>
-					<a onclick="menuarea(<%= temp.getidarea()%>);"><%= temp.getnombre()%></a>
+					<a  href="#"  onclick="menuarea(<%= temp.getidarea()%>);"><%= temp.getnombre()%></a>
 				</li>
 				<% } %>
 		</ul>
 	</li>
 		<% } %>
 	<li><a target="_blank" href="calendario.jsp?idarea=<%=idarea %>">Calendario</a></li>
-	<li><a href="index.jsp">Regresar a Menu</a></li>	
+	<li><a  href="index.jsp">Regresar a Menu</a></li>	
 </ul>

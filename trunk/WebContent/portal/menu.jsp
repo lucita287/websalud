@@ -20,7 +20,7 @@ dbo.Close();
 				ArrayList<CMenu> temp_list=temp_menu.getlist_menu();	
 	%>								
 	<li>
-	<a onclick="Actualizar(<%= temp_menu.getidmenu()%>);" ><%= temp_menu.getdescripcion()%></a>
+	<a  href="#"  onclick="Actualizar(<%= temp_menu.getidmenu()%>);" ><%= temp_menu.getdescripcion()%></a>
 			
 			
 			<ul class="PARTE1_MENU">
@@ -28,7 +28,7 @@ dbo.Close();
 					CMenu temp_menu1=temp_list.get(j);
 					%>
 				<li>
-					<a onclick="Actualizar(<%= temp_menu1.getidmenu()%>);"><%= temp_menu1.getdescripcion()%></a>
+					<a href="#" onclick="Actualizar(<%= temp_menu1.getidmenu()%>);"><%= temp_menu1.getdescripcion()%></a>
 				</li>
 				<% } %>
 			</ul>
@@ -45,7 +45,7 @@ dbo.Close();
 					CArea temp_area=list_area.get(h);
 					%>
 					<li>
-					<a onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getnombre()%></a>
+					<a href="#" onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getnombre()%></a>
 							
 					</li>
 				<% 	} %>

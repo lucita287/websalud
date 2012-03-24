@@ -34,7 +34,8 @@
 		
 		$(this).css('cursor','auto');
 		
-	});		
+	});	
+	
 	function initMenu() {
 		  $('#menu ul').hide();
 		  $('#menu ul:first').show();
