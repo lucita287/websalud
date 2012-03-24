@@ -17,9 +17,6 @@ CConfiguracion configurar=dbo.getConfiguracion();
 		<td>Telefono</td><td><input type="text" size="15" value="<%=configurar.gettelefono() %>"/></td>
 	</tr>
 	<tr>
-		<td>Correo Electronico</td><td><input type="text" size="30" value="<%=configurar.getcorreo_electronico() %>" /></td>
-	</tr>
-	<tr>
 		<td>Fax</td><td><input type="text" size="15" value="<%=configurar.getfax() %>" /></td>
 	</tr>	
 	<tr>

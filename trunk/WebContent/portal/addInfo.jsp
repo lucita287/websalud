@@ -10,19 +10,9 @@ dbo.Close();
 %>
 <div class="row-top">
 					<div class="row-padding">
-									<table>
-										<tr>
-											<td><b>DIRECCI&Oacute;n:</b></td > <td colspan=4><%=temp.getdireccion()%></td>
-										</tr>
-										<tr >
-											<td><b>TELEFONO:</b></td><td><%=temp.gettelefono()%></td>
-											<td><b>CORREO ELECTRONICO:</b></td><td><%=temp.getcorreo_electronico()%></td>
-										</tr>
-										<tr>
-											<td><b>FAX:</b></td><td><%=temp.getfax()%></td>
-											
-										</tr>
-									</table>	
-							</div>
+						<div id="info_configuracion">
+						<%=temp.getdireccion()%> <b>TELEFONO:</b> <%=temp.gettelefono()%> <b>FAX:</b><%=temp.getfax()%>
+						</div>
+					</div>
 							
 </div>

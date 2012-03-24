@@ -81,11 +81,11 @@ public class SMenuTable extends HttpServlet {
 									 asc=0;
 								 }
 								 
-								
-								ArrayList<CMenu> list=dbo.getMenuLista(min,max,pqtype,busqueda,ordenar,asc);
+								int maximo=dbo.getCMenuTotal(pqtype,busqueda);
+								ArrayList<CMenu> list=dbo.getMenuLista(min,max,pqtype,busqueda,ordenar,asc,maximo);
 								
 								 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-								 info+="<rows><page>"+page+"</page><total>"+dbo.getCMenuTotal(pqtype,busqueda)+"</total>";
+								 info+="<rows><page>"+page+"</page><total>"+maximo+"</total>";
 								 
 								 String data="";
 								 for(int i=0; i<list.size();i++){
