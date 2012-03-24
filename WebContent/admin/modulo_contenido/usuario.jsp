@@ -79,17 +79,17 @@
 				  if(editiduser<=0){
 					  action="newedit";
 				  }
-				  
+		
 					cadena = [ 	'idusuario='   + editiduser,
 				             	'a='+action,
-					            'name='+unescape($("#user_name").val()),
-					            'apellido='+unescape($("#user_last_name").val()),
-					            'nick='     + unescape($("#nick").val()),
-					            'phone='     + unescape($("#user_phone").val()),
-					            'email='     + unescape($("#user_email").val()),
-					            'idarea='     + unescape($("#user_area").val()),
-					            'password='+unescape($("#user_pass").val()),
-					            'password2='+unescape($("#user_pass2").val()),
+					            'name='+escape($("#user_name").val()),
+					            'apellido='+escape($("#user_last_name").val()),
+					            'nick='     + escape($("#nick").val()),
+					            'phone='     + escape($("#user_phone").val()),
+					            'email='     + escape($("#user_email").val()),
+					            'idarea='     + escape($("#user_area").val()),
+					            'password='+escape($("#user_pass").val()),
+					            'password2='+escape($("#user_pass2").val()),
 					            'estado='+$('#user_estado').val()
 					        ].join('&');
 					
@@ -146,6 +146,9 @@
 									</tr>
 									<tr>
 										<td>*Usuario </td><td><input id="nick" type="text" size="20" /></td>
+									</tr>
+									<tr>
+										<td>No Personal </td><td><input id="no_personal" type="text" size="20" /></td>
 									</tr>	
 									<tr>
 										<td>Password</td><td><input id="user_pass" type="password" size="20" /></td>

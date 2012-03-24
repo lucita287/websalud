@@ -329,30 +329,30 @@ public class CDataBase {
 		
 		return false;
 	}
-	public ArrayList<CMenu> getMenuLista(int min,int max,int type,String busqueda ,int ordenar,int asc){
-        ArrayList<CMenu> ret=new ArrayList<CMenu>();
+	public ArrayList<CMenu> getMenuLista(int min,int max,int type,String busqueda ,int ordenar,int asc,int cantidad){
+		ArrayList<CMenu> ret=new ArrayList<CMenu>();
         try{
-        	String query="";
-        	
-        		query="select * from "
-				+"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion, '' contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
-				+"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
-				+"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
-				+"where a.idarea=m.areaidarea and"
-				+" upper("+(type==1?"m.descripcion":"a.nombre")+") like ? "
-				+") data "
-				+"where rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC");
+                String query="";
+                
+                        query="select * from "
+                                +"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion, '' contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
+                                +"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
+                                +"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
+                                +"where a.idarea=m.areaidarea and"
+                                +" upper("+(type==1?"m.descripcion":"a.nombre")+") like ? "
+                                +") data "
+                                +"where rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC");
 
 
-        		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
+                        PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
                 stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
                 stm.setInt(2, min);
                 stm.setInt(3, max);
                 stm.setInt(4, ordenar);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
-                				ArrayList<CMenu> templist=null;
-                				
+                                                ArrayList<CMenu> templist=null;
+                                                
                                 CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist);
                                 
                                 CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);

@@ -15,9 +15,11 @@ dbo.Connect();
 ArrayList<CEncabezado> lista=dbo.getEncabezadoLista(idarea);
 CArea area=dbo.getCAreaEspecifico(idarea);
 dbo.Close();
-%>
-	<script>
 
+if(lista.size()>0){
+%>
+
+	<script>	
 	$(function() {
 		$(".menu_header").jCarouselLite({
 			hoverPause:true,
@@ -28,11 +30,13 @@ dbo.Close();
 			});
 		});	
     </script>
+   <%} %> 
 	<style type="text/css">
 		#header_carousel { float:right; }
 		.foto-inicio{	width:100%; height:100px;	}
 		
 	</style>
+		
 <div id="header_carousel">
 	<div class="menu_header">
 

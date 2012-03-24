@@ -1,4 +1,7 @@
-
+/*********** INFORMACIÓN DE LA INSTITUCIÓN *************/
+		#info_configuracion {
+		width:700px; margin: 0 auto 0 auto;
+		}
 /************* PORTAL ******************/
 
 		#menu-principal {  width:25%;  float:left; }
@@ -29,8 +32,7 @@
 			  }
 			  #pdf_descripcion{
 			  	width: 400px;
-                    border-style:solid;
-					border-width:1px;
+                   
 					margin: 0px 20px 20px 20px;
 			  }
 			  #pdf_div{
@@ -150,7 +152,7 @@
 		}
 		
 /************** LOGIN ******************************/
-
+.error_label {color:red;  font-size:1.2em; text-align:center; text-decoration:blink; text-transform:uppercase; }
 #Panel-login { width:230px;  padding: 0.4em; background: #fff; }
 #Panel-login h3 { margin: 0; padding: 0.4em; text-align: center; }
 

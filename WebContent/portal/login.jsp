@@ -8,6 +8,12 @@
 									
 										<h3 class="ui-widget-header ui-corner-all">Ingreso</h3>
 										<br/>
+										
+												<% if(request.getParameter("e")!=null && request.getParameter("e").toString().compareTo("1")==0){ %>
+										 		<span class="error_label">Error en el usuario y/o password</span>
+										 		<br/>
+										 <% } %>
+										
 											<table>
 												<tr>	
 													<td>Usuario</td>
@@ -32,12 +38,6 @@
 											<input type="submit" id="button_login" class="ui-state-default ui-corner-all" value="Entrar"/> 
 										</div>	
 										<hr/>
-										<%
-											if(request.getParameter("e")!=null && request.getParameter("e").toString().compareTo("1")==0){
-										 %>
-										 		<span class="error_label">Error en el usuario y/o password</span>
-										 		<br/>
-										 <% } %>
 										 <center>
 										<br/> <a href="http://rye.usac.edu.gt/">¿Olvid&oacute; su contraseña?</a>
 										<br/> <a href="http://rye.usac.edu.gt/">Obtener Usuario</a>
