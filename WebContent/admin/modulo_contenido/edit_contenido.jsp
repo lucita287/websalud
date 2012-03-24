@@ -30,7 +30,7 @@
 						],
 					    usepager: true,
 					    sortname: "idmenu",
-						sortorder: "asc",
+						sortorder: "desc",
 					    title: 'Contenido',
 					    useRp: true,
 					    rp: 15,
