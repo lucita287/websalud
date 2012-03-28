@@ -2,12 +2,12 @@
     pageEncoding="UTF-8" %>
 
 		<script>
-		var idrespon=0;
+		var idcivil=0;
 		  $(document).ready(function () {
 		      $("#estado_civil").flexigrid
 				({
 					method: 'POST',
-					// url: '../SResponsableTable',
+					// url: '../ScivilsableTable',
 					 dataType : 'xml',
 				    colModel: [
 					{display: 'Seleccionar', name : 'chkestado_civil', width : 30, sortable : false, align: 'left'},           
@@ -35,11 +35,11 @@
 		<table>
 					<tr>
 						<td>ID</td>
-						<td><label id="id_respon">NEW</label></td>
+						<td><label id="id_civil">NEW</label></td>
 					</tr>
 					<tr>
 						<td>Descripci&oacute;n</td>
-						<td><input id='nombre_respon' type="text" size="40"/></td>
+						<td><input id='nombre_civil' type="text" size="40"/></td>
 					</tr>
 						
 				</table>

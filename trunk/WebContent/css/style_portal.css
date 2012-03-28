@@ -312,3 +312,20 @@ font-weight:bold;
 	float:left;
 	padding: 2px;
 }
+/************* REGISTRO ************************************/
+
+#registro_usuarios{
+	width:700px; margin: 0 auto 0 auto;	
+}
+#registro_titulo{
+	width:150px; float:right;
+}
+#registro_usuarios h3{
+	margin: 0; padding: 0.4em; text-align: center; 
+}
+.bt_registrarse{
+margin:0 auto 0 auto; width:120px;
+}
+.button_registro{
+	width: 550px;
+}

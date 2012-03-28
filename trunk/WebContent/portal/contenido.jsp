@@ -23,7 +23,7 @@ dbo.Close();
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
 		<br/>
 		<% if(temp_menu.getsize()>0 & temp_menu.getsize()<4){ %>
-		<div id="panel-texto-c<%=temp_menu.getsize()%>" class="panel-texto-desc" >
+		<div id="panel-texto-c<%=temp_menu.getsize()%>" class="ui-widget-content ui-corner-all panel-texto-desc" >
 				<div style="margin-left:20px;margin-right:20px;">
 					<%=temp_menu.getcontenido()%>				
 				</div>

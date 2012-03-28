@@ -58,7 +58,12 @@ public class SLogin extends HttpServlet {
 					session.setAttribute("portal",1);
 					usuario.setPassword("");
 					ArrayList<Integer> lista_permisos=dbo.getListaPermisoInt(usuario.getidusuario());
-					CUsuarioPermiso user_permiso=new CUsuarioPermiso(usuario,lista_permisos);
+					ArrayList<Integer> area=null;
+					if(usuario.getidusuario()==1) area=dbo.getAreaListaInt();
+					else area=dbo.getAreaListaInt(usuario.getidusuario());
+					
+					CUsuarioPermiso user_permiso=new CUsuarioPermiso(usuario,lista_permisos,area);
+					
 					session.setAttribute("user_permiso",user_permiso);
 					response.sendRedirect("admin/index.jsp");
 					

@@ -19,7 +19,7 @@ if(area!=null){
 <h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=area.getnombre()%></h3>
 <br/>
 		<% if(area.getsize()>0 & area.getsize()<4){ %>
-		<div id="panel-texto-c<%=area.getsize()%>" class="panel-texto-desc" >
+		<div id="panel-texto-c<%=area.getsize()%>" class="ui-widget-content ui-corner-all  panel-texto-desc" >
 				<div style="margin-left:20px;margin-right:20px;">
 					<%=area.getdescripcion()%>				
 				</div>

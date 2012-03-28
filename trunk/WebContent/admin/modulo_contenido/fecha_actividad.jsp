@@ -178,12 +178,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 
 			</div>
 			</center>
-						Fecha Inicio: <input  type="text" id="fe_ini_buscar" size="10" class="datepicker"/> Fecha Fin: <input type="text" id="fe_fin_buscar" size="10" class="datepicker"/> 
-			<button class="buscar" onclick="BuscarFecha()">Buscar</button>
-			<div class="fecha_tabla">
 			
-			<table id="fecha_actividad" style="display:none"></table>
-			</div>
 			<% if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 			<div class="caja_gris">
 						<h5>PERIODOS DE FECHAS</h5>
@@ -259,5 +254,12 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								</div>
 								<div style="clear: both;"></div>
 						</div>
+						
+						Fecha Inicio: <input  type="text" id="fe_ini_buscar" size="10" class="datepicker"/> Fecha Fin: <input type="text" id="fe_fin_buscar" size="10" class="datepicker"/> 
+			<button class="buscar" onclick="BuscarFecha()">Buscar</button>
+			<div class="fecha_tabla">
+			
+			<table id="fecha_actividad" style="display:none"></table>
+			</div>			
 		<%} %>							
 <%	}	} %>					

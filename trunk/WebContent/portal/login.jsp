@@ -39,8 +39,8 @@
 										</div>	
 										<hr/>
 										 <center>
-										<br/> <a href="http://rye.usac.edu.gt/">¿Olvid&oacute; su contraseña?</a>
-										<br/> <a href="http://rye.usac.edu.gt/">Obtener Usuario</a>
+										<br/> <a href="registrarse.jsp?a=get_pass">¿Olvid&oacute; su contraseña?</a>
+ 										<br/> <a href="registrarse.jsp?a=registrarse">Obtener Usuario</a> 
 										</center>
 									</div>
 								</div>

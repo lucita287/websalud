@@ -2,12 +2,12 @@
     pageEncoding="UTF-8" %>
 
 		<script>
-		var idrespon=0;
+		var idtipo_sangre=0;
 		  $(document).ready(function () {
 		      $("#tipo_sangre").flexigrid
 				({
 					method: 'POST',
-					// url: '../SResponsableTable',
+					// url: '../Stipo_sangresableTable',
 					 dataType : 'xml',
 				    colModel: [
 					{display: 'Seleccionar', name : 'chktipo_sangre', width : 30, sortable : false, align: 'left'},           
@@ -35,11 +35,11 @@
 		<table>
 					<tr>
 						<td>ID</td>
-						<td><label id="id_respon">NEW</label></td>
+						<td><label id="id_tipo_sangre">NEW</label></td>
 					</tr>
 					<tr>
 						<td>Descripci&oacute;n</td>
-						<td><input id='nombre_respon' type="text" size="40"/></td>
+						<td><input id='nombre_tipo_sangre' type="text" size="40"/></td>
 					</tr>
 						
 				</table>

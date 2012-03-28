@@ -15,18 +15,13 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 <div id="content">
 
 <div class="top">
-<div style="float:left">
-<img src="../images/usalud.png" width="100px" height="100px" />
-</div>
-<div style="float:left">
-<h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Estudiante</a></h2>
-<h2><a href="#">Bienvenido </a></h2>
-</div>
-<div style="clear: both;"></div>
+<jsp:include page="../admin/modulo_contenido/titulo.jsp">
+<jsp:param name="titulo" value="Estudiante" />
+<jsp:param name="usuario" value="Prueba" />	
+</jsp:include>
 </div>
 
-<div id="back">
+<div id="back"  class="ui-widget-content ui-corner-all">
 <!-- header begins -->
 
  <div id="main">

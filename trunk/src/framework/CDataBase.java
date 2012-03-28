@@ -12,6 +12,7 @@ import com.mysql.jdbc.PreparedStatement;
 import data.CActividad;
 import data.CArea;
 import data.CCategoria;
+import data.CCategoria_permiso;
 import data.CConfiguracion;
 import data.CContenido;
 import data.CDetalleActividad;
@@ -61,6 +62,15 @@ public class CDataBase {
 		}else  return false;
 			
 		
+		
+	}
+	public String ConvertString(ArrayList<Integer> lista){
+		String data="";
+		for(int i=0; i<lista.size();i++){
+			 data+=((data.compareTo("")==0)?"":",");
+			 data+="?";
+		}
+		return data;
 		
 	}
 	public CUsuario getUsuario(String user){
@@ -329,7 +339,7 @@ public class CDataBase {
 		
 		return false;
 	}
-	public ArrayList<CMenu> getMenuLista(int min,int max,int type,String busqueda ,int ordenar,int asc,int cantidad){
+	public ArrayList<CMenu> getMenuLista(int min,int max,int type,String busqueda ,int ordenar,int asc,int cantidad,ArrayList<Integer> lista){
 		ArrayList<CMenu> ret=new ArrayList<CMenu>();
         try{
                 String query="";
@@ -339,16 +349,22 @@ public class CDataBase {
                                 +"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
                                 +"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
                                 +"where a.idarea=m.areaidarea and"
-                                +" upper("+(type==1?"m.descripcion":"a.nombre")+") like ? "
+                                +" upper("+(type==1?"m.descripcion":"a.nombre")+") like ?  and a.idarea in ("+ConvertString(lista)+")"
                                 +") data "
                                 +"where rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC");
 
 
                         PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
+                
                 stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
-                stm.setInt(2, min);
-                stm.setInt(3, max);
-                stm.setInt(4, ordenar);
+                int id=2;
+                
+                for(int i=0; i<lista.size();i++){
+                	stm.setInt(id++, lista.get(i));
+                }
+                stm.setInt(id++, min);
+                stm.setInt(id++, max);
+                stm.setInt(id++, ordenar);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                                                 ArrayList<CMenu> templist=null;
@@ -369,19 +385,22 @@ public class CDataBase {
         return ret;
 	}
 	
-	public int getCMenuTotal(int type,String busqueda){
+	public int getCMenuTotal(int type,String busqueda,ArrayList<Integer> lista){
 		int temp=0;
 		try {
 			String query="";
 
         		query="select count(m.idmenu) cant from "
 				+" Menu m , Area a  "
-				+"where m.areaidarea=a.idarea and upper("+(type==1?"m.descripcion":"a.nombre")+") like ?";
+				+"where m.areaidarea=a.idarea and upper("+(type==1?"m.descripcion":"a.nombre")+") like ? and a.idarea in ("+ConvertString(lista)+")";
         		
 			
 	                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
 	                stm.setString(1,"%"+busqueda.toUpperCase().trim()+"%");
-	                
+	                int id=2;
+	                for(int i=0; i<lista.size();i++){
+	                	stm.setInt(id++, lista.get(i));
+	                }
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
 			temp=rs2.getInt("cant");
@@ -445,6 +464,45 @@ public class CDataBase {
                 	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea);
                 	ret.add(temp);
                         
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
+	public ArrayList<Integer> getAreaListaInt(int idusuario){
+        ArrayList<Integer> ret=new ArrayList<Integer>();
+        try{
+        	String sql="SELECT a.idarea from area a inner join area_usuario au on au.areaidarea=a.idarea where au.usuarioidusuario=?" ;
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                stm.setInt(1,idusuario);
+                ResultSet rs=stm.executeQuery();
+                
+                while(rs.next()){
+                	ret.add(rs.getInt("idarea"));    
+                }
+                rs.close();
+                stm.close();
+        }
+        
+        catch(Throwable e){
+                
+        }
+        return ret;
+	}
+	public ArrayList<Integer> getAreaListaInt(){
+        ArrayList<Integer> ret=new ArrayList<Integer>();
+        try{
+        	String sql="SELECT a.idarea from area a " ;
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                ResultSet rs=stm.executeQuery();
+                
+                while(rs.next()){
+                	ret.add(rs.getInt("idarea"));    
                 }
                 rs.close();
                 stm.close();
@@ -1116,16 +1174,38 @@ public CContenido getContenido(int idcontenido){
 		
 		return false;
 	}
+public ArrayList<CCategoria_permiso> getListaCategoriaPermisos(){
+	ArrayList<CCategoria_permiso> list=new ArrayList<CCategoria_permiso>();
+	try{
+    	String sql="SELECT cp.idcategoria_permiso, cp.nombre FROM categoria_permiso cp ";
+            PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+            ResultSet rs=stm.executeQuery();
+            while(rs.next()){
+            		CCategoria_permiso cp=new CCategoria_permiso(rs.getInt("idcategoria_permiso"),rs.getString("nombre"));
+            		list.add(cp);
+                    
+            }
+            rs.close();
+            stm.close();
+    }
+    
+    catch(Throwable e){
+    	e.printStackTrace();
+    }
+    return list;
+    
+}
 public ArrayList<CPermiso> getListaPermiso(){
 		
 		
 		ArrayList<CPermiso> ret=new ArrayList<CPermiso>();
         try{
-        	String sql="SELECT idpermiso, descripcion FROM permiso ";
+        	String sql="SELECT p.idpermiso, p.descripcion, cp.idcategoria_permiso, cp.nombre FROM permiso p inner join categoria_permiso cp on p.idcategoria_permiso=cp.idcategoria_permiso ";
                 PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
-                		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"));
+                		CCategoria_permiso cp=new CCategoria_permiso(rs.getInt("idcategoria_permiso"),rs.getString("nombre"));
+                		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"),cp);
                         ret.add(permiso);
                         
                 }
@@ -1138,17 +1218,42 @@ public ArrayList<CPermiso> getListaPermiso(){
         }
         return ret;
 	}
+public ArrayList<CPermiso> getListaPermisoCate(int idcategoria){
+	
+	
+	ArrayList<CPermiso> ret=new ArrayList<CPermiso>();
+    try{
+    	String sql="SELECT p.idpermiso, p.descripcion, cp.idcategoria_permiso, cp.nombre FROM   permiso p inner join categoria_permiso cp on p.idcategoria_permiso=cp.idcategoria_permiso where cp.idcategoria_permiso = ?";
+            PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+            stm.setInt(1, idcategoria);
+            ResultSet rs=stm.executeQuery();
+            while(rs.next()){
+            	CCategoria_permiso cp=new CCategoria_permiso(rs.getInt("idcategoria_permiso"),rs.getString("nombre"));
+            		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"),cp);
+                    ret.add(permiso);
+                    
+            }
+            rs.close();
+            stm.close();
+    }
+    
+    catch(Throwable e){
+    	e.printStackTrace();
+    }
+    return ret;
+}
 public ArrayList<CPermiso> getListaPermiso(int idusuario){
 	
 	
 	ArrayList<CPermiso> ret=new ArrayList<CPermiso>();
     try{
-    	String sql="SELECT p.idpermiso, p.descripcion FROM usuario_permisos up inner join  permiso p on p.idpermiso=up.permisosidpermiso where usuarioidusuario = ?";
+    	String sql="SELECT p.idpermiso, p.descripcion, cp.idcategoria_permiso, cp.nombre FROM usuario_permisos up inner join  permiso p on p.idpermiso=up.permisosidpermiso inner join categoria_permiso cp on p.idcategoria_permiso=cp.idcategoria_permiso where usuarioidusuario = ?";
             PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
             stm.setInt(1, idusuario);
             ResultSet rs=stm.executeQuery();
             while(rs.next()){
-            		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"));
+            	CCategoria_permiso cp=new CCategoria_permiso(rs.getInt("idcategoria_permiso"),rs.getString("nombre"));
+            		CPermiso permiso=new CPermiso(rs.getInt("idpermiso"),rs.getString("descripcion"),cp);
                     ret.add(permiso);
                     
             }
@@ -1183,7 +1288,8 @@ public ArrayList<Integer> getListaPermisoInt(int idusuario){
     }
     return ret;
 }
-public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list){
+
+public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list,ArrayList<Integer> areas){
 	PreparedStatement stm;
 	boolean b=true;
 	try {
@@ -1192,11 +1298,23 @@ public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list){
 		stm.setInt(1, idusuario);
 		 stm.executeUpdate();
 	 
-		
+		 		
+		stm = (PreparedStatement)conn.prepareStatement("DELETE FROM area_usuario WHERE  usuarioidusuario = ?");
+		stm.setInt(1, idusuario);
+		 stm.executeUpdate();
+		 
 		 for(int j=0; j<list.size();j++){ 
 			 stm = (PreparedStatement)conn.prepareStatement("INSERT INTO usuario_permisos(usuarioidusuario,permisosidpermiso) VALUES (?,?)");
 				stm.setInt(1, idusuario);
 				stm.setInt(2, list.get(j));
+			 if(stm.executeUpdate()>0)
+				 b= true;
+			 else  return false;
+		 }
+		 for(int j=0; j<areas.size();j++){ 
+			 stm = (PreparedStatement)conn.prepareStatement("INSERT INTO area_usuario (usuarioidusuario,areaidarea) VALUES   (?,   ?)");
+				stm.setInt(1, idusuario);
+				stm.setInt(2, areas.get(j));
 			 if(stm.executeUpdate()>0)
 				 b= true;
 			 else  return false;

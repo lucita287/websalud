@@ -27,26 +27,18 @@
 <div id="content">
 
 <div class="top">
-<div style="float:left">
-<img src="images/usalud.png" width="100px" height="100px" />
-</div>
-<div style="float:left">
-<h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Noticias</a></h2>
-</div>
-<div style="clear: both;"></div>
+<jsp:include page="portal/titulo.jsp">
+<jsp:param name="titulo" value="Noticias" />	
+</jsp:include>
 </div>
 
 <div id="back">
 <!-- header begins -->
 
  <div id="main">
-<br/>
-<br/>
+<div id="retorna_unidad">
 <a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNAR A LA UNIDAD DE SALUD</a> <a href="noticia.jsp" class="ui-state-default ui-corner-all button">NOTICIAS</a> 
-<br/>
-<br/>
-<br/>						
+</div>
 
 		<% if(info_new!=null){ %>
 		<h3 id="Panel-texto-tit" class="ui-widget-header ui-corner-all"><%=info_new.getTitulo()%></h3>

@@ -48,7 +48,6 @@ if(lista.size()>0){
 										<div class="foto-inicio" >
 												
 													<img src="<%=temp.getMultimediaidmultimedia().getdireccion_relativa()%>" width="160px" height="120px" />												
-	
 											
 										</div>
 										</li>
