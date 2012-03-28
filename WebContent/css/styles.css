@@ -63,10 +63,6 @@ border-right: 7px solid #ffffff;
 
 
 .wrapper {width:100%;overflow:hidden; font-size: 12px; padding: 10px; color: #666666}
-.col1, .col2, .col3, .cols {float:left}
-.col1 {width:290px}
-.col2 {width:240px}
-.col3 {width:252px}
 .pad_left1 {padding-left:67px}
 .pad {padding:0 10px}
 .list1 {

@@ -4,7 +4,7 @@
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAttribute("user_permiso")!=null){
 	Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
-	
+	String user=(String)sessiones.getAttribute("username");
 	
 %>
 
@@ -16,15 +16,10 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <div id="content">
 
 <div class="top">
-<div style="float:left">
-<img src="../images/usalud.png" width="100px" height="100px" />
-</div>
-<div style="float:left">
-<h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Administraci&oacute;n</a></h2>
-<h2><a href="#">Bienvenido <%=sessiones.getAttribute("username")%></a></h2>
-</div>
-<div style="clear: both;"></div>
+<jsp:include page="modulo_contenido/titulo.jsp">
+<jsp:param name="titulo" value="Administraci&oacute;n" />
+<jsp:param name="usuario" value="<%=user%>" />	
+</jsp:include>
 </div>
 
 <div id="back">
@@ -32,7 +27,7 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 
  <div id="main">
 <div style="clear: both;"></div>
-<div id="menu-principal" >
+<div id="menu-principal" class="ui-widget-content ui-corner-all">
 <jsp:include page="modulo_contenido/menu.jsp" />
 </div>
 <div id="contenido">
@@ -57,7 +52,7 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <% }else if(portal==10){ %>
 <jsp:include page="modulo_examen/propiedades.jsp" />
 <% }else if(portal==11){ %>
-<jsp:include page="modulo_examen/carreras.jsp" />
+<jsp:include page="modulo_examen/mantenimiento.jsp" />
 <% }else if(portal==12){ %>
 <jsp:include page="modulo_examen/auto_eva.jsp" />
 <% }else if(portal==13){ %>

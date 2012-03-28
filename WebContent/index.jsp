@@ -12,17 +12,12 @@
 <div id="content">
 
 <div class="top">
-<div style="float:left">
-<img src="images/usalud.png" width="100px" height="100px" />
-</div>
-<div style="float:left">
-<h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Portal</a></h2>
-</div>
-<div style="clear: both;"></div>
+<jsp:include page="portal/titulo.jsp">
+<jsp:param name="titulo" value="Portal" />	
+</jsp:include>
 </div>
 
-<div id="back">
+<div id="back" class="ui-widget-content ui-corner-all">
 <!-- header begins -->
 
  <div id="main">
@@ -32,12 +27,12 @@
 <div id="menu-principal" >
 
 	<%if(area==null){ %>
-	<div id="menu-salud" >
+	<div id="menu-salud" class="ui-widget-content ui-corner-all">
 	<jsp:include page="portal/menu.jsp" />
 	</div>
 	
 	<%}else { %>
-	<div id="menu-salud" >
+	<div id="menu-salud"  class="ui-widget-content ui-corner-all">
 	<jsp:include page="portal/menu_area.jsp" />
 	</div>
 	<% }%>

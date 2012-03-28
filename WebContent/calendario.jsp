@@ -37,15 +37,9 @@ if(request.getParameter("idarea")!=null){
 <div id="content">
 
 <div class="top">
-<div style="float:left">
-<img src="images/usalud.png" width="100px" height="100px" />
-</div>
-
-<div style="float:left">
-<h1><a href="#">Unidad de Salud</a></h1>
-<h2><a href="#" id="metamorph">Calendario de Actividades</a></h2>
-</div>
-<div style="clear: both;"></div>
+<jsp:include page="portal/titulo.jsp">
+<jsp:param name="titulo" value="Calendario de Actividades" />	
+</jsp:include>
 </div>
 
 <div id="back">

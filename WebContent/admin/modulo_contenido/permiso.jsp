@@ -4,29 +4,20 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="data.CArea" %>
 <%@ page import="data.CPermiso" %>
+<%@ page import="data.CCategoria_permiso" %>
 <%
 	CDataBase	data=new CDataBase();
 		data.Connect();
 		ArrayList<CArea> list=data.getAreaLista();
+		
 		ArrayList<CPermiso> list_permisos=data.getListaPermiso();
-		data.Close();
+		ArrayList<CCategoria_permiso> list_cate=data.getListaCategoriaPermisos();
+		
 %>
 	<style type="text/css">
-div.tabla
-{
-	clear: none;
-	overflow: auto;
-}
 
-
-div.col
-{
-	float: left;
-	padding: 5px;
-	border-right-width: 0px;
-	border-left-width: 0px;
-	border-top-width: 0px;
-}
+.format { margin-top: 0.2em; }
+.titulo_permiso {font-weight:normal;color:blue; text-transform:uppercase; font-size:1em;}
 	
 	</style>
 
@@ -69,45 +60,8 @@ div.col
 										]
 					});
 			  });  
-			  $(function() {
-					$( ".datepicker" ).datepicker();
-				});
-			  function next_permiso(){
-				  var array=$('#allpermiso').val();
-				  for (i=0;i<array.length;i++){ 
-					  var id=array[i];
-					  var value=$("#allpermiso option[value="+id+"]").text();
-					  $('#userpermiso').append('<option value="'+id+'" selected="selected">'+value+'</option>');
-					  $("#allpermiso option[value="+id+"]").remove();
-				  }
-				  
-			  }
-			  function nextall_permiso(){
-				 
-				$('select#allpermiso').find('option').each(function() {
-		                var value=$("#allpermiso option[value="+$(this).val()+"]").text();
-		                $('#userpermiso').append('<option value="'+$(this).val()+'" selected="selected" >'+value+'</option>');
-						$("#allpermiso option[value="+$(this).val()+"]").remove();
-		        });
-				  
-			  }
-			  function backall_permiso(){
-				  $('select#userpermiso').find('option').each(function() {
-		                var value=$("#userpermiso option[value="+$(this).val()+"]").text();
-		                $('#allpermiso').append('<option value="'+$(this).val()+'" selected="selected" >'+value+'</option>');
-						$("#userpermiso option[value="+$(this).val()+"]").remove();
-		        	});
-			  }
-			  function back_permiso(){
-				  var array=$('#userpermiso').val();
-				  for (i=0;i<array.length;i++){ 
-					  var id=array[i];
-					  var value=$("#userpermiso option[value="+id+"]").text();
-					  $('#allpermiso').append('<option value="'+id+'" selected="selected">'+value+'</option>');
-					  $("#userpermiso option[value="+id+"]").remove();
-				  }
-			  }
-			  function editarUser(iduser){
+			 
+			 function editarUser(iduser){
 				  editiduser=iduser;
 				  $("#idusuario").text(iduser);
 					cadena = ['iduser='   + iduser,
@@ -123,34 +77,68 @@ div.col
 				        	$("#user_name").text(result.nombre);
 				        	$("#user_last_name").text(result.apellido);
 				        	$("#nick").text(result.nick);
-				        	backall_permiso();
+				        	backall_permiso(false);
+				        	backall_area();
 				        	var permisos=result.permisos;
 				        	for (var x = 0 ; x < permisos.length ; x++) {
 				        		var id=permisos[x].idpermiso;
-				        		var value=$("#allpermiso option[value="+id+"]").text();
-				        		$('#userpermiso').append('<option value="'+id+'" selected="selected">'+value+'</option>');
-								$("#allpermiso option[value="+id+"]").remove();
+				        		$("#idpermiso_"+id).attr('checked', true);
+				        		$("#idpermiso_"+id).button('refresh');
+				        	}
+				        	var areas=result.areas;
+				        	for (var x = 0 ; x < areas.length ; x++) {
+				        		var id=areas[x].idarea;
+				        		$("#area_"+id).attr('checked', true);
+				        		$("#area_"+id).button('refresh');
 				        	}
 				        }
 					
 				    });
-			  }
-			  function limpiar(){
-				  	$("#user_name").text('');
+			  } 
+			 function backall_permiso(estado){
+				 
+				<%
+				for(int i=0; i<list_permisos.size();i++){ 
+					CPermiso per=list_permisos.get(i);
+				%>
+				$("#idpermiso_<%=per.getIdpermiso()%>").attr('checked', estado);	
+				$("#idpermiso_<%=per.getIdpermiso()%>").button('refresh');
+				<%}%>
+				
+			 }
+			 function backall_area(){
+				 <%for(int i=0; i<list.size();i++){ 
+						CArea area=list.get(i);%>
+					$("#area_<%=area.getidarea()%>").attr('checked', false);	
+					$("#area_<%=area.getidarea()%>").button('refresh');
+					<%}%> 
+			 }
+			 function limpiar(){
+				 
+				 $("#user_name").text('');
 		        	$("#user_last_name").text('');
 		        	$("#nick").text('');
 		        	editiduser=0;
 					$("#idusuario").text('');
 					$('#flex1').flexReload();
-		        	backall_permiso();
-			  }
-			  function GuardarUser(){
+					backall_area();
+					backall_permiso(false);
+					
+			 }
+			 function GuardarUser(){
 				  $('select#userpermiso').find('option').each(function() {
 					  $('#userpermiso option[value=' + $(this).val() + ']').attr('selected', true); 
 		        	});
 				  cadena = ['iduser='   + editiduser,
 			             	'a=privileges',
-			             	'permisos='+$('#userpermiso').val()
+			             	<%for(int i=0; i<list_permisos.size();i++){ 
+								CPermiso per=list_permisos.get(i);%>							
+							'id_permiso_<%=per.getIdpermiso()%>='+(($('#idpermiso_<%=per.getIdpermiso()%>').is(':checked')==true)?1:0),
+							<%}%>
+							<% for(int j=0; j<list.size();j++){ 
+								CArea area=list.get(j);%>
+							'id_area<%=area.getidarea()%>='+(($('#area_<%=area.getidarea()%>').is(':checked')==true)?1:0),
+							<% } %>
 				        ].join('&');
 				  $.ajax({
 				        url: "../SUsuario",
@@ -164,74 +152,91 @@ div.col
 				        	}
 				        }
 				    });
-			  }
-			  function mensaje(mens){
-  				  $( "#dialog-message" ).html(mens);
-					$( "#dialog-message" ).dialog({
-						modal: true,
-						buttons: {
-							Ok: function() {
-								$( this ).dialog( "close" );
-							}
-						}
-					});
-				}
+			 }
+
+				$(function() {
+					$( ".check" ).button();
+					$( ".check2" ).button();
+					$( ".format" ).buttonset();
+				});
 			</script>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<table id="flex1" style="display:none"></table>			
 					<table cellpadding="4" cellspacing="4">
 									<tr >
-										<td>ID</td><td><label id="idusuario"></label></td>
+										<td><div class="titulo_permiso"> ID</div></td><td><label id="idusuario"></label></td>
 									</tr>
 									<tr >
-										<td>Nombre</td><td><label id="user_name" ></label></td>
+										<td><div class="titulo_permiso">Nombre</div></td><td><label id="user_name" ></label></td>
 									</tr>
 									<tr>
-										<td>Apellido</td><td><label id="user_last_name" ></label></td>
+										<td><div class="titulo_permiso">Apellido</div></td><td><label id="user_last_name" ></label></td>
 									</tr>
 									<tr>
-										<td>Nick</td><td><label id="nick" ></label></td>
+										<td><div class="titulo_permiso">Nick</div></td><td><label id="nick" ></label></td>
 									</tr>
 									<tr>
-									
-										<td colspan="2" >
-										<div class="tabla">
-										<div class="col">
-											TODOS LOS PERMISOS<BR/>
-											<select  id="allpermiso" size="10" multiple="multiple">
-											<% for(int j=0; j<list_permisos.size();j++){ 
-																CPermiso perm=list_permisos.get(j);
+										<td><div class="titulo_permiso">Areas</div> </td>
+										<td>
+											<div class="format">
+											<% for(int j=0; j<list.size();j++){ 
+																CArea area=list.get(j);
 															%>
-																<option value="<%=perm.getIdpermiso()%>" ><%= perm.getDescripcion()%></option>
-											<% } %>  
-											</select>
-										</div>
-										<div class="col">	
-											<img onclick="next_permiso()"   src="../images/next.png" width="32px" height="32px" /><br/>
-											<img onclick="nextall_permiso()" src="../images/next2_all.png" width="32px" height="32px" /><br/>
-											<img onclick="back_permiso()" src="../images/back.png" width="32px" height="32px" /><br/>
-											<img onclick="backall_permiso()" src="../images/back2_all.png" width="32px" height="32px" />
-										</div>
-										<div class="col">
-											PERMISOS A ASIGNAR<BR/>
-											<select id="userpermiso"  size="10" multiple="multiple"> 
-											
-											</select>
-										</div>	
-										</div>	
+																<input type="checkbox" class=".check" id="area_<%=area.getidarea()%>" /><label for="area_<%=area.getidarea()%>"><%=area.getnombre() %></label>
+																
+											<% } %>
+											</div> 
 										</td>
-										
 									</tr>
+					</table>				
+									
+	<div id="tabs">
+			<ul>
+				<% for(int j=0; j<list_cate.size();j++){ 
+					CCategoria_permiso cate=list_cate.get(j);
+					
+					%>
+				<li><a href="#tabs-<%= cate.getIdcategoria_permiso() %>"><%= cate.getNombre() %></a></li>
+				<% } %>
+			</ul>
+			
+			<% for(int j=0; j<list_cate.size();j++){ 
+					CCategoria_permiso cate=list_cate.get(j);
+					ArrayList<CPermiso> list_perm=data.getListaPermisoCate(cate.getIdcategoria_permiso());				
+					%>
+					<div id="tabs-<%= cate.getIdcategoria_permiso() %>" style="width:600px; ">
+						<center>
+						<%  int x=0;
+						for(int i=0; i<list_perm.size();i++){ 
+							CPermiso per=list_perm.get(i);
+								if(i%2==0){
+									out.print("<div class=\"format\">");
+									x++; 
+								} %>
+							<input type="checkbox"  id="idpermiso_<%=per.getIdpermiso() %>" /><label for="idpermiso_<%=per.getIdpermiso() %>"><%=per.getDescripcion() %></label>	
+						<% 
+								if(i%2!=0){
+									out.println("</div>"); x--;
+								}
+						} 
+							if(x>0)out.println("</div>");
+						%>
+						</center>
+					</div>
+			<% } %>
+	</div>					
+											
+										
 
-					</table>		
+							
 								<BR/>
 								<BR/>	
-									<div class="centerd">
-											<a href="#" class="ui-state-default ui-corner-all button-save" onclick="GuardarUser()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+									<center>
+											<a class="ui-state-default ui-corner-all button-save" onclick="GuardarUser()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 											
-									</div>
+									</center>
 								<BR/>
 								<BR/>
 			
 	<div style="clear: both;"></div>	
-	
+	<%data.Close(); %>

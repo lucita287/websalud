@@ -90,7 +90,9 @@
 					            'idarea='     + escape($("#user_area").val()),
 					            'password='+escape($("#user_pass").val()),
 					            'password2='+escape($("#user_pass2").val()),
-					            'estado='+$('#user_estado').val()
+					            'estado='+$('#user_estado').val(),
+					            'no_personal='+escape($("#no_personal").val()),
+					            
 					        ].join('&');
 					
 					$.ajax({

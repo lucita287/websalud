@@ -48,7 +48,8 @@ public class SMenuTable extends HttpServlet {
 			 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 					if( (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-								CDataBase dbo=new CDataBase();
+						ArrayList<Integer> lista=user_permiso.getIdarea();		
+						CDataBase dbo=new CDataBase();
 								 dbo.Connect();
 								 CValidation valid=new CValidation();
 								 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
@@ -81,8 +82,9 @@ public class SMenuTable extends HttpServlet {
 									 asc=0;
 								 }
 								 
-								int maximo=dbo.getCMenuTotal(pqtype,busqueda);
-								ArrayList<CMenu> list=dbo.getMenuLista(min,max,pqtype,busqueda,ordenar,asc,maximo);
+
+								int maximo=dbo.getCMenuTotal(pqtype,busqueda,lista);
+								ArrayList<CMenu> list=dbo.getMenuLista(min,max,pqtype,busqueda,ordenar,asc,maximo,lista);
 								
 								 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 								 info+="<rows><page>"+page+"</page><total>"+maximo+"</total>";

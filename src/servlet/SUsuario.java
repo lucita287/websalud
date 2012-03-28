@@ -65,9 +65,18 @@ public class SUsuario extends HttpServlet {
 					data+="{idpermiso:"+perm.getIdpermiso()+"}";
 				 }
 				 data="permisos:["+data+"]";
+				 String area="";
+				 ArrayList<Integer> list_area=dbo.getAreaListaInt(iduser);
+				 for(int j=0; j<list_area.size();j++){ 
+					 int idarea=list_area.get(j);
+					 area+=(area.equalsIgnoreCase(""))?"":",";	
+					 area+="{idarea:"+idarea+"}";
+				 }
+				 area="areas:["+area+"]";
+				 
 				 result= "{nombre:\""+temp_user.getnombre()+" \",apellido:\""+temp_user.getapellido()+"\",nick:\""+temp_user.getnick()+"\",telefono:\""+
 						 temp_user.gettelefono()+"\",email:\""+temp_user.getemail()+"\","
-					 +"telefono:\""+temp_user.gettelefono()+"\",idarea:\""+temp_user.getAreaidarea().getidarea()+"\",estado:\""+temp_user.getEstado()+"\","+data+"}";
+					 +"telefono:\""+temp_user.gettelefono()+"\",idarea:\""+temp_user.getAreaidarea().getidarea()+"\",estado:\""+temp_user.getEstado()+"\","+data+","+area+"}";
 				 
 			 }
 			 out.println(result);
@@ -165,9 +174,23 @@ public class SUsuario extends HttpServlet {
 			String result="";
 			int iduser=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("iduser")));
 			String validacion=valid.ValidarSiesMayor(iduser, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un usuario\"}");
-			ArrayList<Integer> lista=valid.ValidarListaNumeros(valid.ValidarRequest(request.getParameter("permisos")));
+			ArrayList<CPermiso> list_permisos=dbo.getListaPermiso();
+			ArrayList<Integer> lista=new ArrayList<Integer>();
+			for(int i=0; i<list_permisos.size();i++){ 
+				CPermiso per=list_permisos.get(i);
+				int permiso=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_permiso_"+per.getIdpermiso())));
+				if(permiso==1) lista.add(per.getIdpermiso());
+			}
+			ArrayList<CArea> list_area=dbo.getAreaLista();
+			ArrayList<Integer> areas=new ArrayList<Integer>();
+			for(int i=0; i<list_area.size();i++){ 
+				CArea idarea=list_area.get(i);
+				int intarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_area"+idarea.getidarea())));
+				if(intarea==1) areas.add(idarea.getidarea());
+			}
+			
 			if(validacion.compareTo("")==0){
-				 boolean b=dbo.safePermisoUsuario(iduser,lista);
+				 boolean b=dbo.safePermisoUsuario(iduser,lista,areas);
 				 if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 					else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";
 			}else{
