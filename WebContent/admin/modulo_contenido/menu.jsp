@@ -31,11 +31,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			<ul id="admin_conte">
 			<%if (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li  >
-					<a id="2" >Editar Contenido</a>
-				</li>
-			<%} if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
-				<li >
-					<a  id="3" >Nuevo Contenido</a>
+					<a id="2" >Gestionar Contenido</a>
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(225)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>

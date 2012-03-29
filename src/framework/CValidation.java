@@ -185,7 +185,15 @@ public class CValidation {
 				result="{\"resultado\":\"ERROR\",\"mensaje\":\"El password debe contener almenos 6 caracteres\"}";
 			}
 		}else{
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\" El password no coincide\"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\" El password no coincide con la confirmación de password\"}";
+		}
+		return result;
+	}
+	public String ValidarPasswordAnt(String pass,String pass2){
+		String result="";
+		if(pass.compareTo(pass2)!=0){
+			
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\" El password no coincide con el anterior password\"}";
 		}
 		return result;
 	}

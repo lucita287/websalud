@@ -96,7 +96,7 @@ public class SNoticiaTable extends HttpServlet {
 						 for(int i=0; i<list.size();i++){
 							 CNoticia temp=list.get(i);
 							 
-						data+="<row id='"+temp.getIdnoticia()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editarnoticia("+temp.getIdnoticia()+")' name='idmenu_radio' value='"+temp.getIdnoticia()+"' />]]></cell><cell><![CDATA["+temp.getIdnoticia()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell><cell><![CDATA["+temp.getAreaidarea().getnombre()+"]]></cell><cell><![CDATA["+temp.getFormatoFecha(temp.getFecha_inicio())+"]]></cell><cell><![CDATA["+(temp.getEstado()==1?"ACTIVO":"DESACTIVADO")+"]]></cell></row>";	 
+						data+="<row id='"+temp.getIdnoticia()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editarnoticia("+temp.getIdnoticia()+")' name='idmenu_radio' value='"+temp.getIdnoticia()+"' />]]></cell><cell><![CDATA["+temp.getIdnoticia()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell><cell><![CDATA["+temp.getAreaidarea().getnombre()+"]]></cell><cell><![CDATA["+temp.getFormatoFechaDes(temp.getFecha_inicio())+"]]></cell><cell><![CDATA["+(temp.getEstado()==1?"ACTIVO":"DESACTIVADO")+"]]></cell></row>";	 
 				
 						 }
 						 info+=data+"</rows>";

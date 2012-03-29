@@ -20,6 +20,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import data.CConfiguracion;
 import data.CMultimedia;
 import data.CUsuario;
+import data.CUsuarioPermiso;
 import framework.CDataBase;
 
 /**
@@ -48,25 +49,24 @@ public class SUploadPDF extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session!=null && session.getAttribute("username")!=null){
+		if (!ServletFileUpload.isMultipartContent(request)) {
+			throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
+		}
+		ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
+		PrintWriter writer = response.getWriter();
+		response.setContentType("text/plain");
+		HttpSession sessiones = request.getSession(false);
+		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+			 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");			 
+			 if( (user_permiso.getIdpermiso().indexOf(222)>-1  ||user_permiso.getIdpermiso().indexOf(226)>-1 ||user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 
-			
-			if (!ServletFileUpload.isMultipartContent(request)) {
-				throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
-			}
-			
-			
+
 			
 			CDataBase dbo=new CDataBase();
 			 dbo.Connect();
+			CUsuario usuario=user_permiso.getIdusuario(); 
 			
-			CUsuario usuario=dbo.getUsuario(session.getAttribute("username").toString()); 
 			
-			
-			ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
-			PrintWriter writer = response.getWriter();
-			response.setContentType("text/plain");
 			CConfiguracion config=dbo.getConfiguracion();
 			String repositorio=config.getdireccion_pdf();
 			String repositorio_relativo=config.getdir_rel_pdf();
@@ -114,7 +114,9 @@ public class SUploadPDF extends HttpServlet {
 				writer.close();
 				dbo.Close();
 			}
-	}
+			
+		}
+	}	 
 
 	}
 }

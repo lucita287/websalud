@@ -17,11 +17,11 @@
 											<table>
 												<tr>	
 													<td>Usuario</td>
-													<td><input id="user" name="user" type="text" value="" size="13"/></td>
+													<td><input id="user" name="user" autocomplete="off" type="text" value="" size="13"/></td>
 												</tr>
 												<tr>	
 													<td>Contraseña</td>
-													<td><input id="pass" name="pass" type="password" value="" size="13"/></td>
+													<td><input id="pass" name="pass" type="password" autocomplete="off" value="" size="13"/></td>
 												</tr>
 												<tr>	
 													<td>Perfil</td>

@@ -129,36 +129,36 @@
 		  }
 		</script>
 		<table id="lugar" style="display:none"></table>
-		<table>
-					<tr>
-						<td>ID</td>
-						<td><label id="id_lugar" >NEW</label></td>
-					</tr>
-					<tr>
-						<td>Nombre</td>
-						<td><input id='nombre_lugar' type="text" size="50"/></td>
-					</tr>
-					<tr>
-						<td>Direccion</td>
-						<td><input id='dir_lugar' type="text" size="50"/></td>
-					</tr>
-					<tr>	
-						<td>Telefono</td>
-						<td><input id='tel_lugar' type="text" size="20"/></td>
-					</tr>
-						
-				</table>
-				
-			<center>
-									<br/><br/>
-									
+		
+		
+		<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="id_lugar" >NEW</label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Nombre</div>
+								<div class="col"><input id='nombre_lugar' type="text" size="50"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Direccion</div>
+								<div class="col"><input id='dir_lugar' type="text" size="50"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Telefono</div>
+								<div class="col"><input id='tel_lugar' type="text" size="20"/></div>
+							</div>
+				</div>
+		</div>
+		
+			<div class="center_button_2">
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="LimpiarEdificio()" > <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 									<%if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="GuardarEdificio()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 									<%} %>
 									<%if (user_permiso.getIdpermiso().indexOf(230)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 										<a href="#" class="ui-state-default ui-corner-all button-delete" onclick="EliminarEdificio()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
-									<%} %>
-									<br/><br/>		
-			</center>
+									<%} %>		
+			</div>
 <% }	} %>				

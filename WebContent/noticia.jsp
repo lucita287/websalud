@@ -39,7 +39,7 @@
 <div id="retorna_unidad">
 <a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNAR A LA UNIDAD DE SALUD</a> <a href="noticia.jsp" class="ui-state-default ui-corner-all button">NOTICIAS</a> 
 </div>
-
+<div style="clear: both;"></div>
 		<% if(info_new!=null){ %>
 		<h3 id="Panel-texto-tit" class="ui-widget-header ui-corner-all"><%=info_new.getTitulo()%></h3>
 		<br/>
@@ -53,6 +53,13 @@
 				<center>
 				<img width="750px"  src="<%=info_new.getMultimediaidmultimedia().getdireccion_relativa() %>"/>		
 				</center>
+						<div style="clear: both;"></div>
+				<% if(info_new.getMultimediaidmultimedia_pdf()!=null&&info_new.getMultimediaidmultimedia_pdf().getidimagen()>0){ %>
+					<div class="news_vermas_especifica">
+						<a   target="_blank" href="<%= info_new.getMultimediaidmultimedia_pdf().getdireccion_relativa() %>">VER PDF</a>
+					</div>
+					<div style="clear: both;"></div>
+					<% } %>
 			<%} %>	
 		<% }else{ 
 		for(int i=0; i<list_news.size();i++){
@@ -60,10 +67,30 @@
 				String sub_descrip=temp_news.getDescripcion_corta()+" [...]";
 		%>
 		<div class="news-todas">
+		<div class="todas_noticias_titulo">
 		<a href="noticia.jsp?idnoticia=<%=temp_news.getIdnoticia()%>"><b><%=temp_news.getTitulo()%></b></a>
-		<div style="border-top: 1px dotted #6699CC; height: 20px; "></div>
-		<%=temp_news.getDescripcion_corta()%>
+		</div>
 		
+		<div style="border-top: 1px dotted #6699CC; height: 20px; "></div>
+		<div class="todas_noticias_descripcion">
+		<%=temp_news.getDescripcion()%>
+		</div>
+		<div style="clear: both;"></div>
+					<div class="news_vermas">
+						<a id="news_mas"  href="noticia.jsp?idnoticia=<%=temp_news.getIdnoticia() %>">VER MAS</a>
+					</div>
+					<% if(temp_news.getMultimediaidmultimedia_pdf()!=null&&temp_news.getMultimediaidmultimedia_pdf().getidimagen()>0){ %>
+					<div class="news_vermas">
+						<a   target="_blank" href="<%= temp_news.getMultimediaidmultimedia_pdf().getdireccion_relativa() %>">VER PDF</a>
+					</div>
+					<% } %>
+					<% if(temp_news.getMultimediaidmultimedia()!=null&&temp_news.getMultimediaidmultimedia().getidimagen()>0){ %>
+					<div class="news_vermas">
+						<a   target="_blank" href="<%= temp_news.getMultimediaidmultimedia().getdireccion_relativa() %>">VER AFICHE</a>
+					</div>
+					<% } %>
+		
+		<div style="clear: both;"></div>
 		</div>
 		<%} } %>
 

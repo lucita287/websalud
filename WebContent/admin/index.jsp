@@ -34,9 +34,7 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <% if(portal==1){ %>
 <jsp:include page="modulo_contenido/perfil.jsp" />
 <% }else if(portal==2){ %>
-<jsp:include page="modulo_contenido/edit_contenido.jsp" />
-<% }else if(portal==3){ %>
-<jsp:include page="modulo_contenido/new_contenido.jsp" />
+<jsp:include page="modulo_contenido/contenido_menu.jsp" />
 <% }else if(portal==6){ %>
 <jsp:include page="modulo_contenido/header_area.jsp" />
 <% }else if(portal==4){ %>

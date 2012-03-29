@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import framework.CValidation;
 
@@ -18,10 +19,11 @@ public class CNoticia {
 	private CArea areaidarea;
 	private String descripcion_corta;
 	private int estado;
+	private CMultimedia multimediaidmultimedia_pdf;
 	
 	public CNoticia(String titulo, String descripcion,String descripcion_corta,
 			CMultimedia multimediaidmultimedia, Date fecha_inicio,
-			Date fecha_fin, int prioridad, int idnoticia, int estado,CArea areaidarea) {
+			Date fecha_fin, int prioridad, int idnoticia, int estado,CArea areaidarea,CMultimedia multimediaidmultimedia_pdf) {
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.multimediaidmultimedia = multimediaidmultimedia;
@@ -32,7 +34,23 @@ public class CNoticia {
 		this.areaidarea = areaidarea;
 		this.descripcion_corta=descripcion_corta;
 		this.estado=estado;
+		this.multimediaidmultimedia_pdf=multimediaidmultimedia_pdf;
 	}
+	
+	/**
+	 * @return the multimediaidmultimedia_pdf
+	 */
+	public CMultimedia getMultimediaidmultimedia_pdf() {
+		return multimediaidmultimedia_pdf;
+	}
+
+	/**
+	 * @param multimediaidmultimedia_pdf the multimediaidmultimedia_pdf to set
+	 */
+	public void setMultimediaidmultimedia_pdf(CMultimedia multimediaidmultimedia_pdf) {
+		this.multimediaidmultimedia_pdf = multimediaidmultimedia_pdf;
+	}
+
 	/**
 	 * @return the estado
 	 */
@@ -176,6 +194,10 @@ public class CNoticia {
 	public String getFormatoFechaddmmyy(Date date){
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		
+		return formatter.format(date);
+	}
+	public String getFormatoFechaDes(Date date){
+		SimpleDateFormat formatter = new SimpleDateFormat("E ',' dd 'de' MMMM 'de' yyyy", new Locale("es"));
 		return formatter.format(date);
 	}
 }

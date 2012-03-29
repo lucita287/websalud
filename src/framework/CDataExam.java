@@ -4,11 +4,7 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
-import data.CActividad;
-import data.CArea;
 import data.CDepartamento;
-import data.CDetalleActividad;
-import data.CEdificio;
 
 public class CDataExam extends CDataBase {
 

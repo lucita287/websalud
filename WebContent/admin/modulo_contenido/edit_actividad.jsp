@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataBase" %>
@@ -234,61 +235,72 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			</script>
 			
 			<table id="actividad" style="display:none"></table>			
-										<table width="80%" CELLSPACING="8">
-								<tr>
-									<td>ID</td><td><label id="id_actividad">NEW</label></td>
-								</tr>
-								<tr>
-									<td>Titulo</td><td><input id="titulo_actividad" type="text" size="50" /></td>
-								</tr>
-								<tr>
-									<td>Descripci&oacute;n</td><td><textarea id="descripcion_actividad" rows="4" cols="50"></textarea></td>
-								</tr>
-								<tr>
-									<td>Lugar</td><td>
-													<select id="lugar_actividad" >
+			
+			
+			
+			
+			<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="id_actividad">NEW</label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Titulo</div>
+								<div class="col"><input id="titulo_actividad" type="text" size="50" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Descripci&oacute;n</div>
+								<div class="col"><textarea id="descripcion_actividad" rows="4" cols="50"></textarea></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Lugar</div>
+								<div class="col">
+												<select id="lugar_actividad" >
 													<% for(int j=0; j<list_edificio.size();j++){ 
 														CEdificio edi=list_edificio.get(j);%>
 														<option value="<%=edi.getIdedificio()%>" ><%=edi.getNombre()%></option>
 													<% } %>
 												</select>
-													</td>
-								</tr>
-								<tr>
-									<td>Salon</td><td><input id="salon_actividad" type="text" size="30" /></td>
-								</tr>	
-								<tr>
-									<td>Area</td>
-									<td>
-												<select id="area_actividad" >
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Salon</div>
+								<div class="col"><input id="salon_actividad" type="text" size="30" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Area</div>
+								<div class="col">
+										<select id="area_actividad" >
 													<% for(int j=0; j<list.size();j++){ 
 														CArea area=list.get(j);%>
 														<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
 													<% } %>
 												</select>
-									</td>
-								</tr>
-								<tr>
-									<td>Responsable</td><td>
-												<select id="respon_actividad" size="7"  multiple="multiple">
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Responsable</div>
+								<div class="col">
+								<select id="respon_actividad" size="7"  multiple="multiple">
 													<% for(int j=0; j<list_respon.size();j++){ 
 														CResponsable respon=list_respon.get(j);%>
 														<option value="<%=respon.getIdresponsable()%>" ><%=respon.getAreaidarea().getnombre()+"/"+respon.getNombre()+" "+respon.getApellido()%></option>
 													<% } %>
 												</select>
-												</td>
-								</tr>
-								
-							</table>		
-								<div style="margin-top:20px; margin-bottom:20px;">	
-									<center>
+								</div>
+							</div>
+							
+					</div>
+			</div>				
+					<div class="center_button_2">
 										<a  class="ui-state-default ui-corner-all button-save" onclick="LimpiarActividad()"> <img  width="24px"  height="24px" src="../images/add.png" />Nuevo</a>
 									<%if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 										<a  class="ui-state-default ui-corner-all button-save" onclick="GuardarActividad()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 									<%} if (user_permiso.getIdpermiso().indexOf(230)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 										<a  class="ui-state-default ui-corner-all button-delete" onclick="EliminarActividad()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 									<% } %>	
-									</center>
-								</div>
+					</div>
+								
 			
 <%	}	} %>	

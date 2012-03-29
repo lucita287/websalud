@@ -47,10 +47,10 @@ public class SMenu extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
-		
-		String action=request.getParameter("a");
-		Base64core base64=new Base64core();
 		CValidation valid=new CValidation();
+		String action=valid.ValidarRequest(request.getParameter("a"));
+		Base64core base64=new Base64core();
+		
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
 		 HttpSession sessiones = request.getSession(false);
@@ -126,15 +126,17 @@ public class SMenu extends HttpServlet {
 									contenido=base64.decodificar(contenido);
 									contenido=valid.Limpiarvalor(contenido);
 									int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
+									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("area")));
 									int idsubmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("submenu")));
 									String validacion=valid.ValidarCampoVacio(titulo, "titulo");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 3, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar el area\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idsubmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un submenu\"}"):validacion;
 														
 										if(validacion.compareTo("")==0){
-											int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("area")));
+											
 											CMenu menu=dbo.getMenuEspecifico(idsubmenu);
 											CArea area=dbo.getCAreaEspecifico(idarea);
 											CMenu newmenu=new CMenu(0,titulo,area,contenido,size,menu);

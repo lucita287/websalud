@@ -8,7 +8,20 @@ public class CUsuario {
 	private String password;
 	private String telefono;
 	private String email;
-	private CArea areaidarea;
+	private String no_personal;
+
+	/**
+	 * @return the no_personal
+	 */
+	public String getNo_personal() {
+		return no_personal;
+	}
+	/**
+	 * @param no_personal the no_personal to set
+	 */
+	public void setNo_personal(String no_personal) {
+		this.no_personal = no_personal;
+	}
 	private int estado;
 	/**
 	 * @return the estado
@@ -22,19 +35,9 @@ public class CUsuario {
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
-	/**
-	 * @return the areaidarea
-	 */
-	public CArea getAreaidarea() {
-		return areaidarea;
-	}
-	/**
-	 * @param areaidarea the areaidarea to set
-	 */
-	public void setAreaidarea(CArea areaidarea) {
-		this.areaidarea = areaidarea;
-	}
-	public CUsuario(int idusuario, String nombre, String apellido,String nick, String password, String telefono, String email,int estado ,CArea areaidarea){
+	
+	
+	public CUsuario(int idusuario, String nombre, String apellido,String nick, String password, String telefono, String email,int estado ,String no_personal){
 		this.idusuario=idusuario;
 		this.nombre=nombre;
 		this.apellido=apellido;
@@ -42,8 +45,8 @@ public class CUsuario {
 		this.password=password;
 		this.telefono=telefono;
 		this.email=email;
-		this.areaidarea=areaidarea;
 		this.estado=estado;
+		this.no_personal=no_personal;
 	}
 	public int getidusuario(){
 		return this.idusuario;
@@ -66,9 +69,6 @@ public class CUsuario {
 	}
 	public String getemail(){
 		return this.email;
-	}
-	public CArea areaidarea(){
-		return this.areaidarea;
 	}
 	/**
 	 * @param idusuario the idusuario to set

@@ -162,22 +162,29 @@
 			</script>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<table id="flex1" style="display:none"></table>			
-					<table cellpadding="4" cellspacing="4">
-									<tr >
-										<td><div class="titulo_permiso"> ID</div></td><td><label id="idusuario"></label></td>
-									</tr>
-									<tr >
-										<td><div class="titulo_permiso">Nombre</div></td><td><label id="user_name" ></label></td>
-									</tr>
-									<tr>
-										<td><div class="titulo_permiso">Apellido</div></td><td><label id="user_last_name" ></label></td>
-									</tr>
-									<tr>
-										<td><div class="titulo_permiso">Nick</div></td><td><label id="nick" ></label></td>
-									</tr>
-									<tr>
-										<td><div class="titulo_permiso">Areas</div> </td>
-										<td>
+			
+			
+			<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="idusuario"></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Nombre</div>
+								<div class="col"><label id="user_name" ></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Apellido</div>
+								<div class="col"><label id="user_last_name" ></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Nick</div>
+								<div class="col"><label id="nick" ></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Areas</div>
+								<div class="col">
 											<div class="format">
 											<% for(int j=0; j<list.size();j++){ 
 																CArea area=list.get(j);
@@ -185,11 +192,12 @@
 																<input type="checkbox" class=".check" id="area_<%=area.getidarea()%>" /><label for="area_<%=area.getidarea()%>"><%=area.getnombre() %></label>
 																
 											<% } %>
-											</div> 
-										</td>
-									</tr>
-					</table>				
-									
+											</div>
+								</div>
+							</div>
+				</div>
+			</div>			
+			<div style="clear: both;"></div>				
 	<div id="tabs">
 			<ul>
 				<% for(int j=0; j<list_cate.size();j++){ 

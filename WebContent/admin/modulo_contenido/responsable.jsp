@@ -130,45 +130,49 @@
 		  
 		</script>
 		<table id="responsable" style="display:none"></table>
-		<table>
-					<tr>
-						<td>ID</td>
-						<td><label id="id_respon">NEW</label></td>
-					</tr>
-					<tr>
-						<td>Nombre</td>
-						<td><input id='nombre_respon' type="text" size="40"/></td>
-					</tr>
-					<tr>
-						<td>Apellido</td>
-						<td><input id='apellido_respon' type="text" size="40"/></td>
-					</tr>
-					<tr>	
-						<td>Area Profesional</td>
-						<td>
-							<select id='area_respon'>
+		
+		
+		<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="id_respon">NEW</label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Nombre</div>
+								<div class="col"><input id='nombre_respon' type="text" size="40"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Apellido</div>
+								<div class="col"><input id='apellido_respon' type="text" size="40"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Area Profesional</div>
+								<div class="col">
+								<select id='area_respon'>
 									<% for(int j=0; j<list.size();j++){ 
 											CArea area=list.get(j);%>
 											<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
 									<% } %>
-							</select>
-						</td>
-					</tr>
-					<tr>	
-						<td>Usuario</td>
-						<td>
-							<select id='usuario_respon' >
+								</select>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Usuario</div>
+								<div class="col">
+								<select id='usuario_respon' >
 										<option value="0"  >No tiene asignado Usuario</option>
 									<% for(int j=0; j<list_usuario.size();j++){ 
 											CUsuario user=list_usuario.get(j);%>
 											<option value="<%=user.getidusuario()%>"  ><%= user.getnick()+"/"+user.getnombre()+" "+user.getapellido()%></option>
 									<% } %>
-							</select>
-						</td>
-					</tr>	
-				</table>
-			<center>
-									<br/><br/>
+								</select>
+								</div>
+							</div>
+		
+					</div>
+			</div>		
+			<div class="center_button_2">
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="LimpiarResponsable()" > <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 									<%if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="GuardarResponsable()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
@@ -176,6 +180,5 @@
 									<%if (user_permiso.getIdpermiso().indexOf(230)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 										<a href="#" class="ui-state-default ui-corner-all button-delete" onclick="EliminarResponsable()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
 									<%} %>
-									<br/><br/>		
-			</center>
+		</div>
 <% }	} %>				 
