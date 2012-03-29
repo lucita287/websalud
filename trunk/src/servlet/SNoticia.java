@@ -50,9 +50,10 @@ public class SNoticia extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
-    	String action=request.getParameter("a");
+    	CValidation valid=new CValidation();
+    	String action=valid.ValidarRequest(request.getParameter("a"));
 		Base64core base64=new Base64core();
-		CValidation valid=new CValidation();
+		
 		
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -65,6 +66,7 @@ public class SNoticia extends HttpServlet {
 								 if(action.equalsIgnoreCase("new_noticia")&& (user_permiso.getIdpermiso().indexOf(226)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
+									int idmultimedia2=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpdf")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 									int prioridad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("prioridad")));
 									int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
@@ -83,6 +85,7 @@ public class SNoticia extends HttpServlet {
 									String fecha_fin=(valid.ValidarRequest(request.getParameter("fecha_fin")));		
 									fecha_fin=base64.decodificar(fecha_fin);
 									String validacion=valid.ValidarCampoVacio(titulo, "titulo");
+									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un area\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "Descripcion"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Descripcion"):validacion;
@@ -96,7 +99,8 @@ public class SNoticia extends HttpServlet {
 										Date ffecha_fin=valid.CambiarFormatoddmmyy(fecha_fin);
 										CArea area=dbo.getCAreaEspecifico(idarea);
 										CMultimedia multi=dbo.getMultimediaEspecifica(idmultimedia);
-										CNoticia noti=new CNoticia(titulo,contenido,descripcion,multi, ffecha_inicio, ffecha_fin,  prioridad, 0,estado, area);
+										CMultimedia multi2=dbo.getMultimediaEspecifica(idmultimedia2);
+										CNoticia noti=new CNoticia(titulo,contenido,descripcion,multi, ffecha_inicio, ffecha_fin,  prioridad, 0,estado, area,multi2);
 										boolean b=dbo.SafeNoticia(noti);
 										if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 										else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";
@@ -113,7 +117,7 @@ public class SNoticia extends HttpServlet {
 									 if(noti!=null){
 										 result= "{descripcion:\""+noti.getDescripcion()+"\",idarea:\""+noti.getAreaidarea().getidarea()+"\",areanombre:\""+
 												 noti.getAreaidarea().getnombre()+"\",idimagen:"+noti.getMultimediaidmultimedia().getidimagen()+",idimagendir:\""+noti.getMultimediaidmultimedia().getdireccion_relativa()+"\","
-											 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+noti.getTitulo()+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+noti.getDescripcion_corta()+"\",estado:"+noti.getEstado()+"}";
+											 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+noti.getTitulo()+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+noti.getDescripcion_corta()+"\",estado:"+noti.getEstado()+",idpdf:"+noti.getMultimediaidmultimedia_pdf().getidimagen()+",idpdfdir:\""+noti.getMultimediaidmultimedia_pdf().getdireccion_relativa()+"\"}";
 									 }
 									 out.println(base64.codificar(result));
 									//MODIFICAR NOTICIA 
@@ -121,6 +125,7 @@ public class SNoticia extends HttpServlet {
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 									int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
+									int idmultimedia2=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpdf")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 									int prioridad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("prioridad")));
 									int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
@@ -139,6 +144,7 @@ public class SNoticia extends HttpServlet {
 									descripcion=valid.Limpiarvalor(descripcion);
 									
 									String validacion=valid.ValidarSiesMayor(idnoticia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un area\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "Contenido"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
@@ -154,9 +160,11 @@ public class SNoticia extends HttpServlet {
 										Date ffecha_fin=valid.CambiarFormatoddmmyy(fecha_fin);
 										CArea area=dbo.getCAreaEspecifico(idarea);
 										CMultimedia multi=dbo.getMultimediaEspecifica(idmultimedia);
+										CMultimedia multi2=dbo.getMultimediaEspecifica(idmultimedia2);
 										CNoticia noti=dbo.getNoticiaEspecifica(idnoticia);
 										noti.setAreaidarea(area);
 										noti.setMultimediaidmultimedia(multi);
+										noti.setMultimediaidmultimedia_pdf(multi2);
 										noti.setDescripcion(contenido);
 										noti.setFecha_inicio(ffecha_inicio);
 										noti.setFecha_fin(ffecha_fin);

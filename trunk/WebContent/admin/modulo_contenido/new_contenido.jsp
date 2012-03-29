@@ -6,53 +6,72 @@
 <%@ page import="data.CArea" %>
 <%@ page import="data.CUsuarioPermiso" %>
 <%
-	CDataBase	data=new CDataBase();
-		data.Connect();
-		ArrayList<CArea> list=data.getAreaLista();
-		ArrayList<CMenu> list_me=data.getMenu(1); 
-		data.Close();
+
 
 HttpSession sessiones = request.getSession(false);
 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+	CDataBase	data=new CDataBase();
+	data.Connect();
+	ArrayList<CArea> list=data.getAreaLista(user_permiso.getIdarea());
+	data.Close();
+	
 
-CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
 if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
+			<script type="text/javascript" src="../lib/system_admin.js" charset="utf-8"></script>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<div class="centerd">
 			<H2>Nuevo Contenido</H2>
 			</div>
-				<div id="validacion_prin" class="validacion"></div>
-				Titulo: <input id="new-titulo" type="text" size="60" /><br/>
-				Area Pertenece:
-					<select id="new-area" onchange="cambiarArea()">
-						<% for(int j=0; j<list.size();j++){ 
-							CArea area=list.get(j);
-						%>
-							<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
-						<% } %>
-					</select><br/>
-				Sub Parte: <select id="new-submenu">
-						<% for(int i=0; i<list_me.size(); i++){
-							CMenu men=list_me.get(i);%>
-							<option value="<%=men.getidmenu()%>"><%= men.getdescripcion()%></option>
-						<%} %> 
-						
-						</select>
-				<br/>
-				Tama&ntilde;o:<select id="new-tam"> 
-						<option value="3">Grande</option>
-						<option value="2">Mediano</option>
-						<option value="1">Peque&ntilde;o</option>
-						<option value="0">Sin Texto</option>
-				</select>
+				<div id="validacion_conte" class="validacion"></div>
+				
+				<div class="perfil">
+						<div class="tabla">
+									<div class="fila">
+												<div class="col_titulo">*Titulo</div>
+												<div class="col"><input id="new-titulo" type="text" size="60" /></div>
+									</div>
+									<div class="fila">
+												<div class="col_titulo">*Area Pertenece</div>
+												<div class="col"><select id="new-area" onchange="cambiarArea()">
+																		<option value="0" selected>SELECCIONE UN AREA</option>
+																		<% for(int j=0; j<list.size();j++){ 
+																			CArea area=list.get(j);
+																		%>
+																			<option value="<%=area.getidarea()%>" ><%= area.getnombre()%></option>
+																		<% } %>
+																	</select>
+												</div>
+									</div>
+									<div class="fila">
+												<div class="col_titulo">*Sub Parte</div>
+												<div class="col">
+													 <select id="new-submenu">
+													
+													</select>
+												</div>
+									</div>
+									<div class="fila">
+												<div class="col_titulo">*Tama&ntilde;o</div>
+												<div class="col">
+													<select id="new-tam"> 
+															<option value="3">Grande</option>
+															<option value="2">Mediano</option>
+															<option value="1">Peque&ntilde;o</option>
+															<option value="0">Sin Texto</option>
+													</select>
+												</div>
+									</div>
+						</div>
+				</div>											
+				<div style="clear: both;"></div>
+				
 				<textarea id="cont-text" class="editor"></textarea>
-				<br/><br/>
-				<div class="centerd">
-						<a href="#validacion_prin" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-					<a href="#validacion_prin" class="ui-state-default ui-corner-all button-delete" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
+				<div class="center_button">
+						<a href="#validacion_conte" class="ui-state-default ui-corner-all button-save" onclick="Guardarnew()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+					<a href="#validacion_conte" class="ui-state-default ui-corner-all button-delete" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Limpiar</a>	
 				</div>
-				<br/><br/>	
 				<div style="clear: both;"></div>
 				
 				<script  type="text/javascript">
@@ -91,7 +110,7 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 			  function Guardarnew(){
 
 					  if($.trim($('#new-titulo').val())!=""){
-						  if($('#new-submenu').val()>0){	
+						  if($('#new-submenu').val()>0 && $('#new-area').val()>0){	
 								  var data_cont=Base64.encode(convertirCaracter($('#cont-text').val()));
 								  var titulo=Base64.encode(convertirCaracter($('#new-titulo').val()));
 								  var submenu=$('#new-submenu').val();
@@ -102,7 +121,7 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 										            'area='+$('#new-area').val(),
 										            'submenu='+submenu
 										        ].join('&');
-									 $("#validacion").html("No se ha actualizado"); 
+									 $("#validacion_conte").html("No se ha actualizado"); 
 									  $.ajax({
 									        url: "../SMenu",
 									        data: cadena,
@@ -117,29 +136,17 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 										
 									    }); 
 						  }else{
-							  $("#validacion_prin").html("Debe seleccionar un SubMenu");
+							  $("#validacion_conte").html("Debe seleccionar un SubMenu ó Menu");
 						  }		  
 							  
 					  }else{
-						  $("#validacion_prin").html("El titulo no puede estar vacio");
+						  $("#validacion_conte").html("El titulo no puede estar vacio");
 					  }
-			  }
-			function mensaje(mens){
-				  
-				  $( "#dialog-message" ).html(mens);
-					$( "#dialog-message" ).dialog({
-						modal: true,
-						buttons: {
-							Ok: function() {
-								$( this ).dialog( "close" );
-							}
-						}
-					});
 			  }
 			function limpiar(){
 				$("#cont-text").cleditor()[0].clear();
         		$('#new-titulo').val('');
+        		 $("#validacion_conte").html("");
 			}
 			</script>
-	<%	}
-} %>			
+	<% 	} } %>			

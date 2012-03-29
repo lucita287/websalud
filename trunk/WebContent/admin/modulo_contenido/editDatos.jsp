@@ -144,27 +144,49 @@
 		
 						</script>
 										<div id="validacion_data" class="validacion"></div>
-										ID:  <label id="edit-id"></label><br/>
-										Titulo: <input id="edit-titulo" type="text" size="60" /><br/>
-										Area Pertenece: <label id="edit-area"></label><br/>
-										Sub Menu: <label id="edit-submenu"></label><br/>
-										Tama&ntilde;o:<select id="edit-tam"> 
-												<option value="3">Grande</option>
-												<option value="2">Mediano</option>
-												<option value="1">Peque&ntilde;o</option>
-												<option value="0">Sin Texto</option>
-										</select>
+										
+										<div class="perfil">
+											<div class="tabla">
+														<div class="fila">
+															<div class="col_titulo">ID</div>
+															<div class="col"><label id="edit-id"></label></div>
+														</div>
+														<div class="fila">
+															<div class="col_titulo">*Titulo</div>
+															<div class="col"><input id="edit-titulo" type="text" size="55" /></div>
+														</div>
+														<div class="fila">
+															<div class="col_titulo">Area Pertenece</div>
+															<div class="col"><label id="edit-area"></label></div>
+														</div>
+														<div class="fila">
+															<div class="col_titulo">Sub Menu</div>
+															<div class="col"><label id="edit-submenu"></label></div>
+														</div>
+														<div class="fila">
+															<div class="col_titulo">*Tama&ntilde;o</div>
+															<div class="col">
+																			<select id="edit-tam"> 
+																			<option value="3">Grande</option>
+																			<option value="2">Mediano</option>
+																			<option value="1">Peque&ntilde;o</option>
+																			<option value="0">Sin Texto</option>
+																			</select>
+															</div>
+														</div>
+											</div>			
+										</div>							
+										
+										<div style="clear: both;"></div>
 										<textarea o id="editconte" class="editor"></textarea>
 										
-										<br/><br/>
-										<center>
+										<div class="center_button">
 											<% if (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 												<a href="#validacion_data" class="ui-state-default ui-corner-all button-save" onclick="Guardaredit()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 											<% }%>	
 											<% if (user_permiso.getIdpermiso().indexOf(223)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 											<a href="#validacion_data"  class="ui-state-default ui-corner-all button-delete" onclick="eliminar_conte()"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 											<% }%>
-										</center>
-										<br/><br/>
+										</div>
 	<%}
 } %>				

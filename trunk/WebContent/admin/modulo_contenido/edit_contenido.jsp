@@ -10,7 +10,7 @@
 		CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
 		if (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
-				
+			<script type="text/javascript" src="../lib/system_admin.js" charset="utf-8"></script>				
 			<script  type="text/javascript">
 			var editidmenu=0;
 					 
@@ -29,9 +29,9 @@
 						{ display: 'menu_rec', name: 'menu_rec', width: 100, sortable: true, align: 'left' }
 						],
 					    usepager: true,
-					    sortname: "idmenu",
+					    sortname: "area",
 						sortorder: "desc",
-					    title: 'Contenido',
+					    title: 'Menu',
 					    useRp: true,
 					    rp: 15,
 					    showTableToggleBtn: true,

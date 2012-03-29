@@ -46,9 +46,10 @@ public class SActividad extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
-    	String action=request.getParameter("a");
+    	CValidation valid=new CValidation();
+    	String action=valid.ValidarRequest(request.getParameter("a"));
 		Base64core base64=new Base64core();
-		CValidation valid=new CValidation();
+		
 		
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){

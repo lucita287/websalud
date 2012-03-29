@@ -12,33 +12,35 @@
 		
 						<form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
 						    			<h2>Subir Imagenes</h2>
+						    			<h3 style="color:red;">Tama&ntilde;o recomendado,  ancho = 550px </h3>
 										<div id="validacion_imagen" class="validacion"></div>
 										<table id="imagenes" style="display:none"></table>
-										<table  width="80%" CELLSPACING="8">
-											<tr>
-												<td>IDEN</td>
-												<td><label id="idimagen">NEW</label> </td>	
-											</tr>
-											<tr>
-												
-												<td>Titulo</td>
-												<td><input id="tituloimagen" type="text" size="40"/> </td>	
-											</tr>
-											<tr>
-												<td>Descripci&oacute;n</td>
-												<td><textarea id="descripcionimagen" rows="4" cols="40"></textarea> </td>	
-											</tr>
-											<tr>
-												<td>Imagen</td>
-												<td>
-												<input id="fileupload" type="file" name="files[]" ><BR/>
-												<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
-												</td>	
-											</tr>	
-										</table>
-														
-										<br/><br/>
-										<center>
+
+
+								<div class="perfil">
+									<div class="tabla">
+												<div class="fila">
+													<div class="col_titulo">ID</div>
+													<div class="col"><label id="idimagen">NEW</label></div>
+												</div>
+												<div class="fila">
+													<div class="col_titulo">*Titulo</div>
+													<div class="col"><input id="tituloimagen" type="text" size="40"/></div>
+												</div>
+												<div class="fila">
+													<div class="col_titulo">Descripci&oacute;n</div>
+													<div class="col"><textarea id="descripcionimagen" rows="4" cols="40"></textarea></div>
+												</div>
+																								<div class="fila">
+													<div class="col_titulo">*Imagen</div>
+													<div class="col">
+														<input id="fileupload" type="file" name="files[]" ><BR/>
+														<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
+													</div>
+												</div>
+									</div>
+							</div>		
+										<div class="center_button_2">
 												<a href="#validacion_imagen"  onclick="limpiar()" class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 												<% if (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 														<a href="#validacion_imagen" onclick="guardarImagen()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
@@ -46,7 +48,7 @@
 												<% if (user_permiso.getIdpermiso().indexOf(223)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 												<a href="#validacion_imagen"  onclick="eliminar_Contenido(1)"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 												<% }%>	
-										</center>
+										</div>
 										<br/><br/>
 							
 						    

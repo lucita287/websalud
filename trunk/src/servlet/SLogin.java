@@ -16,7 +16,7 @@ import data.CUsuarioPermiso;
 
 
 import framework.CDataBase;
-
+import framework.CValidation;
 /**
  * Servlet implementation class SLogin
  */
@@ -45,9 +45,10 @@ public class SLogin extends HttpServlet {
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
 		 response.setContentType("text/html;charset=UTF-8"); 
-		 String user=request.getParameter("user").toLowerCase();
-		 String pass=request.getParameter("pass");
-		 String perfil=request.getParameter("perfil");
+		 CValidation valid=new CValidation();
+		 String user=valid.ValidarRequest(request.getParameter("user").toLowerCase());
+		 String pass=valid.ValidarRequest(request.getParameter("pass"));
+		 String perfil=valid.ValidarRequest(request.getParameter("perfil"));
 		 if(perfil.equalsIgnoreCase("2")){
 			 
 			 CUsuario usuario=dbo.getUsuario(user);

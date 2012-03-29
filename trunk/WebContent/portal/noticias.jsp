@@ -32,13 +32,13 @@ if(list_news.size()>0){ %>
 		<% 
 		for(int i=0; i<list_news.size();i++){
 				CNoticia temp_news=list_news.get(i);
-				String sub_descrip=temp_news.getDescripcion_corta()+" [...]";
+				String sub_descrip=temp_news.getDescripcion_corta();
 		%>
 										<li>
-										<div class="news-inicio" name="<%=temp_news.getIdnoticia()%>">
+										<div <%= (i==0?" style='background:#CCC;' ":"")%> class="ui-widget-content ui-corner-all news-inicio noticia<%=temp_news.getIdnoticia()%>"  onclick="update_noti(<%=temp_news.getIdnoticia()%>)" >
 												
 												<div class="news-text"  >
-												<b><%=temp_news.getTitulo() %></b> 
+												<div class="titulo_noticias"><%=temp_news.getTitulo() %></div> 
 												<br/><%= sub_descrip %>
 												</div>
 										</div>
@@ -66,6 +66,7 @@ if(list_news.size()>0){ %>
 
 <script>
 
+<% if(list_news.size()>0){%>
 $(function() {
 	$(".jCarouselLite2").jCarouselLite({
 		vertical: true,
@@ -74,6 +75,13 @@ $(function() {
 		visible: <%=(list_news.size()<3)?list_news.size():3%>
 	});
 });
+
+function update_noti(id){
+	$(".news-inicio").css("background","white");	
+	$(".noticia"+id).css("background","#CCC");
+	$("#widget-info").load("portal/noticia_descripcion.jsp?idnoticia="+id);
+}
+<% }%>
 </script>
 <div style="clear: both;"></div>
 </div>

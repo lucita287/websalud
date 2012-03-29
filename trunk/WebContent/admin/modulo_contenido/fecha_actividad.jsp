@@ -180,7 +180,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			</center>
 			
 			<% if (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
-			<div class="caja_gris">
+			<div class="ui-widget-content ui-corner-all caja_gris">
 						<h5>PERIODOS DE FECHAS</h5>
 								<table>	
 									<tr>

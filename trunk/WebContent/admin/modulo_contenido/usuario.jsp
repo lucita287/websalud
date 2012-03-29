@@ -3,13 +3,21 @@
 <%@ page import="framework.CDataBase" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="data.CArea" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
 	CDataBase	data=new CDataBase();
 		data.Connect();
 		ArrayList<CArea> list=data.getAreaLista();
 		
 		data.Close();
-%>
+		
+		
+		HttpSession sessiones = request.getSession(false);
+		if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+			CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+				if (user_permiso.getIdpermiso().indexOf(233)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
+
 			<div class="centerd">
 			<H2>Usuarios</H2>
 			</div>
@@ -67,7 +75,7 @@
 				        	$("#nick").val(result.nick);
 				        	$("#user_phone").val(result.telefono);
 				        	$("#user_email").val(result.email);
-				        	$("#user_area").val(result.idarea);
+				        	$("#no_personal").val(result.no_personal);
 				        	$('#user_estado').val(result.estado);
 				        }
 					
@@ -87,7 +95,7 @@
 					            'nick='     + escape($("#nick").val()),
 					            'phone='     + escape($("#user_phone").val()),
 					            'email='     + escape($("#user_email").val()),
-					            'idarea='     + escape($("#user_area").val()),
+					            'no_personal='     + escape($("#no_personal").val()),
 					            'password='+escape($("#user_pass").val()),
 					            'password2='+escape($("#user_pass2").val()),
 					            'estado='+$('#user_estado').val(),
@@ -114,7 +122,7 @@
 		        	$("#nick").val("");
 		        	$("#user_phone").val("");
 		        	$("#user_email").val("");
-		        	$("#user_area").val(1);
+		        	$("#no_personal").val("");
 		        	$("#user_pass").val("");
 		        	$("#user_pass2").val("");
 		        	$("#idusuario").text("NEW");
@@ -122,77 +130,67 @@
 		        	$('#user_estado').val(1);
 		        	editiduser=0;
 			  }
-			  function mensaje(mens){
-				  				  $( "#dialog-message" ).html(mens);
-					$( "#dialog-message" ).dialog({
-						modal: true,
-						buttons: {
-							Ok: function() {
-								$( this ).dialog( "close" );
-							}
-						}
-					});
-			  }
 			</script>
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<table id="flex1" style="display:none"></table>			
-					<table width="80%" CELLSPACING="8">
-									<tr >
-										<td>ID</td><td><label id="idusuario"></label></td>
-									</tr>
-									<tr >
-										<td>*Nombre</td><td><input id="user_name" type="text" size="40"/></td>
-									</tr>
-									<tr>
-										<td>*Apellido</td><td><input id="user_last_name" type="text" size="40" /></td>
-									</tr>
-									<tr>
-										<td>*Usuario </td><td><input id="nick" type="text" size="20" /></td>
-									</tr>
-									<tr>
-										<td>No Personal </td><td><input id="no_personal" type="text" size="20" /></td>
-									</tr>	
-									<tr>
-										<td>Password</td><td><input id="user_pass" type="password" size="20" /></td>
-									</tr>
-									<tr>
-										<td>Confirmar Password</td><td><input id="user_pass2" type="password" size="20" /></td>
-									</tr>
-									<tr>
-										<td>Telefono</td><td><input id="user_phone" type="text"/></td>
-									</tr>
-									<tr>
-										<td>Email</td><td><input id="user_email" type="text"/></td>
-									</tr>
-									<tr>
-										<td>*Area</td><td><select id="user_area" >
-															<% for(int j=0; j<list.size();j++){ 
-																CArea area=list.get(j);
-															%>
-																<option value="<%=area.getidarea()%>" <%=(area.getidarea()==1?"selected":"") %>><%= area.getnombre()%></option>
-															<% } %>
-														</select>
-													</td>
-									
-									</tr>
-									<tr>
-										<td>*Estado</td><td><select id="user_estado" >
+			
+			
+			<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="idusuario"></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">*Nombre</div>
+								<div class="col"><input id="user_name" type="text" size="40"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">*Apellido</div>
+								<div class="col"><input id="user_last_name" type="text" size="40" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">*Usuario</div>
+								<div class="col"><input id="nick" type="text" size="20" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">No Personal</div>
+								<div class="col"><input id="no_personal" type="text" size="20" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Password</div>
+								<div class="col"><input id="user_pass" type="password" autocomplete="off" size="20" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Confirmar Password</div>
+								<div class="col"><input id="user_pass2" type="password" autocomplete="off" size="20" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Telefono</div>
+								<div class="col"><input id="user_phone" type="text"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Email</div>
+								<div class="col"><input id="user_email" type="text"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">*Estado</div>
+								<div class="col"><select id="user_estado" >
 																<option value="1" selected>ACTIVO</option>
 																<option value="2" >DESACTIVADO</option>
 														</select>
-													</td>
+												</div>
+							</div>
+					</div>
+				</div>					
 									
-									</tr>
-					</table>		
-								<BR/>
-								<BR/>	
-									<div class="centerd">
+									<div class="center_button">
 										<a  class="ui-state-default ui-corner-all button-save" onclick="limpiar()"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+									<%if (user_permiso.getIdpermiso().indexOf(234)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 										<a  class="ui-state-default ui-corner-all button-save" onclick="guardaUser()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-										
+									<%} %>		
 									</div>
-								<BR/>
-								<BR/>
+								
 
 	<div style="clear: both;"></div>	
-	
+	<%			} } %>
