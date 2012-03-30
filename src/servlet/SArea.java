@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import data.CArea;
 import data.CMultimedia;
+import data.CUsuarioPermiso;
 import framework.Base64core;
 import framework.CDataBase;
 import framework.CValidation;
@@ -41,15 +43,17 @@ public class SArea extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
-		PrintWriter out = response.getWriter(); 
-		
-		
+		PrintWriter out = response.getWriter(); 		
 		Base64core base64=new Base64core();
 		CValidation valid=new CValidation();
+		HttpSession sessiones = request.getSession(false);
+		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+		CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+		
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
 		 String action=valid.ValidarRequest(request.getParameter("a"));
-		if(action.equalsIgnoreCase("show")){
+		 if(action.equalsIgnoreCase("show")&&  (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 		 int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 		 CArea temp_area=dbo.getCAreaEspecifico(idarea);
 		 String result="";
@@ -58,7 +62,7 @@ public class SArea extends HttpServlet {
 				 temp_area.getidmultimedia().getdireccion_relativa()+"\", contenido:\""+temp_area.getdescripcion()+"\"}";
 		 }
 		 out.println(base64.codificar(result));
-		}else if(action.equalsIgnoreCase("guardaredit")){
+		}else if(action.equalsIgnoreCase("guardaredit")&& (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";			
 			int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 			String contenido=(valid.ValidarRequest(request.getParameter("contenido")));		
@@ -87,6 +91,8 @@ public class SArea extends HttpServlet {
 			
 		}
 		dbo.Close();
+		
+	  }	
 	}
 
 }

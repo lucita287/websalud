@@ -5,14 +5,22 @@
 <%@ page import="data.CArea" %>
 <%@ page import="data.CPermiso" %>
 <%@ page import="data.CCategoria_permiso" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
-	CDataBase	data=new CDataBase();
-		data.Connect();
-		ArrayList<CArea> list=data.getAreaLista();
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(235)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+			
 		
-		ArrayList<CPermiso> list_permisos=data.getListaPermiso();
-		ArrayList<CCategoria_permiso> list_cate=data.getListaCategoriaPermisos();
-		
+				CDataBase	data=new CDataBase();
+					data.Connect();
+					ArrayList<CArea> list=data.getAreaLista();
+					
+					ArrayList<CPermiso> list_permisos=data.getListaPermiso();
+					ArrayList<CCategoria_permiso> list_cate=data.getListaCategoriaPermisos();
+					
 %>
 	<style type="text/css">
 
@@ -207,13 +215,13 @@
 				<li><a href="#tabs-<%= cate.getIdcategoria_permiso() %>"><%= cate.getNombre() %></a></li>
 				<% } %>
 			</ul>
-			
+			<center>
 			<% for(int j=0; j<list_cate.size();j++){ 
 					CCategoria_permiso cate=list_cate.get(j);
 					ArrayList<CPermiso> list_perm=data.getListaPermisoCate(cate.getIdcategoria_permiso());				
 					%>
 					<div id="tabs-<%= cate.getIdcategoria_permiso() %>" style="width:600px; ">
-						<center>
+						
 						<%  int x=0;
 						for(int i=0; i<list_perm.size();i++){ 
 							CPermiso per=list_perm.get(i);
@@ -229,22 +237,22 @@
 						} 
 							if(x>0)out.println("</div>");
 						%>
-						</center>
+						
 					</div>
 			<% } %>
+			</center>
 	</div>					
 											
 										
 
 							
-								<BR/>
-								<BR/>	
-									<center>
+								<div class="center_button">
 											<a class="ui-state-default ui-corner-all button-save" onclick="GuardarUser()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 											
-									</center>
-								<BR/>
-								<BR/>
+								</div>
 			
 	<div style="clear: both;"></div>	
-	<%data.Close(); %>
+	<%data.Close(); 
+	
+	}	}
+	%>	

@@ -35,21 +35,23 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <jsp:include page="modulo_contenido/perfil.jsp" />
 <% }else if(portal==2){ %>
 <jsp:include page="modulo_contenido/contenido_menu.jsp" />
-<% }else if(portal==6){ %>
-<jsp:include page="modulo_contenido/header_area.jsp" />
-<% }else if(portal==4){ %>
+<% }else if(portal==3){ %>
 <jsp:include page="modulo_contenido/noticia.jsp" />
-<% }else if(portal==5){ %>
+<% }else if(portal==4){ %>
 <jsp:include page="modulo_contenido/actividad.jsp" />
-<% }else if(portal==7){ %>
+<% }else if(portal==5){ %>
+<jsp:include page="modulo_contenido/header_area.jsp" />
+<% }else if(portal==6){ %>
 <jsp:include page="modulo_contenido/usuario.jsp" />
-<% }else if(portal==8){ %>
+<% }else if(portal==7){ %>
 <jsp:include page="modulo_contenido/permiso.jsp" />
-<% }else if(portal==9){ %>
+<% }else if(portal==8){ %>
 <jsp:include page="modulo_contenido/configuracion.jsp" />
+<% }else if(portal==9){ %>
+<jsp:include page="modulo_contenido/multimedia.jsp" />
 <% }else if(portal==10){ %>
 <jsp:include page="modulo_examen/propiedades.jsp" />
-<% }else if(portal==11){ %>
+<% }else if(portal==11){ %>else if(portal==11){ %>
 <jsp:include page="modulo_examen/mantenimiento.jsp" />
 <% }else if(portal==12){ %>
 <jsp:include page="modulo_examen/auto_eva.jsp" />

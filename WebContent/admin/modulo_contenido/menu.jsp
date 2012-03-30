@@ -19,7 +19,6 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	</li>
 
 	<%if (user_permiso.getIdpermiso().indexOf(221)>-1  
-		||user_permiso.getIdpermiso().indexOf(224)>-1
 		||user_permiso.getIdpermiso().indexOf(225)>-1
 		||user_permiso.getIdpermiso().indexOf(228)>-1
 		||user_permiso.getIdpermiso().indexOf(231)>-1
@@ -35,15 +34,15 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(225)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
-					<a id="4">Gestionar Noticias</a>
+					<a id="3">Gestionar Noticias</a>
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(228)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
-					<a id="5">Gestionar Actividades</a>
+					<a id="4">Gestionar Actividades</a>
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
-					<a  id="6">Gestionar Areas</a>
+					<a  id="5">Gestionar Areas</a>
 				</li>
 			<%}%>	
 			</ul>
@@ -51,23 +50,37 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	<%}%>
 		<%if (user_permiso.getIdpermiso().indexOf(233)>-1  
 		||user_permiso.getIdpermiso().indexOf(235)>-1
+		||user_permiso.getIdpermiso().indexOf(246)>-1
 		||user_permiso.getIdusuario().getidusuario()==1){%>	
 	<li >
 	<a >Administrar </a>
 			<ul id="admin">
+			<%if (user_permiso.getIdpermiso().indexOf(233)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 				<li >
-					<a id="7">Gestionar Usuarios</a>
+					<a id="6">Gestionar Usuarios</a>
 				</li>
+		   <% } if (user_permiso.getIdpermiso().indexOf(235)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 				<li>
-					<a id="8">Gestionar Permisos</a>
+					<a id="7">Gestionar Permisos</a>
 				</li>
+		 <% } if (user_permiso.getIdpermiso().indexOf(246)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
 				<li>
-					<a id="9">Configuraci&oacute;n</a>
+					<a id="8">Configuraci&oacute;n</a>
 				</li>
+		 <% } if (user_permiso.getIdpermiso().indexOf(246)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
+				<li>
+					<a id="9">Imagenes sin usar</a>
+				</li>
+		<% } %>		
 			</ul>	
 	</li>
 	<% } %>
 	
+	<%if (user_permiso.getIdpermiso().indexOf(239)>-1  
+		||user_permiso.getIdpermiso().indexOf(240)>-1
+		||user_permiso.getIdpermiso().indexOf(241)>-1
+		||user_permiso.getIdpermiso().indexOf(242)>-1
+		||user_permiso.getIdusuario().getidusuario()==1){%>	
 	<li>
 		<a >Configurar Examen de Salud</a>
 			<ul id="exam">
@@ -86,6 +99,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			</ul>
 	
 	</li>
+	<%	} %>
 	<li>
 		<a >Estudiantes</a>
 			<ul id="estudiante">
@@ -131,13 +145,15 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	function initMenu() {
 	  $('#menu ul').hide();
 	  
-	  <% if(portal>1 && portal<7){%>
+	  <% if(portal>1 && portal<6){%>
 	  $('#admin_conte').show();
-	  <% }else if(portal>6 && portal<10){ %>
+	  <% }else if(portal>5 && portal<10){ %>
 	  $('#admin').show();
 	  <% }else if(portal>9 && portal<14){ %>
 	  $('#exam').show();
-	  <% }else if(portal>10 && portal<13){ %>
+	  <% }else if(portal>13 && portal<15){ %>
+	  $('#estudiante').show();
+	  <% }else if(portal>14 && portal<16){ %>
 	  $('#report').show();
 	  <%} %>
 	  
