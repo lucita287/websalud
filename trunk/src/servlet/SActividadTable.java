@@ -85,8 +85,10 @@ public class SActividadTable extends HttpServlet {
 						 asc=1;
 					 }
 					 
-					 int maximo=dbo.getActividadesTotal(pqtype,busqueda);
-					ArrayList<CActividad> list=dbo.getListaActividades(ordenar,asc,min,max,pqtype,busqueda,maximo);
+					
+					ArrayList<Integer> lista_numeros=user_permiso.getIdarea();
+					 int maximo=dbo.getActividadesTotal(pqtype,busqueda,lista_numeros);
+					 ArrayList<CActividad> list=dbo.getListaActividades(ordenar,asc,min,max,pqtype,busqueda,maximo,lista_numeros);
 					
 					 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 					 info+="<rows><page>"+page+"</page><total>"+maximo+"</total>";

@@ -275,6 +275,7 @@
 				  $("#flex1").flexReload(); 
 				  $("#descripcion_noti").val('');
 				  $("#selec-estado").val(1);
+				  $("#validacion_imagen").html('');
 			  }
 			  function Guardaredit(){
 					var titulo=convertirCaracter($.trim($("#titulo_noticia").val()));
@@ -336,6 +337,7 @@
 							$("#editnoti").cleditor()[0].execCommand("inserthtml",result.descripcion,null,null);
 							$("#editnoti").cleditor()[0].focus();
 							$('#selec-estado').val(result.estado);
+							$("#selec-area").val(result.idarea);
 							//$("#grid_list").flexOptions({url: newurl/'}); 
 							idimagen=result.idimagen;
 							idpdf=result.idpdf;

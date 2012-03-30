@@ -1,3 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+    <%@ page import="java.util.ArrayList" %>
+    <%@ page import="data.CUsuarioPermiso" %>
+    
+    <%
+
+	HttpSession sessiones = request.getSession(false);
+	if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+		
+		CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
+<form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
+    			<h2>Subir Imagenes</h2>
+    			<h3 style="color:red;">Tama&ntilde;o recomendado:  [160px , 120px] </h3>
+				<div id="validacion_imagen" class="validacion"></div>
+				<table id="imagenes" style="display:none"></table>
+				
+				
+				<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="idimagen">NEW</label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Imagen</div>
+								<div class="col">
+									<input id="fileupload" type="file" name="files[]" ><BR/>
+									<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
+								</div>
+							</div>
+				</div>
+				</div>
+								
+				<div class="center_button_2">
+						<a href="#validacion_imagen" onclick="limpiar()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+						<%if (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
+						<a href="#validacion_imagen" onclick="guardaareamulti()"   class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+						<a href="#validacion_imagen" onclick="deleteenca()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
+						<% } %>	
+				</div>
+    
+</form>
 <script  type="text/javascript">
 var idmultimedia1=0;
 var idmultimedia2=0;
@@ -67,7 +112,20 @@ function editar_encabe(idmultimedia){
 	idmultimedia1=idmultimedia;
 	idmultimedia2=idmultimedia;
 	$('#idimagen').text(idmultimedia);
-	//$('pathimagen').text(path);
+	cadena = [ 	'idmultimedia='   + idmultimedia1,
+             	'a=show_encabezado',
+	     		'idarea='+editiarea,
+	        ].join('&');
+	$.ajax({
+        url: "../SEncabezado",
+        data: cadena,
+  	    type: 'post',
+        dataType: 'json',
+        success: function(data){
+        		$("#pathimagen").text(data.path);
+        		
+        }
+    });
 }
 
 function guardaareamulti(){
@@ -146,32 +204,4 @@ function deleteenca(){
 }
 
 </script>
-<form id="file_upload" action="../uploadimagen" method="POST" enctype="multipart/form-data">
-    			<h2>Subir Imagenes</h2>
-				<div id="validacion_imagen" class="validacion"></div>
-				<table id="imagenes" style="display:none"></table>
-				<table  width="80%" CELLSPACING="8">
-					<tr>
-						<td>IDEN</td>
-						<td><label id="idimagen">NEW</label> </td>	
-					</tr>
-					<tr>
-						<td>Imagen</td>
-						<td>
-						<input id="fileupload" type="file" name="files[]" ><BR/>
-						<label id="pathimagen">NO SE HA SUBIDO IMAGEN</label><br/>
-						</td>	
-					</tr>	
-				</table>
-								
-				<br/><br/>
-				<center>
-						<a href="#validacion_imagen" onclick="limpiar()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
-						<a href="#validacion_imagen" onclick="guardaareamulti()"   class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-						<a href="#validacion_imagen" onclick="deleteenca()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
-							
-				</center>
-				<br/><br/>
-	
-    
-</form>
+<% 	}		} %>

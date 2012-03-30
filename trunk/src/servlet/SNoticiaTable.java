@@ -86,11 +86,11 @@ public class SNoticiaTable extends HttpServlet {
 							 asc=1;
 						 }
 						 
-						 
-						ArrayList<CNoticia> list=dbo.getListaNoticias(ordenar,asc,min,max,pqtype,busqueda);
+						ArrayList<Integer> lista_enteros=user_permiso.getIdarea(); 
+						ArrayList<CNoticia> list=dbo.getListaNoticias(ordenar,asc,min,max,pqtype,busqueda,lista_enteros);
 						
 						 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-						 info+="<rows><page>"+page+"</page><total>"+dbo.getNoticiasTotal(pqtype,busqueda)+"</total>";
+						 info+="<rows><page>"+page+"</page><total>"+dbo.getNoticiasTotal(pqtype,busqueda,lista_enteros)+"</total>";
 						 
 						 String data="";
 						 for(int i=0; i<list.size();i++){

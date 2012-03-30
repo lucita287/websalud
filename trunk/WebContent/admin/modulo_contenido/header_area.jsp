@@ -15,11 +15,13 @@
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<div class="centerd">
 			<h2>Editar Areas Profesionales</h2>
+			
 			</div>
 			<div style="width: 600px; margin:0 auto 0 auto;">
 			<div id="validacion_prin" class="validacion"></div>
 			<table id="flex1" style="display:none"></table>
 			</div>
+			
 			<div id="tabs">
 			<ul>
 				<li><a href="#tabs-1">Editar Area</a></li>
@@ -28,42 +30,46 @@
 			</ul>
 			
 			<div id="tabs-1" style="width:750px; ">
-							<table>
-								<tr>
-									<td>IDEN</td>
-									<td><label id="idarea"></label> </td>	
-								</tr>
-								<tr>
-									
-									<td>Nombre</td>
-									<td><label id="tituloarea"></label> </td>	
-								</tr>
-							<tr>
-								<td>Tama&ntilde;o:</td>
-								<td><select id="edit-tam"> 
+			
+						<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="idarea"></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Nombre</div>
+								<div class="col"><label id="tituloarea"></label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Tama&ntilde;o:</div>
+								<div class="col">
+									<select id="edit-tam"> 
 									<option value="3">Grande</option>
 									<option value="2">Mediano</option>
 									<option value="1">Peque&ntilde;o</option>
 									<option value="0">Sin Texto</option>
 									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>Imagen Principal</td>
-								<td>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Imagen Principal</div>
+								<div class="col">
 									<input id="fileup_prin" type="file" name="files[]" ><BR/>
 									<img  id="hiddenimg" onclick="EliminarImagen()" width="24px"  height="24px" src="../images/delete.png"/>
 									<label id="pathimagen_prin">NO SE HA SUBIDO IMAGEN</label><br/>
-								</td>
-							</tr>
-							
-							</table>		
+								</div>
+							</div>
+									
+						</div>
+				</div>
+				<div style="clear: both;"></div>		
 							<textarea id="cont-text" class="editor"></textarea>
-							<br/><br/>
-							<center>
-									<a href="#validacion_prin" onclick="GuardarArea()" class="ui-state-default ui-corner-all button-save" onclick="GuardarArea()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-							</center>
-							<br/><br/>
+							<div class="center_button">
+									<%if (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
+									<a  onclick="GuardarArea()" class="ui-state-default ui-corner-all button-save" onclick="GuardarArea()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+									<% } %>
+							</div>
 			</div>
 			<div id="tabs-2" style="width:750px; ">
 				<jsp:include page="uploadencabezado.jsp" />

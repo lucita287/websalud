@@ -18,7 +18,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 
 	CDataBase	data=new CDataBase();
 		data.Connect();
-		ArrayList<CArea> list=data.getAreaLista();
+		ArrayList<CArea> list=data.getAreaLista(user_permiso.getIdarea());
 		ArrayList<CUsuario> list_usuario=data.getListaUsuarios();
 		ArrayList<CResponsable> list_respon=data.getListaResponsables();
 		ArrayList<CEdificio> list_edificio=data.getListaEdificio();

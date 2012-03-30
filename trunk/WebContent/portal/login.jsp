@@ -38,10 +38,10 @@
 											<input type="submit" id="button_login" class="ui-state-default ui-corner-all" value="Entrar"/> 
 										</div>	
 										<hr/>
-										 <center>
+										 <div id="button-login">
 										<br/> <a href="registrarse.jsp?a=get_pass">¿Olvid&oacute; su contraseña?</a>
  										<br/> <a href="registrarse.jsp?a=registrarse">Obtener Usuario</a> 
-										</center>
+										</div>
 									</div>
 								</div>
 		</div>

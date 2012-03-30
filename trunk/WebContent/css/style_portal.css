@@ -163,14 +163,14 @@
 .error_label {color:red;  font-size:1.2em; text-align:center; text-decoration:blink; text-transform:uppercase; }
 #Panel-login { width:230px;  padding: 0.4em; background: #fff; }
 #Panel-login h3 { margin: 0; padding: 0.4em; text-align: center; }
-
+#button-login {width:200px; margin:0 auto 0 auto; text-align: center; }
 /************** NOTICIAS ******************************/
 
 #Panel-inicio { width:723px;  padding: 0.4em; background: #fff; }
 #Panel-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }	
 #tabs1-inicio-info { width:253px; float:left; }
 #widget-info { width:450px; float:left; }
-.news-inicio{	width:250px; height:80px; border-style:solid; border-width:1px;	}
+.news-inicio{	width:250px; height:100px; border-style:solid; border-width:1px;	}
 #Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
 .button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
 .news-todas{
