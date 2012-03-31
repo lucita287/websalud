@@ -67,7 +67,7 @@ public class SEncabezadoTable extends HttpServlet {
 				        for(int i=0; i<list.size();i++){
 				        	CEncabezado temp=list.get(i);
 				                       data+=(data=="")?"":",";
-				                                         data+="{ cell: [\"<input type='radio' onclick='editar_encabe("+temp.getMultimediaidmultimedia().getidimagen()+")' name='idencabe' value='"+temp.getMultimediaidmultimedia().getidimagen()+"' />\",\""+temp.getMultimediaidmultimedia().getidimagen()+"\", \""+temp.getAreaidarea().getnombre()+"\" , \""+temp.getMultimediaidmultimedia().getdireccion_relativa()+"\"  ] }";
+				                                         data+="{ cell: [\"<input type='checkbox'  name='delete_encabe' class='delete_encabe' value='"+temp.getMultimediaidmultimedia().getidimagen()+"' />\",\""+temp.getMultimediaidmultimedia().getidimagen()+"\", \""+temp.getAreaidarea().getnombre()+"\" , \""+temp.getMultimediaidmultimedia().getdireccion_relativa()+"\"  ] }";
 				        }
 				        info+=data+"] }";
 				        dbo.Close();

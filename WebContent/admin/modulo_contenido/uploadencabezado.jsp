@@ -20,10 +20,7 @@
 				
 				<div class="perfil">
 				<div class="tabla">
-							<div class="fila">
-								<div class="col_titulo">ID</div>
-								<div class="col"><label id="idimagen">NEW</label></div>
-							</div>
+							
 							<div class="fila">
 								<div class="col_titulo">Imagen</div>
 								<div class="col">
@@ -35,16 +32,13 @@
 				</div>
 								
 				<div class="center_button_2">
-						<a href="#validacion_imagen" onclick="limpiar()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
 						<%if (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
 						<a href="#validacion_imagen" onclick="guardaareamulti()"   class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-						<a href="#validacion_imagen" onclick="deleteenca()"  class="ui-state-default ui-corner-all button-delete"> <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>	
 						<% } %>	
 				</div>
     
 </form>
 <script  type="text/javascript">
-var idmultimedia1=0;
 var idmultimedia2=0;
 $(document).ready(function () {
 	$("#imagenes").flexigrid
@@ -56,6 +50,11 @@ $(document).ready(function () {
 		{ display: 'Area', name: 'nombre_area', width: 100, sortable: true, align: 'left' },
 		{ display: 'Archivo', name: 'direccion', width: 250, sortable: true, align: 'left' }
 		],
+		<% if (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
+		buttons : [
+		   		{name: 'Eliminar', bclass: 'delete', onpress : EliminarEncabe}
+		],
+		<%}%>
 	    title: 'IMAGENES',
 	    width: 600,
 	    height: 200
@@ -64,6 +63,35 @@ $(document).ready(function () {
 	
 	
 });
+function EliminarEncabe(com, grid){
+	  if(com=="Eliminar"){
+			  	var array_values = [];
+					$('.delete_encabe').each( function() {
+					    if( $(this).is(':checked') ) {
+					        array_values.push( $(this).val() );
+					    }
+					});
+					var arrayValues = array_values.join(',');
+					cadena = [ 'a=eliminar_especifico',
+					           'idarea='+editiarea,
+					            'check_det_encabe='+arrayValues,
+					        ].join('&');
+					$.ajax({
+				        url: "../SEncabezado",
+				        data: cadena,
+				  	    type: 'post',
+				  	    dataType: 'json',
+				        success: function(data){
+				        	mensaje(data.mensaje); 	
+			        		if(data.resultado=='OK'){
+			        			limpiar();
+			        		}	
+				        }
+				    });
+					
+	  }		  
+}
+
 $(function () {
 	 $('#fileupload').fileupload({
        dataType: 'json',
@@ -108,51 +136,11 @@ function LimpiarImagenes(){
 	        	 							
 }
 
-function editar_encabe(idmultimedia){
-	idmultimedia1=idmultimedia;
-	idmultimedia2=idmultimedia;
-	$('#idimagen').text(idmultimedia);
-	cadena = [ 	'idmultimedia='   + idmultimedia1,
-             	'a=show_encabezado',
-	     		'idarea='+editiarea,
-	        ].join('&');
-	$.ajax({
-        url: "../SEncabezado",
-        data: cadena,
-  	    type: 'post',
-        dataType: 'json',
-        success: function(data){
-        		$("#pathimagen").text(data.path);
-        		
-        }
-    });
-}
 
 function guardaareamulti(){
 	if(editiarea>0){
 		if(idmultimedia2>0){
-			//MODIFICAR
-			if(idmultimedia1>0){
-				cadena = [ 	'idimagen='   + idmultimedia2,
-			             	'a=updateedit',
-				     		'idarea='+editiarea,
-				     		'idimagen_ant='+idmultimedia1
-				        ].join('&');
-				$.ajax({
-			        url: "../SEncabezado",
-			        data: cadena,
-			  	    type: 'post',
-			        dataType: 'json',
-			        success: function(data){
-			        		
-			        		mensaje(data.mensaje); 	
-			        		if(data.resultado=='OK'){
-			        			limpiar();
-			        		}
-			        }
-			    });
-			//NUEVO
-			}else{
+			
 				cadena = [ 	'idimagen='   + idmultimedia2,
 			             	'a=guardaredit',
 				     		'idarea='+editiarea,
@@ -169,39 +157,17 @@ function guardaareamulti(){
 			        		}
 			        }
 			    });
-			}
 			
-		}else{
-			$("#validacion_imagen").html("Debe seleccionar una imagen");	
-		}
+		}else $("#validacion_imagen").html("Debe seleccionar una imagen");	
 	}else $("#validacion_imagen").html("Debe seleccionar una area");
 	
 }
 function limpiar(){
-	$("#idimagen").text('NEW');
 	$("#pathimagen").text('');
-	idmultimedia1=0;
 	idmultimedia2=0;
 	CargarImagenes();
 }
-function deleteenca(){
-	cadena = [ 	'idimagen='   + idmultimedia2,
-             	'a=deleteenca',
-	     		'idarea='+editiarea,
-	        ].join('&');
-	$.ajax({
-        url: "../SEncabezado",
-        data: cadena,
-  	    type: 'post',
-        dataType: 'json',
-        success: function(data){        		
-        		mensaje(data.mensaje); 	
-        		if(data.resultado=='OK'){
-        			limpiar();
-        		}
-        }
-    });
-}
+
 
 </script>
 <% 	}		} %>

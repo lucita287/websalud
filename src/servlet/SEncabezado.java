@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,12 +56,7 @@ public class SEncabezado extends HttpServlet {
 		
 						CDataBase dbo=new CDataBase();
 						dbo.Connect();
-						if(action.equalsIgnoreCase("show_encabezado")&&  (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-							int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmultimedia")));
-							CMultimedia multi=dbo.getMultimediaEspecifica(idmultimedia);
-							String result="{\"path\":\""+multi.getdireccion_relativa()+"\"}";
-							out.println(result);
-						} else if(action.equalsIgnoreCase("guardaredit")&&  (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						if(action.equalsIgnoreCase("guardaredit")&&  (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 							int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 							String result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe llenar todos los campos\"}";
@@ -83,45 +79,14 @@ public class SEncabezado extends HttpServlet {
 								}
 							
 							out.println(result);
-						}else if(action.equalsIgnoreCase("updateedit")&&  (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-							int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
-							int idmultimedia2=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen_ant")));
-							int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-							String result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe llenar todos los campos\"}";
-							
-							String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
-							validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idmultimedia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un archivo\"}"):validacion;
-							validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idmultimedia2, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un archivo\"}"):validacion;
-							
-								if(validacion.compareTo("")==0){
-									CArea temp_area=dbo.getCAreaEspecifico(idarea);
-									CMultimedia multi=dbo.getMultimediaEspecifica(idmultimedia);
-									CEncabezado conte=new CEncabezado(temp_area,multi);
-									int resp=dbo.deleteEncabezado(idarea,idmultimedia2);
-									if(resp==1){	
-										boolean b=dbo.SafeEncabezado(conte);
-										if(!b){
-											result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
-										}else{
-											result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-										}
-									}else{
-										result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
-									}	
-								}else{
-									 result=validacion;
-								}
-							
-							out.println(result);
-						}else if(action.equalsIgnoreCase("deleteenca")&&  (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-							int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
+						}else  if(action.equalsIgnoreCase("eliminar_especifico")&&  (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+							ArrayList<Integer> lista=valid.ValidarListaNumeros(valid.ValidarRequest(request.getParameter("check_det_encabe")));
 							int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 							String result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe llenar todos los campos\"}";
 							String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
-							validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idmultimedia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un archivo\"}"):validacion;
 							if(validacion.compareTo("")==0){
-								int resp=dbo.deleteEncabezado(idarea,idmultimedia);
-								if(resp==1){	
+								boolean resp=dbo.deleteEncabezado(idarea,lista);
+								if(resp){	
 									result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
 								}else{
 									result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";

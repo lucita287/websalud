@@ -882,22 +882,27 @@ public CContenido getContenido(int idcontenido){
 		
 		return false;
 	}
-	public int deleteEncabezado(int idarea,int idmultimedia){
-		int temp=0;
+	public boolean deleteEncabezado(int idarea,ArrayList<Integer> lista){
+		
+		if(lista.size()>0){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("select EliminarEncabezado(?,? ) result");
-			stm.setInt(1, idarea);
-			stm.setInt(2, idmultimedia);
-			ResultSet rs2=stm.executeQuery();
-			if(rs2.next())
-			temp=rs2.getInt("result");
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM encabezado   WHERE areaidarea = ?  and multimediaidmultimedia in ( "+this.ConvertString(lista)+")");
+			int id=1;
+			stm.setInt(id++, idarea);
+			
+			for(int i=0; i<lista.size();i++){
+				
+            	stm.setInt(id++, lista.get(i));
+            }
+			if(stm.executeUpdate()>0)
+				return true;
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		
-		return temp;
+		}
+		return false;
 	}
 	public ArrayList<CNoticia> getListaNoticias(int ordenar,int asc,int min,int max,int type, String busqueda,ArrayList<Integer> lista){
 		ArrayList<CNoticia> ret=new ArrayList<CNoticia>();
