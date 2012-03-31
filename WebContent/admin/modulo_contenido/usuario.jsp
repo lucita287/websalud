@@ -19,7 +19,7 @@
 				if (user_permiso.getIdpermiso().indexOf(233)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 
 			<div class="centerd">
-			<H2>Usuarios</H2>
+			<H2>USUARIOS</H2>
 			</div>
 			<script  type="text/javascript">
 			var editiduser=0;

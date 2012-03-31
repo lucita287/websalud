@@ -37,7 +37,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    usepager: true,
 					    sortname: "idmultimedia",
 						sortorder: "desc",
-					    title: 'ARCHIVOS SIN USAR',
+					    title: 'ARCHIVOS SIN USO',
 					    useRp: true,
 					    rp: 15,
 					    width: 720,
@@ -90,7 +90,9 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			  }
 			</script>
 			
-			
+			<div class="centerd">
+			<H2>ARCHIVOS SIN USO</H2>
+			</div>			
 			<table id="multimedia" style="display:none"></table>
 			<div id="result"></div>
 <% 		}	} %>			
