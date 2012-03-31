@@ -22,10 +22,10 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 </jsp:include>
 </div>
 
-<div id="back">
+<div id="back" class="ui-widget-content ui-corner-all">
 <!-- header begins -->
 
- <div id="main">
+ <div id="main" >
 <div style="clear: both;"></div>
 <div id="menu-principal" class="ui-widget-content ui-corner-all">
 <jsp:include page="modulo_contenido/menu.jsp" />

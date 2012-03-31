@@ -42,7 +42,7 @@ if(request.getParameter("idarea")!=null){
 </jsp:include>
 </div>
 
-<div id="back">
+<div id="back"  class="ui-widget-content ui-corner-all">
 <!-- header begins -->
 
  <div id="main">
