@@ -37,11 +37,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    usepager: true,
 					    sortname: "idmultimedia",
 						sortorder: "desc",
-					    title: 'IMAGENES SIN USAR',
+					    title: 'ARCHIVOS SIN USAR',
 					    useRp: true,
 					    rp: 15,
 					    width: 720,
-					    height: 450,
+					    height: 300,
 					    searchitems : [
 										{display: 'Nombre archivo', name : 'nombre'},
 										{display: 'Nombre de Creador', name : 'usuario'}
@@ -90,7 +90,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			  }
 			</script>
 			
-			<div id="result"></div>
-			<table id="multimedia" style="display:none"></table>
 			
+			<table id="multimedia" style="display:none"></table>
+			<div id="result"></div>
 <% 		}	} %>			

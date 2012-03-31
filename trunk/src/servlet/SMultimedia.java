@@ -39,31 +39,32 @@ public class SMultimedia extends HttpServlet {
 	}
 
 	public String eliminar(CDataBase dbo,ArrayList<CMultimedia> lista_imag){
-		String resultados="";
+		String resultados="<div class=\"multi\"><div class=\"tabla\">";
 		 for(int i=0; i<lista_imag.size();i++){
            	CMultimedia multi=lista_imag.get(i);
            	File f=new File(multi.getdireccion());
+           	resultados+="<div class=\"fila\">";
+           	resultados+="<div class=\"col_titulo\">"+multi.getidimagen()+". "+f.getName()+"</div>";
            	if(!f.exists()){
            		
            		boolean b=dbo.deleteMultimedia(multi.getidimagen());
-           		if(b){
-           			resultados+=f.getName()+" NO SE ENCONTRO,ELIMINADO <BR/>";
-           		}else{
-           			resultados+=f.getName()+" NO SE ENCONTRO,ERROR AL ELIMINADO <BR/>";
-           		}
+           		if(b) resultados+="<div class=\"col\">NO SE ENCONTRO,ELIMINADO</div>";		
+           		else resultados+="<div class=\"col\">NO SE ENCONTRO,ERROR AL ELIMINADO</div>";
+           			
+           		
            	}else{
            		if(f.delete()){
            			boolean b=dbo.deleteMultimedia(multi.getidimagen());
-               		if(b){
-               			resultados+=f.getName()+" ELIMINADO <BR/>";
-               		}else{
-               			resultados+=f.getName()+" ERROR AL ELIMINADO <BR/>";
-               		}
+               		if(b) resultados+="<div class=\"col\">ELIMINADO</div>";		
+               		else resultados+="<div class=\"col\">ERROR AL ELIMINADO</div>";
            		}else{
-           		resultados+=f.getName()+" NO SE PUEDE ELIMINAR <BR/>";
+           			resultados+="<div class=\"col\">NO SE PUEDE ELIMINAR </div>";
+           		
            		}
            	}
+           	resultados+="</div>";
            }
+		 resultados+="</div></div>";
 		return resultados;
 	}
 	/**
