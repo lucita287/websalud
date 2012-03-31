@@ -7,46 +7,95 @@
 		      $("#estado_civil").flexigrid
 				({
 					method: 'POST',
-					// url: '../ScivilsableTable',
-					 dataType : 'xml',
+					url: '../SPropiedadTable',
+					dataType : 'xml',
 				    colModel: [
 					{display: 'Seleccionar', name : 'chkestado_civil', width : 30, sortable : false, align: 'left'},           
 					{ display: 'ID', name: 'idestado_civil', width: 40, sortable: true, align: 'left' },
-					{ display: 'Descripcion', name: 'nombre', width: 100, sortable: true, align: 'left' }
+					{ display: 'Descripcion', name: 'nombre', width: 250, sortable: true, align: 'left' }
 					],
-					usepager: true,
-				    sortname: "idestado_civil",
+					sortname: "idestado_civil",
 					sortorder: "desc",
 				    title: 'ESTADO CIVIL',
-				    useRp: true,
-				    rp: 15,
 				    showTableToggleBtn: true,
 				    width: 600,
 				    height: 200,
-				    searchitems : [
-					{display: 'Descripcion', name : 'nombre'}
-					]
+				    params : [ {name: 'a', value: 'civil'} ]
 				});
 		  });  
+		  function EditarEstadoCivil(id,nombre){
+			  $("#id_civil").text(id);
+			  $("#nombre_civil").val(nombre);
+			  idcivil=id;
+		  }
+		  function limpiarCivil(){
+			  $("#id_civil").text("NEW");
+			  $("#nombre_civil").val("");
+			  idcivil=0;
+			  $('#estado_civil').flexReload();
+		  }
+		  function GuardarCivil(){
+			  var action="guardarcivil";
+			  if(idcivil<=0){
+				  action="newcivil";
+			  }
+			  cadena = [ 	'id_civil='   + idcivil,
+			             	'a='+action,
+				            'nombre='+escape($("#nombre_civil").val()),
+				        ].join('&');
+			  $.ajax({
+			        url: "../SPropiedad",
+			        data: cadena,
+			  	    type: 'post',
+			        dataType: 'json',
+			        success: function(data){
+			        	mensaje(data.mensaje);
+			        	if(data.resultado=='OK'){
+			        		limpiarCivil();
+			        	}
+			        }
+			    });
+		  }
+		  function EliminarCivil(){
+			  var action="deletecivil";
+			  
+			  cadena = [ 	'id_civil='   + idcivil,
+			             	'a='+action
+			            ].join('&');
+			  $.ajax({
+			        url: "../SPropiedad",
+			        data: cadena,
+			  	    type: 'post',
+			        dataType: 'json',
+			        success: function(data){
+			        	mensaje(data.mensaje);
+			        	if(data.resultado=='OK'){
+			        		limpiarCivil();
+			        	}
+			        }
+			    });
+		  }
 		  
 		  
 		</script>
+		<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 		<table id="estado_civil" style="display:none"></table>
-		<table>
-					<tr>
-						<td>ID</td>
-						<td><label id="id_civil">NEW</label></td>
-					</tr>
-					<tr>
-						<td>Descripci&oacute;n</td>
-						<td><input id='nombre_civil' type="text" size="40"/></td>
-					</tr>
-						
-				</table>
-			<center>
-									<br/><br/>
-										<a href="#" class="ui-state-default ui-corner-all button-save"  > <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
-										<a href="#" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-										<a href="#" class="ui-state-default ui-corner-all button-delete" > <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
-									<br/><br/>		
-			</center>
+		
+		
+		<div class="perfil">
+				<div class="tabla">
+							<div class="fila">
+								<div class="col_titulo">ID</div>
+								<div class="col"><label id="id_civil">NEW</label></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Descripci&oacute;n</div>
+								<div class="col"><input id='nombre_civil' type="text" size="40"/></div>
+							</div>
+				</div>
+		</div>				
+					<div class="center_button_2">
+										<a href="#" onclick="limpiarCivil()" class="ui-state-default ui-corner-all button-save"  > <img  width="24px"  height="24px" src="../images/add.png" /> Nuevo</a>
+										<a href="#" onclick="GuardarCivil()" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+										<a href="#" onclick="EliminarCivil()" class="ui-state-default ui-corner-all button-delete" > <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
+					</div>

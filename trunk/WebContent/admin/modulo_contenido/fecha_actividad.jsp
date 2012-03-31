@@ -48,7 +48,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    height: 200,
 						params : [ 
 						          {name: 'idactividad', value: 0},{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} 
-						        ], 
+						        ]
 					});
 			  });  
 			  $(function() {
