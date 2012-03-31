@@ -69,7 +69,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				</li>
 		 <% } if (user_permiso.getIdpermiso().indexOf(246)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
 				<li>
-					<a id="9">Archivos sin usar</a>
+					<a id="9">Archivos sin uso</a>
 				</li>
 		<% } %>		
 			</ul>	
