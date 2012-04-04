@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import data.CEstado_Civil;
 import data.CTipo_Sangre;
+import data.CTitulo_Secundaria;
 import data.CUsuarioPermiso;
 import framework.CDataExam;
 import framework.CValidation;
@@ -84,7 +85,42 @@ public class SPropiedadTable extends HttpServlet {
 							 out.println(info);
 					 dbo.Close();
 				
+				}else if(action.equalsIgnoreCase("tsecundaria") &&(user_permiso.getIdpermiso().indexOf(240)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					CDataExam dbo=new CDataExam();
+					 dbo.Connect();
+					 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
+					 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
+					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
+					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
+					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
+					 
+					 int min=((page-1)*rp)+1;
+					 int max=page*(rp);
+					 int ordenar=1;					 
+					 if(order.equalsIgnoreCase("nombre")){
+					 	 ordenar=2;
+					 }
+					 
+					 int asc=0;
+					 if(typeorder.equalsIgnoreCase("asc")){
+						 asc=1;
+					 }
+					 
+					 		ArrayList<CTitulo_Secundaria> lista=dbo.getListaTitulo_Secundaria(ordenar, asc, min, max,  busqueda);
+					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+							 info+="<rows><page>1</page><total>"+dbo.getTitulo_SecundariaTotal(busqueda)+"</total>";
+							 
+							 String data="";
+							 for(int i=0; i<lista.size();i++){
+								 CTitulo_Secundaria temp=lista.get(i);
+								 	data+="<row id='"+temp.getIdtitulo_secundaria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editartsecundaria("+temp.getIdtitulo_secundaria()+",\""+temp.getNombre()+"\")' name='idtsangre_radio' value='"+temp.getIdtitulo_secundaria()+"' />]]></cell><cell><![CDATA["+temp.getIdtitulo_secundaria()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell></row>";	 
+							 }
+							 info+=data+"</rows>";
+							 out.println(info);
+					 dbo.Close();
+				
 				} 
+		  
 		 }
 	}
 

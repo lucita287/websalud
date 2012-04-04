@@ -51,6 +51,10 @@ public class SUsuario extends HttpServlet {
 		
 		CDataBase dbo=new CDataBase();
 		dbo.Connect();
+		if(action.equalsIgnoreCase("user_disponibilidad")){
+			String result="{\"mensaje\":\"Disponible\"}";
+			out.println(result);
+		}
 		HttpSession session = request.getSession(false);
 		if(session!=null &&  session.getAttribute("user_permiso")!=null){
 			CUsuarioPermiso user_permiso=(CUsuarioPermiso)session.getAttribute("user_permiso");

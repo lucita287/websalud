@@ -4,8 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Unidad de Salud / USAC</title>
+<link rel="stylesheet" type="text/css" media="all" href="css/jquery.validate.password.css" />
 <jsp:include page="portal/top.jsp" />
+
 <script src="lib/jquery.maskedinput-1.2.2.js"></script>
+<script src="lib/jquery.validate.js"></script>
+<script src="lib/jquery.validate.password.js"></script>
 <script src="lib/i18n/ui.datepicker-es.js"></script>
 </head>
 <body>
