@@ -27,7 +27,6 @@ $( "#tabs" ).tabs({
 });
 });
 </script>
-</script>
 <div id="tabs">
 			<ul>
 				<li><a href="portal/mes_header.jsp?year=<%=calendar.get(calendar.YEAR)%>&month=1">Enero</a></li>

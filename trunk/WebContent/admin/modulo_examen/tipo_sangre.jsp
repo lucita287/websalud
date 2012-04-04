@@ -4,17 +4,17 @@
 		<script>
 		var idtsangre=0;
 		  $(document).ready(function () {
-		      $("#estado_tsangre").flexigrid
+		      $("#tipo_sangre").flexigrid
 				({
 					method: 'POST',
 					url: '../SPropiedadTable',
 					dataType : 'xml',
 				    colModel: [
-					{display: 'Seleccionar', name : 'chkestado_tsangre', width : 30, sortable : false, align: 'left'},           
-					{ display: 'ID', name: 'idestado_tsangre', width: 40, sortable: true, align: 'left' },
+					{display: 'Seleccionar', name : 'chktipo_sangre', width : 30, sortable : false, align: 'left'},           
+					{ display: 'ID', name: 'idtipo_sangre', width: 40, sortable: true, align: 'left' },
 					{ display: 'Descripcion', name: 'nombre', width: 250, sortable: true, align: 'left' }
 					],
-					sortname: "idestado_tsangre",
+					sortname: "idtipo_sangre",
 					sortorder: "desc",
 				    title: 'TIPO DE SANGRE',
 				    showTableToggleBtn: true,
@@ -32,7 +32,7 @@
 			  $("#id_tsangre").text("NEW");
 			  $("#nombre_tsangre").val("");
 			  idtsangre=0;
-			  $('#estado_tsangre').flexReload();
+			  $('#tipo_sangre').flexReload();
 		  }
 		  function Guardartsangre(){
 			  var action="guardartsangre";
@@ -79,7 +79,7 @@
 		  
 		</script>
 		<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
-		<table id="estado_tsangre" style="display:none"></table>
+		<table id="tipo_sangre" style="display:none"></table>
 		
 		
 		<div class="perfil">

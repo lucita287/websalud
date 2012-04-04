@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import data.CUsuario;
@@ -114,12 +115,14 @@ public class CValidation {
 	}
 	
 	public String Limpiarvalor(String campo){
+		campo=JavascriptUtil.unescapeJavaScript(campo);
 		campo=campo.replaceAll("\"", "'");
 		campo=campo.replaceAll("\t", " ");
 		campo=campo.replaceAll("\r", " ");
 		campo=campo.replaceAll("\f", " ");
 		campo=campo.replaceAll("\n", " ");
 		campo=campo.trim();
+		
 		return campo;
 	}
 	public int ConvertEntero(String num){
@@ -320,6 +323,20 @@ public class CValidation {
 			
 		}
 		return result;
+	}
+	public String ValidarUsername(String name){
+		String validacion="";
+		if(name.length()<4){
+			validacion="{\"resultado\":\"ERROR\",\"mensaje\":\"DEBE CONTENER MAS DE 4 CARACTERES\"}";
+			
+		}else if(name.contains(" ")){
+			validacion="{\"resultado\":\"ERROR\",\"mensaje\":\"NO PUEDE CONTENER ESPACIOS EN BLANCO\"}";
+			
+		}else if(name.length()>11){
+			validacion="{\"resultado\":\"ERROR\",\"mensaje\":\"NO PUEDE CONTENER MAS DE 11 CARACTERES\"}";
+			
+		}
+		return validacion;
 	}
 	
 }

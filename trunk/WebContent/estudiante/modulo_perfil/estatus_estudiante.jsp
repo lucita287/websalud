@@ -17,7 +17,7 @@
 <h3 class="ui-state-default ui-corner-all">Estatus del estudiante</h3>
 				
 				
-				<table  align="center" width="90%" CELLSPACING="8">
+				<table  >
 									<tr  >
 										<td class="titulo_tabla">Carne</td><td></td>
 									</tr>

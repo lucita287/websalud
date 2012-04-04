@@ -16,7 +16,7 @@
 <h3 class="ui-state-default ui-corner-all">Datos Personales</h3>
 				
 				
-				<table  align="center" width="90%" CELLSPACING="8">
+				<table >
 									<tr  >
 										<td class="titulo_tabla">Nombre</td><td><label> Aura Luz Cifuentes Reyes </label></td>
 									</tr>
@@ -79,7 +79,7 @@
 <div id="dato_personal" class="ui-widget-content ui-corner-all">
 <h3 class="ui-state-default ui-corner-all">Persona a notificar en Caso de Emergencia</h3>
 
-						<table  align="center" width="90%" CELLSPACING="8">
+						<table >
 									<tr  >
 										<td class="titulo_tabla">Nombre</td><td><input type="text" size="20"/></td>
 									</tr>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import data.CEstado_Civil;
 import data.CTipo_Sangre;
+import data.CTitulo_Secundaria;
 import data.CUsuarioPermiso;
 
 import framework.CDataExam;
@@ -149,6 +150,58 @@ public class SPropiedad extends HttpServlet {
 						
 						if(validacion.compareTo("")==0){
 							boolean b=dbo.deleteTipoSangre(idsangre);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+							
+					}else if(action.equalsIgnoreCase("guardartsecundaria")&& (user_permiso.getIdpermiso().indexOf(242)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int idtsecundaria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tsecundaria")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String validacion=valid.ValidarSiesMayor(idtsecundaria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Descripcion"):validacion;
+						
+						
+						if(validacion.compareTo("")==0){
+							CTitulo_Secundaria tsecundaria=new CTitulo_Secundaria(idtsecundaria,nombre);
+							boolean b=dbo.UpdateTitulo_Secundaria(tsecundaria);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
+					}else if(action.equalsIgnoreCase("newtsecundaria")&& (user_permiso.getIdpermiso().indexOf(242)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="";
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
+						
+						if(validacion.compareTo("")==0){
+							CTitulo_Secundaria tsecun=new CTitulo_Secundaria(0,nombre);
+							boolean b=dbo.SafeTitulo_Secundaria(tsecun);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+							
+					}else if(action.equalsIgnoreCase("deletetsecundaria")&& (user_permiso.getIdpermiso().indexOf(242)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="";
+						int idtsecun=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tsecundaria")));
+						String validacion=valid.ValidarSiesMayor(idtsecun, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.deleteTitulo_Secundaria(idtsecun);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
 							}else{
