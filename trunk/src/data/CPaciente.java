@@ -20,6 +20,8 @@ public class CPaciente {
 	private String nombre_centro;
 	private String nombre_unidad;
 	private String nombre_dependencia;
+	private String email;
+	private String usuario;
 	/**
 	 * @param idpaciente
 	 * @param nombre
@@ -38,13 +40,15 @@ public class CPaciente {
 	 * @param nombre_centro
 	 * @param nombre_unidad
 	 * @param nombre_dependencia
+	 * @param email
+	 * @param usuario 
 	 */
 	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
 			int carne, String direccion, String telefono, String movil,
 			CCarrera idcarrera, CCentro_Regional idcentro,
 			CUnidad_Academica idunidad, CDependencia iddependencia, int sexo,
 			String password, String nombre_carrera, String nombre_centro,
-			String nombre_unidad, String nombre_dependencia) {
+			String nombre_unidad, String nombre_dependencia,String email,String usuario) {
 		this.idpaciente = idpaciente;
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -62,7 +66,38 @@ public class CPaciente {
 		this.nombre_centro = nombre_centro;
 		this.nombre_unidad = nombre_unidad;
 		this.nombre_dependencia = nombre_dependencia;
+		this.email=email;
+		this.usuario=usuario;
 	}
+	
+	/**
+	 * @return the usuario
+	 */
+	public String getUsuario() {
+		return usuario;
+	}
+
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	/**
 	 * @return the idpaciente
 	 */
