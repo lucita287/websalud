@@ -60,11 +60,11 @@ if(request.getParameter("idarea")!=null){
 <div style="clear: both;"></div>
 
 <% if(area!=null){%>  
-   			<jsp:include page="portal/weekcalendar.jsp" />
+   			<jsp:include page="portal/calendar/weekcalendar.jsp" />
 <% }else if(mes!=null){ %>
-			<jsp:include page="portal/actividad_mes.jsp" />
+			<jsp:include page="portal/calendar/actividad_mes.jsp" />
 <% }else{ %>
-   			<jsp:include page="portal/actividad.jsp" />
+   			<jsp:include page="portal/calendar/actividad.jsp" />
 <% }%>	
 	<div style="clear: both;"></div>
 

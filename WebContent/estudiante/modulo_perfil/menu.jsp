@@ -15,10 +15,16 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 1</a>
 			<ul id="personal">
 				<li >
-					<a id="1">Datos personales</a>
+					<a id="1">Datos Generales</a>
 				</li>
 				<li>
 					<a id="2">Estatus del estudiante</a>
+				</li>
+				<li>
+					<a id="3">Estatus del trabajador</a>
+				</li>
+				<li>
+					<a id="4">Datos Personales</a>
 				</li>
 			</ul>	
 	</li>
@@ -26,7 +32,7 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 2</a>
 			<ul id="examen_fa">
 				<li >
-					<a id="3">EXAMEN MULTIF&Aacute;SICO</a>
+					<a id="5">EXAMEN MULTIF&Aacute;SICO</a>
 				</li>
 			</ul>	
 	</li>
@@ -34,7 +40,7 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 2</a>
 			<ul id="examen_auto">
 				<li >
-					<a id="3">EXAMEN AUTOEVALUACI&Oacute;N</a>
+					<a id="5">EXAMEN AUTOEVALUACI&Oacute;N</a>
 				</li>
 				
 			</ul>	
@@ -43,10 +49,10 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 3</a>
 			<ul id="cita">
 				<li >
-					<a id="3">Citas</a>
+					<a id="6">Citas</a>
 				</li>
 				<li>
-					<a id="2">Reportes</a>
+					<a id="6">Reportes</a>
 				</li>
 			</ul>	
 	</li>

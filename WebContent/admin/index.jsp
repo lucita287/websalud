@@ -54,9 +54,9 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <% }else if(portal==11){ %>
 <jsp:include page="modulo_examen/mantenimiento.jsp" />
 <% }else if(portal==12){ %>
-<jsp:include page="modulo_examen/auto_eva.jsp" />
+<jsp:include page="modulo_examen/mant_categorias.jsp" />
 <% }else if(portal==13){ %>
-<jsp:include page="modulo_examen/multi_fa.jsp" />
+<jsp:include page="modulo_examen/preguntas.jsp" />
 <% } %>
 </div>
 <div style="clear: both;"></div>

@@ -10,6 +10,7 @@
 <script src="lib/jquery.maskedinput-1.2.2.js"></script>
 <script src="lib/jquery.validate.js"></script>
 <script src="lib/jquery.validate.password.js"></script>
+<script src="lib/i18n/jquery.validator-es.js"></script>
 <script src="lib/i18n/ui.datepicker-es.js"></script>
 </head>
 <body>
@@ -28,9 +29,9 @@
 String action=((request.getParameter("a")==null)?"":request.getParameter("a"));
 
 if(action.equalsIgnoreCase("registrarse")) {%>
-<jsp:include page="portal/registrarse.jsp" />
+<jsp:include page="portal/registro/registrarse.jsp" />
 <%}else if(action.equalsIgnoreCase("get_pass")){ %>
-<jsp:include page="portal/olvido_password.jsp" />
+<jsp:include page="portal/registro/olvido_password.jsp" />
 <% } %>     
 <div style="clear: both;"></div>
 </div>	

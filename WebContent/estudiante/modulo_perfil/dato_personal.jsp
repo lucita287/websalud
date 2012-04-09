@@ -23,9 +23,7 @@
 									<tr >
 										<td class="titulo_tabla">Fecha de Nacimiento</td><td><label> 1 de Diciembre del 1987 </label></td>
 									</tr>
-									<tr >
-										<td class="titulo_tabla">Sexo</td><td><label> Femenino </label></td>
-									</tr>
+									
 									<tr >
 										<td class="titulo_tabla">Estado Civil</td><td><div class="radio">
 																		<input type="radio" id="estado_1" name="radio" /><label for="estado_1">SOLTERO(A)</label>
@@ -36,20 +34,7 @@
 																	</div>
 															</td>
 									</tr>
-									<tr >
-										<td class="titulo_tabla">Domicilio</td><td>
-																<textarea  cols="50" rows="3" ></textarea> 
-														  </td>
-									</tr>
-									<tr >
-										<td class="titulo_tabla">Telefono casa</td><td><input type="text" size="20"/> </td>
-									</tr>
-									<tr >
-										<td class="titulo_tabla">Telefono movil</td><td><input type="text" size="20"/>  </td>
-									</tr>
-									<tr >
-										<td class="titulo_tabla">Correo electr&oacute;nico</td><td><input type="text" size="40"/>  </td>
-									</tr>
+									
 									<tr >
 										<td class="titulo_tabla">Tipo de Sangre</td><td>
 										

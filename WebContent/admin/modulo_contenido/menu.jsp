@@ -75,12 +75,6 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			</ul>	
 	</li>
 	<% } %>
-	
-	<%if (user_permiso.getIdpermiso().indexOf(239)>-1  
-		||user_permiso.getIdpermiso().indexOf(240)>-1
-		||user_permiso.getIdpermiso().indexOf(241)>-1
-		||user_permiso.getIdpermiso().indexOf(242)>-1
-		||user_permiso.getIdusuario().getidusuario()==1){%>	
 	<li>
 		<a >Configurar Examen de Salud</a>
 			<ul id="exam">
@@ -91,20 +85,22 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 					<a id="11" >Mantenimiento de Carreras</a>
 				</li>
 				<li>
-					<a id="12" >Gestionar Examen de Autoevaluaci&oacute;n</a>
+					<a id="12" >Mantenimiento de Categorias</a>
 				</li>
 				<li>
-					<a id="13">Gestionar Examen Multif&aacute;setico</a>
+					<a id="13" >Gestionar Examen de Autoevaluaci&oacute;n</a>
+				</li>
+				<li>
+					<a id="14">Gestionar Examen Multif&aacute;setico</a>
 				</li >
 			</ul>
 	
 	</li>
-	<%	} %>
 	<li>
 		<a >Estudiantes</a>
 			<ul id="estudiante">
 				<li>
-					<a id="14" >Perfil de estudiantes</a>
+					<a id="15" >Perfil de estudiantes</a>
 				</li>
 				
 			</ul>
@@ -117,10 +113,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	<a >Reportes</a>
 			<ul id="report">
 				<li>
-					<a id="15">Reportes</a>
+					<a id="16">Reportes</a>
 				</li>
 				<li>
-					<a id="16" >Dashboard</a>
+					<a id="17" >Dashboard</a>
 				</li>
 			</ul>	
 	</li>
@@ -149,11 +145,11 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	  $('#admin_conte').show();
 	  <% }else if(portal>5 && portal<10){ %>
 	  $('#admin').show();
-	  <% }else if(portal>9 && portal<14){ %>
+	  <% }else if(portal>9 && portal<15){ %>
 	  $('#exam').show();
-	  <% }else if(portal>13 && portal<15){ %>
-	  $('#estudiante').show();
 	  <% }else if(portal>14 && portal<16){ %>
+	  $('#estudiante').show();
+	  <% }else if(portal>15 && portal<18){ %>
 	  $('#report').show();
 	  <%} %>
 	  

@@ -11,7 +11,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 import data.CActividad;
 import data.CArea;
-import data.CCategoria;
 import data.CCategoria_permiso;
 import data.CConfiguracion;
 import data.CContenido;
@@ -22,7 +21,6 @@ import data.CMultimedia;
 import data.CMenu;
 import data.CNoticia;
 import data.CPermiso;
-import data.CPregunta;
 import data.CResponsable;
 import data.CSubcategoria;
 import data.CUsuario;
@@ -110,26 +108,7 @@ public class CDataBase {
         }
 		return lista;
 	}
-	public CCategoria getEspecificoCategoria(int idcategoria){
-		CCategoria temp=null;
-		try{    
-        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idcategoria,descripcion FROM Categoria where idcategoria =? ");
-        	stm.setInt(1,idcategoria);
-                ResultSet rs=stm.executeQuery();
-                while(rs.next()){
-                                
-                                temp=new CCategoria( rs.getInt("idcategoria"),rs.getString("descripcion"));
-                               
-                }
-                rs.close();
-                stm.close();
-        }
-        
-        catch(Throwable e){
-                
-        }
-        return temp;
-	}
+	
 	public CSubcategoria getEspecificosubcategoria(int idsubcategoria){
 		CSubcategoria temp=null;
 		PreparedStatement stm;
@@ -146,28 +125,6 @@ public class CDataBase {
 		}
 		
 		return temp;
-	}
-	public ArrayList<CPregunta> getPreguntas(int idcategoria){
-		ArrayList<CPregunta> list=new ArrayList<CPregunta>();
-		
-		try {
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idpregunta, descripcion, categoriaidcategoria, subcategoriaidsubcategoria from pregunta where categoriaidcategoria=? ");
-        	stm.setInt(1,idcategoria);
-                ResultSet rs=stm.executeQuery();
-                while(rs.next()){
-                				CCategoria cate= this.getEspecificoCategoria(idcategoria);
-                				CSubcategoria subcate=this.getEspecificosubcategoria(rs.getInt("subcategoriaidsubcategoria"));
-                                CPregunta preg=null;
-                				preg=new CPregunta( rs.getInt("idpregunta"),rs.getString("descripcion"),cate,subcate);
-                               list.add(preg);
-                }
-                rs.close();
-                stm.close();
-		} catch (SQLException e) {
-	
-			e.printStackTrace();
-		}
-		return list;
 	}
 	public int getPreguntasTotal(int idcategoria){
 		int temp=0;
@@ -414,25 +371,7 @@ public class CDataBase {
 		return temp;
 	}
 	
-	public ArrayList<CCategoria> getListaCategoria(){
-        ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
-        try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idcategoria,descripcion FROM Categoria ");
-                ResultSet rs=stm.executeQuery();
-                while(rs.next()){
-                                CCategoria temp=null;
-                                temp=new CCategoria( rs.getInt("idcategoria"),rs.getString("descripcion"));
-                                ret.add(temp);
-                }
-                rs.close();
-                stm.close();
-        }
-        
-        catch(Throwable e){
-                
-        }
-        return ret;
-	}
+
 	public ArrayList<CSubcategoria> getListaSubCategoria(){
         ArrayList<CSubcategoria> ret=new ArrayList<CSubcategoria>();
         try{

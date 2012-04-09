@@ -178,7 +178,7 @@
 										</div>							
 										
 										<div style="clear: both;"></div>
-										<textarea o id="editconte" class="editor"></textarea>
+										<textarea id="editconte" class="editor"></textarea>
 										
 										<div class="center_button">
 											<% if (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
