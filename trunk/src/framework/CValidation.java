@@ -115,7 +115,7 @@ public class CValidation {
 	}
 	
 	public String Limpiarvalor(String campo){
-		campo=JavascriptUtil.unescapeJavaScript(campo);
+		//campo=JavascriptUtil.unescapeJavaScript(campo);
 		campo=campo.replaceAll("\"", "'");
 		campo=campo.replaceAll("\t", " ");
 		campo=campo.replaceAll("\r", " ");
@@ -295,6 +295,15 @@ public class CValidation {
 	     if(date!=null&& date2!=null && date2.compareTo(date)>0){
 	    	 result="";
 	     }
+		return result;
+	}
+	public String validarMinyMax(int min,int max, String minmensaje,String mensaje){
+		String result="";
+		if(min>=max){
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\""+minmensaje+", Debe ser mayor que , "+mensaje+"\"}";
+		}else if(min<0){
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\", Debe ser mayor que 0, "+minmensaje+"\"}";
+		}
 		return result;
 	}
 	public Date CambiarFormatohhmm(String hora, String formato){

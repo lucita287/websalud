@@ -4,8 +4,12 @@
 <% 
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
-	Integer portal=(Integer)(sessiones.getAttribute("examen")==null?1:sessiones.getAttribute("examen"));
-	
+	Integer portal=1;
+	try{
+	portal=(Integer)(sessiones.getAttribute("examen")==null?1:sessiones.getAttribute("examen"));
+	}catch (Exception e){
+		
+	}
 %>
 <head>
 <jsp:include page="modulo_perfil/top.jsp" />

@@ -16,43 +16,64 @@
 		int idregistro=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idregistro")));		
 		CDataExam	data=new CDataExam();
 		data.Connect();
+		String a="";
+		if(idregistro==4)
+			a="guardarpaciente";
+		else if(idregistro==3)
+			a="guardartrabajador";
+		else if(idregistro==2)
+			a="guardarestudiante";
+		else if(idregistro==1)
+			a="guardarcortesia";
 %>
 
     <script  type="text/javascript">
+    <% if(idregistro==2||idregistro==4){ %>
     function cambiarCentro(){ 
-		  if($("#centro_registro").val()=="A"){
+		  if($("#centro_registro").val()==0){
 			  	$("#oculto_centro_registro").show();
+			  	$("#nombre_centro_registro").val("");
 		  }else{
 			  $("#oculto_centro_registro").hide();
 		  }
     }	
     function cambiarFacultad(){
-    	if($("#facultad").val()=="A"){
+    	if($("#facultad").val()==0){
 		  	$("#oculto_facultad").show();
+		  	$("#nombre_facultad").val("");
 	  }else{
 		  $("#oculto_facultad").hide();
 	  }
     }
     
-    function cambiarCarrera(){
-    	if($("#carrera").val()=="A"){
+    function CambiarCarrera(){
+    	if($("#carrera").val()==0){
 		  	$("#oculto_carrera").show();
+		  	$("#nombre_carrera").val("");
 		  }else{
 			  $("#oculto_carrera").hide();
 		  }  
 	  }
+    <%} if(idregistro==3||idregistro==4){ %>
     function CambiarDependencia(){
-    	if($("#dependencia").val()=="A"){
+    	if($("#dependencia").val()==0){
 		  	$("#oculto_dependencia").show();
+		  	$("#nombre_dependencia").val("");
 		  }else{
 			  $("#oculto_dependencia").hide();
 		  }
     }
+    <% } %>
 			  $(document).ready(function () {
-				  $("#oculto_centro_registro").hide();
-				  $("#oculto_facultad").hide();
-				  $("#oculto_carrera").hide();
-				  $("#oculto_dependencia").hide();
+				  
+				  <% if(idregistro==2||idregistro==4){ %>	  
+				  if($("#centro_registro").val()!=0){$("#oculto_centro_registro").hide();}
+				  if($("#facultad").val()!=0){ $("#oculto_facultad").hide(); }
+				  if($("#carrera").val()!=0){ $("#oculto_carrera").hide(); }
+				  <% }  if(idregistro==3||idregistro==4){ %>
+				  if($("#dependencia").val()!=0){$("#oculto_dependencia").hide();}
+				  <% } %>
+				  
 				  
 				  $( ".info-btt" ).button({
 			            icons: {
@@ -61,6 +82,31 @@
 				  // validate signup form on keyup and submit
 					$("#registro").validate({
 						rules: {
+							<% if(idregistro==2||idregistro==4){ %>	
+							carne: {
+								required: true,
+								minlength: 7,
+								number: true
+							},
+							centro_registro: {
+								min:0
+							},
+							facultad: {
+								min:0
+							},
+							carrera: {
+								min:0
+							},
+							<% } if(idregistro==3||idregistro==4){%>
+							dependencia: {
+								min:0
+							},
+							no_personal:{
+								required: true,
+								minlength: 3,
+								number: true
+							},
+							<% } %>
 							username: {
 								required: true,
 								minlength: 4
@@ -68,12 +114,28 @@
 							password: {
 								password: "#username"
 							},
+							
 							password_confirm: {
 								required: true,
 								equalTo: "#password"
 							}
 						},
 						messages: {
+							<% if(idregistro==2||idregistro==4){ %>	
+							centro_registro: {
+								min:"Seleccione un centro regional"
+							},
+							facultad: {
+								min:"Seleccione una facultad"
+							},
+							carrera: {
+								min:"Seleccione una carrera"
+							},
+							<% } if(idregistro==3||idregistro==4){%>
+							dependencia: {
+								min:"Seleccione su Dependencia"
+							},
+							<% } %>
 							username: {
 								required: "Ingrese su usuario",
 								minlength: jQuery.format("Ingrese almenos {0} caracteres")
@@ -108,7 +170,8 @@
 			  
 			  
 	</script>
-	<form class="cmxform" id="registro" method="post" action="">
+	<form class="cmxform" id="registro" method="post" action="SPaciente">
+	<input type="hidden" id="a" name="a" value="<%=a %>" />
 	<div class="registro_user">
 	<% if(idregistro==2||idregistro==4){ 
 		ArrayList<CCentro_Regional> centro=data.getListaCentro_Regional();
@@ -118,14 +181,14 @@
 			<h3 class="ui-widget-header ui-corner-all">Estatus del Estudiante</h3>
 		<div class="tabla">
 						<div class="fila">
-									<div class="col_titulo">Carne</div>
-									<div class="col"><input type="text" id="carne" name="carne" class="required" minlength="7" size="20"></div>
+									<div class="col_titulo">*Carne</div>
+									<div class="col"><input type="text" id="carne" name="carne" class="required"  size="20"></div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Centro Universitario</div>
+									<div class="col_titulo">*Centro Universitario</div>
 									<div class="col">
 										<select id="centro_registro" onchange="cambiarCentro()" name="centro_registro" >
-												<option value="0">SELECCIONE SU CENTRO UNIVERSITARIO</option>
+												<option value="-1">SELECCIONE SU CENTRO UNIVERSITARIO</option>
 										<%
 										Iterator<CCentro_Regional> it=centro.iterator();
 										while (it.hasNext()) {
@@ -133,24 +196,24 @@
 												out.println("<option value=\""+cen.getIdcentro_regional()+"\">"+cen.getNombre()+"</option>");
 										    }
 											%>			
-												<option value="A">OTRO</option>	
+												<option value="0">OTRO</option>	
 										</select>
 										
 									</div>
 						</div>
 			<div id="oculto_centro_registro">
 					<div class="fila">
-									<div class="col_titulo">Ingrese su Centro Regional</div>
+									<div class="col_titulo">*Ingrese su Centro Regional</div>
 									<div class="col">
-										<input type="text" id="nombre_centro_registro" />
+										<input type="text" id="nombre_centro_registro" name="nombre_centro_registro"  />
 									</div>
 						</div>
 			</div>			
 						<div class="fila">
-									<div class="col_titulo">Facultad</div>
+									<div class="col_titulo">*Facultad</div>
 									<div class="col">
-										<select id="facultad" onchange="cambiarFacultad()">
-												<option value="0">SELECCIONE SU FACULTAD</option>	
+										<select id="facultad" name="facultad" onchange="cambiarFacultad()">
+												<option value="-1">SELECCIONE SU FACULTAD</option>	
 												<%
 										Iterator<CUnidad_Academica> it2=facultad.iterator();
 										while (it2.hasNext()) {
@@ -158,23 +221,23 @@
 												out.println("<option value=\""+fac.getIdunidad_academica()+"\">"+fac.getNombre()+"</option>");
 										    }
 											%>			
-												<option value="A">OTRO</option>
+												<option value="0">OTRO</option>
 										</select>
 									</div>
 						</div>
 			<div id="oculto_facultad">
 					<div class="fila">
-									<div class="col_titulo">Ingrese su Facultad</div>
+									<div class="col_titulo">*Ingrese su Facultad</div>
 									<div class="col">
-										<input type="text" id="nombre_facultad" />
+										<input type="text" id="nombre_facultad" name="nombre_facultad"   />
 									</div>
 						</div>
 			</div>			
 						<div class="fila">
-									<div class="col_titulo">Carrera</div>
+									<div class="col_titulo">*Carrera</div>
 									<div class="col">
-										<select id="carrera" onchange="cambiarCarrera()">
-												<option value="0">SELECCIONE SU CARRERA</option>	
+										<select id="carrera" name="carrera" onchange="CambiarCarrera()">
+												<option value="-1">SELECCIONE SU CARRERA</option>	
 												<%
 													Iterator<CCarrera> it3=carrera.iterator();
 													while (it3.hasNext()) {
@@ -182,15 +245,15 @@
 															out.println("<option value=\""+car.getIdcarrera()+"\">"+car.getNombre()+"</option>");
 													    }
 												%>
-												<option value="A">OTRO</option>
+												<option value="0">OTRO</option>
 										</select>
 									</div>
 						</div>
 			<div id="oculto_carrera">
 					<div class="fila">
-									<div class="col_titulo">Ingrese su Carrera</div>
+									<div class="col_titulo">*Ingrese su Carrera</div>
 									<div class="col">
-										<input type="text" id="nombre_carrera" />
+										<input type="text" id="nombre_carrera" name="nombre_carrera"   />
 									</div>
 						</div>
 			</div>			
@@ -206,16 +269,16 @@
 		
 			<div class="tabla">
 						<div class="fila">
-									<div class="col_titulo">No Personal</div>
+									<div class="col_titulo">*No Personal</div>
 									<div class="col">
 										<input type="text" id="no_personal" name="no_personal" minlength="3" class="required" size="20">
 									</div>
 						</div>
 						<div class="fila">			
-									<div class="col_titulo">Dependencia</div>
+									<div class="col_titulo">*Dependencia</div>
 									<div class="col">
-										<select id="dependencia" onchange="CambiarDependencia()">
-												<option value="0">SELECCIONE LA DEPENDENC&Iacute;A</option>	
+										<select id="dependencia" name="dependencia" onchange="CambiarDependencia()">
+												<option value="-1">SELECCIONE LA DEPENDENC&Iacute;A</option>	
 												<%
 													Iterator<CDependencia> it4=lista_dep.iterator();
 													while (it4.hasNext()) {
@@ -223,15 +286,15 @@
 															out.println("<option value=\""+car.getIddependencia()+"\">"+car.getNombre()+"</option>");
 													    }
 												%>
-												<option value="A">OTRO</option>
+												<option value="0">OTRO</option>
 										</select>
 									</div>
 						</div>
 						<div id="oculto_dependencia">
 								<div class="fila">
-												<div class="col_titulo">Ingrese su dependencia</div>
+												<div class="col_titulo">*Ingrese su dependencia</div>
 												<div class="col">
-													<input type="text" id="nombre_dependencia" />
+													<input type="text" id="nombre_dependencia" name="nombre_dependencia"   />
 												</div>
 									</div>
 						</div>
@@ -241,17 +304,17 @@
 <h3 class="ui-widget-header ui-corner-all">Datos Personales</h3>
 	<div class="tabla">
 						<div class="fila">
-									<div class="col_titulo">Usuario</div>
+									<div class="col_titulo">*Usuario</div>
 									<div class="col">
-										<input type="text" id="username" name="username" class="required" minlength="2" size="20"/>
+										<input type="text" id="username" name="username" class="required"  size="20"/>
 										<a onclick="disponibilidad()" class="info-btt">Comprobar disponibilidad</a><br/>
 										<label id="disp_usuario"></label>
 									</div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Password</div>
+									<div class="col_titulo">*Password</div>
 									<div class="col">
-										<input type="password" autocomplete="off" class="password" name="password" id="password" />
+										<input type="password" autocomplete="off" class="password" name="password" id="password"  />
 										<div class="password-meter">
 											<div class="password-meter-message">&nbsp;</div>
 											<div class="password-meter-bg">
@@ -261,11 +324,11 @@
 									</div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Confirmar Password </div>
+									<div class="col_titulo">*Confirmar Password </div>
 									<div class="col"> <input type="password" id="password_confirm" name="password_confirm"/></div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Nombre Completo</div>
+									<div class="col_titulo">*Nombre Completo</div>
 									<div class="col">
 									<input type="text" id="nombre_usuario" name="nombre_usuario" class="required"  size="70"/>
 									</div>
@@ -273,35 +336,40 @@
 						<div class="fila">
 									<div class="col_titulo">Telefono</div>
 									<div class="col">
-									<input type="text" id="tel_usuario" name="nombre_usuario"   size="30"/>
+									<input type="text" id="tel_usuario" name="tel_usuario"   size="30"/>
 									</div>
 						</div>
 						<div class="fila">
 									<div class="col_titulo">Telefono Movil</div>
 									<div class="col">
-									<input type="text" id="movil_usuario" name="nombre_usuario"  size="30"/>
+									<input type="text" id="movil_usuario" name="movil_usuario"  size="30"/>
 									</div>
 						</div>
-						
 						<div class="fila">
-									<div class="col_titulo">Fecha de Nacimiento</div>
+									<div class="col_titulo">Direcci&oacute;n</div>
+									<div class="col">
+									<textarea id="direccion" name="direccion"  rows="3" cols="50"  class="required"></textarea>
+									</div>
+						</div>
+						<div class="fila">
+									<div class="col_titulo">*Fecha de Nacimiento</div>
 									<div class="col"><input type="text" id="datepicker" name="datepicker" class="required" size="10"/></div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Sexo</div>
+									<div class="col_titulo">*Sexo</div>
 									<div class="col">
 									<div class="genero">
-										<input type="radio" id="genero_1" name="genero" /><label for="genero_1">MASCULINO</label>
-										<input type="radio" id="genero_2" name="genero" checked="checked" /><label for="genero_2">FEMENINO</label>
+										<input type="radio" id="genero_1" name="genero" value="1" /><label for="genero_1">MASCULINO</label>
+										<input type="radio" id="genero_2" name="genero" value="2" checked="checked" /><label for="genero_2">FEMENINO</label>
 									</div>
 									</div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Correo Electronico</div>
+									<div class="col_titulo">*Correo Electronico</div>
 									<div class="col"><input type="text" id="correo_electronico" name="correo_electronico"  class="required email" size="50"/></div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">Ingrese el texto</div>
+									<div class="col_titulo">*Ingrese el texto</div>
 									<div class="col">
 										 <% ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lf9as8SAAAAAOvbB8V_Xj1KaI3vFPaYAlsgYFoq", "6Lf9as8SAAAAAI5FO_4qetoWZv4D_8nRFDSsbp5P", false);
 									          out.print(c.createRecaptchaHtml(null, null));			
@@ -319,4 +387,4 @@
 	</div>
 	</div>
 	</form>
-	<% data.Close();	 %>
+	<% data.Close();%>

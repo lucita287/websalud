@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CEstado_Civil;
+import data.CParentesco;
 import data.CTipo_Sangre;
 import data.CTitulo_Secundaria;
 import data.CUsuarioPermiso;
@@ -202,6 +203,63 @@ public class SPropiedad extends HttpServlet {
 						
 						if(validacion.compareTo("")==0){
 							boolean b=dbo.deleteTitulo_Secundaria(idtsecun);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+							
+					}else if(action.equalsIgnoreCase("guardarparen")&& (user_permiso.getIdpermiso().indexOf(241)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int idparen=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_paren")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						int grupo_familiar=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("grupo_familiar")));
+						int antecedentes=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("antecedentes")));
+						int emergencias=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("emergencias")));
+						String validacion=valid.ValidarSiesMayor(idparen, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Descripcion"):validacion;						
+						if(validacion.compareTo("")==0){
+							
+							CParentesco parentesco=new CParentesco(idparen,nombre,grupo_familiar,antecedentes, emergencias);
+							boolean b=dbo.UpdateParentesco(parentesco);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
+					}else if(action.equalsIgnoreCase("newparen")&& (user_permiso.getIdpermiso().indexOf(241)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="";
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						int grupo_familiar=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("grupo_familiar")));
+						int antecedentes=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("antecedentes")));
+						int emergencias=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("emergencias")));
+						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
+						
+						if(validacion.compareTo("")==0){
+							CParentesco parentesco=new CParentesco(0,nombre,grupo_familiar,antecedentes, emergencias);
+							boolean b=dbo.SafeParentesco(parentesco);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+							
+					}else if(action.equalsIgnoreCase("deleteparen")&& (user_permiso.getIdpermiso().indexOf(241)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="";
+						int idparen=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_paren")));
+						String validacion=valid.ValidarSiesMayor(idparen, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.deleteTipoSangre(idparen);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
 							}else{
