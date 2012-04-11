@@ -77,7 +77,7 @@ public class SCarreraTable extends HttpServlet {
 					 
 					 		ArrayList<CCarrera> lista=dbo.getListaCarrera(ordenar, asc, min, max,  busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>1</page><total>"+dbo.getCarreraTotal(busqueda)+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getCarreraTotal(busqueda)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){
@@ -115,7 +115,7 @@ public class SCarreraTable extends HttpServlet {
 					 
 					 		ArrayList<CCentro_Regional> lista=dbo.getListaCentro_Regional(ordenar, type, asc, min, max, busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>1</page><total>"+dbo.getCentro_RegionalTotal(type,busqueda)+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getCentro_RegionalTotal(type,busqueda)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){
@@ -149,7 +149,7 @@ public class SCarreraTable extends HttpServlet {
 					 
 					 		ArrayList<CUnidad_Academica> lista=dbo.getListaUnidad_Academica(ordenar, asc, min, max, busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>1</page><total>"+dbo.getUnidadAcademicaTotal(busqueda)+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getUnidadAcademicaTotal(busqueda)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){
@@ -183,7 +183,7 @@ public class SCarreraTable extends HttpServlet {
 					 
 					 ArrayList<CDependencia> lista=dbo.getListaDependencia(ordenar, asc, min, max, busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>1</page><total>"+dbo.getDependenciaTotal(busqueda)+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getDependenciaTotal(busqueda)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){

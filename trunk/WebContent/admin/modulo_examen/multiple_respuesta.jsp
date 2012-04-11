@@ -30,6 +30,7 @@
 	function mensaje_cadena (){
 		cadena = [ 	
 		          'multiple='+$("input[name='multiple']:checked").val(),
+		          'cantidad_opc='+$("#cantidad_opc_pregunta").val(),
 		          <%for (int i=1;i<=t;i++) { %>
 		          "ponderacion<%=i%>="+$("#ponderacion<%=i%>").val(),
 		          "descrip_titu<%=i%>="+escape($("#descrip_titu<%=i%>").val()),
@@ -43,7 +44,7 @@
     			<div class="col_titulo">*<%=i%>)</div>
     			<div class="col">
     					Ponderaci&oacute;n: <input type="text" size="6" id="ponderacion<%=i%>" name="ponderacion<%=i%>"/>
-    					Descripci&oacute;n: <input type="text" size="40" id="descrip_titu<%=i%>" name="descrip_titu<%=i%>" class="tags" />
+    					Descripci&oacute;n: <input type="text" size="30" id="descrip_titu<%=i%>" name="descrip_titu<%=i%>" class="tags" />
     		    </div>
     		</div>
     <% } %>	

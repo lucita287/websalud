@@ -30,16 +30,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			
 		var idactividad=0;
 			  $(document).ready(function () {
-				  $("#descripcion_actividad").cleditor({
-					    width:        450,
-					    height:       200,
-					    controls:     // controls to add to the toolbar
-	                        "bold italic underline strikethrough subscript superscript | font size " +
-	                        "style | color highlight removeformat | bullets numbering | outdent " +
-	                        "indent | alignleft center alignright justify | undo redo | " +
-	                        "rule image link unlink | cut copy paste pastetext | print"
-				      });
-				  $("#descripcion_actividad").cleditor()[0].focus();
+				  
 			      $("#actividad").flexigrid
 					({
 						method: 'POST',
@@ -67,6 +58,17 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						{display: 'area', name : 'area', isdefault: true}
 						]
 					});
+			      $('.pSearch').click();
+			      $("#descripcion_actividad").cleditor({
+					    width:        450,
+					    height:       200,
+					    controls:     // controls to add to the toolbar
+	                        "bold italic underline strikethrough subscript superscript | font size " +
+	                        "style | color highlight removeformat | bullets numbering | outdent " +
+	                        "indent | alignleft center alignright justify | undo redo | " +
+	                        "rule image link unlink | cut copy paste pastetext | print"
+				      });
+				  $("#descripcion_actividad").cleditor()[0].focus();
 			  });
 			  $( function(){
 					

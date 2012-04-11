@@ -20,7 +20,7 @@
 			url: false, //URL if using data from AJAX
 			method: 'POST', //data sending method
 			dataType: 'xml', //type of data for AJAX, either xml or json
-			errormsg: 'Connection Error',
+			errormsg: 'Falla de Conexi&oacute;n',
 			usepager: false,
 			nowrap: true,
 			page: 1, //current page
@@ -29,11 +29,11 @@
 			rp: 15, //results per page
 			rpOptions: [10, 15, 20, 30, 50], //allowed per-page values 
 			title: false,
-			pagestat: 'Displaying {from} to {to} of {total} items',
-			pagetext: 'Page',
-			outof: 'of',
-			findtext: 'Find',
-			procmsg: 'Processing, please wait ...',
+			pagestat: 'Mostrando {from} a {to} de {total} items',
+			pagetext: 'Pagina',
+			outof: 'de',
+			findtext: 'Buscar',
+			procmsg: 'Procesando, por favor espere ...',
 			query: '',
 			qtype: '',
 			nomsg: 'No items',

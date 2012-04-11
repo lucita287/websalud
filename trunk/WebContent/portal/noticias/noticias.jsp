@@ -79,7 +79,7 @@ $(function() {
 function update_noti(id){
 	$(".news-inicio").css("background","white");	
 	$(".noticia"+id).css("background","#CCC");
-	$("#widget-info").load("portal/noticia_descripcion.jsp?idnoticia="+id);
+	$("#widget-info").load("portal/noticias/noticia_descripcion.jsp?idnoticia="+id);
 }
 <% }%>
 </script>

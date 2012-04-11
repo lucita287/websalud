@@ -22,7 +22,6 @@ import data.CMenu;
 import data.CNoticia;
 import data.CPermiso;
 import data.CResponsable;
-import data.CSubcategoria;
 import data.CUsuario;
 
 public class CDataBase {
@@ -109,23 +108,7 @@ public class CDataBase {
 		return lista;
 	}
 	
-	public CSubcategoria getEspecificosubcategoria(int idsubcategoria){
-		CSubcategoria temp=null;
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idsubcategoria,descripcion FROM subcategoria where  idsubcategoria=? ");
-			stm.setInt(1, idsubcategoria);
-			ResultSet rs2=stm.executeQuery();
-			if(rs2.next()){
-				temp=new CSubcategoria( rs2.getInt("idsubcategoria"),rs2.getString("descripcion"));
-			}
-		} catch (SQLException e) {
 
-			e.printStackTrace();
-		}
-		
-		return temp;
-	}
 	public int getPreguntasTotal(int idcategoria){
 		int temp=0;
 		PreparedStatement stm;
@@ -372,25 +355,6 @@ public class CDataBase {
 	}
 	
 
-	public ArrayList<CSubcategoria> getListaSubCategoria(){
-        ArrayList<CSubcategoria> ret=new ArrayList<CSubcategoria>();
-        try{
-                PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idsubcategoria,descripcion FROM subcategoria ");
-                ResultSet rs=stm.executeQuery();
-                while(rs.next()){
-                				CSubcategoria temp=null;
-                                temp=new CSubcategoria( rs.getInt("idsubcategoria"),rs.getString("descripcion"));
-                                ret.add(temp);
-                }
-                rs.close();
-                stm.close();
-        }
-        
-        catch(Throwable e){
-                
-        }
-        return ret;
-	}
 	public ArrayList<CArea> getAreaLista(){
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{

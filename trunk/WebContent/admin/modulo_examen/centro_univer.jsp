@@ -18,7 +18,7 @@ dbo.Close();
 				({
 					method: 'POST',
 					url: '../SCarreraTable',
-					 dataType : 'xml',
+					dataType : 'xml',
 				    colModel: [
 					{display: 'Seleccionar', name : 'chkcentro_uni', width : 30, sortable : false, align: 'left'},           
 					{ display: 'ID', name: 'idcentro_uni', width: 40, sortable: true, align: 'left' },

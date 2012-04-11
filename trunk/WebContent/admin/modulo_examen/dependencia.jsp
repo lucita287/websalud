@@ -14,12 +14,16 @@
 					{ display: 'ID', name: 'iddependencia_uni', width: 40, sortable: true, align: 'left' },
 					{ display: 'Descripcion', name: 'nombre', width: 250, sortable: true, align: 'left' }
 					],
+					usepager: true,
 					sortname: "iddependencia_uni",
 					sortorder: "desc",
 				    title: 'Dependencia',
 				    showTableToggleBtn: true,
 				    width: 600,
 				    height: 200,
+				    useRp: true,
+				    rp: 15,
+				    searchitems : [{display: 'Departamento', name : 'departamento'}],
 				    params : [ {name: 'a', value: 'dependencia'} ]
 				});
 		  });  
