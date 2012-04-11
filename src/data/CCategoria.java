@@ -6,20 +6,23 @@ public class CCategoria {
 	private int orden;
 	private int autoevaluacion;
 	private int multifasico;
+	private int estado;
 	/**
 	 * @param idcategoria
 	 * @param descripcion
 	 * @param orden
 	 * @param autoevaluacion
 	 * @param multifasico
+	 * @param estado
 	 */
 	public CCategoria(int idcategoria, String descripcion, int orden,
-			int autoevaluacion, int multifasico) {
+			int autoevaluacion, int multifasico, int estado) {
 		this.idcategoria = idcategoria;
 		this.descripcion = descripcion;
 		this.orden = orden;
 		this.autoevaluacion = autoevaluacion;
 		this.multifasico = multifasico;
+		this.estado = estado;
 	}
 	/**
 	 * @return the idcategoria
@@ -81,12 +84,28 @@ public class CCategoria {
 	public void setMultifasico(int multifasico) {
 		this.multifasico = multifasico;
 	}
-	public boolean getBooleano(int i){
-		if(i==1) return true;
-		else return false;
+	/**
+	 * @return the estado
+	 */
+	public int getEstado() {
+		return estado;
 	}
-	public String getMensaje(int i){
-		if(i==1) return "SI";
-		else return "NO";
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(int estado) {
+		this.estado = estado;
 	}
+	 public boolean getBooleano(int i){
+         if(i==1) return true;
+         else return false;
+	 }
+	 public String getMensaje(int i){
+	         if(i==1) return "SI";
+	         else return "NO";
+	 }
+	 public String getEstadoMensaje(){
+         if(this.estado==1) return "HABILITADO";
+         else return "DESHABILITADO";
+ }
 }

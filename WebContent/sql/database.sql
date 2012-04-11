@@ -129,6 +129,8 @@ CREATE TABLE pregunta (
   multifasico          int(11) NOT NULL, 
   largo                int(10) comment '1->pequeño,2->mediano,3->Grande', 
   multiple             int(11), 
+  idgrupo              int(11), 
+  estado               int(11) DEFAULT 1 NOT NULL, 
   PRIMARY KEY (idpregunta));
 CREATE TABLE categoria (
   idcategoria    int(10) NOT NULL AUTO_INCREMENT, 
@@ -136,6 +138,7 @@ CREATE TABLE categoria (
   orden          int(11) NOT NULL, 
   autoevaluacion int(10) NOT NULL, 
   multifasico    int(10) NOT NULL, 
+  estado         int(11) DEFAULT 1 NOT NULL, 
   PRIMARY KEY (idcategoria));
 CREATE TABLE titulo_respuesta (
   idtitulo_respuesta int(11) NOT NULL AUTO_INCREMENT, 
@@ -225,10 +228,11 @@ CREATE TABLE dependencia (
   nombre        varchar(100), 
   PRIMARY KEY (iddependencia));
 CREATE TABLE grupo_titulo_respuesta (
-  idgrupo_titulo_respuesta int(10) NOT NULL, 
-  idtitulo_respuesta       int(11) NOT NULL, 
-  orden                    int(11) NOT NULL, 
-  PRIMARY KEY (idgrupo_titulo_respuesta, 
+  idgrupo            int(10) NOT NULL, 
+  idtitulo_respuesta int(11) NOT NULL, 
+  orden              int(11) NOT NULL, 
+  grupoidgrupo       int(11), 
+  PRIMARY KEY (idgrupo, 
   idtitulo_respuesta));
 CREATE TABLE pregunta_titulo_respuesta (
   idtitulo_respuesta int(11) NOT NULL, 
@@ -236,19 +240,15 @@ CREATE TABLE pregunta_titulo_respuesta (
   ponderacion        int(10), 
   PRIMARY KEY (idtitulo_respuesta, 
   idpregunta));
-CREATE TABLE grupo_titulo_respuesta_pregunta (
-  idgrupo_titulo_respuesta int(10) NOT NULL, 
-  idpregunta               int(10) NOT NULL, 
-  ponderacion              int(10), 
-  idtitulo_respuesta       int(11) NOT NULL, 
-  PRIMARY KEY (idgrupo_titulo_respuesta, 
-  idpregunta, 
-  idtitulo_respuesta));
 CREATE TABLE tipo_pregunta (
-  idtipo_pregunta          int(10) NOT NULL AUTO_INCREMENT, 
-  descripcion              varchar(100) NOT NULL, 
-  idgrupo_titulo_respuesta int(10) UNIQUE, 
+  idtipo_pregunta int(10) NOT NULL AUTO_INCREMENT, 
+  descripcion     varchar(100) NOT NULL, 
+  idgrupo         int(11) UNIQUE, 
   PRIMARY KEY (idtipo_pregunta));
+CREATE TABLE grupo (
+  idgrupo     int(11) NOT NULL AUTO_INCREMENT, 
+  descripcion varchar(100), 
+  PRIMARY KEY (idgrupo));
 ALTER TABLE noticia ADD INDEX FKnoticia378758 (areaidarea), ADD CONSTRAINT FKnoticia378758 FOREIGN KEY (areaidarea) REFERENCES area (idarea);
 ALTER TABLE menu ADD INDEX FKmenu590668 (areaidarea), ADD CONSTRAINT FKmenu590668 FOREIGN KEY (areaidarea) REFERENCES area (idarea);
 ALTER TABLE encabezado ADD INDEX FKencabezado458445 (areaidarea), ADD CONSTRAINT FKencabezado458445 FOREIGN KEY (areaidarea) REFERENCES area (idarea);
@@ -286,8 +286,9 @@ ALTER TABLE paciente ADD INDEX FKpaciente702060 (dependenciaiddependencia), ADD 
 ALTER TABLE grupo_titulo_respuesta ADD INDEX FKgrupo_titu883601 (idtitulo_respuesta), ADD CONSTRAINT FKgrupo_titu883601 FOREIGN KEY (idtitulo_respuesta) REFERENCES titulo_respuesta (idtitulo_respuesta);
 ALTER TABLE pregunta_titulo_respuesta ADD INDEX FKpregunta_t278188 (idtitulo_respuesta), ADD CONSTRAINT FKpregunta_t278188 FOREIGN KEY (idtitulo_respuesta) REFERENCES titulo_respuesta (idtitulo_respuesta);
 ALTER TABLE pregunta_titulo_respuesta ADD INDEX FKpregunta_t722293 (idpregunta), ADD CONSTRAINT FKpregunta_t722293 FOREIGN KEY (idpregunta) REFERENCES pregunta (idpregunta);
-ALTER TABLE grupo_titulo_respuesta_pregunta ADD INDEX FKgrupo_titu150633 (idgrupo_titulo_respuesta, idtitulo_respuesta), ADD CONSTRAINT FKgrupo_titu150633 FOREIGN KEY (idgrupo_titulo_respuesta, idtitulo_respuesta) REFERENCES grupo_titulo_respuesta (idgrupo_titulo_respuesta, idtitulo_respuesta);
-ALTER TABLE grupo_titulo_respuesta_pregunta ADD INDEX FKgrupo_titu301304 (idpregunta), ADD CONSTRAINT FKgrupo_titu301304 FOREIGN KEY (idpregunta) REFERENCES pregunta (idpregunta);
 ALTER TABLE categoria_interpretacion ADD INDEX FKcategoria_569059 (idcategoria), ADD CONSTRAINT FKcategoria_569059 FOREIGN KEY (idcategoria) REFERENCES categoria (idcategoria);
 ALTER TABLE pregunta ADD INDEX FKpregunta916024 (categoriaidcategoria), ADD CONSTRAINT FKpregunta916024 FOREIGN KEY (categoriaidcategoria) REFERENCES categoria (idcategoria);
 ALTER TABLE pregunta ADD INDEX FKpregunta179647 (idtipo_pregunta), ADD CONSTRAINT FKpregunta179647 FOREIGN KEY (idtipo_pregunta) REFERENCES tipo_pregunta (idtipo_pregunta);
+ALTER TABLE grupo_titulo_respuesta ADD INDEX FKgrupo_titu508512 (grupoidgrupo), ADD CONSTRAINT FKgrupo_titu508512 FOREIGN KEY (grupoidgrupo) REFERENCES grupo (idgrupo);
+ALTER TABLE pregunta ADD INDEX FKpregunta677186 (idgrupo), ADD CONSTRAINT FKpregunta677186 FOREIGN KEY (idgrupo) REFERENCES grupo (idgrupo);
+ALTER TABLE tipo_pregunta ADD INDEX FKtipo_pregu253906 (idgrupo), ADD CONSTRAINT FKtipo_pregu253906 FOREIGN KEY (idgrupo) REFERENCES grupo (idgrupo);

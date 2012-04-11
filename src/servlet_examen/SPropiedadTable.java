@@ -109,7 +109,7 @@ public class SPropiedadTable extends HttpServlet {
 					 
 					 		ArrayList<CTitulo_Secundaria> lista=dbo.getListaTitulo_Secundaria(ordenar, asc, min, max,  busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>1</page><total>"+dbo.getTitulo_SecundariaTotal(busqueda)+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getTitulo_SecundariaTotal(busqueda)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){
@@ -149,7 +149,7 @@ public class SPropiedadTable extends HttpServlet {
 					 
 					 		ArrayList<CParentesco> lista=dbo.getListaParentesco(ordenar, asc, min, max, busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>1</page><total>"+dbo.getParentescoTotal(busqueda)+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getParentescoTotal(busqueda)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){

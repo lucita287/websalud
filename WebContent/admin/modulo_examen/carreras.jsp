@@ -96,7 +96,7 @@
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Descripci&oacute;n</div>
-								<div class="col"><input id='nombre_carrera' type="text" size="40"/></div>
+								<div class="col"><input id='nombre_carrera' type="text" size="60"/></div>
 							</div>
 				</div>
 		</div>				

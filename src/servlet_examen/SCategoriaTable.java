@@ -74,12 +74,12 @@ public class SCategoriaTable extends HttpServlet {
 							 
 							 		ArrayList<CCategoria> lista=dbo.getListaCategoria(ordenar, asc, min, max,  busqueda);
 							 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-									 info+="<rows><page>1</page><total>"+dbo.getCategoriaTotal(busqueda)+"</total>";
+									 info+="<rows><page>"+page+"</page><total>"+dbo.getCategoriaTotal(busqueda)+"</total>";
 									 
 									 String data="";
 									 for(int i=0; i<lista.size();i++){
 										 CCategoria temp=lista.get(i);
-										 	data+="<row id='"+temp.getIdcategoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarcategoria("+temp.getIdcategoria()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+","+temp.getBooleano(temp.getAutoevaluacion())+","+temp.getBooleano(temp.getMultifasico())+")' name='idcategoria' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAutoevaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
+										 	data+="<row id='"+temp.getIdcategoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarcategoria("+temp.getIdcategoria()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+","+temp.getBooleano(temp.getAutoevaluacion())+","+temp.getBooleano(temp.getMultifasico())+")' name='idcategoria' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getEstadoMensaje()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAutoevaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
 									 }
 									 info+=data+"</rows>";
 									 out.println(info);

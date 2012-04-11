@@ -53,6 +53,7 @@
 										{display: 'Usuario', name : 'nickname', isdefault: true}
 										]
 					});
+			      $('.pSearch').click();
 			  });  
 			  $(function() {
 					$( ".datepicker" ).datepicker();

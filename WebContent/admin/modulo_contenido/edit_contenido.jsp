@@ -42,7 +42,7 @@
 						{display: 'Descripcion', name : 'descripcion', isdefault: true}
 						]
 					});				  
-			  
+				  $('.pSearch').click();			  
 					
 			  });
 			  

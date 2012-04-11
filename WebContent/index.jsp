@@ -42,7 +42,7 @@
 <div id="Cont-Panel-texto" class="ui-widget-content ui-corner-all">
 <jsp:include page="portal/inicio.jsp" />				
 </div>
-<jsp:include page="portal/noticias.jsp" />						
+<jsp:include page="portal/noticias/noticias.jsp" />						
 </div>
 <div style="clear: both;"></div>
 

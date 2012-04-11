@@ -79,6 +79,7 @@
 				            'auto='+(($("#auto_cate").is(":checked")==true)?1:0),
 				            'multifa='+(($("#multifa_cate").is(":checked")==true)?1:0),
 				            'orden='+escape($("#orden_cate").val()),
+				            'estado='+escape($("#estado_pregunta").val()),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SCategoria",
@@ -132,6 +133,15 @@
 							<div class="fila">
 								<div class="col_titulo">Orden</div>
 								<div class="col"><input id='orden_cate' type="text" size="10"/></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Estado</div>
+								<div class="col">
+									<select id="estado_pregunta" name="estado_pregunta"  >
+													<option value="0" >DESHABILITADA</option>
+													<option value="1" selected>HABILITADO</option>
+												</select>
+								</div>
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Examenes</div>

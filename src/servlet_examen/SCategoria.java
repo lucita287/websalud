@@ -62,13 +62,14 @@ public class SCategoria extends HttpServlet {
 						int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
+						int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 						String validacion=valid.ValidarSiesMayor(idcate, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 						
 						
 						if(validacion.compareTo("")==0){
-							CCategoria cate=new CCategoria(idcate,nombre,orden,auto, multifa);
+							CCategoria cate=new CCategoria(idcate,nombre,orden,auto, multifa,estado);
 							boolean b=dbo.UpdateCategoria(cate);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -84,11 +85,12 @@ public class SCategoria extends HttpServlet {
 						int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
+						int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 						
 						if(validacion.compareTo("")==0){
-							CCategoria cate=new CCategoria(0,nombre,orden,auto, multifa);
+							CCategoria cate=new CCategoria(0,nombre,orden,auto, multifa,estado);
 							boolean b=dbo.SafeCategoria(cate);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -129,14 +131,13 @@ public class SCategoria extends HttpServlet {
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
-						
 						String validacion=valid.ValidarSiesMayor(idcate_pond, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(interpretacion, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcategoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una categoria\"}"):validacion;
 						if(validacion.compareTo("")==0){
-							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0);
+							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0);
 							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(idcate_pond,max, min, interpretacion,categoria) ;
 							boolean b=dbo.UpdateCategoria_Interpretacion(cate);
 							if(!b){
@@ -159,7 +160,7 @@ public class SCategoria extends HttpServlet {
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
 						if(validacion.compareTo("")==0){
-							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0);
+							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0);
 							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(0,max, min, interpretacion,categoria) ;
 							boolean b=dbo.SafeCategoria_Interpretacion(cate);
 							if(!b){
