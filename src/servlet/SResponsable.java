@@ -46,6 +46,8 @@ public class SResponsable extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
+    	String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	CValidation valid=new CValidation();
     	String action=valid.ValidarRequest(request.getParameter("a"));
 		
@@ -62,8 +64,8 @@ public class SResponsable extends HttpServlet {
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idusuario=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("usuario")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
-									String apellido=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("apellido"))));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
+									String apellido=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("apellido"))),codificacion);
 
 									String validacion=valid.ValidarCampoVacio(nombre, "nombre");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Nombre"):validacion;
@@ -98,8 +100,8 @@ public class SResponsable extends HttpServlet {
 									int idresponsable=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idresponsable")));
 									int idusuario=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("usuario")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
-									String apellido=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("apellido"))));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
+									String apellido=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("apellido"))),codificacion);
 
 									String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 											validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Nombre"):validacion;

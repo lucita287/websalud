@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CPaciente;
 import data.CUsuario;
 import data.CUsuarioPermiso;
 
 
-import framework.CDataBase;
+import framework.CDataExam;
 import framework.CValidation;
 /**
  * Servlet implementation class SLogin
@@ -42,7 +43,7 @@ public class SLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CDataBase dbo=new CDataBase();
+		CDataExam dbo=new CDataExam();
 		 dbo.Connect();
 		 response.setContentType("text/html;charset=UTF-8"); 
 		 CValidation valid=new CValidation();
@@ -72,12 +73,17 @@ public class SLogin extends HttpServlet {
 				 response.sendRedirect("index.jsp?e=1");
 			 }
 		 }else{
-			 HttpSession session = request.getSession(true);
-			 session.setAttribute("estudiante", user);
-			 session.setAttribute("examen",1);
-			 response.sendRedirect("estudiante/index.jsp");
 			 
-			 //response.sendRedirect("index.jsp?e=1");
+			 HttpSession session = request.getSession(true);
+			 CPaciente pac= dbo.getEstudianteEspecifica(user, pass);
+			 if(pac!=null){
+				 session.setAttribute("estudiante", user);
+				 session.setAttribute("examen",1);
+				 session.setAttribute("paciente",pac);
+				 response.sendRedirect("estudiante/index.jsp");
+				 
+			 }else
+			 response.sendRedirect("index.jsp?e=1");
 		 }
 		 dbo.Close();
 	}

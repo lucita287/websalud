@@ -48,6 +48,9 @@ public class SUsuario extends HttpServlet {
 		PrintWriter out = response.getWriter(); 
 		CValidation valid=new CValidation();
 		String action=valid.ValidarRequest(request.getParameter("a"));
+		//request.setCharacterEncoding("UTF-8");
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		
 		CDataBase dbo=new CDataBase();
 		dbo.Connect();
@@ -62,14 +65,14 @@ public class SUsuario extends HttpServlet {
 							if(action.equalsIgnoreCase("guardar_perfil")){
 								String result="";
 								CUsuario usuario_login=user_permiso.getIdusuario();
-								String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
-								String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")));
-								String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")));
-								String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("email")));
-								String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")));
-								String ant_pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ant_pass")));
-								String new_pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("new_pass")));
-								String conf_pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("conf_pass")));
+								String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+								String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")),codificacion);
+								String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")),codificacion);
+								String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("email")),codificacion);
+								String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")),codificacion);
+								String ant_pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ant_pass")),codificacion);
+								String new_pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("new_pass")),codificacion);
+								String conf_pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("conf_pass")),codificacion);
 								String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
 								validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(apellido, "Apellido"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Nombre"):validacion;
@@ -135,15 +138,15 @@ public class SUsuario extends HttpServlet {
 								String result="";
 								int iduser=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idusuario")));
 								int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
-								String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("name")));
-								String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")));
-								String nick=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nick")));
+								String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("name")),codificacion);
+								String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")),codificacion);
+								String nick=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nick")),codificacion);
 								nick=nick.toLowerCase();
-								String phone=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("phone")));
-								String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("email")));
-								String pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
-								String pass2=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password2")));
-								String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")));
+								String phone=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("phone")),codificacion);
+								String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("email")),codificacion);
+								String pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
+								String pass2=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password2")),codificacion);
+								String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")),codificacion);
 								
 								String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Nombre"):validacion;
@@ -186,15 +189,15 @@ public class SUsuario extends HttpServlet {
 							}else if(action.equalsIgnoreCase("newedit")&& (user_permiso.getIdpermiso().indexOf(234)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 								String result="";
 								int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
-								String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("name")));
-								String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")));
-								String nick=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nick")));
+								String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("name")),codificacion);
+								String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")),codificacion);
+								String nick=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nick")),codificacion);
 								nick=nick.toLowerCase();
-								String phone=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("phone")));
-								String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("email")));
-								String pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
-								String pass2=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password2")));
-								String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")));
+								String phone=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("phone")),codificacion);
+								String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("email")),codificacion);
+								String pass=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
+								String pass2=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password2")),codificacion);
+								String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")),codificacion);
 								
 								String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
 								CUsuario usuario=dbo.getUsuario(session.getAttribute("user").toString()); 

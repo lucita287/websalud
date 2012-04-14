@@ -51,7 +51,7 @@ public class CValidationMensaje extends CValidation {
         Matcher mat = null;        
         pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
         mat = pat.matcher(correo);
-        if (mat.find()) {
+        if (mat.find()||correo.length()==0) {
         	if(correo.length()<80)
         		return "";
         	else return "<div class='registro_validator'>DEBE INGRESAR UN CORREO ELECTRONICO NO MAYOR A 80 CARACTERES </div>";
@@ -69,15 +69,10 @@ public class CValidationMensaje extends CValidation {
 		}
 		
 	}
-	public String ValidarMCombo(int num,String name,String tipo){
-			if(num>=0){
-				if(num==0 && !name.isEmpty()){
-						if(name.length()>80) return "<div class='registro_validator'>Debe ingresar el texto de "+tipo+" no mayor a 80 caracteres </div>";
-						else return "";
-				}else if(num>0){
-					return "";
-				}else return "<div class='registro_validator'>Debe ingresar el texto de "+tipo+"</div>";
-			} else return "<div class='registro_validator'>Debe seleccionar un "+tipo+"</div>";
+	public String ValidarMCombo(int num,String tipo){
+			if(num>0)
+				return "";
+			 else return "<div class='registro_validator'>Debe seleccionar un "+tipo+"</div>";
 	}
 	public String ValidarMNoPersonal(int num){
 			if(num<=0){

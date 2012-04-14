@@ -88,10 +88,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 					<a id="12" >Mantenimiento de Categorias</a>
 				</li>
 				<li>
-					<a id="13" >Gestionar Examen de Autoevaluaci&oacute;n</a>
+					<a id="13" >Gestionar Examen de Salud</a>
 				</li>
 				<li>
-					<a id="14">Gestionar Examen Multif&aacute;setico</a>
+					<a id="14">PENDIENTE</a>
 				</li >
 			</ul>
 	

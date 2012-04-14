@@ -15,16 +15,16 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 1</a>
 			<ul id="personal">
 				<li >
-					<a id="1">Datos Generales</a>
+					<a href="index.jsp?portal=1">Datos Generales</a>
 				</li>
 				<li>
-					<a id="2">Estatus del estudiante</a>
+					<a href="index.jsp?portal=2">Estatus del estudiante</a>
 				</li>
 				<li>
-					<a id="3">Estatus del trabajador</a>
+					<a href="index.jsp?portal=3">Estatus del trabajador</a>
 				</li>
 				<li>
-					<a id="4">Datos Personales</a>
+					<a href="index.jsp?portal=4">Datos Personales</a>
 				</li>
 			</ul>	
 	</li>
@@ -32,17 +32,11 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 2</a>
 			<ul id="examen_fa">
 				<li >
-					<a id="5">EXAMEN MULTIF&Aacute;SICO</a>
+					<a href="index.jsp?portal=5">EXAMEN MULTIF&Aacute;SICO</a>
 				</li>
-			</ul>	
-	</li>
-	<li >
-		<a >PASO 2</a>
-			<ul id="examen_auto">
 				<li >
-					<a id="5">EXAMEN AUTOEVALUACI&Oacute;N</a>
+					<a href="index.jsp?portal=6">EXAMEN AUTOEVALUACI&Oacute;N</a>
 				</li>
-				
 			</ul>	
 	</li>
 	<li >
@@ -94,20 +88,7 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 	        checkElement.slideDown('normal');
 	        return false;
 	        }
-	      cadena = [ 'idmenu='     + $(this).attr("id"),
-		             'a=admin'
-		  		        ].join('&');
 	      
-		  $.ajax({
-			  url: "../SMenu",
-		        data: cadena,
-		  	    type: 'post',
-		        success: function(data){
-		        	window.location.href="index.jsp";
-		        }
-			
-		    });
-
 	      }
 	    );
 	  }

@@ -20,7 +20,7 @@
 	<a href="registrarse.jsp?a=registrarse&idregistro=2"><button id="bt_est_registro" class="button_registro">Estudiante de la Universidad de San Carlos de Guatemala</button></a>
 	<a href="registrarse.jsp?a=registrarse&idregistro=3"><button class="button_registro"  id="bt_tra_registro">Trabajador de la Universidad de San Carlos de Guatemala</button></a>
 	<a href="registrarse.jsp?a=registrarse&idregistro=4"><button class="button_registro"  id="bt_tra_registro">Estudiante y Trabajador de la Universidad de San Carlos de Guatemala</button></a>
-	<a href="registrarse.jsp?a=registrarse&idregistro=1"><button  class="button_registro" id="bt_tra_registro">Cortesia</button></a>
+	<a href="registrarse.jsp?a=registrarse&idregistro=1"><button  class="button_registro" id="bt_tra_registro">Poblaci&oacute;n en General(No estudiantes)</button></a>
 </div>	
 <% } %>
 <% if(idregistro>0){%>

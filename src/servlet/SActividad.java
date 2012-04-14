@@ -49,6 +49,8 @@ public class SActividad extends HttpServlet {
     	CValidation valid=new CValidation();
     	String action=valid.ValidarRequest(request.getParameter("a"));
 		Base64core base64=new Base64core();
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		
 		
 		HttpSession sessiones = request.getSession(false);
@@ -63,14 +65,14 @@ public class SActividad extends HttpServlet {
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idedificio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idedificio")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-									String responsable=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("responsable")));
-									String salon=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("salon")));
+									String responsable=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("responsable")),codificacion);
+									String salon=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("salon")),codificacion);
 									String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 									titulo=base64.decodificar(titulo);
-									titulo=valid.Limpiarvalor(titulo);
+									titulo=valid.Limpiarvalor(titulo,codificacion);
 									String contenido=(valid.ValidarRequest(request.getParameter("descripcion")));		
 									contenido=base64.decodificar(contenido);
-									contenido=valid.Limpiarvalor(contenido);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
 									
 									ArrayList<Integer>lista= valid.ValidarListaNumeros(responsable);
 									String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un area\"}");
@@ -123,14 +125,14 @@ public class SActividad extends HttpServlet {
 									int idactividad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idactividad")));
 									int idedificio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idedificio")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
-									String responsable=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("responsable")));
-									String salon=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("salon")));
+									String responsable=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("responsable")),codificacion);
+									String salon=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("salon")),codificacion);
 									String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 									titulo=base64.decodificar(titulo);
-									titulo=valid.Limpiarvalor(titulo);
+									titulo=valid.Limpiarvalor(titulo,codificacion);
 									String contenido=(valid.ValidarRequest(request.getParameter("descripcion")));		
 									contenido=base64.decodificar(contenido);
-									contenido=valid.Limpiarvalor(contenido);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
 									
 									ArrayList<Integer>lista= valid.ValidarListaNumeros(responsable);
 									String validacion=valid.ValidarSiesMayor(idactividad, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una actividad\"}");

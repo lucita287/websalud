@@ -33,7 +33,7 @@
 		          'cantidad_opc='+$("#cantidad_opc_pregunta").val(),
 		          <%for (int i=1;i<=t;i++) { %>
 		          "ponderacion<%=i%>="+$("#ponderacion<%=i%>").val(),
-		          "descrip_titu<%=i%>="+escape($("#descrip_titu<%=i%>").val()),
+		          "descrip_titu<%=i%>="+$("#descrip_titu<%=i%>").val(),
 		          <%}%>
 				].join('&');
 		return cadena;

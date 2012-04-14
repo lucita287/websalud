@@ -43,6 +43,8 @@ public class SEdificio extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
+    	String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	CValidation valid=new CValidation();
 		Base64core base64=new Base64core();
 		HttpSession sessiones = request.getSession(false);
@@ -56,9 +58,9 @@ public class SEdificio extends HttpServlet {
 								 //MODIFICAR EDIFICIO
 								 if(action.equalsIgnoreCase("guardar_edificio")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
-									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))));
-									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
+									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))),codificacion);
+									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")),codificacion);
 
 									String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Nombre"):validacion;
@@ -88,9 +90,9 @@ public class SEdificio extends HttpServlet {
 									//MODIFICAR EDIFICIO 
 								}else if(action.equalsIgnoreCase("modificar_edificio")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))));
-									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))));
-									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")));
+									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
+									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))),codificacion);
+									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")),codificacion);
 									int idedificio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idedificio")));
 									
 									String validacion=valid.ValidarSiesMayor(idedificio, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");

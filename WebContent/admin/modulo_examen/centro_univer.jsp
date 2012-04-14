@@ -60,7 +60,7 @@ dbo.Close();
 			  }
 			  cadena = [ 	'id_centro='   + idcentro,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_centro").val()),
+				            'nombre='+$("#nombre_centro").val(),
 				            'departamento='+$("#dep-centro").val()
 				        ].join('&');
 			  $.ajax({

@@ -44,6 +44,8 @@ public class SCategoriaTable extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		PrintWriter out = response.getWriter(); 
 		CValidation valid=new CValidation();			
 		
@@ -56,9 +58,9 @@ public class SCategoriaTable extends HttpServlet {
 							 dbo.Connect();
 							 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
 							 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
-							 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-							 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
-							 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
+							 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+							 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+							 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
 							 
 							 int min=((page-1)*rp)+1;
 							 int max=page*(rp);
@@ -89,8 +91,8 @@ public class SCategoriaTable extends HttpServlet {
 							CDataExam dbo=new CDataExam();
 							 dbo.Connect();
 							 int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
-							 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-							 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
+							 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+							 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
 							 
 							 int ordenar=1;					 
 							 if(order.equalsIgnoreCase("min")){

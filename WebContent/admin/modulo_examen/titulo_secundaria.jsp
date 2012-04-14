@@ -47,7 +47,7 @@
 			  }
 			  cadena = [ 	'id_tsecundaria='   + idtsecundaria,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_tsecundaria").val()),
+				            'nombre='+$("#nombre_tsecundaria").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SPropiedad",

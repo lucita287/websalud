@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CPaciente;
+import data.CParentesco;
 
 import framework.CDataExam;
 import framework.CValidationMensaje;
@@ -62,6 +63,8 @@ public class SPaciente extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		CValidationMensaje valid=new CValidationMensaje();
 		String action=valid.ValidarRequest(request.getParameter("a"));
 		
@@ -69,7 +72,7 @@ public class SPaciente extends HttpServlet {
 		dbo.Connect();
 		if(action.equalsIgnoreCase("user_disponibilidad")){
 			String result="{\"mensaje\":\"Disponible\"}";
-			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("user")));
+			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("user")),codificacion);
 			String validacion=valid.ValidarUsername(username);
 			
 			if(validacion.isEmpty()){
@@ -85,53 +88,48 @@ public class SPaciente extends HttpServlet {
 			int carne = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("carne")));
 			
 			int carrera = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("carrera")));
-			String nombre_carrera=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_carrera")));
-			
 			int centro = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("centro_registro")));
-			String nombre_centro=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_centro_registro")));
-			
 			int facultad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("facultad")));
-			String nombre_facultad=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_facultad")));
 			
 			int no_personal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("no_personal")));
 			int dependencia = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("dependencia")));
-			String nombre_dependencia=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_dependencia")));
-			
-			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")));
-			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")));
-			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")));
+			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
+			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
+			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
+			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
+			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
 			
 			
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
-			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")));
-			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")));
-			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
-			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")));
-			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username"))).toLowerCase();
-			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")));
+			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
+			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")),codificacion);
+			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
+			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")),codificacion);
+			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username")),codificacion).toLowerCase();
+			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")),codificacion);
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
+			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMCarne(carne,dbo);
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
 			mensaje+=valid.ValidarMPassword(password, password_confirm);
 			mensaje+=valid.ValidarMUsuario(username, dbo);
-			mensaje+=valid.ValidarMCombo(carrera,nombre_carrera,"Carrera");
-			mensaje+=valid.ValidarMCombo(facultad,nombre_facultad,"Facultad");
-			mensaje+=valid.ValidarMCombo(centro,nombre_centro,"Centro Regional");
-			mensaje+=valid.ValidarMCombo(dependencia,nombre_dependencia,"Dependenc&iacute;a");
+			mensaje+=valid.ValidarMCombo(carrera,"Carrera");
+			mensaje+=valid.ValidarMCombo(facultad,"Facultad");
+			mensaje+=valid.ValidarMCombo(centro,"Centro Regional");
+			mensaje+=valid.ValidarMCombo(dependencia,"Dependenc&iacute;a");
 			mensaje+=valid.ValidarMNoPersonal(no_personal);
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				
+				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						carne, direccion, tel_usuario, movil_usuario,
 						dbo.getEspecificoCarrera(carrera), dbo.getEspecificoCentro_Regional(centro),
 						dbo.getEspecificoUnidadAcademica(facultad), dbo.getEspecificoDependencia(dependencia), genero,
-						password, nombre_carrera, nombre_centro,
-						nombre_facultad, nombre_dependencia,email,username);
+						password, email,username,par,ced);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);		
 			}
@@ -139,119 +137,119 @@ public class SPaciente extends HttpServlet {
 			
 			int no_personal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("no_personal")));
 			int dependencia = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("dependencia")));
-			String nombre_dependencia=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_dependencia")));
 			
-			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")));
-			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")));
-			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")));
+			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
+			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
+			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
 			
-			
+			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
+			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
-			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")));
-			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")));
-			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
-			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")));
-			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username"))).toLowerCase();
-			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")));
+			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
+			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")),codificacion);
+			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
+			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")),codificacion);
+			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username")),codificacion).toLowerCase();
+			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")),codificacion);
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
+			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
 			mensaje+=valid.ValidarMPassword(password, password_confirm);
 			mensaje+=valid.ValidarMUsuario(username, dbo);
-			mensaje+=valid.ValidarMCombo(dependencia,nombre_dependencia,"Dependenc&iacute;a");
+			mensaje+=valid.ValidarMCombo(dependencia,"Dependenc&iacute;a");
 			mensaje+=valid.ValidarMNoPersonal(no_personal);
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				
+				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
 						null, null,null, dbo.getEspecificoDependencia(dependencia), genero,
-						password, "", "","", nombre_dependencia,email,username);
+						password,email,username,par,ced);
 				boolean b=dbo.SafePacienteTrab(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}	
 		}else if(action.equalsIgnoreCase("guardarestudiante")){
 			int carne = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("carne")));
-			
 			int carrera = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("carrera")));
-			String nombre_carrera=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_carrera")));
-			
 			int centro = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("centro_registro")));
-			String nombre_centro=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_centro_registro")));
-			
 			int facultad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("facultad")));
-			String nombre_facultad=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_facultad")));
 			
-			
-			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")));
-			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")));
-			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")));
-			
+			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
+			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
+			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
+			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
+			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
-			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")));
-			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")));
-			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
-			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")));
-			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username"))).toLowerCase();
-			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")));
+			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
+			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")),codificacion);
+			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
+			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")),codificacion);
+			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username")),codificacion).toLowerCase();
+			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")),codificacion);
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
+			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMCarne(carne,dbo);
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
 			mensaje+=valid.ValidarMPassword(password, password_confirm);
 			mensaje+=valid.ValidarMUsuario(username, dbo);
-			mensaje+=valid.ValidarMCombo(carrera,nombre_carrera,"Carrera");
-			mensaje+=valid.ValidarMCombo(facultad,nombre_facultad,"Facultad");
-			mensaje+=valid.ValidarMCombo(centro,nombre_centro,"Centro Regional");
+			mensaje+=valid.ValidarMCombo(carrera,"Carrera");
+			mensaje+=valid.ValidarMCombo(facultad,"Facultad");
+			mensaje+=valid.ValidarMCombo(centro,"Centro Regional");
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				
+				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						carne, direccion, tel_usuario, movil_usuario,
 						dbo.getEspecificoCarrera(carrera), dbo.getEspecificoCentro_Regional(centro),
 						dbo.getEspecificoUnidadAcademica(facultad), null, genero,
-						password, nombre_carrera, nombre_centro,
-						nombre_facultad, "",email,username);
+						password,email,username,par,ced);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}
 		}else if(action.equalsIgnoreCase("guardarcortesia")){
 			
 			
-			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")));
-			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")));
-			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")));
-			
+			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
+			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
+			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
+			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
+			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
-			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")));
-			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")));
-			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")));
-			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")));
-			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username"))).toLowerCase();
-			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")));
+			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
+			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")),codificacion);
+			String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
+			String password_confirm=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password_confirm")),codificacion);
+			String username=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("username")),codificacion).toLowerCase();
+			String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")),codificacion);
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
+			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
+			
 			mensaje+=valid.ValidarMPassword(password, password_confirm);
 			mensaje+=valid.ValidarMUsuario(username, dbo);
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				
+				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
 						null, null,null, null, genero,
-						password, "", "","", "",email,username);
+						password,email,username,par,ced);
+				
+				
 				boolean b=dbo.SafePacienteTrab(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}	

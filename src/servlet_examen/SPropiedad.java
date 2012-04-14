@@ -47,6 +47,8 @@ public class SPropiedad extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
     	CValidation valid=new CValidation();
+    	String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	String action=valid.ValidarRequest(request.getParameter("a"));
     	HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -58,7 +60,7 @@ public class SPropiedad extends HttpServlet {
 					if(action.equalsIgnoreCase("guardarcivil")&& (user_permiso.getIdpermiso().indexOf(239)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idcivil=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_civil")));
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						String validacion=valid.ValidarSiesMayor(idcivil, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
@@ -77,7 +79,7 @@ public class SPropiedad extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("newcivil")&& (user_permiso.getIdpermiso().indexOf(239)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 						
@@ -110,7 +112,7 @@ public class SPropiedad extends HttpServlet {
 					}else if(action.equalsIgnoreCase("guardartsangre")&& (user_permiso.getIdpermiso().indexOf(240)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idtsangre=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tsangre")));
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						String validacion=valid.ValidarSiesMayor(idtsangre, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
@@ -129,7 +131,7 @@ public class SPropiedad extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("newtsangre")&& (user_permiso.getIdpermiso().indexOf(240)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 						
@@ -162,7 +164,7 @@ public class SPropiedad extends HttpServlet {
 					}else if(action.equalsIgnoreCase("guardartsecundaria")&& (user_permiso.getIdpermiso().indexOf(242)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idtsecundaria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tsecundaria")));
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						String validacion=valid.ValidarSiesMayor(idtsecundaria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 150, "Descripcion"):validacion;
@@ -181,7 +183,7 @@ public class SPropiedad extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("newtsecundaria")&& (user_permiso.getIdpermiso().indexOf(242)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 						
@@ -214,7 +216,7 @@ public class SPropiedad extends HttpServlet {
 					}else if(action.equalsIgnoreCase("guardarparen")&& (user_permiso.getIdpermiso().indexOf(241)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idparen=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_paren")));
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						int grupo_familiar=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("grupo_familiar")));
 						int antecedentes=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("antecedentes")));
 						int emergencias=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("emergencias")));
@@ -235,7 +237,7 @@ public class SPropiedad extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("newparen")&& (user_permiso.getIdpermiso().indexOf(241)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						int grupo_familiar=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("grupo_familiar")));
 						int antecedentes=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("antecedentes")));
 						int emergencias=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("emergencias")));

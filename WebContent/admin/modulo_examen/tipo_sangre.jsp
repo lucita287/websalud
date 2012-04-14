@@ -41,7 +41,7 @@
 			  }
 			  cadena = [ 	'id_tsangre='   + idtsangre,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_tsangre").val()),
+				            'nombre='+$("#nombre_tsangre").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SPropiedad",

@@ -43,7 +43,8 @@ public class SUsuarioTable extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 response.setContentType("text/html;charset=UTF-8"); 
 			PrintWriter out = response.getWriter(); 
-		 
+			String codificacion=request.getCharacterEncoding();
+			codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		
 			HttpSession sessiones = request.getSession(false);
 			 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -55,10 +56,10 @@ public class SUsuarioTable extends HttpServlet {
 						 CValidation valid=new CValidation();
 						 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
 						 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
-						 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-						 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
-						 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")));
-						 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
+						 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+						 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+						 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")),codificacion);
+						 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
 						 int pqtype=1;
 						 if(qtype.trim().equalsIgnoreCase("nombre"))
 							 pqtype=2;

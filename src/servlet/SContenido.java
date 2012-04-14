@@ -46,6 +46,8 @@ public class SContenido extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		CValidation valid=new CValidation();
 		String action=valid.ValidarRequest(request.getParameter("a"));
 		 HttpSession sessiones = request.getSession(false);
@@ -57,9 +59,9 @@ public class SContenido extends HttpServlet {
 								//MODIFICAR CONTENIDO
 								if(action.equalsIgnoreCase("guardaredit")&& (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String titulo=base64.decodificar(valid.ValidarRequest(request.getParameter("titulo")));
-									titulo=valid.Limpiarvalor(titulo);
+									titulo=valid.Limpiarvalor(titulo, codificacion);
 									String contenido=base64.decodificar(valid.ValidarRequest(request.getParameter("contenido")));
-									contenido=valid.Limpiarvalor(contenido);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
 									int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 									int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
 									String result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe llenar todos los campos\"}";
@@ -87,16 +89,19 @@ public class SContenido extends HttpServlet {
 									out.println(result);
 									//MOSTRAR CONTENIDO	
 								}else if(action.equalsIgnoreCase("editconte")&& (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-									int idcontenido=Integer.parseInt(request.getParameter("idcontenido"));
+									int idcontenido=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcontenido")));
 									CContenido contenido=dbo.getContenido(idcontenido);
+									if(contenido!=null){
 									String result="{titulo:\""+contenido.gettitulo()+"\",descripcion:\""+contenido.getdescripcion()+"\",idimagen:"+contenido.getmultimedia().getidimagen()+",direccion:\""+contenido.getmultimedia().getdireccion_relativa()+"\"}";
+									
 									out.println(base64.codificar(result));
+									}
 									//MODIFICAR CONTENIDO
 								}else if(action.equalsIgnoreCase("updateedit")&& (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String titulo=base64.decodificar(request.getParameter("titulo"));
 									String contenido=base64.decodificar(request.getParameter("contenido"));
-									contenido=valid.Limpiarvalor(contenido);
-									titulo=valid.Limpiarvalor(titulo);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
+									titulo=valid.Limpiarvalor(titulo,codificacion);
 									int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 									int idcontenido=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idconte")));
 									

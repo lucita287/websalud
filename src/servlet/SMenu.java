@@ -45,6 +45,8 @@ public class SMenu extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
 		CValidation valid=new CValidation();
@@ -80,10 +82,10 @@ public class SMenu extends HttpServlet {
 								int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 								String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 								titulo=base64.decodificar(titulo);
-								titulo=valid.Limpiarvalor(titulo);
+								titulo=valid.Limpiarvalor(titulo,codificacion);
 								String contenido=(valid.ValidarRequest(request.getParameter("contenido")));		
 								contenido=base64.decodificar(contenido);
-								contenido=valid.Limpiarvalor(contenido);
+								contenido=valid.Limpiarvalor(contenido,codificacion);
 								String validacion=valid.ValidarSiesMayor(idmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 								validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "titulo"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
@@ -121,10 +123,10 @@ public class SMenu extends HttpServlet {
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 									titulo=base64.decodificar(titulo);
-									titulo=valid.Limpiarvalor(titulo);
+									titulo=valid.Limpiarvalor(titulo,codificacion);
 									String contenido=valid.ValidarRequest(request.getParameter("contenido"));
 									contenido=base64.decodificar(contenido);
-									contenido=valid.Limpiarvalor(contenido);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
 									int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("area")));
 									int idsubmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("submenu")));

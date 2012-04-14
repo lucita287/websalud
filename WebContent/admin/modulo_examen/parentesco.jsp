@@ -65,7 +65,7 @@
 			  }
 			  cadena = [ 	'id_paren='   + idparen,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_paren").val()),
+				            'nombre='+$("#nombre_paren").val(),
 				            'grupo_familiar='+(($("#grupo_familiar").is(":checked")==true)?1:0),
 				            'antecedentes='+(($("#antecedentes").is(":checked")==true)?1:0),
 				            'emergencias='+(($("#emergencias").is(":checked")==true)?1:0),

@@ -43,6 +43,8 @@ public class SArea extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		PrintWriter out = response.getWriter(); 		
 		Base64core base64=new Base64core();
 		CValidation valid=new CValidation();
@@ -67,7 +69,7 @@ public class SArea extends HttpServlet {
 			int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 			String contenido=(valid.ValidarRequest(request.getParameter("contenido")));		
 			contenido=base64.decodificar(contenido);
-			contenido=valid.Limpiarvalor(contenido);
+			contenido=valid.Limpiarvalor(contenido,codificacion);
 			int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmultimedia")));
 			int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 			String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");

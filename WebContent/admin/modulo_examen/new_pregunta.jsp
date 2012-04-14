@@ -27,14 +27,15 @@ data.Close();
     function preguntaForm(){
     	
     	cadena = [ 	'a=NewPregunta',
-		            'pregunta='+escape($("#pregunta_pregunta").val()),
-		            'categoria='+escape($("#categoria_pregunta").val()),
-		            'tipo='+escape($("#tipo_pregunta").val()),
+		            'pregunta='+$("#pregunta_pregunta").val(),
+		            'categoria='+$("#categoria_pregunta").val(),
+		            'tipo='+$("#tipo_pregunta").val(),
 		            'requerida='+$("input[name='obligatoria']:checked").val(),
 		            'auto='+(($('#auto_pregunta').is(':checked')==true)?"1":"0"),
 		            'multifa='+(($("#multifa_pregunta").is(':checked')==true)?"1":"0"),
-		            'descrip='+escape($("#descripcion_pregunta").val()),
-		            'orden='+escape($("#orden_pregunta").val())
+		            'descrip='+$("#descripcion_pregunta").val(),
+		            'orden='+$("#orden_pregunta").val(),
+		            'estado='+$("#estado_pregunta").val()
 		        ].join('&');
     	cadena=cadena+"&"+mensaje_cadena();
     	
@@ -48,6 +49,7 @@ data.Close();
 	        	mensaje(data.mensaje);
 	        	if(data.resultado=='OK'){
 	        		$( "#dialog-form" ).dialog( "close" );
+	        		$('#Pregunta_table').flexReload();
 	        	}
 	        }
 	    });

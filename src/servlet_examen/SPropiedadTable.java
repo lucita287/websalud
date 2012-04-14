@@ -48,7 +48,8 @@ public class SPropiedadTable extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
 		CValidation valid=new CValidation();			
-		
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
@@ -91,9 +92,9 @@ public class SPropiedadTable extends HttpServlet {
 					 dbo.Connect();
 					 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
 					 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
-					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
-					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
+					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
 					 
 					 int min=((page-1)*rp)+1;
 					 int max=page*(rp);
@@ -125,9 +126,9 @@ public class SPropiedadTable extends HttpServlet {
 					 dbo.Connect();
 					 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
 					 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
-					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
-					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")));
+					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
 					 
 					 int min=((page-1)*rp)+1;
 					 int max=page*(rp);

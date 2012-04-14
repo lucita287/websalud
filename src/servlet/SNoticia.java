@@ -50,6 +50,8 @@ public class SNoticia extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
+    	String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	CValidation valid=new CValidation();
     	String action=valid.ValidarRequest(request.getParameter("a"));
 		Base64core base64=new Base64core();
@@ -72,13 +74,13 @@ public class SNoticia extends HttpServlet {
 									int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 									String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 									titulo=base64.decodificar(titulo);
-									titulo=valid.Limpiarvalor(titulo);
+									titulo=valid.Limpiarvalor(titulo,codificacion);
 									String contenido=(valid.ValidarRequest(request.getParameter("contenido")));		
 									contenido=base64.decodificar(contenido);
-									contenido=valid.Limpiarvalor(contenido);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
 									String descripcion=(valid.ValidarRequest(request.getParameter("descripcion")));		
 									descripcion=base64.decodificar(descripcion);
-									descripcion=valid.Limpiarvalor(descripcion);
+									descripcion=valid.Limpiarvalor(descripcion,codificacion);
 									
 									String fecha_inicio=(valid.ValidarRequest(request.getParameter("fecha_inicio")));		
 									fecha_inicio=base64.decodificar(fecha_inicio);
@@ -131,17 +133,17 @@ public class SNoticia extends HttpServlet {
 									int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 									String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 									titulo=base64.decodificar(titulo);
-									titulo=valid.Limpiarvalor(titulo);
+									titulo=valid.Limpiarvalor(titulo,codificacion);
 									String contenido=(valid.ValidarRequest(request.getParameter("contenido")));		
 									contenido=base64.decodificar(contenido);
-									contenido=valid.Limpiarvalor(contenido);
+									contenido=valid.Limpiarvalor(contenido,codificacion);
 									String fecha_inicio=(valid.ValidarRequest(request.getParameter("fecha_inicio")));		
 									fecha_inicio=base64.decodificar(fecha_inicio);
 									String fecha_fin=(valid.ValidarRequest(request.getParameter("fecha_fin")));		
 									fecha_fin=base64.decodificar(fecha_fin);
 									String descripcion=(valid.ValidarRequest(request.getParameter("descripcion")));		
 									descripcion=base64.decodificar(descripcion);
-									descripcion=valid.Limpiarvalor(descripcion);
+									descripcion=valid.Limpiarvalor(descripcion,codificacion);
 									
 									String validacion=valid.ValidarSiesMayor(idnoticia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un area\"}"):validacion;

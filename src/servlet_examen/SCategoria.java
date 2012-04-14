@@ -46,6 +46,8 @@ public class SCategoria extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
     	CValidation valid=new CValidation();
+    	String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	String action=valid.ValidarRequest(request.getParameter("a"));
     	HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -58,7 +60,7 @@ public class SCategoria extends HttpServlet {
 					if(action.equalsIgnoreCase("guardarcate")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idcate=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_cate")));
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
@@ -81,7 +83,7 @@ public class SCategoria extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("newcate")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
@@ -127,7 +129,7 @@ public class SCategoria extends HttpServlet {
 					}else if(action.equalsIgnoreCase("safe_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
-						String interpretacion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("interpretacion"))));
+						String interpretacion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("interpretacion"))),codificacion);
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
@@ -150,7 +152,7 @@ public class SCategoria extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("new_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String interpretacion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("interpretacion"))));
+						String interpretacion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("interpretacion"))),codificacion);
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
