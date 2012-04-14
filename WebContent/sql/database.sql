@@ -129,7 +129,6 @@ CREATE TABLE pregunta (
   multifasico          int(11) NOT NULL, 
   largo                int(10) comment '1->pequeño,2->mediano,3->Grande', 
   multiple             int(11), 
-  idgrupo              int(11), 
   estado               int(11) DEFAULT 1 NOT NULL, 
   PRIMARY KEY (idpregunta));
 CREATE TABLE categoria (
@@ -171,12 +170,11 @@ CREATE TABLE paciente (
   unidad_academicaidunidad_academica   int(11), 
   titulo_secundariaidtitulo_secundaria int(11), 
   dependenciaiddependencia             int(11), 
-  nombre_carrera                       varchar(80), 
-  nombre_centro                        varchar(80), 
-  nombre_dependencia                   varchar(80), 
-  nombre_unidad_academica              varchar(80), 
   password                             varchar(50), 
   usuario                              varchar(20), 
+  parentesco_ced                       int(11), 
+  ced                                  varchar(50) NOT NULL, 
+  sexo                                 int(11) DEFAULT 1 NOT NULL, 
   PRIMARY KEY (idpaciente));
 CREATE TABLE estado_civil (
   idestado_civil int(11) NOT NULL AUTO_INCREMENT, 
@@ -290,5 +288,5 @@ ALTER TABLE categoria_interpretacion ADD INDEX FKcategoria_569059 (idcategoria),
 ALTER TABLE pregunta ADD INDEX FKpregunta916024 (categoriaidcategoria), ADD CONSTRAINT FKpregunta916024 FOREIGN KEY (categoriaidcategoria) REFERENCES categoria (idcategoria);
 ALTER TABLE pregunta ADD INDEX FKpregunta179647 (idtipo_pregunta), ADD CONSTRAINT FKpregunta179647 FOREIGN KEY (idtipo_pregunta) REFERENCES tipo_pregunta (idtipo_pregunta);
 ALTER TABLE grupo_titulo_respuesta ADD INDEX FKgrupo_titu508512 (grupoidgrupo), ADD CONSTRAINT FKgrupo_titu508512 FOREIGN KEY (grupoidgrupo) REFERENCES grupo (idgrupo);
-ALTER TABLE pregunta ADD INDEX FKpregunta677186 (idgrupo), ADD CONSTRAINT FKpregunta677186 FOREIGN KEY (idgrupo) REFERENCES grupo (idgrupo);
 ALTER TABLE tipo_pregunta ADD INDEX FKtipo_pregu253906 (idgrupo), ADD CONSTRAINT FKtipo_pregu253906 FOREIGN KEY (idgrupo) REFERENCES grupo (idgrupo);
+ALTER TABLE paciente ADD INDEX FKpaciente522871 (parentesco_ced), ADD CONSTRAINT FKpaciente522871 FOREIGN KEY (parentesco_ced) REFERENCES parentesco (idparentesco);
