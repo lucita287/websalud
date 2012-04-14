@@ -9,6 +9,7 @@
     <%@ page import="data.CUnidad_Academica" %>
     <%@ page import="data.CCarrera" %>
     <%@ page import="data.CDependencia" %>
+    <%@ page import="data.CParentesco" %>
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="java.util.Iterator" %>
 <%
@@ -16,6 +17,7 @@
 		int idregistro=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idregistro")));		
 		CDataExam	data=new CDataExam();
 		data.Connect();
+		ArrayList<CParentesco> lista_paren=data.getListaParentesco(0,1,0);
 		String a="";
 		if(idregistro==4)
 			a="guardarpaciente";
@@ -28,52 +30,7 @@
 %>
 
     <script  type="text/javascript">
-    <% if(idregistro==2||idregistro==4){ %>
-    function cambiarCentro(){ 
-		  if($("#centro_registro").val()==0){
-			  	$("#oculto_centro_registro").show();
-			  	$("#nombre_centro_registro").val("");
-		  }else{
-			  $("#oculto_centro_registro").hide();
-		  }
-    }	
-    function cambiarFacultad(){
-    	if($("#facultad").val()==0){
-		  	$("#oculto_facultad").show();
-		  	$("#nombre_facultad").val("");
-	  }else{
-		  $("#oculto_facultad").hide();
-	  }
-    }
-    
-    function CambiarCarrera(){
-    	if($("#carrera").val()==0){
-		  	$("#oculto_carrera").show();
-		  	$("#nombre_carrera").val("");
-		  }else{
-			  $("#oculto_carrera").hide();
-		  }  
-	  }
-    <%} if(idregistro==3||idregistro==4){ %>
-    function CambiarDependencia(){
-    	if($("#dependencia").val()==0){
-		  	$("#oculto_dependencia").show();
-		  	$("#nombre_dependencia").val("");
-		  }else{
-			  $("#oculto_dependencia").hide();
-		  }
-    }
-    <% } %>
 			  $(document).ready(function () {
-				  
-				  <% if(idregistro==2||idregistro==4){ %>	  
-				  if($("#centro_registro").val()!=0){$("#oculto_centro_registro").hide();}
-				  if($("#facultad").val()!=0){ $("#oculto_facultad").hide(); }
-				  if($("#carrera").val()!=0){ $("#oculto_carrera").hide(); }
-				  <% }  if(idregistro==3||idregistro==4){ %>
-				  if($("#dependencia").val()!=0){$("#oculto_dependencia").hide();}
-				  <% } %>
-				  
 				  
 				  $( ".info-btt" ).button({
 			            icons: {
@@ -89,17 +46,20 @@
 								number: true
 							},
 							centro_registro: {
-								min:0
+								min:1,
+								required: true
 							},
 							facultad: {
-								min:0
+								min:1,
+								required: true
 							},
 							carrera: {
-								min:0
+								min:1,
+								required: true
 							},
 							<% } if(idregistro==3||idregistro==4){%>
 							dependencia: {
-								min:0
+								min:1
 							},
 							no_personal:{
 								required: true,
@@ -133,7 +93,8 @@
 							},
 							<% } if(idregistro==3||idregistro==4){%>
 							dependencia: {
-								min:"Seleccione su Dependencia"
+								min:"Seleccione su Dependencia",
+								required: true
 							},
 							<% } %>
 							username: {
@@ -170,9 +131,9 @@
 			  
 			  
 	</script>
-	<form class="cmxform" id="registro" method="post" action="SPaciente">
+	<form class="cmxform" id="registro" method="post" action="SPaciente" accept-charset="UTF-8">
 	<input type="hidden" id="a" name="a" value="<%=a %>" />
-	<div class="registro_user">
+	<div class="registro_user"> 
 	<% if(idregistro==2||idregistro==4){ 
 		ArrayList<CCentro_Regional> centro=data.getListaCentro_Regional();
 		ArrayList<CUnidad_Academica> facultad=data.getListaUnidad_Academica();
@@ -187,8 +148,8 @@
 						<div class="fila">
 									<div class="col_titulo">*Centro Universitario</div>
 									<div class="col">
-										<select id="centro_registro" onchange="cambiarCentro()" name="centro_registro" >
-												<option value="-1">SELECCIONE SU CENTRO UNIVERSITARIO</option>
+										<select id="centro_registro"  name="centro_registro" >
+												<option value="0">SELECCIONE SU CENTRO UNIVERSITARIO</option>
 										<%
 										Iterator<CCentro_Regional> it=centro.iterator();
 										while (it.hasNext()) {
@@ -196,24 +157,16 @@
 												out.println("<option value=\""+cen.getIdcentro_regional()+"\">"+cen.getNombre()+"</option>");
 										    }
 											%>			
-												<option value="0">OTRO</option>	
 										</select>
 										
 									</div>
 						</div>
-			<div id="oculto_centro_registro">
-					<div class="fila">
-									<div class="col_titulo">*Ingrese su Centro Regional</div>
-									<div class="col">
-										<input type="text" id="nombre_centro_registro" name="nombre_centro_registro"  />
-									</div>
-						</div>
-			</div>			
+					
 						<div class="fila">
 									<div class="col_titulo">*Facultad</div>
 									<div class="col">
-										<select id="facultad" name="facultad" onchange="cambiarFacultad()">
-												<option value="-1">SELECCIONE SU FACULTAD</option>	
+										<select id="facultad" name="facultad" >
+												<option value="0">SELECCIONE SU FACULTAD</option>	
 												<%
 										Iterator<CUnidad_Academica> it2=facultad.iterator();
 										while (it2.hasNext()) {
@@ -221,23 +174,18 @@
 												out.println("<option value=\""+fac.getIdunidad_academica()+"\">"+fac.getNombre()+"</option>");
 										    }
 											%>			
-												<option value="0">OTRO</option>
 										</select>
 									</div>
 						</div>
-			<div id="oculto_facultad">
-					<div class="fila">
-									<div class="col_titulo">*Ingrese su Facultad</div>
-									<div class="col">
-										<input type="text" id="nombre_facultad" name="nombre_facultad"   />
-									</div>
-						</div>
-			</div>			
+						
 						<div class="fila">
 									<div class="col_titulo">*Carrera</div>
+									
+						</div>
+						<div class="fila">
 									<div class="col">
-										<select id="carrera" name="carrera" onchange="CambiarCarrera()">
-												<option value="-1">SELECCIONE SU CARRERA</option>	
+										<select id="carrera" name="carrera" >
+												<option value="0">SELECCIONE SU CARRERA</option>	
 												<%
 													Iterator<CCarrera> it3=carrera.iterator();
 													while (it3.hasNext()) {
@@ -245,18 +193,10 @@
 															out.println("<option value=\""+car.getIdcarrera()+"\">"+car.getNombre()+"</option>");
 													    }
 												%>
-												<option value="0">OTRO</option>
 										</select>
 									</div>
 						</div>
-			<div id="oculto_carrera">
-					<div class="fila">
-									<div class="col_titulo">*Ingrese su Carrera</div>
-									<div class="col">
-										<input type="text" id="nombre_carrera" name="nombre_carrera"   />
-									</div>
-						</div>
-			</div>			
+						
 		</div>												
 		
 	
@@ -277,8 +217,8 @@
 						<div class="fila">			
 									<div class="col_titulo">*Dependencia</div>
 									<div class="col">
-										<select id="dependencia" name="dependencia" onchange="CambiarDependencia()">
-												<option value="-1">SELECCIONE LA DEPENDENC&Iacute;A</option>	
+										<select id="dependencia" name="dependencia" >
+												<option value="0">SELECCIONE LA DEPENDENC&Iacute;A</option>	
 												<%
 													Iterator<CDependencia> it4=lista_dep.iterator();
 													while (it4.hasNext()) {
@@ -286,18 +226,10 @@
 															out.println("<option value=\""+car.getIddependencia()+"\">"+car.getNombre()+"</option>");
 													    }
 												%>
-												<option value="0">OTRO</option>
 										</select>
 									</div>
 						</div>
-						<div id="oculto_dependencia">
-								<div class="fila">
-												<div class="col_titulo">*Ingrese su dependencia</div>
-												<div class="col">
-													<input type="text" id="nombre_dependencia" name="nombre_dependencia"   />
-												</div>
-									</div>
-						</div>
+						
 			</div>
 		<div style="clear: both;"></div>															
 	<% }%>	
@@ -334,6 +266,21 @@
 									</div>
 						</div>
 						<div class="fila">
+									<div class="col_titulo">*Cedula/DPI</div>
+									<div class="col">
+									
+										<select id="paren_usuario" name="paren_usuario" >
+										<option value="0">SOY MAYOR DE EDAD</option>
+									<%
+										Iterator<CParentesco> it_paren=lista_paren.iterator();
+										while(it_paren.hasNext()){
+											CParentesco paren= it_paren.next();
+											out.println("<option value=\""+paren.getIdparentesco()+"\">Responsable "+paren.getNombre()+"</option>");
+										}
+									%>	</select><input type="text" id="ced_usuario" name="ced_usuario" class="required"  size="25"/>
+									</div>
+						</div>
+						<div class="fila">
 									<div class="col_titulo">Telefono</div>
 									<div class="col">
 									<input type="text" id="tel_usuario" name="tel_usuario"   size="30"/>
@@ -365,8 +312,8 @@
 									</div>
 						</div>
 						<div class="fila">
-									<div class="col_titulo">*Correo Electronico</div>
-									<div class="col"><input type="text" id="correo_electronico" name="correo_electronico"  class="required email" size="50"/></div>
+									<div class="col_titulo">Correo Electronico</div>
+									<div class="col"><input type="text" id="correo_electronico" name="correo_electronico"  size="50"/></div>
 						</div>
 						<div class="fila">
 									<div class="col_titulo">*Ingrese el texto</div>

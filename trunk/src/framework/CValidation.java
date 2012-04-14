@@ -1,5 +1,6 @@
 package framework;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -113,18 +114,28 @@ public class CValidation {
 		
 		return date1;
 	}
-	
-	public String Limpiarvalor(String campo){
+
+
+	public String Limpiarvalor(String campo,String codificacion){
 		//campo=JavascriptUtil.unescapeJavaScript(campo);
 		campo=campo.replaceAll("\"", "'");
 		campo=campo.replaceAll("\t", " ");
 		campo=campo.replaceAll("\r", " ");
 		campo=campo.replaceAll("\f", " ");
 		campo=campo.replaceAll("\n", " ");
-		campo=campo.trim();
-		
+		    campo=campo.trim();
+		    byte[] arrByte;
+			try {
+				arrByte = campo.getBytes(codificacion);
+				campo = new String(arrByte, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				
+			}
+			
 		return campo;
 	}
+
+
 	public int ConvertEntero(String num){
 		int result=0;
 		try{

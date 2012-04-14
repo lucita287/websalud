@@ -91,16 +91,16 @@
 		
 					cadena = [ 	'idusuario='   + editiduser,
 				             	'a='+action,
-					            'name='+escape($("#user_name").val()),
-					            'apellido='+escape($("#user_last_name").val()),
-					            'nick='     + escape($("#nick").val()),
-					            'phone='     + escape($("#user_phone").val()),
-					            'email='     + escape($("#user_email").val()),
-					            'no_personal='     + escape($("#no_personal").val()),
-					            'password='+escape($("#user_pass").val()),
-					            'password2='+escape($("#user_pass2").val()),
+					            'name='+$("#user_name").val(),
+					            'apellido='+$("#user_last_name").val(),
+					            'nick='     + $("#nick").val(),
+					            'phone='     + $("#user_phone").val(),
+					            'email='     + $("#user_email").val(),
+					            'no_personal='     + $("#no_personal").val(),
+					            'password='+$("#user_pass").val(),
+					            'password2='+$("#user_pass2").val(),
 					            'estado='+$('#user_estado').val(),
-					            'no_personal='+escape($("#no_personal").val()),
+					            'no_personal='+$("#no_personal").val(),
 					            
 					        ].join('&');
 					

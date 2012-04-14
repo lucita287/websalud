@@ -48,6 +48,8 @@ public class SCarrera extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8"); 
     	PrintWriter out = response.getWriter(); 
     	CValidation valid=new CValidation();
+    	String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	String action=valid.ValidarRequest(request.getParameter("a"));
     	HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -61,7 +63,7 @@ public class SCarrera extends HttpServlet {
 						if(action.equalsIgnoreCase("guardarcarrera")&& (user_permiso.getIdpermiso().indexOf(243)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 							int idcarrera=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_carrera")));
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							String validacion=valid.ValidarSiesMayor(idcarrera, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
@@ -80,7 +82,7 @@ public class SCarrera extends HttpServlet {
 							
 						}else if(action.equalsIgnoreCase("newcarrera")&& (user_permiso.getIdpermiso().indexOf(243)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="";
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 							
@@ -113,7 +115,7 @@ public class SCarrera extends HttpServlet {
 						}else if(action.equalsIgnoreCase("guardarcentro")&& (user_permiso.getIdpermiso().indexOf(244)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 							int idcentro=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_centro")));
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							int iddepartamento=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("departamento")));
 							String validacion=valid.ValidarSiesMayor(idcentro, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
@@ -134,7 +136,7 @@ public class SCarrera extends HttpServlet {
 							
 						}else if(action.equalsIgnoreCase("newcentro")&& (user_permiso.getIdpermiso().indexOf(244)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="";
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							int iddepartamento=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("departamento")));
 							String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
@@ -169,7 +171,7 @@ public class SCarrera extends HttpServlet {
 						}else if(action.equalsIgnoreCase("guardarfacultad")&& (user_permiso.getIdpermiso().indexOf(245)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 							int idfacultad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_facultad")));
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							String validacion=valid.ValidarSiesMayor(idfacultad, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
@@ -188,7 +190,7 @@ public class SCarrera extends HttpServlet {
 							
 						}else if(action.equalsIgnoreCase("newfacultad")&& (user_permiso.getIdpermiso().indexOf(245)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="";
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 							
@@ -221,7 +223,7 @@ public class SCarrera extends HttpServlet {
 						}if(action.equalsIgnoreCase("guardardependencia")&& (user_permiso.getIdpermiso().indexOf(249)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 							int iddependencia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_dependencia")));
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							String validacion=valid.ValidarSiesMayor(iddependencia, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
@@ -240,7 +242,7 @@ public class SCarrera extends HttpServlet {
 							
 						}else if(action.equalsIgnoreCase("newdependencia")&& (user_permiso.getIdpermiso().indexOf(249)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							String result="";
-							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")));
+							String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 							String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 							validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 							

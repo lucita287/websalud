@@ -1,6 +1,8 @@
 package data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class CPaciente {
 	private int idpaciente;
@@ -16,12 +18,11 @@ public class CPaciente {
 	private CDependencia iddependencia;
 	private int sexo;
 	private String password;
-	private String nombre_carrera;
-	private String nombre_centro;
-	private String nombre_unidad;
-	private String nombre_dependencia;
 	private String email;
 	private String usuario;
+	private CParentesco parentesco_ced;
+	private String cedula;
+	
 	/**
 	 * @param idpaciente
 	 * @param nombre
@@ -41,14 +42,16 @@ public class CPaciente {
 	 * @param nombre_unidad
 	 * @param nombre_dependencia
 	 * @param email
-	 * @param usuario 
+	 * @param usuario
+	 * @param parentesco_ced
+	 * @param cedula
 	 */
 	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
 			int carne, String direccion, String telefono, String movil,
 			CCarrera idcarrera, CCentro_Regional idcentro,
 			CUnidad_Academica idunidad, CDependencia iddependencia, int sexo,
-			String password, String nombre_carrera, String nombre_centro,
-			String nombre_unidad, String nombre_dependencia,String email,String usuario) {
+			String password, String email,
+			String usuario, CParentesco parentesco_ced, String cedula) {
 		this.idpaciente = idpaciente;
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -62,14 +65,45 @@ public class CPaciente {
 		this.iddependencia = iddependencia;
 		this.sexo = sexo;
 		this.password = password;
-		this.nombre_carrera = nombre_carrera;
-		this.nombre_centro = nombre_centro;
-		this.nombre_unidad = nombre_unidad;
-		this.nombre_dependencia = nombre_dependencia;
-		this.email=email;
-		this.usuario=usuario;
+		this.email = email;
+		this.usuario = usuario;
+		this.parentesco_ced = parentesco_ced;
+		this.cedula = cedula;
 	}
+
 	
+	/**
+	 * @return the parentesco_ced
+	 */
+	public CParentesco getParentesco_ced() {
+		return parentesco_ced;
+	}
+
+
+	/**
+	 * @param parentesco_ced the parentesco_ced to set
+	 */
+	public void setParentesco_ced(CParentesco parentesco_ced) {
+		this.parentesco_ced = parentesco_ced;
+	}
+
+
+	/**
+	 * @return the cedula
+	 */
+	public String getCedula() {
+		return cedula;
+	}
+
+
+	/**
+	 * @param cedula the cedula to set
+	 */
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+
 	/**
 	 * @return the usuario
 	 */
@@ -254,53 +288,9 @@ public class CPaciente {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	/**
-	 * @return the nombre_carrera
-	 */
-	public String getNombre_carrera() {
-		return nombre_carrera;
-	}
-	/**
-	 * @param nombre_carrera the nombre_carrera to set
-	 */
-	public void setNombre_carrera(String nombre_carrera) {
-		this.nombre_carrera = nombre_carrera;
-	}
-	/**
-	 * @return the nombre_centro
-	 */
-	public String getNombre_centro() {
-		return nombre_centro;
-	}
-	/**
-	 * @param nombre_centro the nombre_centro to set
-	 */
-	public void setNombre_centro(String nombre_centro) {
-		this.nombre_centro = nombre_centro;
-	}
-	/**
-	 * @return the nombre_unidad
-	 */
-	public String getNombre_unidad() {
-		return nombre_unidad;
-	}
-	/**
-	 * @param nombre_unidad the nombre_unidad to set
-	 */
-	public void setNombre_unidad(String nombre_unidad) {
-		this.nombre_unidad = nombre_unidad;
-	}
-	/**
-	 * @return the nombre_dependencia
-	 */
-	public String getNombre_dependencia() {
-		return nombre_dependencia;
-	}
-	/**
-	 * @param nombre_dependencia the nombre_dependencia to set
-	 */
-	public void setNombre_dependencia(String nombre_dependencia) {
-		this.nombre_dependencia = nombre_dependencia;
+	public String getFormatoFechaDes(Date date){
+		SimpleDateFormat formatter = new SimpleDateFormat("E ',' dd 'de' MMMM 'de' yyyy", new Locale("es"));
+		return formatter.format(date);
 	}
 	
 }

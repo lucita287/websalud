@@ -46,7 +46,8 @@ public class SFecha_actividadTable extends HttpServlet {
 		 response.setContentType("text/html;charset=UTF-8"); 
 			PrintWriter out = response.getWriter(); 
 						
-			
+			String codificacion=request.getCharacterEncoding();
+			codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 			HttpSession sessiones = request.getSession(false);
 			 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
@@ -56,10 +57,10 @@ public class SFecha_actividadTable extends HttpServlet {
 						 CValidation valid=new CValidation();
 						 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
 						 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
-						 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-						 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
-						 String fecha_inicio=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_ini")));
-						 String fecha_fin=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_fin")));
+						 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+						 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+						 String fecha_inicio=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_ini")),codificacion);
+						 String fecha_fin=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_fin")),codificacion);
 						 
 						 fecha_inicio=(fecha_inicio.trim().compareTo("")==0)?fecha_fin:fecha_inicio;
 						 fecha_fin=(fecha_fin.trim().compareTo("")==0)?fecha_inicio:fecha_fin;

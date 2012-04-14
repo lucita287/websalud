@@ -75,11 +75,11 @@
 			  }
 			  cadena = [ 	'id_cate='   + idcate,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_cate").val()),
+				            'nombre='+$("#nombre_cate").val(),
 				            'auto='+(($("#auto_cate").is(":checked")==true)?1:0),
 				            'multifa='+(($("#multifa_cate").is(":checked")==true)?1:0),
-				            'orden='+escape($("#orden_cate").val()),
-				            'estado='+escape($("#estado_pregunta").val()),
+				            'orden='+$("#orden_cate").val(),
+				            'estado='+$("#estado_pregunta").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SCategoria",

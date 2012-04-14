@@ -41,7 +41,7 @@
 			  }
 			  cadena = [ 	'id_civil='   + idcivil,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_civil").val()),
+				            'nombre='+$("#nombre_civil").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SPropiedad",

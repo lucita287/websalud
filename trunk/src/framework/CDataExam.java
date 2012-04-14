@@ -710,7 +710,7 @@ public class CDataExam extends CDataBase {
 		ArrayList<CCentro_Regional> lista=new ArrayList<CCentro_Regional>();
 		try{
 			String sql=" SELECT ct.idcentro_regional, ct.nombre centro_regional, ct.departamentoiddepartamento , dep.nombre depto_nombre"+
-					" FROM centro_regional ct left outer join departamento dep on dep.iddepartamento=ct.departamentoiddepartamento ";
+					" FROM centro_regional ct left outer join departamento dep on dep.iddepartamento=ct.departamentoiddepartamento order by  ct.nombre asc";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
@@ -730,7 +730,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CUnidad_Academica> getListaUnidad_Academica(){
 		ArrayList<CUnidad_Academica> lista=new ArrayList<CUnidad_Academica>();
 		try{
-			String sql=" SELECT idunidad_academica, nombre FROM unidad_academica ";
+			String sql=" SELECT idunidad_academica, nombre FROM unidad_academica order by nombre asc";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
@@ -748,7 +748,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CCarrera> getListaCarrera(){
 		ArrayList<CCarrera> lista=new ArrayList<CCarrera>();
 		try{
-			String sql=" SELECT idcarrera, nombre FROM carrera ";
+			String sql=" SELECT idcarrera, nombre FROM carrera order by nombre asc ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
@@ -903,9 +903,9 @@ public class CDataExam extends CDataBase {
 		try {
 			String sql="INSERT INTO paciente( nombre, fecha_nac, carne, direccion, telefono, movil,  "
 					+"  email, carreraidcarrera, centro_regionalidcentro_regional, unidad_academicaidunidad_academica,  "
-					+"  dependenciaiddependencia, nombre_carrera, nombre_centro, nombre_dependencia, nombre_unidad_academica, "
-					+"   password, usuario)  "
-					+"   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+					+"  dependenciaiddependencia,  "
+					+"   password, usuario, parentesco_ced,  ced,sexo)  "
+					+"   VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			
 			stm = (PreparedStatement)conn.prepareStatement(sql);
 			
@@ -917,23 +917,20 @@ public class CDataExam extends CDataBase {
 			stm.setString(6,paciente.getMovil());
 			stm.setString(7,paciente.getEmail());
 			if(paciente.getIdcarrera()!=null) stm.setInt(8,paciente.getIdcarrera().getIdcarrera());
-			else	stm.setNull(8, java.sql.Types.INTEGER);
+			else stm.setNull(8,java.sql.Types.NULL );
 			if(paciente.getIdcentro()!=null) stm.setInt(9,paciente.getIdcentro().getIdcentro_regional());
-			else	stm.setNull(9, java.sql.Types.INTEGER);
+			else stm.setNull(9,java.sql.Types.NULL );
 			if(paciente.getIdunidad()!=null) stm.setInt(10,paciente.getIdunidad().getIdunidad_academica());
-			else	stm.setNull(10, java.sql.Types.INTEGER);
+			else stm.setNull(10,java.sql.Types.NULL );
 			if(paciente.getIddependencia()!=null) stm.setInt(11,paciente.getIddependencia().getIddependencia());
-			else	stm.setNull(11, java.sql.Types.INTEGER);	
-			if(!paciente.getNombre_carrera().isEmpty()) stm.setString(12, paciente.getNombre_carrera());
-			else	stm.setNull(12, java.sql.Types.VARCHAR);
-			if(!paciente.getNombre_centro().isEmpty()) stm.setString(13, paciente.getNombre_centro());
-			else	stm.setNull(13, java.sql.Types.VARCHAR);
-			if(!paciente.getNombre_dependencia().isEmpty()) stm.setString(14, paciente.getNombre_dependencia());
-			else	stm.setNull(14, java.sql.Types.VARCHAR);
-			if(!paciente.getNombre_unidad().isEmpty()) stm.setString(15, paciente.getNombre_unidad());
-			else	stm.setNull(15, java.sql.Types.VARCHAR);
-			 stm.setString(16, paciente.getPassword());
-			 stm.setString(17, paciente.getUsuario());	
+			else stm.setNull(11,java.sql.Types.NULL );
+			stm.setString(12, paciente.getPassword());
+			stm.setString(13, paciente.getUsuario());
+			if(paciente.getParentesco_ced()!=null && paciente.getParentesco_ced().getIdparentesco()>0)
+			stm.setInt(14, paciente.getParentesco_ced().getIdparentesco());
+			else stm.setNull(14,java.sql.Types.NULL );
+			stm.setString(15, paciente.getCedula());
+			stm.setInt(16, paciente.getSexo());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -948,9 +945,9 @@ public class CDataExam extends CDataBase {
 		PreparedStatement stm;
 		try {
 			String sql="INSERT INTO paciente( nombre, fecha_nac,  direccion, telefono, movil,  "
-					+"  email, dependenciaiddependencia, nombre_dependencia,  "
-					+"   password, usuario)  "
-					+"   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+					+"  email, dependenciaiddependencia,   "
+					+"   password, usuario, parentesco_ced,  ced,sexo)  "
+					+"   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?) ";
 			
 			stm = (PreparedStatement)conn.prepareStatement(sql);
 			
@@ -961,11 +958,14 @@ public class CDataExam extends CDataBase {
 			stm.setString(5,paciente.getMovil());
 			stm.setString(6,paciente.getEmail());
 			if(paciente.getIddependencia()!=null) stm.setInt(7,paciente.getIddependencia().getIddependencia());
-			else	stm.setNull(7, java.sql.Types.INTEGER);	
-			if(!paciente.getNombre_dependencia().isEmpty()) stm.setString(8, paciente.getNombre_dependencia());
-			else	stm.setNull(8, java.sql.Types.VARCHAR);
-			 stm.setString(9, paciente.getPassword());
-			 stm.setString(10, paciente.getUsuario());	
+			else stm.setNull(7, java.sql.Types.NULL);
+			stm.setString(8, paciente.getPassword());
+			stm.setString(9, paciente.getUsuario());
+			if(paciente.getParentesco_ced()!=null && paciente.getParentesco_ced().getIdparentesco()>0)
+				stm.setInt(10, paciente.getParentesco_ced().getIdparentesco());
+				else stm.setNull(10,java.sql.Types.NULL );
+			stm.setString(11, paciente.getCedula());
+			stm.setInt(12, paciente.getSexo());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1064,6 +1064,30 @@ public class CDataExam extends CDataBase {
 			stm.setInt(id++,min);
 			stm.setInt(id++,max);
 			stm.setInt(id++,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CParentesco news=new CParentesco(rs.getInt("idparentesco"),rs.getString("nombre"),rs.getInt("grupo_familiar"),rs.getInt("antecedentes_familiares"),rs.getInt("emergencia"));
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<CParentesco> getListaParentesco(int grupo_fam, int ant_fam, int emer){
+		ArrayList<CParentesco> ret=new ArrayList<CParentesco>();
+		try{
+			String sql="SELECT tc.idparentesco, tc.nombre,tc.grupo_familiar,tc.antecedentes_familiares, tc.emergencia, @rownum:=@rownum+1 rownum  "+
+						"FROM parentesco tc where (tc.grupo_familiar=? or tc.antecedentes_familiares=? or tc.emergencia=?)";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			int id=1;
+			stm.setInt(id++,grupo_fam);
+			stm.setInt(id++,ant_fam);
+			stm.setInt(id++,emer);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CParentesco news=new CParentesco(rs.getInt("idparentesco"),rs.getString("nombre"),rs.getInt("grupo_familiar"),rs.getInt("antecedentes_familiares"),rs.getInt("emergencia"));
@@ -1421,6 +1445,35 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
+	public boolean UpdatePregunta(CPregunta ctipo){
+		PreparedStatement stm;
+		try {
+			String sql="UPDATE pregunta SET orden = ?, requerida = ?, pregunta = ?, categoriaidcategoria = ?,  descripcion = ?, "+
+						"  auto_evaluacion = ?,  multifasico = ?,  largo = ?,  multiple = ?,  estado = ?  "+
+						" WHERE idpregunta = ?";
+			stm = (PreparedStatement)conn.prepareStatement(sql);
+			
+			stm.setInt(1,ctipo.getOrden());
+			stm.setInt(2, ctipo.getRequerida());
+			stm.setString(3, ctipo.getPregunta());
+			stm.setInt(4, ctipo.getIdcategoria().getIdcategoria());
+			stm.setString(5, ctipo.getDescripcion());
+			stm.setInt(6, ctipo.getAuto_evaluacion());
+			stm.setInt(7, ctipo.getMultifasico());
+			stm.setInt(8, ctipo.getLargo());
+			stm.setInt(9, ctipo.getMultiple());
+			stm.setInt(10, ctipo.getEstado());
+			stm.setInt(11, ctipo.getIdpregunta());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 	public CTitulo_Respuesta getTitulo_RespuestaEspecifica(String titulo){
 		CTitulo_Respuesta ret=null;
 		try{
@@ -1522,17 +1575,49 @@ public class CDataExam extends CDataBase {
 		
 		return true;
 	}
-	public ArrayList<CPregunta> getListaPreguntas(int ordenar,int asc,int min,int max){
+	public boolean UpdatePregunta_Titulo_Respuesta(ArrayList<CPregunta_Titulo_Respuesta> lista){
+		PreparedStatement stm;
+		try {
+			
+			Iterator<CPregunta_Titulo_Respuesta> it=lista.iterator();
+			while(it.hasNext()){
+				CPregunta_Titulo_Respuesta preg=it.next();
+				String sql=" UPDATE pregunta_titulo_respuesta SET "+
+						   "  ponderacion = ? "+
+						   " WHERE "+
+						   "  idtitulo_respuesta = ? AND idpregunta = ?";
+				stm = (PreparedStatement)conn.prepareStatement(sql);
+				stm.setInt(1,preg.getPonderacion());
+				stm.setInt(2,preg.getIdtitulo_respuesta().getIdtitulo_respuesta());
+				stm.setInt(3,preg.getIdpregunta().getIdpregunta());
+				
+				
+				if(preg.getIdtitulo_respuesta().getIdtitulo_respuesta()<=0) return false;
+				if(stm.executeUpdate()<=0) return false;
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	public ArrayList<CPregunta> getListaPreguntas(int ordenar,int asc,int min,int max,int tipo,String valor){
 		ArrayList<CPregunta> ret=new ArrayList<CPregunta>();
 		try{
+			String like="pe.pregunta";
+			if(tipo==2) like="ca.descripcion";
 			String sql="select * from  (SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, ca.idcategoria, ca.descripcion cate_nombre, "+
 					" pe.descripcion, pe.auto_evaluacion, pe.multifasico, @rownum:=@rownum+1 rownum, pe.estado "+
-					" FROM pregunta pe inner join categoria ca on ca.idcategoria=pe.categoriaidcategoria, (SELECT @rownum:=0) ro ) table1 "+
+					" FROM pregunta pe inner join categoria ca on ca.idcategoria=pe.categoriaidcategoria, (SELECT @rownum:=0) ro " +
+					" where upper("+like+") like ? ) table1 "+
 					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-			stm.setInt(1,min);
-			stm.setInt(2,max);
-			stm.setInt(3,ordenar);
+			stm.setString(1, "%"+valor.trim().toUpperCase()+"%");
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("cate_nombre"),0,0,0,0);
@@ -1583,7 +1668,7 @@ public class CDataExam extends CDataBase {
 				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("cate_nombre"),0,0,0,0);
 				news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
 						cate, rs.getString("descripcion"),tipo,rs.getInt("auto_evaluacion"),
-						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
+						rs.getInt("multifasico"),rs.getInt("largo"),rs.getInt("multiple"),rs.getInt("estado"));
 				
 				
 			}
@@ -1595,4 +1680,143 @@ public class CDataExam extends CDataBase {
 		}
 		return news;
 	}
+	public ArrayList<CPregunta_Titulo_Respuesta> getListaPregunta_Titulo_Respuesta(CPregunta preg){
+		ArrayList<CPregunta_Titulo_Respuesta> ret=new ArrayList<CPregunta_Titulo_Respuesta>();
+		try{
+			String sql="SELECT ptr.idtitulo_respuesta, ptr.ponderacion, tr.descripcion "+
+					" FROM pregunta_titulo_respuesta ptr inner join titulo_respuesta tr "+
+					" on tr.idtitulo_respuesta=ptr.idtitulo_respuesta where ptr.idpregunta=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,preg.getIdpregunta());
+
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CTitulo_Respuesta idtitulo_respuesta =new CTitulo_Respuesta(rs.getInt("idtitulo_respuesta"),rs.getString("descripcion"));
+				CPregunta_Titulo_Respuesta temp= new CPregunta_Titulo_Respuesta(preg,idtitulo_respuesta ,rs.getInt("ponderacion"));
+				ret.add(temp);
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public CPaciente getEstudianteEspecifica(String usuario,String password){
+		CPaciente news=null;
+		try{
+			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.carreraidcarrera,0) idcarrera, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.centro_regionalidcentro_regional,0) idcentro_regional, ifnull(p.unidad_academicaidunidad_academica,0) idunidad_academica, ifnull(p.titulo_secundariaidtitulo_secundaria,0) idtitulo_secundaria, ifnull(p.dependenciaiddependencia,0) iddependencia, p.usuario, ifnull(p.parentesco_ced,0) idparentesco, p.ced, sexo, "+
+		" ifnull(c.nombre,'') carrera_nom, ifnull(ce.nombre,'') centro, ifnull(ua.nombre,'') unidad, ifnull(de.nombre,'') dependencia, ifnull(pa.nombre,'') paren "+
+		" FROM paciente p left outer join carrera c on p.carreraidcarrera=c.idcarrera "+
+		" left outer join centro_regional ce on p.centro_regionalidcentro_regional=ce.idcentro_regional "+
+		" left outer join unidad_academica ua on p.unidad_academicaidunidad_academica=ua.idunidad_academica "+
+		" left outer join dependencia de on p.dependenciaiddependencia=de.iddependencia "+
+		" left outer join parentesco pa on pa.idparentesco=p.parentesco_ced"+
+		" where  usuario=? and password=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1,usuario.toLowerCase());
+			stm.setString(2, password);
+			
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CCarrera idcarrera=new CCarrera(rs.getInt("idcarrera"),rs.getString("carrera_nom"));
+				CCentro_Regional centro=new CCentro_Regional(rs.getInt("idcentro_regional"),rs.getString("centro"),null);
+				CUnidad_Academica uni=new CUnidad_Academica(rs.getInt("idunidad_academica"),rs.getString("unidad")); 
+				CDependencia depe=new CDependencia(rs.getInt("iddependencia"),rs.getString("dependencia"));
+				CParentesco pare=new CParentesco(rs.getInt("idparentesco"),rs.getString("paren"),0,0,0);
+				news=new CPaciente(rs.getInt("idpaciente"), rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
+						rs.getInt("carne"),  rs.getString("direccion"),rs.getString("telefono"),rs.getString("movil"),
+						idcarrera, centro, uni, depe, rs.getInt("sexo"),
+						"", rs.getString("email"),
+						rs.getString("usuario"), pare, rs.getString("ced"));
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return news;
+	}
+	public ArrayList<CCategoria> getListaCategoria(int auto,int multi){
+		ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
+		try{
+			String sql="SELECT tc.idcategoria, tc.descripcion, tc.orden, tc.autoevaluacion, tc.multifasico, tc.estado "+
+						"FROM categoria tc "+
+						" where (tc.autoevaluacion=? or tc.multifasico=?) and tc.estado=1  order by tc.orden ASC";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,auto);
+			stm.setInt(2,multi);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"));
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public void getListaPreguntaTitulo(CTipo_Pregunta ct, int idpregunta){
+		if(ct.getIdtipo_pregunta()==3){
+			String sql="SELECT pr.idtitulo_respuesta, tr.descripcion "+
+					" FROM pregunta_titulo_respuesta  pr inner join titulo_respuesta tr on "+
+					" tr.idtitulo_respuesta=pr.idtitulo_respuesta where pr.idpregunta=?";
+			try{
+				PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+				stm.setInt(1,idpregunta);
+				ResultSet rs=stm.executeQuery();
+				while(rs.next()){
+					CTitulo_Respuesta titulo=new CTitulo_Respuesta(rs.getInt("idtitulo_respuesta"),rs.getString("descripcion"));
+					ct.getIdgrupo_titulo_respuesta().add(titulo);
+				}
+				rs.close();
+				stm.close();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+	}
+	public ArrayList<CPregunta> getListaPreguntas(CCategoria categoria, int auto, int multi){
+		ArrayList<CPregunta> ret=new ArrayList<CPregunta>();
+		try{
+			String sql="SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, "+
+					" pe.descripcion, pe.auto_evaluacion, pe.multifasico, pe.estado, tp.idtipo_pregunta, tp.descripcion  descripcion_preg, tp.idgrupo "+
+					" FROM pregunta pe inner join tipo_pregunta tp on tp.idtipo_pregunta=pe.idtipo_pregunta " +
+					" where pe.categoriaidcategoria=? and (pe.auto_evaluacion=? or pe.multifasico=?) order by pe.orden ASC";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, categoria.getIdcategoria());
+			stm.setInt(2,auto);
+			stm.setInt(3,multi);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ArrayList<CTitulo_Respuesta> lista=new ArrayList<CTitulo_Respuesta>();
+					if(rs.getInt("idtipo_pregunta")>3){
+						lista= this.getListaTitulo_Respuesta(rs.getInt("idgrupo"));
+						
+					}
+					CTipo_Pregunta ct=new CTipo_Pregunta(rs.getInt("idtipo_pregunta"),rs.getString("descripcion_preg"),lista);
+					getListaPreguntaTitulo(ct, rs.getInt("idpregunta"));
+				CPregunta news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
+						categoria, rs.getString("descripcion"),ct,rs.getInt("auto_evaluacion"),
+						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
+				
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 }

@@ -47,7 +47,7 @@
 			  }
 			  cadena = [ 	'id_carrera='   + idcarrera,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_carrera").val()),
+				            'nombre='+$("#nombre_carrera").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SCarrera",

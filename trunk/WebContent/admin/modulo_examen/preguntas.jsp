@@ -23,7 +23,7 @@
 						{display: 'MODIFICAR', name : 'chkactividad', width : 50, sortable : false, align: 'left'},           
 						{ display: 'ID', name: 'idpregunta', width: 30, sortable: true, align: 'left' },
 						{ display: 'Orden', name: 'orden', width: 40, sortable: true, align: 'left' },
-						{ display: 'Categoria', name: 'categoria', width: 80, align: 'left' },
+						{ display: 'Categoria', name: 'categoria', width: 80, sortable: true, align: 'left' },
 						{ display: 'Pregunta', name: 'pregunta', width: 200, sortable: true, align: 'left' },
 						{ display: 'Estado', name: 'estado', width: 80, sortable: true, align: 'left' },
 						{ display: 'AutoEvaluacion', name: 'auto', width: 70, sortable: true, align: 'left' },
@@ -44,8 +44,13 @@
 					    height: 300,
 					    params : [ 
 						          {name: 'a', value: 'preguntas'}//,{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} 
-						        ]
+						        ],
+						searchitems : [
+						   					{display: 'Pregunta', name : 'pregunta'},
+						   					{display: 'Categoria', name : 'categoria'}
+						    		],        
 					});
+			     $('.pSearch').click();
 			  }); 
 		  function Nuevo(com, grid){
 			  $( "#dialog-form" ).load("modulo_examen/new_pregunta.jsp");

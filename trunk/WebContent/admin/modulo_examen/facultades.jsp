@@ -31,7 +31,7 @@
 		  });  
 		  function Editarfacultad(id,nombre){
 			  $("#id_facultad").text(id);
-			  $("#nombre_facultad").val(unescape(nombre));
+			  $("#nombre_facultad").val(nombre);
 			  idfacultad=id;
 		  }
 		  function limpiarfacultad(){
@@ -47,7 +47,7 @@
 			  }
 			  cadena = [ 	'id_facultad='   + idfacultad,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_facultad").val()),
+				            'nombre='+$("#nombre_facultad").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SCarrera",

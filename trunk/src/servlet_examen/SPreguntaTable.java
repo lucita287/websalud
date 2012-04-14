@@ -44,6 +44,8 @@ public class SPreguntaTable extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8"); 
 		PrintWriter out = response.getWriter(); 
 		CValidation valid=new CValidation();			
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -54,9 +56,14 @@ public class SPreguntaTable extends HttpServlet {
 					 dbo.Connect();
 					 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
 					 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
-					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")));
-					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")));
-					 
+					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
+					 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")),codificacion);
+					 int pqtype=1;
+					 if(qtype.equalsIgnoreCase("categoria")){
+						 pqtype=2;
+					 }
 					 int min=((page-1)*rp)+1;
 					 int max=page*(rp);
 					 int ordenar=1;					 
@@ -79,7 +86,7 @@ public class SPreguntaTable extends HttpServlet {
 						 asc=1;
 					 }
 					 
-					 		ArrayList<CPregunta> lista=dbo.getListaPreguntas(ordenar, asc, min, max);
+					 		ArrayList<CPregunta> lista=dbo.getListaPreguntas(ordenar, asc, min, max,pqtype,busqueda);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 							 info+="<rows><page>"+page+"</page><total>"+dbo.getPreguntaTotal()+"</total>";
 							 

@@ -5,8 +5,9 @@
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 	Integer portal=1;
+	String user=(String)sessiones.getAttribute("estudiante");
 	try{
-	portal=(Integer)(sessiones.getAttribute("examen")==null?1:sessiones.getAttribute("examen"));
+	portal=Integer.parseInt((request.getParameter("portal")));
 	}catch (Exception e){
 		
 	}
@@ -20,8 +21,8 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 
 <div class="top">
 <jsp:include page="../admin/modulo_contenido/titulo.jsp">
-<jsp:param name="titulo" value="Estudiante" />
-<jsp:param name="usuario" value="Prueba" />	
+<jsp:param name="titulo" value="Examen de Salud" />
+<jsp:param name="usuario" value="<%=user %>" />	
 </jsp:include>
 </div>
 
@@ -34,12 +35,20 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 <jsp:include page="modulo_perfil/menu.jsp" />
 </div>
 <div id="contenido">
-
+<div id="cont_dato_personal">
 <% if(portal==1){ %>
+
 <jsp:include page="modulo_perfil/dato_personal.jsp" />
 <% }else if(portal==2){ %>
 <jsp:include page="modulo_perfil/estatus_estudiante.jsp" />
+<% }else if(portal==3){ %>
+<jsp:include page="modulo_perfil/estatus_trabajador.jsp" />
+<% }else if(portal==4){ %>
+
+<% }else if(portal==6){ %>
+<jsp:include page="modulo_perfil/auto_eva.jsp" />
 <% } %>
+</div>
 </div>
 <div style="clear: both;"></div>
 

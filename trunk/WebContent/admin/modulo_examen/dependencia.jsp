@@ -45,7 +45,7 @@
 			  }
 			  cadena = [ 	'id_dependencia='   + iddependencia,
 			             	'a='+action,
-				            'nombre='+escape($("#nombre_dependencia").val()),
+				            'nombre='+$("#nombre_dependencia").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SCarrera",
