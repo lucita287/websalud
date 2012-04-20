@@ -61,6 +61,9 @@ public class CDataBase {
 		
 		
 	}
+	public Connection getconnection(){
+		return conn;
+	}
 	public String ConvertString(ArrayList<Integer> lista){
 		String data="";
 		for(int i=0; i<lista.size();i++){
