@@ -22,7 +22,18 @@ public class CPaciente {
 	private String usuario;
 	private CParentesco parentesco_ced;
 	private String cedula;
+	private int no_personal;
 	
+	private CEstado_Civil estado_civilidestado_civil;
+	private String emer_nombre;
+	private CParentesco idemer_parentesco;
+	private String emer_telefono;
+	private String emer_movil;
+	private CTipo_Sangre idtipo_sangre;
+	private CEstado_Civil idestado_civil;
+	private String titulo_secundaria;
+	private String crecio_en;
+
 	/**
 	 * @param idpaciente
 	 * @param nombre
@@ -51,7 +62,7 @@ public class CPaciente {
 			CCarrera idcarrera, CCentro_Regional idcentro,
 			CUnidad_Academica idunidad, CDependencia iddependencia, int sexo,
 			String password, String email,
-			String usuario, CParentesco parentesco_ced, String cedula) {
+			String usuario, CParentesco parentesco_ced, String cedula, int no_personal) {
 		this.idpaciente = idpaciente;
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -69,9 +80,262 @@ public class CPaciente {
 		this.usuario = usuario;
 		this.parentesco_ced = parentesco_ced;
 		this.cedula = cedula;
+		this.no_personal= no_personal;
 	}
 
 	
+	
+	/**
+	 * @param idpaciente
+	 * @param nombre
+	 * @param fecha_nacimiento
+	 * @param carne
+	 * @param direccion
+	 * @param telefono
+	 * @param movil
+	 * @param idcarrera
+	 * @param idcentro
+	 * @param idunidad
+	 * @param iddependencia
+	 * @param sexo
+	 * @param password
+	 * @param email
+	 * @param usuario
+	 * @param parentesco_ced
+	 * @param cedula
+	 * @param estado_civilidestado_civil
+	 * @param emer_nombre
+	 * @param idemer_parentesco
+	 * @param emer_telefono
+	 * @param emer_movil
+	 * @param idtipo_sangre
+	 * @param idestado_civil
+	 * @param titulo_secundaria
+	 * @param crecio_en
+	 */
+	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
+			int carne, String direccion, String telefono, String movil,
+			CCarrera idcarrera, CCentro_Regional idcentro,
+			CUnidad_Academica idunidad, CDependencia iddependencia, int sexo,
+			String password, String email, String usuario,
+			CParentesco parentesco_ced, String cedula,int no_personal,
+			CEstado_Civil estado_civilidestado_civil, String emer_nombre,
+			CParentesco idemer_parentesco, String emer_telefono,
+			String emer_movil, CTipo_Sangre idtipo_sangre,
+			CEstado_Civil idestado_civil, String titulo_secundaria,
+			String crecio_en) {
+		this.idpaciente = idpaciente;
+		this.nombre = nombre;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.carne = carne;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.movil = movil;
+		this.idcarrera = idcarrera;
+		this.idcentro = idcentro;
+		this.idunidad = idunidad;
+		this.iddependencia = iddependencia;
+		this.sexo = sexo;
+		this.password = password;
+		this.email = email;
+		this.usuario = usuario;
+		this.parentesco_ced = parentesco_ced;
+		this.cedula = cedula;
+		this.estado_civilidestado_civil = estado_civilidestado_civil;
+		this.emer_nombre = emer_nombre;
+		this.idemer_parentesco = idemer_parentesco;
+		this.emer_telefono = emer_telefono;
+		this.emer_movil = emer_movil;
+		this.idtipo_sangre = idtipo_sangre;
+		this.idestado_civil = idestado_civil;
+		this.titulo_secundaria = titulo_secundaria;
+		this.crecio_en = crecio_en;
+		this.no_personal= no_personal;
+	}
+
+	
+
+	/**
+	 * @return the no_personal
+	 */
+	public int getNo_personal() {
+		return no_personal;
+	}
+
+
+
+	/**
+	 * @param no_personal the no_personal to set
+	 */
+	public void setNo_personal(int no_personal) {
+		this.no_personal = no_personal;
+	}
+
+
+
+	/**
+	 * @return the estado_civilidestado_civil
+	 */
+	public CEstado_Civil getEstado_civilidestado_civil() {
+		return estado_civilidestado_civil;
+	}
+
+
+
+	/**
+	 * @param estado_civilidestado_civil the estado_civilidestado_civil to set
+	 */
+	public void setEstado_civilidestado_civil(
+			CEstado_Civil estado_civilidestado_civil) {
+		this.estado_civilidestado_civil = estado_civilidestado_civil;
+	}
+
+
+
+	/**
+	 * @return the emer_nombre
+	 */
+	public String getEmer_nombre() {
+		return emer_nombre;
+	}
+
+
+
+	/**
+	 * @param emer_nombre the emer_nombre to set
+	 */
+	public void setEmer_nombre(String emer_nombre) {
+		this.emer_nombre = emer_nombre;
+	}
+
+
+
+	/**
+	 * @return the idemer_parentesco
+	 */
+	public CParentesco getIdemer_parentesco() {
+		return idemer_parentesco;
+	}
+
+
+
+	/**
+	 * @param idemer_parentesco the idemer_parentesco to set
+	 */
+	public void setIdemer_parentesco(CParentesco idemer_parentesco) {
+		this.idemer_parentesco = idemer_parentesco;
+	}
+
+
+
+	/**
+	 * @return the emer_telefono
+	 */
+	public String getEmer_telefono() {
+		return emer_telefono;
+	}
+
+
+
+	/**
+	 * @param emer_telefono the emer_telefono to set
+	 */
+	public void setEmer_telefono(String emer_telefono) {
+		this.emer_telefono = emer_telefono;
+	}
+
+
+
+	/**
+	 * @return the emer_movil
+	 */
+	public String getEmer_movil() {
+		return emer_movil;
+	}
+
+
+
+	/**
+	 * @param emer_movil the emer_movil to set
+	 */
+	public void setEmer_movil(String emer_movil) {
+		this.emer_movil = emer_movil;
+	}
+
+
+
+	/**
+	 * @return the idtipo_sangre
+	 */
+	public CTipo_Sangre getIdtipo_sangre() {
+		return idtipo_sangre;
+	}
+
+
+
+	/**
+	 * @param idtipo_sangre the idtipo_sangre to set
+	 */
+	public void setIdtipo_sangre(CTipo_Sangre idtipo_sangre) {
+		this.idtipo_sangre = idtipo_sangre;
+	}
+
+
+
+	/**
+	 * @return the idestado_civil
+	 */
+	public CEstado_Civil getIdestado_civil() {
+		return idestado_civil;
+	}
+
+
+
+	/**
+	 * @param idestado_civil the idestado_civil to set
+	 */
+	public void setIdestado_civil(CEstado_Civil idestado_civil) {
+		this.idestado_civil = idestado_civil;
+	}
+
+
+
+	/**
+	 * @return the titulo_secundaria
+	 */
+	public String getTitulo_secundaria() {
+		return titulo_secundaria;
+	}
+
+
+
+	/**
+	 * @param titulo_secundaria the titulo_secundaria to set
+	 */
+	public void setTitulo_secundaria(String titulo_secundaria) {
+		this.titulo_secundaria = titulo_secundaria;
+	}
+
+
+
+	/**
+	 * @return the crecio_en
+	 */
+	public String getCrecio_en() {
+		return crecio_en;
+	}
+
+
+
+	/**
+	 * @param crecio_en the crecio_en to set
+	 */
+	public void setCrecio_en(String crecio_en) {
+		this.crecio_en = crecio_en;
+	}
+
+
+
 	/**
 	 * @return the parentesco_ced
 	 */

@@ -4,7 +4,9 @@
 <%@ page import="data.CPaciente" %>
 <%@ page import="data.CParentesco" %>
 <%@ page import="data.CEstado_Civil" %>
+<%@ page import="data.CDepartamento" %>
 <%@ page import="data.CTipo_Sangre" %>
+<%@ page import="data.CTitulo_Secundaria" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
 <% 
@@ -17,6 +19,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	ArrayList<CEstado_Civil> estado=data. getListaEstadoCivil();
 	ArrayList<CTipo_Sangre> tsangre=data.getListaTipo_Sangre();
 	ArrayList<CParentesco> paren=data.getListaParentesco(0,0, 1);
+	ArrayList<CDepartamento> depto=data.getListaDepartamentos();
+	ArrayList<CTitulo_Secundaria> secu=data.getListaTitulo_Secundaria();
 %>
     <script  type="text/javascript">
 			  $(document).ready(function () {
@@ -27,18 +31,38 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 									}
 								}, messages: {
 									emer_par: {
-										min:"Seleccione un centro regional"
+										min:"Seleccione un parentesco"
 									}
 								}	
 				  });
 			  });
+			  $(function() {
+					var departamento = [
+							<% Iterator<CDepartamento> it_dep= depto.iterator();
+								while(it_dep.hasNext()){
+									CDepartamento dep=it_dep.next();
+									out.println("'"+dep.getNombre()+"'"+((it_dep.hasNext())?",":""));
+								}%>
+					];
+					var secundaria=
+						[
+						 	<% Iterator<CTitulo_Secundaria> it_secu= secu.iterator();
+						 	while(it_secu.hasNext()){
+						 		CTitulo_Secundaria secundaria=it_secu.next();
+						 		out.println("'"+secundaria.getNombre()+"'"+((it_secu.hasNext())?",":""));
+						 	}%>
+						 ];
+					$( "#tit_secun_personal" ).autocomplete({
+						source: secundaria
+					});
+					$( "#crecio_en_personal" ).autocomplete({
+						source: departamento
+					});
+					$( ".check" ).button();	
+				});
+
 	</script>		  
 	<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
-<script>
-$(function() {
-	$( ".check" ).button();
-});
-</script>
 <div style="float:left;">
 <h2>PASO 1</h2>
 </div>
@@ -75,7 +99,7 @@ $(function() {
 										while(it.hasNext()){
 											CEstado_Civil civil=it.next();	
 										%>
-										<input type="radio" id="estado_<%=civil.getIdestado_civil()%>" class="check required" name="estado_civil"  /><label for="estado_<%=civil.getIdestado_civil()%>"><%= civil.getNombre() %></label>
+										<input type="radio" id="civil_<%=civil.getIdestado_civil()%>" name="civil_personal" value="<%=civil.getIdestado_civil()%>" class="check required"  <%= civil.getIdestado_civil()==pac.getIdestado_civil().getIdestado_civil()?"checked=\"checked\"":"" %>  /><label for="civil_<%=civil.getIdestado_civil()%>"><%= civil.getNombre() %></label>
 										<% } %>									
 									</div>
 									
@@ -90,7 +114,7 @@ $(function() {
 										while(it2.hasNext()){
 											CTipo_Sangre tsg=it2.next();	
 										%>
-										<input type="radio" id="tsangre_<%=tsg.getIdtipo_sangre() %>" class="check required" name="tsangre"  /><label for="tsangre_<%=tsg.getIdtipo_sangre() %>"><%= tsg.getNombre() %></label>
+										<input type="radio" id="tsangre_<%=tsg.getIdtipo_sangre() %>" name="tsangre_personal" value="<%=tsg.getIdtipo_sangre() %>" class="check required" name="tsangre" <%= tsg.getIdtipo_sangre() ==pac.getIdtipo_sangre().getIdtipo_sangre()?"checked=\"checked\"":"" %>  /><label for="tsangre_<%=tsg.getIdtipo_sangre() %>"><%=tsg.getNombre()%></label>
 										<% } %>									
 									</div>
 									
@@ -99,14 +123,14 @@ $(function() {
 						<div class="border">
 							
 									<div class="col_titulo">Titulo Secundaria</div>
-									<div class="col"><input type="text" size="60"  ></div>
+									<div class="col"><input id="tit_secun_personal" name="tit_secun_personal" value="<%= pac.getTitulo_secundaria()%>" type="text" size="60"  ></div>
 									
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
 							
 									<div class="col_titulo">*Crecio en</div>
-									<div class="col"><input type="text" size="40" class="required" /><br/><span>Lugar</span></div>
+									<div class="col"><input type="text" id="crecio_en_personal" name="crecio_en_personal" size="40" value="<%= pac.getCrecio_en() %>" class="required" /><br/><span>Lugar</span></div>
 									
 							<div style="clear: both;"></div>
 						</div>
@@ -123,7 +147,7 @@ $(function() {
 						<div class="border">
 							
 									<div class="col_titulo">*Nombre</div>
-									<div class="col"><input type="text" name="emer-nombre" id="emer-nombre" value="" size="60" class="required" /></div>
+									<div class="col"><input type="text" name="emer_nombre_personal" id="emer_nombre_personal" value="<%= pac.getEmer_nombre() %>" size="60" class="required" /></div>
 									
 							<div style="clear: both;"></div>
 						</div>
@@ -131,14 +155,14 @@ $(function() {
 							
 									<div class="col_titulo">*Parentesco</div>
 									<div class="col">
-											<select id="emer_par" name="emer_par">
+											<select id="emer_par_personal" name="emer_par_personal">
 												<option value="0">SELECCIONE SU PARENTESCO</option>	
 												<%	Iterator<CParentesco> it3=paren.iterator();
 												while(it3.hasNext()){
 													CParentesco par=it3.next();
 													
 													%>
-													<option value="<%= par.getIdparentesco() %>"><%= par.getNombre() %></option>
+													<option value="<%= par.getIdparentesco() %>" <%= (par.getIdparentesco()==pac.getIdemer_parentesco().getIdparentesco()?"SELECTED":"") %> ><%= par.getNombre() %></option>
 												<% } %>
 											</select>
 									</div>
@@ -148,14 +172,14 @@ $(function() {
 						<div class="border">
 							
 									<div class="col_titulo">*Telefono casa</div>
-									<div class="col"><input type="text" id="tel_casa" name="tel_casa" class="required" size="20"/></div>
+									<div class="col"><input type="text" id="tel_personal" name="tel_personal" value="<%=pac.getEmer_telefono() %>" class="required" size="20"/></div>
 									
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
 							
 									<div class="col_titulo">*Telefono movil</div>
-									<div class="col"><input type="text" id="tel_movil" name="tel_movil" class="required" size="20"/></div>
+									<div class="col"><input type="text" id="movil_personal" name="movil_personal" value="<%=pac.getEmer_movil() %>" class="required" size="20"/></div>
 									
 							<div style="clear: both;"></div>
 						</div>

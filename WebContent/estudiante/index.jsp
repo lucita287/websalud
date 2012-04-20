@@ -1,16 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
+<%@ page import="framework.CValidation" %>
 <% 
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
-	Integer portal=1;
+	CValidation valid=new CValidation();
+	Integer portal=valid.ConvertEntero(request.getParameter("portal"));
 	String user=(String)sessiones.getAttribute("estudiante");
-	try{
-	portal=Integer.parseInt((request.getParameter("portal")));
-	}catch (Exception e){
-		
-	}
+	
 %>
 <head>
 <jsp:include page="modulo_perfil/top.jsp" />

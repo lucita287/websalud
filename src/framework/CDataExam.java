@@ -904,8 +904,8 @@ public class CDataExam extends CDataBase {
 			String sql="INSERT INTO paciente( nombre, fecha_nac, carne, direccion, telefono, movil,  "
 					+"  email, carreraidcarrera, centro_regionalidcentro_regional, unidad_academicaidunidad_academica,  "
 					+"  dependenciaiddependencia,  "
-					+"   password, usuario, parentesco_ced,  ced,sexo)  "
-					+"   VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+					+"   password, usuario, parentesco_ced,  ced,sexo,no_personal)  "
+					+"   VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
 			
 			stm = (PreparedStatement)conn.prepareStatement(sql);
 			
@@ -931,6 +931,9 @@ public class CDataExam extends CDataBase {
 			else stm.setNull(14,java.sql.Types.NULL );
 			stm.setString(15, paciente.getCedula());
 			stm.setInt(16, paciente.getSexo());
+			if(paciente.getNo_personal()>0) stm.setInt(17,paciente.getNo_personal());
+			else stm.setNull(17,java.sql.Types.NULL );
+			
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -946,8 +949,8 @@ public class CDataExam extends CDataBase {
 		try {
 			String sql="INSERT INTO paciente( nombre, fecha_nac,  direccion, telefono, movil,  "
 					+"  email, dependenciaiddependencia,   "
-					+"   password, usuario, parentesco_ced,  ced,sexo)  "
-					+"   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?) ";
+					+"   password, usuario, parentesco_ced,  ced,sexo,no_personal)  "
+					+"   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?) ";
 			
 			stm = (PreparedStatement)conn.prepareStatement(sql);
 			
@@ -966,6 +969,8 @@ public class CDataExam extends CDataBase {
 				else stm.setNull(10,java.sql.Types.NULL );
 			stm.setString(11, paciente.getCedula());
 			stm.setInt(12, paciente.getSexo());
+			if(paciente.getNo_personal()>0) stm.setInt(13,paciente.getNo_personal());
+			else stm.setNull(13,java.sql.Types.NULL );
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1706,13 +1711,21 @@ public class CDataExam extends CDataBase {
 	public CPaciente getEstudianteEspecifica(String usuario,String password){
 		CPaciente news=null;
 		try{
-			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.carreraidcarrera,0) idcarrera, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.centro_regionalidcentro_regional,0) idcentro_regional, ifnull(p.unidad_academicaidunidad_academica,0) idunidad_academica, ifnull(p.titulo_secundariaidtitulo_secundaria,0) idtitulo_secundaria, ifnull(p.dependenciaiddependencia,0) iddependencia, p.usuario, ifnull(p.parentesco_ced,0) idparentesco, p.ced, sexo, "+
-		" ifnull(c.nombre,'') carrera_nom, ifnull(ce.nombre,'') centro, ifnull(ua.nombre,'') unidad, ifnull(de.nombre,'') dependencia, ifnull(pa.nombre,'') paren "+
+			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.carreraidcarrera,0) idcarrera, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.centro_regionalidcentro_regional,0) idcentro_regional, ifnull(p.unidad_academicaidunidad_academica,0) idunidad_academica, ifnull(p.titulo_secundaria,'') titulo_secundaria, ifnull(p.dependenciaiddependencia,0) iddependencia, p.usuario, ifnull(p.parentesco_ced,0) idparentesco, p.ced, sexo, "+
+		" ifnull(c.nombre,'') carrera_nom, ifnull(ce.nombre,'') centro, ifnull(ua.nombre,'') unidad, ifnull(de.nombre,'') dependencia, ifnull(pa.nombre,'') paren, "+
+		" ifnull(crecio_en,'') crecio_en, ifnull(titulo_secundaria,'') titulo_secundaria, "+			
+		" ifnull(emer_nombre,'') emer_nombre, ifnull(emer_telefono,'') emer_telefono, ifnull(emer_movil,'') emer_movil,  "+
+		" ifnull(idemer_parentesco,'') idemer_parentesco, ifnull(pa1.nombre,'') idemer_nombre, "+
+		" ifnull(ts.idtipo_sangre,0)  idtipo_sangre, ifnull(ts.nombre,'') nombre_sangre, "+
+		" ifnull(ec.idestado_civil,0) idestado_civil, ifnull(ec.nombre,'') nombre_estado, ifnull(no_personal,0) no_personal "+
 		" FROM paciente p left outer join carrera c on p.carreraidcarrera=c.idcarrera "+
 		" left outer join centro_regional ce on p.centro_regionalidcentro_regional=ce.idcentro_regional "+
 		" left outer join unidad_academica ua on p.unidad_academicaidunidad_academica=ua.idunidad_academica "+
 		" left outer join dependencia de on p.dependenciaiddependencia=de.iddependencia "+
-		" left outer join parentesco pa on pa.idparentesco=p.parentesco_ced"+
+		" left outer join parentesco pa on pa.idparentesco=p.parentesco_ced "+
+		" left outer join parentesco pa1 on pa1.idparentesco=p.idemer_parentesco "+
+		" left outer join tipo_sangre ts on ts.idtipo_sangre=p.tipo_sangreidtipo_sangre "+
+		" left outer join estado_civil ec on ec.idestado_civil=p.estado_civilidestado_civil "+
 		" where  usuario=? and password=? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setString(1,usuario.toLowerCase());
@@ -1722,14 +1735,24 @@ public class CDataExam extends CDataBase {
 			while(rs.next()){
 				CCarrera idcarrera=new CCarrera(rs.getInt("idcarrera"),rs.getString("carrera_nom"));
 				CCentro_Regional centro=new CCentro_Regional(rs.getInt("idcentro_regional"),rs.getString("centro"),null);
+				CEstado_Civil civil=new CEstado_Civil(rs.getInt("idestado_civil"),rs.getString("nombre_estado"));
 				CUnidad_Academica uni=new CUnidad_Academica(rs.getInt("idunidad_academica"),rs.getString("unidad")); 
+				CTipo_Sangre tipo_sangre=new CTipo_Sangre(rs.getInt("idtipo_sangre"),rs.getString("nombre_sangre"));
 				CDependencia depe=new CDependencia(rs.getInt("iddependencia"),rs.getString("dependencia"));
 				CParentesco pare=new CParentesco(rs.getInt("idparentesco"),rs.getString("paren"),0,0,0);
+				CParentesco pare_emer=new CParentesco(rs.getInt("idemer_parentesco"),rs.getString("idemer_nombre"),0,0,0);
+				
 				news=new CPaciente(rs.getInt("idpaciente"), rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
 						rs.getInt("carne"),  rs.getString("direccion"),rs.getString("telefono"),rs.getString("movil"),
 						idcarrera, centro, uni, depe, rs.getInt("sexo"),
 						"", rs.getString("email"),
-						rs.getString("usuario"), pare, rs.getString("ced"));
+						rs.getString("usuario"), pare, rs.getString("ced"), rs.getInt("no_personal"),
+						civil, rs.getString("emer_nombre"),
+						pare_emer, rs.getString("emer_telefono"),
+						rs.getString("emer_movil"), tipo_sangre,
+						civil, rs.getString("titulo_secundaria"),
+						rs.getString("crecio_en")
+						);
 			}
 			rs.close();
 			stm.close();
@@ -1807,6 +1830,25 @@ public class CDataExam extends CDataBase {
 						categoria, rs.getString("descripcion"),ct,rs.getInt("auto_evaluacion"),
 						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
 				
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<CTitulo_Secundaria> getListaTitulo_Secundaria(){
+		ArrayList<CTitulo_Secundaria> ret=new ArrayList<CTitulo_Secundaria>();
+		try{
+			String sql="SELECT tc.idtitulo_secundaria, tc.nombre FROM titulo_secundaria tc  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CTitulo_Secundaria news=new CTitulo_Secundaria(rs.getInt("idtitulo_secundaria"),rs.getString("nombre"));
 				ret.add(news);
 				
 			}

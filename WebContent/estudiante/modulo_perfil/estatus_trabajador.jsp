@@ -4,8 +4,12 @@
 <%@ page import="data.CPaciente" %>
 <%@ page import="data.CDependencia" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Iterator" %>    
-<h2>PASO 1</h2>
+<%@ page import="java.util.Iterator" %>   
+<%@ page import="framework.CValidation" %> 
+<%
+	CValidation valid=new CValidation();
+	Integer portal=valid.ConvertEntero(request.getParameter("portal"));
+%>
 <script>
 var addressFormatting = function(text){
 	var newText = text;
@@ -41,6 +45,17 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	data.Connect();
 	ArrayList<CDependencia> lista_dep=data.getListaDependencia();
 %>	
+
+	<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
+
+	<div style="float:left;">
+	<h2>PASO 1 / OPCIONAL, SOLO PARA TRABAJADORES</h2>
+	</div>
+	<div class="button-sig">
+	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 
+	</div>
+	<div style="clear: both;"></div>
+	<input type="hidden" id="idestatus" name="idestatus" value="<%=portal%>">
     <div id="dato_personal" class="ui-widget-content ui-corner-all">
 	<h3 class="ui-state-default ui-corner-all">Estatus del trabajador</h3>
 		<div class="perfil">
@@ -48,7 +63,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 						<div class="border">
 							
 									<div class="col_titulo">No de personal</div>
-									<div class="col"><input type="text" size="40"/></div>
+									<div class="col"><input type="text" value="<%=pac.getNo_personal()>0? pac.getNo_personal():"" %>" size="40"/></div>
 									
 							<div style="clear: both;"></div>
 						</div>
@@ -57,15 +72,14 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 									<div class="col_titulo">Dependencia</div>
 									<div class="col">
 									
-									<select id="dependencia" name="dependencia" class="mselect">
+									<select id="depend_estudiante" name="depend_estudiante" class="mselect">
 												<option value="0">SELECCIONE LA DEPENDENC&Iacute;A</option>	
 												<%
 													Iterator<CDependencia> it4=lista_dep.iterator();
 													while (it4.hasNext()) {
-														CDependencia car=it4.next();
-															out.println("<option value=\""+car.getIddependencia()+"\">"+car.getNombre()+"</option>");
-													    }
-												%>
+														CDependencia car=it4.next();%>
+															<option value="<%=car.getIddependencia()%>" <%= (car.getIddependencia()==pac.getIddependencia().getIddependencia() ?"SELECTED":"")%> ><%=car.getNombre()%></option>" 
+												<%	}	%>
 										</select>
 									
 									</div>
@@ -77,4 +91,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	
 	<div style="clear: both;"></div>
 	</div>
+	
+	</form>
+	
+	
 <%	data.Close(); } %>	

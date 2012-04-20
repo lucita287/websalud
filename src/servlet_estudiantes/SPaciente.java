@@ -129,7 +129,7 @@ public class SPaciente extends HttpServlet {
 						carne, direccion, tel_usuario, movil_usuario,
 						dbo.getEspecificoCarrera(carrera), dbo.getEspecificoCentro_Regional(centro),
 						dbo.getEspecificoUnidadAcademica(facultad), dbo.getEspecificoDependencia(dependencia), genero,
-						password, email,username,par,ced);
+						password, email,username,par,ced,no_personal);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);		
 			}
@@ -168,7 +168,7 @@ public class SPaciente extends HttpServlet {
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
 						null, null,null, dbo.getEspecificoDependencia(dependencia), genero,
-						password,email,username,par,ced);
+						password,email,username,par,ced,no_personal);
 				boolean b=dbo.SafePacienteTrab(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}	
@@ -211,7 +211,7 @@ public class SPaciente extends HttpServlet {
 						carne, direccion, tel_usuario, movil_usuario,
 						dbo.getEspecificoCarrera(carrera), dbo.getEspecificoCentro_Regional(centro),
 						dbo.getEspecificoUnidadAcademica(facultad), null, genero,
-						password,email,username,par,ced);
+						password,email,username,par,ced,0);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}
@@ -247,7 +247,7 @@ public class SPaciente extends HttpServlet {
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
 						null, null,null, null, genero,
-						password,email,username,par,ced);
+						password,email,username,par,ced,0);
 				
 				
 				boolean b=dbo.SafePacienteTrab(paciente);

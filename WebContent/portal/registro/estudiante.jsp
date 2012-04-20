@@ -313,7 +313,7 @@
 						</div>
 						<div class="fila">
 									<div class="col_titulo">Correo Electronico</div>
-									<div class="col"><input type="text" id="correo_electronico" name="correo_electronico"  size="50"/></div>
+									<div class="col"><input type="text" id="correo_electronico" name="correo_electronico"  class="email" size="50"/></div>
 						</div>
 						
 	</div>					

@@ -40,7 +40,7 @@ $(document).ready(function () {
 							<div class="border">
 							
 									<div class="col_titulo">Nombre</div>
-									<div class="col"><input type="text" class="required" value="<%= pac.getNombre() %>" size="60" /></div>
+									<div class="col"><%= pac.getNombre() %></div>
 									
 								<div style="clear: both;"></div>
 							</div>
@@ -49,7 +49,7 @@ $(document).ready(function () {
 									<div class="col_titulo">Cedula</div>
 									<div class="col">
 									
-										<select id="paren_usuario" name="paren_usuario" >
+										<select id="cedt_general" name="cedt_general" >
 										<option value="0">SOY MAYOR DE EDAD</option>
 									<%
 										Iterator<CParentesco> it_paren=lista_paren.iterator();
@@ -58,7 +58,7 @@ $(document).ready(function () {
 											out.println("<option value=\""+paren.getIdparentesco()+"\">"+paren.getNombre()+" Responsable </option>");
 										}
 									%>	</select>
-									<input type="text" id="ced_usuario" name="ced_usuario" class="required" value="<%= pac.getCedula() %>" size="25"/>
+									<input type="text" id="ced_general" name="ced_general" class="required" value="<%= pac.getCedula() %>" size="25"/>
 									
 									</div>
 									
@@ -67,14 +67,14 @@ $(document).ready(function () {
 							<div class="border">
 							
 									<div class="col_titulo">Telefono</div>
-									<div class="col"><input type="text" id="tel_usuario" name="tel_usuario"  value="<%= pac.getTelefono() %>"  size="30"/></div>
+									<div class="col"><input type="text" id="tel_general" name="tel_general"  value="<%= pac.getTelefono() %>"  size="30"/></div>
 									
 								<div style="clear: both;"></div>
 							</div>
 							<div class="border">
 							
 									<div class="col_titulo">Telefono Movil</div>
-									<div class="col"><input type="text" id="movil_usuario" name="movil_usuario"  size="30" value="<%= pac.getMovil() %>"/></div>
+									<div class="col"><input type="text" id="movil_general" name="movil_general"  size="30" value="<%= pac.getMovil() %>"/></div>
 									
 								<div style="clear: both;"></div>
 							</div>
@@ -82,16 +82,7 @@ $(document).ready(function () {
 							
 									<div class="col_titulo">Direcci&oacute;n</div>
 									<div class="col">
-									<textarea id="direccion" class="required" name="direccion"  rows="3" cols="50"  class="required"><%=pac.getDireccion() %></textarea>
-									</div>
-									
-								<div style="clear: both;"></div>
-							</div>
-							<div class="border">
-							
-									<div class="col_titulo">*Fecha de Nacimiento</div>
-									<div class="col">
-									<input type="text" id="datepicker" class="required" name="datepicker" class="required" size="10"/>
+									<textarea id="dir_general" class="required" name="dir_general"  rows="3" cols="50"  class="required"><%=pac.getDireccion() %></textarea>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -100,8 +91,10 @@ $(document).ready(function () {
 							
 									<div class="col_titulo">*Sexo</div>
 									<div class="col">
-									<input type="radio" id="genero_1" class="required" name="genero" value="1" class="check"/><label for="genero_1">MASCULINO</label>
-										<input type="radio" id="genero_2" class="required" name="genero" value="2" class="check" checked="checked" /><label for="genero_2">FEMENINO</label>
+									<input type="radio" id="genero_1"  name="genero_general" value="1" class="required genero check" <%= 1 ==pac.getSexo()?"checked=\"checked\"":"" %> />
+									<label for="genero_1">MASCULINO</label>
+									<input type="radio" id="genero_2"  name="genero_general" value="2" class="required genero check" <%= 2 ==pac.getSexo()?"checked=\"checked\"":"" %> />
+									<label for="genero_2">FEMENINO</label>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -110,7 +103,7 @@ $(document).ready(function () {
 							
 									<div class="col_titulo">Correo Electronico</div>
 									<div class="col">
-									<input type="text" id="correo_electronico" name="correo_electronico" value="<%= pac.getEmail() %>" size="50"/>
+									<input type="text" id="correo_electronico" name="email_general" value="<%= pac.getEmail() %>" class="email" size="50"/>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -119,7 +112,7 @@ $(document).ready(function () {
 							
 									<div class="col_titulo">Contrase&ntilde;a anterior</div>
 									<div class="col">
-									<input type="text" class="required" id="pass_ant" name="pass_ant"  size="20"/>
+									<input type="text" class="required" id="pass_ant_general" name="pass_ant"  size="20"/>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -128,7 +121,7 @@ $(document).ready(function () {
 							
 									<div class="col_titulo">Nueva Contrase&ntilde;a</div>
 									<div class="col">
-									<input type="text" id="pass_ant" name="pass_ant"  size="20"/>
+									<input type="text" id="pass_ant" name="pass_new_general"  size="20"/>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -137,7 +130,7 @@ $(document).ready(function () {
 							
 									<div class="col_titulo">Confirmar Nueva Contrase&ntilde;a</div>
 									<div class="col">
-									<input type="text" id="pass_ant" name="pass_ant"  size="20"/>
+									<input type="text" id="pass_ant" name="pass_conf_general"  size="20"/>
 									</div>
 									
 								<div style="clear: both;"></div>
