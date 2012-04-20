@@ -12,6 +12,7 @@
 		select { width: 500px; }
 </style>
 <script>
+
 var addressFormatting = function(text){
 	var newText = text;
 	//array of find replaces
@@ -52,8 +53,13 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 %>
 
 	<form id="MainForm" name="MainForm" action="../SEstatus_estudiante" method="post">
-
-
+<div style="float:left;">
+<h2>PASO 1 / OPCIONAL, SOLO PARA ESTUDIANTES</h2>
+</div>
+<div class="button-sig">
+<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 
+</div>
+<div style="clear: both;"></div>	
 <div id="dato_personal" class="ui-widget-content ui-corner-all">
 <h3 class="ui-state-default ui-corner-all">Estatus del estudiante</h3>
 			<div class="perfil">

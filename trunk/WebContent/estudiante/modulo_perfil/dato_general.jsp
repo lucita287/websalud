@@ -5,6 +5,7 @@
 <%@ page import="data.CParentesco" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
+
 <% 
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
@@ -18,7 +19,19 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 $(function() {
 	$( ".check" ).button();
 });
+$(document).ready(function () {
+	  $("#MainForm").validate();
+});
 </script>
+	<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
+<div style="float:left;">
+<h2>PASO 1</h2>
+</div>
+<div class="button-sig">
+<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 
+</div>
+<div style="clear: both;"></div>	
+
 <div id="dato_personal" class="ui-widget-content ui-corner-all">
 <h3 class="ui-state-default ui-corner-all">Datos Personales</h3>
 				
@@ -27,7 +40,7 @@ $(function() {
 							<div class="border">
 							
 									<div class="col_titulo">Nombre</div>
-									<div class="col"><input type="text" value="<%= pac.getNombre() %>" size="60" /></div>
+									<div class="col"><input type="text" class="required" value="<%= pac.getNombre() %>" size="60" /></div>
 									
 								<div style="clear: both;"></div>
 							</div>
@@ -42,7 +55,7 @@ $(function() {
 										Iterator<CParentesco> it_paren=lista_paren.iterator();
 										while(it_paren.hasNext()){
 											CParentesco paren= it_paren.next();
-											out.println("<option value=\""+paren.getIdparentesco()+"\">Responsable "+paren.getNombre()+"</option>");
+											out.println("<option value=\""+paren.getIdparentesco()+"\">"+paren.getNombre()+" Responsable </option>");
 										}
 									%>	</select>
 									<input type="text" id="ced_usuario" name="ced_usuario" class="required" value="<%= pac.getCedula() %>" size="25"/>
@@ -69,7 +82,7 @@ $(function() {
 							
 									<div class="col_titulo">Direcci&oacute;n</div>
 									<div class="col">
-									<textarea id="direccion" name="direccion"  rows="3" cols="50"  class="required"><%=pac.getDireccion() %></textarea>
+									<textarea id="direccion" class="required" name="direccion"  rows="3" cols="50"  class="required"><%=pac.getDireccion() %></textarea>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -78,7 +91,7 @@ $(function() {
 							
 									<div class="col_titulo">*Fecha de Nacimiento</div>
 									<div class="col">
-									<input type="text" id="datepicker" name="datepicker" class="required" size="10"/>
+									<input type="text" id="datepicker" class="required" name="datepicker" class="required" size="10"/>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -87,8 +100,8 @@ $(function() {
 							
 									<div class="col_titulo">*Sexo</div>
 									<div class="col">
-									<input type="radio" id="genero_1" name="genero" value="1" class="check"/><label for="genero_1">MASCULINO</label>
-										<input type="radio" id="genero_2" name="genero" value="2" class="check" checked="checked" /><label for="genero_2">FEMENINO</label>
+									<input type="radio" id="genero_1" class="required" name="genero" value="1" class="check"/><label for="genero_1">MASCULINO</label>
+										<input type="radio" id="genero_2" class="required" name="genero" value="2" class="check" checked="checked" /><label for="genero_2">FEMENINO</label>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -106,7 +119,7 @@ $(function() {
 							
 									<div class="col_titulo">Contrase&ntilde;a anterior</div>
 									<div class="col">
-									<input type="text" id="pass_ant" name="pass_ant"  size="20"/>
+									<input type="text" class="required" id="pass_ant" name="pass_ant"  size="20"/>
 									</div>
 									
 								<div style="clear: both;"></div>
@@ -132,4 +145,5 @@ $(function() {
 					</div>
 				</div>	
 </div>
+	</form>
 <%  data.Close(); }	%>				

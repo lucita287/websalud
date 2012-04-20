@@ -5,7 +5,7 @@
 <%@ page import="data.CDependencia" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>    
-
+<h2>PASO 1</h2>
 <script>
 var addressFormatting = function(text){
 	var newText = text;

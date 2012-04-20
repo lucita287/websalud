@@ -39,4 +39,14 @@
     <servlet-name>SCalendario</servlet-name>
     <url-pattern>/SCalendario</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SRimage</display-name>
+    <servlet-name>SRimage</servlet-name>
+    <servlet-class>net.sf.jasperreports.j2ee.servlets.ImageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SRimage</servlet-name>
+    <url-pattern>/SRimage</url-pattern>
+  </servlet-mapping>
 </web-app>

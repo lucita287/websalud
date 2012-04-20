@@ -33,9 +33,9 @@ public class SDatoPersonal extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
-		session.setAttribute("examen",2);
-		 response.sendRedirect("estudiante/index.jsp");
+		//HttpSession session = request.getSession(true);
+		//session.setAttribute("examen",2);
+		// response.sendRedirect("estudiante/index.jsp");
 	}
 
 }

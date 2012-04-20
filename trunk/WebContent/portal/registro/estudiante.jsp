@@ -275,7 +275,7 @@
 										Iterator<CParentesco> it_paren=lista_paren.iterator();
 										while(it_paren.hasNext()){
 											CParentesco paren= it_paren.next();
-											out.println("<option value=\""+paren.getIdparentesco()+"\">Responsable "+paren.getNombre()+"</option>");
+											out.println("<option value=\""+paren.getIdparentesco()+"\">"+paren.getNombre()+" Responsable</option>");
 										}
 									%>	</select><input type="text" id="ced_usuario" name="ced_usuario" class="required"  size="25"/>
 									</div>
@@ -315,7 +315,11 @@
 									<div class="col_titulo">Correo Electronico</div>
 									<div class="col"><input type="text" id="correo_electronico" name="correo_electronico"  size="50"/></div>
 						</div>
-						<div class="fila">
+						
+	</div>					
+	<div style="clear: both;"></div>
+	<div class="tabla">
+					<div class="fila">
 									<div class="col_titulo">*Ingrese el texto</div>
 									<div class="col">
 										 <% ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lf9as8SAAAAAOvbB8V_Xj1KaI3vFPaYAlsgYFoq", "6Lf9as8SAAAAAI5FO_4qetoWZv4D_8nRFDSsbp5P", false);
@@ -323,9 +327,7 @@
 									        %>									
 									</div>
 						</div>
-	</div>					
-
-
+	</div>
 
 	
 	<div style="clear: both;"></div>

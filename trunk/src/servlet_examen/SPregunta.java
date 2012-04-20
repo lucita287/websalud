@@ -17,7 +17,6 @@ import data.CPregunta;
 import data.CPregunta_Titulo_Respuesta;
 import data.CTipo_Pregunta;
 import data.CTitulo_Respuesta;
-import data.CUsuarioPermiso;
 import framework.CDataExam;
 import framework.CValidation;
 
@@ -54,7 +53,6 @@ public class SPregunta extends HttpServlet {
     	String action=valid.ValidarRequest(request.getParameter("a"));
     	HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
-					CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 					 
 					CDataExam dbo=new CDataExam();
 					dbo.Connect();
