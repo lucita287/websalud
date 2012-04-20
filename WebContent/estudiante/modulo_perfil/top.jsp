@@ -16,7 +16,9 @@
 <script src="../lib/base64.js" type="text/javascript" charset="utf-8"></script>
 <script src="../lib/ui.selectmenu.js" type="text/javascript" charset="utf-8"></script>
 <script src="../lib/jquery.maskedinput-1.2.2.js"></script>
-
+<script src="../lib/jquery.validate.js"></script>
+<script src="../lib/jquery.validate.password.js"></script>
+<script src="../lib/i18n/jquery.validator-es.js"></script>
 <script type="text/javascript">
      
 

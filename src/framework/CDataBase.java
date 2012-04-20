@@ -2428,5 +2428,6 @@ public int getResponsableTotal(int type,String busqueda){
 			e.printStackTrace();
 		}
 		return list;
+		
 	}
 }

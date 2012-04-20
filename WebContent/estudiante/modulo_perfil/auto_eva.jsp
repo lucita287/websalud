@@ -40,7 +40,7 @@ while(it.hasNext()){
 										<div style="clear: both;"></div>
 									<% } %>	
 									<div class="col_pregunta"><font  color="red"><%=pregunta.getOrden() %>)</font> <%=pregunta.getPregunta() %></div>
-									<div class="col">
+									<div class="col_examen">
 										<% 
 											if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()>=3){
 											Iterator<CTitulo_Respuesta> it4=pregunta.getIdtipo_pregunta().getIdgrupo_titulo_respuesta().iterator(); 

@@ -18,12 +18,35 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	ArrayList<CTipo_Sangre> tsangre=data.getListaTipo_Sangre();
 	ArrayList<CParentesco> paren=data.getListaParentesco(0,0, 1);
 %>
+    <script  type="text/javascript">
+			  $(document).ready(function () {
+				  $("#MainForm").validate({
+								rules: {
+									emer_par: {
+										min:1
+									}
+								}, messages: {
+									emer_par: {
+										min:"Seleccione un centro regional"
+									}
+								}	
+				  });
+			  });
+	</script>		  
 	<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
 <script>
 $(function() {
 	$( ".check" ).button();
 });
 </script>
+<div style="float:left;">
+<h2>PASO 1</h2>
+</div>
+<div class="button-sig">
+<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Siguiente/Guardar"/> 
+</div>
+<div style="clear: both;"></div>
+
 <div id="dato_personal" class="ui-widget-content ui-corner-all">
 <h3 class="ui-state-default ui-corner-all">Datos Personales</h3>
 				
@@ -45,14 +68,14 @@ $(function() {
 						</div>
 						<div class="border">
 							
-									<div class="col_titulo">Estado Civil</div>
+									<div class="col_titulo">*Estado Civil</div>
 									<div class="col">
 										<% 
 										Iterator<CEstado_Civil> it=estado.iterator();
 										while(it.hasNext()){
 											CEstado_Civil civil=it.next();	
 										%>
-										<input type="radio" id="estado_<%=civil.getIdestado_civil()%>" name="estado_civil" class="check" /><label for="estado_<%=civil.getIdestado_civil()%>"><%= civil.getNombre() %></label>
+										<input type="radio" id="estado_<%=civil.getIdestado_civil()%>" class="check required" name="estado_civil"  /><label for="estado_<%=civil.getIdestado_civil()%>"><%= civil.getNombre() %></label>
 										<% } %>									
 									</div>
 									
@@ -67,7 +90,7 @@ $(function() {
 										while(it2.hasNext()){
 											CTipo_Sangre tsg=it2.next();	
 										%>
-										<input type="radio" id="tsangre_<%=tsg.getIdtipo_sangre() %>" name="tsangre" class="check" /><label for="tsangre_<%=tsg.getIdtipo_sangre() %>"><%= tsg.getNombre() %></label>
+										<input type="radio" id="tsangre_<%=tsg.getIdtipo_sangre() %>" class="check required" name="tsangre"  /><label for="tsangre_<%=tsg.getIdtipo_sangre() %>"><%= tsg.getNombre() %></label>
 										<% } %>									
 									</div>
 									
@@ -76,14 +99,14 @@ $(function() {
 						<div class="border">
 							
 									<div class="col_titulo">Titulo Secundaria</div>
-									<div class="col"><input type="text" size="60"></div>
+									<div class="col"><input type="text" size="60"  ></div>
 									
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
 							
-									<div class="col_titulo">Crecio en</div>
-									<div class="col"><input type="text" size="40"/><br/><span>Lugar</span></div>
+									<div class="col_titulo">*Crecio en</div>
+									<div class="col"><input type="text" size="40" class="required" /><br/><span>Lugar</span></div>
 									
 							<div style="clear: both;"></div>
 						</div>
@@ -99,16 +122,16 @@ $(function() {
 					<div class="tabla">
 						<div class="border">
 							
-									<div class="col_titulo">Nombre</div>
-									<div class="col"><input type="text" value="" size="60" /></div>
+									<div class="col_titulo">*Nombre</div>
+									<div class="col"><input type="text" name="emer-nombre" id="emer-nombre" value="" size="60" class="required" /></div>
 									
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
 							
-									<div class="col_titulo">Parentesco</div>
+									<div class="col_titulo">*Parentesco</div>
 									<div class="col">
-											<select>
+											<select id="emer_par" name="emer_par">
 												<option value="0">SELECCIONE SU PARENTESCO</option>	
 												<%	Iterator<CParentesco> it3=paren.iterator();
 												while(it3.hasNext()){
@@ -124,25 +147,21 @@ $(function() {
 						</div>
 						<div class="border">
 							
-									<div class="col_titulo">Telefono casa</div>
-									<div class="col"><input type="text" size="20"/></div>
+									<div class="col_titulo">*Telefono casa</div>
+									<div class="col"><input type="text" id="tel_casa" name="tel_casa" class="required" size="20"/></div>
 									
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
 							
-									<div class="col_titulo">Telefono movil</div>
-									<div class="col"><input type="text" size="20"/></div>
+									<div class="col_titulo">*Telefono movil</div>
+									<div class="col"><input type="text" id="tel_movil" name="tel_movil" class="required" size="20"/></div>
 									
 							<div style="clear: both;"></div>
 						</div>
 					</div>
 				</div>	
 		<div style="clear: both;"></div>
-</div>
-<div class="button-sig">
-<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Siguiente/Guardar"/> 
- 
 </div>
 	</form>
 <% 
