@@ -75,14 +75,14 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 							
 									<div class="col_titulo">Centro Regional</div>
 									<div class="col">
-										<select id="centro_registro"  name="centro_registro" class="mselect" >
+										<select id="centro_estudiante"  name="centro_estudiante" class="mselect" >
 												<option value="0">SELECCIONE SU CENTRO UNIVERSITARIO</option>
 										<%
 										Iterator<CCentro_Regional> it=centro.iterator();
 										while (it.hasNext()) {
-											CCentro_Regional cen=it.next();
-												out.println("<option value=\""+cen.getIdcentro_regional()+"\">"+cen.getNombre()+"</option>");
-										    }
+											CCentro_Regional cen=it.next();%>
+												<option value="<%=cen.getIdcentro_regional()%>" <%= (cen.getIdcentro_regional()==pac.getIdcentro().getIdcentro_regional() ?"SELECTED":"")%>><%=cen.getNombre()%></option>
+										    <%}
 											%>			
 										</select>
 									</div>
@@ -93,15 +93,14 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 							
 									<div class="col_titulo">Facultad</div>
 									<div class="col">
-										<select id="facultad" name="facultad" class="mselect" >
+										<select id="facultad_estudiante" name="facultad_estudiante" class="mselect" >
 												<option value="0">SELECCIONE SU FACULTAD</option>	
 												<%
 											Iterator<CUnidad_Academica> it2=facultad.iterator();
 											while (it2.hasNext()) {
-												CUnidad_Academica fac=it2.next();
-												out.println("<option value=\""+fac.getIdunidad_academica()+"\">"+fac.getNombre()+"</option>");
-										    }
-											%>			
+												CUnidad_Academica fac=it2.next();%>
+												<option value="<%=fac.getIdunidad_academica()%>" <%= (fac.getIdunidad_academica()==pac.getIdunidad().getIdunidad_academica() ?"SELECTED":"")%> ><%=fac.getNombre()%></option> 
+										    <%}%>			
 										</select>
 									</div>
 									
@@ -112,14 +111,14 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 									<div class="col_titulo">Carrera</div>
 									<div class="col">
 									
-									<select id="carrera" name="carrera" class="mselect" >
+									<select id="carrera_estudiante" name="carrera_estudiante" class="mselect" >
 												<option value="0">SELECCIONE SU CARRERA</option>	
 												<%
 													Iterator<CCarrera> it3=carrera.iterator();
 													while (it3.hasNext()) {
-														CCarrera car=it3.next();
-															out.println("<option value=\""+car.getIdcarrera()+"\">"+car.getNombre()+"</option>");
-													    }
+														CCarrera car=it3.next();%>
+															<option value="<%=car.getIdcarrera()%>" <%= (car.getIdcarrera()==pac.getIdcarrera().getIdcarrera() ?"SELECTED":"")%>><%=car.getNombre()%></option>
+													    <%}
 												%>
 										</select>
 									

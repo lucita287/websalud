@@ -13,6 +13,7 @@ import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
 public class CValidationMensaje extends CValidation {
+	
 	public String ValidarMCaptcha(HttpServletRequest request){
 		String recaptcha_response_field=request.getParameter("recaptcha_response_field");
 		String challenge = request.getParameter("recaptcha_challenge_field");
