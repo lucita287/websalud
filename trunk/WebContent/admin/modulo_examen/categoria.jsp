@@ -1,6 +1,14 @@
 		<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-    
+    	<%@ page import="data.CMenu_Categoria" %>
+    	<%@ page import="framework.CDataExam" %>
+    	<%@ page import="java.util.ArrayList" %>
+    	<% 
+    		CDataExam dbo=new CDataExam();
+    		dbo.Connect();
+    		ArrayList<CMenu_Categoria> lstmenu=dbo.getListaMenu_Categoria();
+    		dbo.Close();
+    	%>
 		<script>
 		var idcate=0;
 		$(function() {
@@ -35,7 +43,7 @@
 				    params : [ {name: 'a', value: 'categoria'} ]
 				});
 		  });  
-		  function Editarcategoria(id,nombre,orden,g1,g2){
+		  function Editarcategoria(id,nombre,orden,g1,g2,menu){
 			  $("#id_cate").text(id);
 			  $("#nombre_cate").val(nombre);
 			  $("#orden_cate").val(orden);
@@ -49,6 +57,7 @@
 			  $('#editor').cleditor()[0].clear();
 			  $("#editor").cleditor()[0].focus();
 			  $("#cate_catego_ponde").text(nombre);
+			  $("#menu_cate").val(menu);
 			  idcate_pond=0;
 		  }
 		  function limpiarcate(){
@@ -80,6 +89,7 @@
 				            'multifa='+(($("#multifa_cate").is(":checked")==true)?1:0),
 				            'orden='+$("#orden_cate").val(),
 				            'estado='+$("#estado_pregunta").val(),
+				            'menu_cate='+$("#menu_cate").val(),
 				        ].join('&');
 			  $.ajax({
 			        url: "../SCategoria",
@@ -148,6 +158,18 @@
 								<div class="col">
 									<input type="checkbox" id="auto_cate" class="check" /><label for="auto_cate">Examen de AutoEvaluaci&oacute;n</label>
 									<input type="checkbox" id="multifa_cate" class="check" /><label for="multifa_cate">Examen Multif&aacute;sico</label>										
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">*Menu Categoria</div>
+								<div class="col">
+										<select id="menu_cate" >
+													<% for(int j=0; j<lstmenu.size();j++){ 
+														CMenu_Categoria respon=lstmenu.get(j);%>
+														<option value="<%=respon.getIdmenu_categoria()%>" ><%=respon.getNombre()%></option>
+													<% } %>
+												</select>
+																			
 								</div>
 							</div>
 				</div>

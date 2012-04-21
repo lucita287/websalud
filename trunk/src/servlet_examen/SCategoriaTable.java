@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
+import data.CDependencia;
+import data.CMenu_Categoria;
 import data.CUsuarioPermiso;
 import framework.CDataExam;
 import framework.CValidation;
@@ -81,7 +83,7 @@ public class SCategoriaTable extends HttpServlet {
 									 String data="";
 									 for(int i=0; i<lista.size();i++){
 										 CCategoria temp=lista.get(i);
-										 	data+="<row id='"+temp.getIdcategoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarcategoria("+temp.getIdcategoria()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+","+temp.getBooleano(temp.getAutoevaluacion())+","+temp.getBooleano(temp.getMultifasico())+")' name='idcategoria' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getEstadoMensaje()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAutoevaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
+										 	data+="<row id='"+temp.getIdcategoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarcategoria("+temp.getIdcategoria()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+","+temp.getBooleano(temp.getAutoevaluacion())+","+temp.getBooleano(temp.getMultifasico())+","+temp.getIdmenu_categoria().getIdmenu_categoria()+")' name='idcategoria' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getEstadoMensaje()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAutoevaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
 									 }
 									 info+=data+"</rows>";
 									 out.println(info);
@@ -114,6 +116,40 @@ public class SCategoriaTable extends HttpServlet {
 									 for(int i=0; i<lista.size();i++){
 										 CCategoria_Interpretacion temp=lista.get(i);
 										 	data+="<row id='"+temp.getIdcategoria_interpretacion()+"'><cell><![CDATA[<input type='radio' class='menu_categoria' onclick='EditarCatePonderacion("+temp.getIdcategoria_interpretacion()+")' name='idcategoria_ponderacion' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria_interpretacion()+"]]></cell><cell><![CDATA["+temp.getPonderacion_max()+"]]></cell><cell><![CDATA["+temp.getPonderacion_min()+"]]></cell><cell><![CDATA["+temp.getIdcategoria().getDescripcion()+"]]></cell></row>";	 
+									 }
+									 info+=data+"</rows>";
+									 out.println(info);
+							 dbo.Close();
+						
+						}else if(action.equalsIgnoreCase("menu_categoria") &&(user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+							CDataExam dbo=new CDataExam();
+							 dbo.Connect();
+							 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
+							 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
+							 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
+							 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+							 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
+							 
+							 int min=((page-1)*rp)+1;
+							 int max=page*(rp);
+							 int ordenar=1;					 
+							 if(order.equalsIgnoreCase("nombre")){
+							 	 ordenar=2;
+							 }
+							
+							 int asc=0;
+							 if(typeorder.equalsIgnoreCase("asc")){
+								 asc=1;
+							 }
+							 
+							 ArrayList<CMenu_Categoria> lista=dbo.getListaMenu_Categoria(ordenar, asc, min, max, busqueda);
+							 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+									 info+="<rows><page>"+page+"</page><total>"+dbo.getMenu_CategoriaTotal(busqueda)+"</total>";
+									 
+									 String data="";
+									 for(int i=0; i<lista.size();i++){
+										 CMenu_Categoria temp=lista.get(i);
+										 	data+="<row id='"+temp.getIdmenu_categoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarmenu_categoria("+temp.getIdmenu_categoria()+",\""+temp.getNombre()+"\")' name='idcentro_radio' value='"+temp.getIdmenu_categoria()+"' />]]></cell><cell><![CDATA["+temp.getIdmenu_categoria()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell></row>";	 
 									 }
 									 info+=data+"</rows>";
 									 out.println(info);

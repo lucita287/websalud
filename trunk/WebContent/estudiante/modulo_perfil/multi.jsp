@@ -4,8 +4,7 @@
 <%@ page import="data.CMenu_Categoria" %> 
 <%@ page import="java.util.ArrayList" %> 
 <%@ page import="java.util.Iterator" %>    
-
-<h2>PASO 2 / EXAMEN AUTOEVALUACI&Oacute;N</h2>
+<h2>PASO 2 / EXAMEN MULTIF&Aacute;SICO</h2>
     <% 
     CDataExam dbo=new CDataExam();
     dbo.Connect();
@@ -16,8 +15,8 @@
     	CMenu_Categoria menu=it.next();
     	
     %>
-    	<div class="ui-state-highlight  menu_categoria" >
-    	<a href="index.jsp?portal=9&idmenu=<%=menu.getIdmenu_categoria()%>&auto=1&multi=0&titulo=<%= menu.getNombre() %>">
+    	<div class="ui-state-error menu_categoria" >
+    	<a href="index.jsp?portal=9&idmenu=<%=menu.getIdmenu_categoria()%>&auto=0&multi=1&titulo=<%= menu.getNombre() %>">
     	<%= menu.getNombre() %>
     	</a>
     	</div>

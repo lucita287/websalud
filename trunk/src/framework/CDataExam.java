@@ -1130,14 +1130,15 @@ public class CDataExam extends CDataBase {
 	public boolean UpdateCategoria(CCategoria cate){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE categoria SET descripcion = ?, orden = ?, autoevaluacion = ?, multifasico = ?, estado=? WHERE idcategoria = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE categoria SET descripcion = ?, orden = ?, autoevaluacion = ?, multifasico = ?, estado=?, idmenu_categoria = ? WHERE idcategoria = ?");
 			
 			stm.setString(1, cate.getDescripcion());
 			stm.setInt(2,cate.getOrden());
 			stm.setInt(3,cate.getAutoevaluacion());
 			stm.setInt(4,cate.getMultifasico());
 			stm.setInt(5, cate.getEstado());
-			stm.setInt(6,cate.getIdcategoria());
+			stm.setInt(6, cate.getIdmenu_categoria().getIdmenu_categoria());
+			stm.setInt(7,cate.getIdcategoria());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1151,12 +1152,13 @@ public class CDataExam extends CDataBase {
 	public boolean SafeCategoria(CCategoria cate){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO categoria (descripcion, orden, autoevaluacion, multifasico,estado) VALUES (?, ?, ?,?,?)");			
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO categoria (descripcion, orden, autoevaluacion, multifasico,estado,idmenu_categoria) VALUES (?, ?, ?,?,?,?)");			
 			stm.setString(1, cate.getDescripcion());
 			stm.setInt(2,cate.getOrden());
 			stm.setInt(3,cate.getAutoevaluacion());
 			stm.setInt(4,cate.getMultifasico());
 			stm.setInt(5,cate.getEstado());
+			stm.setInt(6, cate.getIdmenu_categoria().getIdmenu_categoria());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1187,7 +1189,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CCategoria> getListaCategoria(int ordenar,int asc,int min,int max, String busqueda){
 		ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
 		try{
-			String sql="select * from (SELECT tc.idcategoria, tc.descripcion, tc.orden, tc.autoevaluacion, tc.multifasico, tc.estado, @rownum:=@rownum+1 rownum  "+
+			String sql="select * from (SELECT tc.idcategoria, tc.descripcion, tc.orden, tc.autoevaluacion, tc.multifasico, tc.estado, tc.idmenu_categoria, @rownum:=@rownum+1 rownum  "+
 						"FROM categoria tc, (SELECT @rownum:=0) ro  "+
 						"where  upper(tc.descripcion) like ? "+
 						" ) table1 "+
@@ -1200,7 +1202,7 @@ public class CDataExam extends CDataBase {
 			stm.setInt(id++,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"));
+				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"),new CMenu_Categoria(rs.getInt("idmenu_categoria"),""));
 				ret.add(news);
 				
 			}
@@ -1215,12 +1217,14 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CCategoria> getListaCategoria(){
 		ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
 		try{
-			String sql="SELECT tc.idcategoria, tc.descripcion, tc.orden, tc.autoevaluacion, tc.multifasico,tc.estado "+
+			String sql="SELECT tc.idcategoria, tc.descripcion, tc.orden, tc.autoevaluacion, tc.multifasico,tc.estado,tc.idmenu_categoria "+
 						"FROM categoria tc  ";
+			
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"));
+				CMenu_Categoria menu=new CMenu_Categoria(rs.getInt("idmenu_categoria"),"");
+				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"),menu);
 				ret.add(news);				
 			}
 			rs.close();
@@ -1259,7 +1263,7 @@ public class CDataExam extends CDataBase {
 			stm.setInt(2,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),0,0,0,0);
+				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),0,0,0,0,null);
 				CCategoria_Interpretacion news=new CCategoria_Interpretacion(rs.getInt("idcategoria_interpretacion"),rs.getInt("ponderacion_max"),rs.getInt("ponderacion_min"),"",cate);
 				ret.add(news);
 				
@@ -1626,7 +1630,7 @@ public class CDataExam extends CDataBase {
 			stm.setInt(4,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("cate_nombre"),0,0,0,0);
+				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("cate_nombre"),0,0,0,0,null);
 				CPregunta news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
 						cate, rs.getString("descripcion"),null,rs.getInt("auto_evaluacion"),
 						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
@@ -1671,7 +1675,7 @@ public class CDataExam extends CDataBase {
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CTipo_Pregunta tipo=this.getTipo_PreguntaEspecifica(rs.getInt("idtipo_pregunta"));
-				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("cate_nombre"),0,0,0,0);
+				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("cate_nombre"),0,0,0,0,null);
 				news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
 						cate, rs.getString("descripcion"),tipo,rs.getInt("auto_evaluacion"),
 						rs.getInt("multifasico"),rs.getInt("largo"),rs.getInt("multiple"),rs.getInt("estado"));
@@ -1747,18 +1751,19 @@ public class CDataExam extends CDataBase {
 		}
 		return news;
 	}
-	public ArrayList<CCategoria> getListaCategoria(int auto,int multi){
+	public ArrayList<CCategoria> getListaCategoriaMenu(int auto,int multi,int menu){
 		ArrayList<CCategoria> ret=new ArrayList<CCategoria>();
 		try{
 			String sql="SELECT tc.idcategoria, tc.descripcion, tc.orden, tc.autoevaluacion, tc.multifasico, tc.estado "+
 						"FROM categoria tc "+
-						" where (tc.autoevaluacion=? or tc.multifasico=?) and tc.estado=1  order by tc.orden ASC";
+						" where (tc.autoevaluacion=? or tc.multifasico=?) and tc.estado>0 and tc.idmenu_categoria=?  order by tc.orden ASC";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,auto);
 			stm.setInt(2,multi);
+			stm.setInt(3,menu);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"));
+				CCategoria news=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),rs.getInt("orden"),rs.getInt("autoevaluacion"),rs.getInt("multifasico"),rs.getInt("estado"),null);
 				ret.add(news);
 				
 			}
@@ -1790,41 +1795,6 @@ public class CDataExam extends CDataBase {
 				e.printStackTrace();
 			}
 		}
-	}
-	public ArrayList<CPregunta> getListaPreguntas(CCategoria categoria, int auto, int multi){
-		ArrayList<CPregunta> ret=new ArrayList<CPregunta>();
-		try{
-			String sql="SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, "+
-					" pe.descripcion, pe.auto_evaluacion, pe.multifasico, pe.estado, tp.idtipo_pregunta, tp.descripcion  descripcion_preg, tp.idgrupo "+
-					" FROM pregunta pe inner join tipo_pregunta tp on tp.idtipo_pregunta=pe.idtipo_pregunta " +
-					" where pe.categoriaidcategoria=? and (pe.auto_evaluacion=? or pe.multifasico=?) order by pe.orden ASC";
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-			stm.setInt(1, categoria.getIdcategoria());
-			stm.setInt(2,auto);
-			stm.setInt(3,multi);
-			ResultSet rs=stm.executeQuery();
-			while(rs.next()){
-				ArrayList<CTitulo_Respuesta> lista=new ArrayList<CTitulo_Respuesta>();
-					if(rs.getInt("idtipo_pregunta")>3){
-						lista= this.getListaTitulo_Respuesta(rs.getInt("idgrupo"));
-						
-					}
-					CTipo_Pregunta ct=new CTipo_Pregunta(rs.getInt("idtipo_pregunta"),rs.getString("descripcion_preg"),lista);
-					getListaPreguntaTitulo(ct, rs.getInt("idpregunta"));
-				CPregunta news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
-						categoria, rs.getString("descripcion"),ct,rs.getInt("auto_evaluacion"),
-						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
-				
-				ret.add(news);
-				
-			}
-			rs.close();
-			stm.close();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		return ret;
 	}
 	public ArrayList<CTitulo_Secundaria> getListaTitulo_Secundaria(){
 		ArrayList<CTitulo_Secundaria> ret=new ArrayList<CTitulo_Secundaria>();
@@ -1883,5 +1853,165 @@ public class CDataExam extends CDataBase {
 		}
 		
 		return false;
+	}
+	public boolean SafeMenu_Categoria(CMenu_Categoria ctipo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO  menu_categoria(nombre) VALUES (?)");
+			
+			stm.setString(1,ctipo.getNombre());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public ArrayList<CMenu_Categoria> getListaMenu_Categoria(int ordenar,int asc,int min,int max, String busqueda){
+		ArrayList<CMenu_Categoria> ret=new ArrayList<CMenu_Categoria>();
+		try{
+			String sql="select * from (SELECT tc.idmenu_categoria, tc.nombre, @rownum:=@rownum+1 rownum  "+
+						"FROM menu_categoria tc, (SELECT @rownum:=0) ro  "+
+						"where  upper(tc.nombre) like ? "+
+						" ) table1 "+
+						" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			int id=1;
+			stm.setString(id++,"%"+busqueda.trim().toUpperCase()+"%");
+			stm.setInt(id++,min);
+			stm.setInt(id++,max);
+			stm.setInt(id++,ordenar);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CMenu_Categoria news=new CMenu_Categoria(rs.getInt("idmenu_categoria"),rs.getString("nombre"));
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public int getMenu_CategoriaTotal(String busqueda){
+		int temp=0;
+		
+				try {
+					String sql="SELECT count(*) cant  "+
+						" FROM menu_categoria tc where upper(tc.nombre) like ? ";
+					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+					
+					stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
+					ResultSet rs2=stm.executeQuery();
+					if(rs2.next())
+					temp=rs2.getInt("cant");
+				} catch (SQLException e) {
+		
+					e.printStackTrace();
+				}
+		
+		return temp;
+	}
+	public boolean deleteMenu_Categoria(int ctipo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM menu_categoria WHERE idmenu_categoria = ?");
+			
+			stm.setInt(1,ctipo);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public ArrayList<CMenu_Categoria> getListaMenu_Categoria(){
+		ArrayList<CMenu_Categoria> list=new ArrayList<CMenu_Categoria>();
+		try{
+
+			String sql="SELECT idmenu_categoria, nombre FROM menu_categoria";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CMenu_Categoria dep=new CMenu_Categoria(rs.getInt("idmenu_categoria"),rs.getString("nombre"));
+				list.add(dep);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	public ArrayList<CPregunta> getListaPreguntas(CCategoria categoria, int auto, int multi){
+		ArrayList<CPregunta> ret=new ArrayList<CPregunta>();
+		try{
+			String sql="SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, "+
+					" pe.descripcion, pe.auto_evaluacion, pe.multifasico, pe.estado, tp.idtipo_pregunta, tp.descripcion  descripcion_preg, tp.idgrupo "+
+					" FROM pregunta pe inner join tipo_pregunta tp on tp.idtipo_pregunta=pe.idtipo_pregunta " +
+					" where pe.categoriaidcategoria=? and (pe.auto_evaluacion=? or pe.multifasico=?) order by pe.orden ASC";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, categoria.getIdcategoria());
+			stm.setInt(2,auto);
+			stm.setInt(3,multi);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ArrayList<CTitulo_Respuesta> lista=new ArrayList<CTitulo_Respuesta>();
+					if(rs.getInt("idtipo_pregunta")>3){
+						lista= this.getListaTitulo_Respuesta(rs.getInt("idgrupo"));
+						
+					}
+					CTipo_Pregunta ct=new CTipo_Pregunta(rs.getInt("idtipo_pregunta"),rs.getString("descripcion_preg"),lista);
+					getListaPreguntaTitulo(ct, rs.getInt("idpregunta"));
+				CPregunta news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
+						categoria, rs.getString("descripcion"),ct,rs.getInt("auto_evaluacion"),
+						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
+				
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<CMenu_Categoria> getListaMenu_Categoria(int auto,int multi){
+		ArrayList<CMenu_Categoria> ret=new ArrayList<CMenu_Categoria>();
+		ArrayList<CMenu_Categoria> list=new ArrayList<CMenu_Categoria>();
+		try{
+
+			String sql="SELECT  distinct mc.idmenu_categoria, mc.nombre FROM menu_categoria mc inner join categoria c on mc.idmenu_categoria=c.idmenu_categoria where c.autoevaluacion=? or c.multifasico=?";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, auto);
+			stm.setInt(2, multi);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CMenu_Categoria dep=new CMenu_Categoria(rs.getInt("idmenu_categoria"),rs.getString("nombre"));
+				list.add(dep);
+				
+			}
+			rs.close();
+			stm.close();
+		}
+		catch(Throwable e){
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

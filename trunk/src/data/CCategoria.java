@@ -7,6 +7,7 @@ public class CCategoria {
 	private int autoevaluacion;
 	private int multifasico;
 	private int estado;
+	private CMenu_Categoria idmenu_categoria;
 	/**
 	 * @param idcategoria
 	 * @param descripcion
@@ -14,16 +15,33 @@ public class CCategoria {
 	 * @param autoevaluacion
 	 * @param multifasico
 	 * @param estado
+	 * @param idmenu_categoria
 	 */
 	public CCategoria(int idcategoria, String descripcion, int orden,
-			int autoevaluacion, int multifasico, int estado) {
+			int autoevaluacion, int multifasico, int estado,CMenu_Categoria idmenu_categoria) {
 		this.idcategoria = idcategoria;
 		this.descripcion = descripcion;
 		this.orden = orden;
 		this.autoevaluacion = autoevaluacion;
 		this.multifasico = multifasico;
 		this.estado = estado;
+		this.idmenu_categoria=idmenu_categoria;
 	}
+	
+	/**
+	 * @return the idmenu_categoria
+	 */
+	public CMenu_Categoria getIdmenu_categoria() {
+		return idmenu_categoria;
+	}
+
+	/**
+	 * @param idmenu_categoria the idmenu_categoria to set
+	 */
+	public void setIdmenu_categoria(CMenu_Categoria idmenu_categoria) {
+		this.idmenu_categoria = idmenu_categoria;
+	}
+
 	/**
 	 * @return the idcategoria
 	 */

@@ -82,7 +82,7 @@ public class SPregunta extends HttpServlet {
 					
 											if(tipo==1 && validacion.compareTo("")==0){
 												CTipo_Pregunta ctipo=dbo.getTipo_PreguntaEspecifica(tipo);
-												CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+												CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 												CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,0,estado);
 												boolean b=dbo.SafePregunta(pregun);
 												if(!b){
@@ -95,7 +95,7 @@ public class SPregunta extends HttpServlet {
 												int size_pregunta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size_pregunta")));
 												validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(size_pregunta, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar el tama&ntilde;o del texto de la pregunta\"}"):validacion;
 												if(validacion.compareTo("")==0){
-													CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+													CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 													CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa,size_pregunta,0,estado);
 													boolean b=dbo.SafePregunta(pregun);
 													if(!b){
@@ -121,7 +121,7 @@ public class SPregunta extends HttpServlet {
 												
 												if(validacion.compareTo("")==0){
 													CTipo_Pregunta ctipo=dbo.getTipo_PreguntaEspecifica(tipo);
-													CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+													CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 													CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,multiple,estado);
 													boolean b=dbo.SafePregunta(pregun);
 													if(!b){
@@ -157,7 +157,7 @@ public class SPregunta extends HttpServlet {
 													 lista.add(new CPregunta_Titulo_Respuesta(null,titulo,num));
 												}
 												CTipo_Pregunta ctipo=dbo.getTipo_PreguntaEspecifica(tipo);
-												CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+												CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 												CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,multiple,estado);
 												boolean b=dbo.SafePregunta(pregun);
 												if(!b){
@@ -206,7 +206,7 @@ public class SPregunta extends HttpServlet {
 				
 
 				if(tipo==1 && validacion.compareTo("")==0){
-					CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+					CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 					CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa, 0,0,estado);
 					boolean b=dbo.UpdatePregunta(pregun);
 					if(!b){
@@ -219,7 +219,7 @@ public class SPregunta extends HttpServlet {
 					int size_pregunta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 					validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(size_pregunta, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar el tama&ntilde;o del texto de la pregunta\"}"):validacion;
 					if(validacion.compareTo("")==0){
-						CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+						CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 						CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa,size_pregunta,0,estado);
 						boolean b=dbo.UpdatePregunta(pregun);
 						if(!b){
@@ -230,7 +230,7 @@ public class SPregunta extends HttpServlet {
 					}else result=validacion;
 				}else if(tipo>=3  && validacion.compareTo("")==0){
 					int multiple=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multiple")));
-					CCategoria cate=new CCategoria(categoria,"",0,0,0,0);
+					CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
 					CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa,0,multiple,estado);
 					 ArrayList<CPregunta_Titulo_Respuesta> lista_det=dbo.getListaPregunta_Titulo_Respuesta(pregun);
 					 Iterator<CPregunta_Titulo_Respuesta> it=lista_det.iterator();
