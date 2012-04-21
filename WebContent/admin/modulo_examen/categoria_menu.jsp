@@ -2,6 +2,23 @@
     pageEncoding="UTF-8" %>
 
 		<script>
+		function RecargarMenu_Categoria(){
+			  cadena = [ 'a=show_menu_cate',].join('&');
+				 
+				 $.ajax({
+				        url: "../SCategoria",
+				        data: cadena,
+				  	    type: 'post',
+				  	  	success: function(data){
+				        	result=eval("("+data+")");
+				        	var array=result.rows;
+				        	$('#menu_cate').empty();
+				        	for (var x = 0 ; x < array.length ; x++) {
+				        		$('#menu_cate').append('<option value="'+array[x].value+'" >'+array[x].text+'</option>');
+				        	}
+				        }
+				    });
+		  }
 		var idmenu_categoria=0;
 		  $(document).ready(function () {
 		      $("#m_categoria").flexigrid
@@ -37,6 +54,7 @@
 			  $("#nombre_menu_categoria").val("");
 			  idmenu_categoria=0;
 			  $('#m_categoria').flexReload();
+			  RecargarMenu_Categoria();
 		  }
 		  function Guardarmenu_categoria(){
 			  var action="guardarmenu_categoria";

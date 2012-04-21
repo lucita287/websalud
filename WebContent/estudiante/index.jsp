@@ -45,9 +45,11 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 <% }else if(portal==4){ %>
 <jsp:include page="modulo_perfil/dato_general.jsp" />
 <% }else if(portal==5){ %>
-<jsp:include page="modulo_perfil/report.jsp" />
+<jsp:include page="modulo_perfil/multi.jsp" />
 <% }else if(portal==6){ %>
 <jsp:include page="modulo_perfil/auto_eva.jsp" />
+<% }else if(portal==9){ %>
+<jsp:include page="modulo_perfil/examen_categoria.jsp" />
 <% } %>
 </div>
 </div>

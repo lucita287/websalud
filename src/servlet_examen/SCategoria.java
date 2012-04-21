@@ -2,6 +2,7 @@ package servlet_examen;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import data.CCarrera;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CMenu_Categoria;
+import data.CResponsable;
 import data.CUsuarioPermiso;
 import framework.Base64core;
 import framework.CDataExam;
@@ -67,13 +69,16 @@ public class SCategoria extends HttpServlet {
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 						int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
+						int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("menu_cate")));
+						
 						String validacion=valid.ValidarSiesMayor(idcate, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(menu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un Menu para la categoria\"}"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 						
 						
 						if(validacion.compareTo("")==0){
-							CCategoria cate=new CCategoria(idcate,nombre,orden,auto, multifa,estado);
+							CCategoria cate=new CCategoria(idcate,nombre,orden,auto, multifa,estado,new CMenu_Categoria(menu,""));
 							boolean b=dbo.UpdateCategoria(cate);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -90,11 +95,14 @@ public class SCategoria extends HttpServlet {
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 						int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
+						int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("menu_cate")));
+						
 						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(menu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un Menu para la categoria\"}"):validacion;
 						
 						if(validacion.compareTo("")==0){
-							CCategoria cate=new CCategoria(0,nombre,orden,auto, multifa,estado);
+							CCategoria cate=new CCategoria(0,nombre,orden,auto, multifa,estado,new CMenu_Categoria(menu,""));
 							boolean b=dbo.SafeCategoria(cate);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -135,13 +143,17 @@ public class SCategoria extends HttpServlet {
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
+						int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("menu_cate")));
+						
 						String validacion=valid.ValidarSiesMayor(idcate_pond, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(interpretacion, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcategoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una categoria\"}"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(menu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un Menu para la categoria\"}"):validacion;
+						
 						if(validacion.compareTo("")==0){
-							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0);
+							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0,new CMenu_Categoria(menu,""));
 							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(idcate_pond,max, min, interpretacion,categoria) ;
 							boolean b=dbo.UpdateCategoria_Interpretacion(cate);
 							if(!b){
@@ -164,7 +176,7 @@ public class SCategoria extends HttpServlet {
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
 						if(validacion.compareTo("")==0){
-							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0);
+							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0,null);
 							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(0,max, min, interpretacion,categoria) ;
 							boolean b=dbo.SafeCategoria_Interpretacion(cate);
 							if(!b){
@@ -210,8 +222,51 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 						
+					}else if(action.equalsIgnoreCase("newmenu_categoria")&& (user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="";
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+						String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 80, "Descripcion"):validacion;
+						
+						if(validacion.compareTo("")==0){
+							CMenu_Categoria car=new CMenu_Categoria(0,nombre);
+							boolean b=dbo.SafeMenu_Categoria(car);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+							
+					}else if(action.equalsIgnoreCase("deletemenu_categoria")&& (user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="";
+						int id_menu_categoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_menu_categoria")));
+						String validacion=valid.ValidarSiesMayor(id_menu_categoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.deleteMenu_Categoria(id_menu_categoria);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+							
+					}else if(action.equalsIgnoreCase("show_menu_cate")){
+						ArrayList<CMenu_Categoria> list_respon=dbo.getListaMenu_Categoria();
+						String result="{total:"+list_respon.size()+",rows:[";
+						String data="";
+						
+						for(int j=0; j<list_respon.size();j++){ 
+							CMenu_Categoria respon=list_respon.get(j);
+							data+=(data.compareTo("")==0)?"":",";
+							data+="{value:"+respon.getIdmenu_categoria()+",text:'"+respon.getNombre()+"'}";
+						}
+						result+=data+"]}";
+						out.println(result);
 					}
-					
 					dbo.Close();
 		 }
 		 
