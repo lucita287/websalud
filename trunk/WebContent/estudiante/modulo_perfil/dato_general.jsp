@@ -25,7 +25,7 @@ $(document).ready(function () {
 </script>
 	<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
 <div style="float:left;">
-<h2>PASO 1</h2>
+<h2>PASO 1 / OPCIONAL, ACTUALIZACI&Oacute;N DE DATOS</h2>
 </div>
 <div class="button-sig">
 <input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 

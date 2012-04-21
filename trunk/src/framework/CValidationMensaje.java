@@ -124,5 +124,29 @@ public class CValidationMensaje extends CValidation {
 		}
 		return result;
 	}
-	
+	public String ValidarECombo(int num,String tipo){
+		if(num>0)
+			return "";
+		 else return "Debe seleccionar un "+tipo+"<br>";
+	}
+	public String ValidarENombre(String name,int longitud,String tipo){
+		String result="";
+		if(name.length()>longitud){
+			result="DEBE INGRESAR EL CAMPO DE "+tipo+" NO MAYOR A 300 CARACTERES <br>";
+		}else if(name.isEmpty()){
+			result="DEBE INGRESAR EL CAMPO DE "+tipo+"<br>";
+		}else if(name.length()<5){
+			result="EL CAMPO "+tipo+" DEBE CONTENER ALMENOS 4 CARACTERES<br>";
+		}
+		return result;
+	}
+	public String ValidarENombreV(String name,int longitud,String tipo){
+		String result="";
+		if(name.length()>longitud){
+			result="DEBE INGRESAR EL CAMPO DE "+tipo+" NO MAYOR A 300 CARACTERES <br>";
+		}else if(name.length()<5){
+			result="EL CAMPO "+tipo+" DEBE CONTENER ALMENOS 4 CARACTERES<br>";
+		}
+		return result;
+	}
 }

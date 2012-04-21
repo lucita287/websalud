@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CPaciente;
-import data.CParentesco;
 
 import framework.CDataExam;
 import framework.CValidationMensaje;
@@ -43,12 +42,20 @@ public class SPaciente extends HttpServlet {
 			int idusuario=dbo.getIdPaciente(username.toLowerCase());
 			if(idusuario>0){
 				paciente.setIdpaciente(idusuario);
+				paciente.setCrecio_en("");
+				paciente.setEstado_civilidestado_civil(0);
+				paciente.setIdtipo_sangre(0);
+				paciente.setIdemer_parentesco(0);
+				paciente.setEmer_movil("");
+				paciente.setEmer_telefono("");
+				paciente.setEmer_nombre("");
+				paciente.setTitulo_secundaria("");
 				paciente.setPassword("");
 				HttpSession session = request.getSession(true);
 				 session.setAttribute("estudiante",username.toLowerCase() );
 				 session.setAttribute("examen",1);
 				 session.setAttribute("paciente",paciente);
-				 response.sendRedirect("estudiante/index.jsp");
+				 response.sendRedirect("estudiante/index.jsp?portal=1");
 			}else{
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N","Error al guardar");
 			}
@@ -124,12 +131,12 @@ public class SPaciente extends HttpServlet {
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				CParentesco par=new CParentesco(parentesco,"",0,0,0);
+				
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						carne, direccion, tel_usuario, movil_usuario,
-						dbo.getEspecificoCarrera(carrera), dbo.getEspecificoCentro_Regional(centro),
-						dbo.getEspecificoUnidadAcademica(facultad), dbo.getEspecificoDependencia(dependencia), genero,
-						password, email,username,par,ced,no_personal);
+						carrera, centro,
+						facultad, dependencia, genero,
+						password, email,username,parentesco,ced,no_personal);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);		
 			}
@@ -164,11 +171,10 @@ public class SPaciente extends HttpServlet {
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
-						null, null,null, dbo.getEspecificoDependencia(dependencia), genero,
-						password,email,username,par,ced,no_personal);
+						0, 0,0, dependencia, genero,
+						password,email,username,parentesco,ced,no_personal);
 				boolean b=dbo.SafePacienteTrab(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}	
@@ -206,12 +212,11 @@ public class SPaciente extends HttpServlet {
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						carne, direccion, tel_usuario, movil_usuario,
-						dbo.getEspecificoCarrera(carrera), dbo.getEspecificoCentro_Regional(centro),
-						dbo.getEspecificoUnidadAcademica(facultad), null, genero,
-						password,email,username,par,ced,0);
+						carrera, centro,
+						facultad, 0, genero,
+						password,email,username,parentesco,ced,0);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}
@@ -243,11 +248,10 @@ public class SPaciente extends HttpServlet {
 			if(!mensaje.isEmpty()){
 				ImprimirPaginas(out,"ERRORES DE VALIDACI&Oacute;N",mensaje);
 			}else{
-				CParentesco par=new CParentesco(parentesco,"",0,0,0);
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
-						null, null,null, null, genero,
-						password,email,username,par,ced,0);
+						0, 0,0, 0, genero,
+						password,email,username,parentesco,ced,0);
 				
 				
 				boolean b=dbo.SafePacienteTrab(paciente);

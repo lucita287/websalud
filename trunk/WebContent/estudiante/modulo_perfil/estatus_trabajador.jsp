@@ -78,7 +78,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 													Iterator<CDependencia> it4=lista_dep.iterator();
 													while (it4.hasNext()) {
 														CDependencia car=it4.next();%>
-															<option value="<%=car.getIddependencia()%>" <%= (car.getIddependencia()==pac.getIddependencia().getIddependencia() ?"SELECTED":"")%> ><%=car.getNombre()%></option>" 
+															<option value="<%=car.getIddependencia()%>" <%= (car.getIddependencia()==pac.getIddependencia() ?"SELECTED":"")%> ><%=car.getNombre()%></option>" 
 												<%	}	%>
 										</select>
 									

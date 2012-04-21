@@ -70,7 +70,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 <input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Siguiente/Guardar"/> 
 </div>
 <div style="clear: both;"></div>
-
+<input type="hidden" name="idestatus" value="1" id="idestatus"/>
 <div id="dato_personal" class="ui-widget-content ui-corner-all">
 <h3 class="ui-state-default ui-corner-all">Datos Personales</h3>
 				
@@ -99,7 +99,9 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 										while(it.hasNext()){
 											CEstado_Civil civil=it.next();	
 										%>
-										<input type="radio" id="civil_<%=civil.getIdestado_civil()%>" name="civil_personal" value="<%=civil.getIdestado_civil()%>" class="check required"  <%= civil.getIdestado_civil()==pac.getIdestado_civil().getIdestado_civil()?"checked=\"checked\"":"" %>  /><label for="civil_<%=civil.getIdestado_civil()%>"><%= civil.getNombre() %></label>
+										<input type="radio" id="civil_<%=civil.getIdestado_civil()%>" name="civil_personal" value="<%=civil.getIdestado_civil()%>" class="check required" 
+										 <%= civil.getIdestado_civil()==pac.getEstado_civilidestado_civil() ?"checked=\"checked\"":"" %>  />
+										<label for="civil_<%=civil.getIdestado_civil()%>"><%= civil.getNombre() %></label>
 										<% } %>									
 									</div>
 									
@@ -114,7 +116,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 										while(it2.hasNext()){
 											CTipo_Sangre tsg=it2.next();	
 										%>
-										<input type="radio" id="tsangre_<%=tsg.getIdtipo_sangre() %>" name="tsangre_personal" value="<%=tsg.getIdtipo_sangre() %>" class="check required" name="tsangre" <%= tsg.getIdtipo_sangre() ==pac.getIdtipo_sangre().getIdtipo_sangre()?"checked=\"checked\"":"" %>  /><label for="tsangre_<%=tsg.getIdtipo_sangre() %>"><%=tsg.getNombre()%></label>
+										<input type="radio" id="tsangre_<%=tsg.getIdtipo_sangre() %>" name="tsangre_personal" value="<%=tsg.getIdtipo_sangre() %>" class="check required" name="tsangre" <%= tsg.getIdtipo_sangre() ==pac.getIdtipo_sangre()?"checked=\"checked\"":"" %>  /><label for="tsangre_<%=tsg.getIdtipo_sangre() %>"><%=tsg.getNombre()%></label>
 										<% } %>									
 									</div>
 									
@@ -123,7 +125,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 						<div class="border">
 							
 									<div class="col_titulo">Titulo Secundaria</div>
-									<div class="col"><input id="tit_secun_personal" name="tit_secun_personal" value="<%= pac.getTitulo_secundaria()%>" type="text" size="60"  ></div>
+									<div class="col"><input id="tit_secun_personal" name="tit_secun_personal" value="<%= pac.getTitulo_secundaria()%>" type="text" size="80"  ></div>
 									
 							<div style="clear: both;"></div>
 						</div>
@@ -162,7 +164,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 													CParentesco par=it3.next();
 													
 													%>
-													<option value="<%= par.getIdparentesco() %>" <%= (par.getIdparentesco()==pac.getIdemer_parentesco().getIdparentesco()?"SELECTED":"") %> ><%= par.getNombre() %></option>
+													<option value="<%= par.getIdparentesco() %>" <%= (par.getIdparentesco()==pac.getIdemer_parentesco()?"SELECTED":"") %> ><%= par.getNombre() %></option>
 												<% } %>
 											</select>
 									</div>
