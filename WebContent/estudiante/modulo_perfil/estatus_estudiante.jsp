@@ -81,7 +81,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 										Iterator<CCentro_Regional> it=centro.iterator();
 										while (it.hasNext()) {
 											CCentro_Regional cen=it.next();%>
-												<option value="<%=cen.getIdcentro_regional()%>" <%= (cen.getIdcentro_regional()==pac.getIdcentro().getIdcentro_regional() ?"SELECTED":"")%>><%=cen.getNombre()%></option>
+												<option value="<%=cen.getIdcentro_regional()%>" <%= (cen.getIdcentro_regional()==pac.getIdcentro() ?"SELECTED":"")%>><%=cen.getNombre()%></option>
 										    <%}
 											%>			
 										</select>
@@ -99,7 +99,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 											Iterator<CUnidad_Academica> it2=facultad.iterator();
 											while (it2.hasNext()) {
 												CUnidad_Academica fac=it2.next();%>
-												<option value="<%=fac.getIdunidad_academica()%>" <%= (fac.getIdunidad_academica()==pac.getIdunidad().getIdunidad_academica() ?"SELECTED":"")%> ><%=fac.getNombre()%></option> 
+												<option value="<%=fac.getIdunidad_academica()%>" <%= (fac.getIdunidad_academica()==pac.getIdunidad() ?"SELECTED":"")%> ><%=fac.getNombre()%></option> 
 										    <%}%>			
 										</select>
 									</div>
@@ -117,7 +117,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 													Iterator<CCarrera> it3=carrera.iterator();
 													while (it3.hasNext()) {
 														CCarrera car=it3.next();%>
-															<option value="<%=car.getIdcarrera()%>" <%= (car.getIdcarrera()==pac.getIdcarrera().getIdcarrera() ?"SELECTED":"")%>><%=car.getNombre()%></option>
+															<option value="<%=car.getIdcarrera()%>" <%= (car.getIdcarrera()==pac.getIdcarrera() ?"SELECTED":"")%>><%=car.getNombre()%></option>
 													    <%}
 												%>
 										</select>

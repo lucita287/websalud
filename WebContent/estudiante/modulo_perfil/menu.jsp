@@ -4,10 +4,12 @@
 <%@ page import="data.CMenu" %>
 <%@ page import="data.CUsuarioPermiso" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="framework.CValidation" %>
 <% 
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
-	Integer portal=(Integer)(sessiones.getAttribute("examen")==null?1:sessiones.getAttribute("examen"));
+	CValidation valid=new CValidation();
+	Integer portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal")));
 %>
 	
 <ul id="menu"  >
@@ -71,10 +73,12 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 	function initMenu() {
 	  $('#menu ul').hide();
 	  
-	  <% if(portal>0 && portal<3){%>
+	  <% if(portal>0 && portal<5){%>
 	  $('#personal').show();
 	  <% }%>
-	  
+	  <% if(portal>4 && portal<7){%>
+	  $('#examen_fa').show();
+	  <% }%>
 	  
 	  $('#menu li a').click(
 	    function() {

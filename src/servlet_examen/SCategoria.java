@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import data.CCarrera;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
+import data.CMenu_Categoria;
 import data.CUsuarioPermiso;
 import framework.Base64core;
 import framework.CDataExam;
@@ -188,6 +190,26 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 							
+					}else if(action.equalsIgnoreCase("guardarmenu_categoria")&& (user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int idmenu_Categoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_menu_categoria")));
+						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+						String validacion=valid.ValidarSiesMayor(idmenu_Categoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 80, "Descripcion"):validacion;
+						
+						
+						if(validacion.compareTo("")==0){
+							CMenu_Categoria car=new CMenu_Categoria(idmenu_Categoria,nombre);
+							boolean b=dbo.UpdateMenu_Categoria(car);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
 					}
 					
 					dbo.Close();

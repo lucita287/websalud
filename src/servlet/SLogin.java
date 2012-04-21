@@ -80,7 +80,7 @@ public class SLogin extends HttpServlet {
 				 session.setAttribute("estudiante", user);
 				 session.setAttribute("examen",1);
 				 session.setAttribute("paciente",pac);
-				 response.sendRedirect("estudiante/index.jsp");
+				 response.sendRedirect("estudiante/index.jsp?portal=1");
 				 
 			 }else
 			 response.sendRedirect("index.jsp?e=1");

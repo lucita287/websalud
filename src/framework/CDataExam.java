@@ -13,6 +13,7 @@ import data.CCentro_Regional;
 import data.CDepartamento;
 import data.CDependencia;
 import data.CEstado_Civil;
+import data.CMenu_Categoria;
 import data.CPaciente;
 import data.CParentesco;
 import data.CPregunta;
@@ -916,18 +917,18 @@ public class CDataExam extends CDataBase {
 			stm.setString(5,paciente.getTelefono());
 			stm.setString(6,paciente.getMovil());
 			stm.setString(7,paciente.getEmail());
-			if(paciente.getIdcarrera()!=null) stm.setInt(8,paciente.getIdcarrera().getIdcarrera());
+			if(paciente.getIdcarrera()>0) stm.setInt(8,paciente.getIdcarrera());
 			else stm.setNull(8,java.sql.Types.NULL );
-			if(paciente.getIdcentro()!=null) stm.setInt(9,paciente.getIdcentro().getIdcentro_regional());
+			if(paciente.getIdcentro()>0) stm.setInt(9,paciente.getIdcentro());
 			else stm.setNull(9,java.sql.Types.NULL );
-			if(paciente.getIdunidad()!=null) stm.setInt(10,paciente.getIdunidad().getIdunidad_academica());
+			if(paciente.getIdunidad()>0) stm.setInt(10,paciente.getIdunidad());
 			else stm.setNull(10,java.sql.Types.NULL );
-			if(paciente.getIddependencia()!=null) stm.setInt(11,paciente.getIddependencia().getIddependencia());
+			if(paciente.getIddependencia()>0) stm.setInt(11,paciente.getIddependencia());
 			else stm.setNull(11,java.sql.Types.NULL );
 			stm.setString(12, paciente.getPassword());
 			stm.setString(13, paciente.getUsuario());
-			if(paciente.getParentesco_ced()!=null && paciente.getParentesco_ced().getIdparentesco()>0)
-			stm.setInt(14, paciente.getParentesco_ced().getIdparentesco());
+			if(paciente.getParentesco_ced()>0)
+			stm.setInt(14, paciente.getParentesco_ced());
 			else stm.setNull(14,java.sql.Types.NULL );
 			stm.setString(15, paciente.getCedula());
 			stm.setInt(16, paciente.getSexo());
@@ -960,13 +961,13 @@ public class CDataExam extends CDataBase {
 			stm.setString(4,paciente.getTelefono());
 			stm.setString(5,paciente.getMovil());
 			stm.setString(6,paciente.getEmail());
-			if(paciente.getIddependencia()!=null) stm.setInt(7,paciente.getIddependencia().getIddependencia());
+			if(paciente.getIddependencia()>0) stm.setInt(7,paciente.getIddependencia());
 			else stm.setNull(7, java.sql.Types.NULL);
 			stm.setString(8, paciente.getPassword());
 			stm.setString(9, paciente.getUsuario());
-			if(paciente.getParentesco_ced()!=null && paciente.getParentesco_ced().getIdparentesco()>0)
-				stm.setInt(10, paciente.getParentesco_ced().getIdparentesco());
-				else stm.setNull(10,java.sql.Types.NULL );
+			if(paciente.getParentesco_ced()>0)
+				stm.setInt(10, paciente.getParentesco_ced());
+			else stm.setNull(10,java.sql.Types.NULL );
 			stm.setString(11, paciente.getCedula());
 			stm.setInt(12, paciente.getSexo());
 			if(paciente.getNo_personal()>0) stm.setInt(13,paciente.getNo_personal());
@@ -1712,20 +1713,12 @@ public class CDataExam extends CDataBase {
 		CPaciente news=null;
 		try{
 			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.carreraidcarrera,0) idcarrera, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.centro_regionalidcentro_regional,0) idcentro_regional, ifnull(p.unidad_academicaidunidad_academica,0) idunidad_academica, ifnull(p.titulo_secundaria,'') titulo_secundaria, ifnull(p.dependenciaiddependencia,0) iddependencia, p.usuario, ifnull(p.parentesco_ced,0) idparentesco, p.ced, sexo, "+
-		" ifnull(c.nombre,'') carrera_nom, ifnull(ce.nombre,'') centro, ifnull(ua.nombre,'') unidad, ifnull(de.nombre,'') dependencia, ifnull(pa.nombre,'') paren, "+
 		" ifnull(crecio_en,'') crecio_en, ifnull(titulo_secundaria,'') titulo_secundaria, "+			
 		" ifnull(emer_nombre,'') emer_nombre, ifnull(emer_telefono,'') emer_telefono, ifnull(emer_movil,'') emer_movil,  "+
-		" ifnull(idemer_parentesco,'') idemer_parentesco, ifnull(pa1.nombre,'') idemer_nombre, "+
-		" ifnull(ts.idtipo_sangre,0)  idtipo_sangre, ifnull(ts.nombre,'') nombre_sangre, "+
-		" ifnull(ec.idestado_civil,0) idestado_civil, ifnull(ec.nombre,'') nombre_estado, ifnull(no_personal,0) no_personal "+
-		" FROM paciente p left outer join carrera c on p.carreraidcarrera=c.idcarrera "+
-		" left outer join centro_regional ce on p.centro_regionalidcentro_regional=ce.idcentro_regional "+
-		" left outer join unidad_academica ua on p.unidad_academicaidunidad_academica=ua.idunidad_academica "+
-		" left outer join dependencia de on p.dependenciaiddependencia=de.iddependencia "+
-		" left outer join parentesco pa on pa.idparentesco=p.parentesco_ced "+
-		" left outer join parentesco pa1 on pa1.idparentesco=p.idemer_parentesco "+
-		" left outer join tipo_sangre ts on ts.idtipo_sangre=p.tipo_sangreidtipo_sangre "+
-		" left outer join estado_civil ec on ec.idestado_civil=p.estado_civilidestado_civil "+
+		" ifnull(idemer_parentesco,'') idemer_parentesco, "+
+		" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
+		" ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(no_personal,0) no_personal "+
+		" FROM paciente p "+
 		" where  usuario=? and password=? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setString(1,usuario.toLowerCase());
@@ -1733,24 +1726,16 @@ public class CDataExam extends CDataBase {
 			
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CCarrera idcarrera=new CCarrera(rs.getInt("idcarrera"),rs.getString("carrera_nom"));
-				CCentro_Regional centro=new CCentro_Regional(rs.getInt("idcentro_regional"),rs.getString("centro"),null);
-				CEstado_Civil civil=new CEstado_Civil(rs.getInt("idestado_civil"),rs.getString("nombre_estado"));
-				CUnidad_Academica uni=new CUnidad_Academica(rs.getInt("idunidad_academica"),rs.getString("unidad")); 
-				CTipo_Sangre tipo_sangre=new CTipo_Sangre(rs.getInt("idtipo_sangre"),rs.getString("nombre_sangre"));
-				CDependencia depe=new CDependencia(rs.getInt("iddependencia"),rs.getString("dependencia"));
-				CParentesco pare=new CParentesco(rs.getInt("idparentesco"),rs.getString("paren"),0,0,0);
-				CParentesco pare_emer=new CParentesco(rs.getInt("idemer_parentesco"),rs.getString("idemer_nombre"),0,0,0);
 				
 				news=new CPaciente(rs.getInt("idpaciente"), rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
 						rs.getInt("carne"),  rs.getString("direccion"),rs.getString("telefono"),rs.getString("movil"),
-						idcarrera, centro, uni, depe, rs.getInt("sexo"),
+						rs.getInt("idcarrera"), rs.getInt("idcentro_regional"), rs.getInt("idunidad_academica"),rs.getInt("iddependencia"), rs.getInt("sexo"),
 						"", rs.getString("email"),
-						rs.getString("usuario"), pare, rs.getString("ced"), rs.getInt("no_personal"),
-						civil, rs.getString("emer_nombre"),
-						pare_emer, rs.getString("emer_telefono"),
-						rs.getString("emer_movil"), tipo_sangre,
-						civil, rs.getString("titulo_secundaria"),
+						rs.getString("usuario"), rs.getInt("idparentesco"), rs.getString("ced"), rs.getInt("no_personal"),
+						rs.getInt("idestado_civil"), rs.getString("emer_nombre"),
+						rs.getInt("idemer_parentesco"), rs.getString("emer_telefono"),
+						rs.getString("emer_movil"), rs.getInt("idtipo_sangre"),
+						rs.getString("titulo_secundaria"),
 						rs.getString("crecio_en")
 						);
 			}
@@ -1860,5 +1845,43 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
-	
+	public boolean UpdatePaciente1(CPaciente  pac){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET tipo_sangreidtipo_sangre = ?, estado_civilidestado_civil = ?, titulo_secundaria = ?, crecio_en = ?, emer_nombre = ?, emer_telefono = ?, emer_movil = ? WHERE idpaciente = ?");
+			stm.setInt(1, pac.getIdtipo_sangre());
+			stm.setInt(2, pac.getEstado_civilidestado_civil());
+			stm.setString(3, pac.getTitulo_secundaria());
+			stm.setString(4, pac.getCrecio_en());
+			stm.setString(5, pac.getEmer_nombre());
+			stm.setString(6, pac.getEmer_telefono());
+			stm.setString(7, pac.getEmer_movil());
+			stm.setInt(8, pac.getIdpaciente());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean UpdateMenu_Categoria(CMenu_Categoria ctipo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE menu_categoria SET nombre = ? WHERE idmenu_categoria = ?");
+			
+			stm.setString(1, ctipo.getNombre());
+			stm.setInt(2,ctipo.getIdmenu_categoria());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }
