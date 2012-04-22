@@ -55,6 +55,7 @@ public class SArea extends HttpServlet {
 		CDataBase dbo=new CDataBase();
 		 dbo.Connect();
 		 String action=valid.ValidarRequest(request.getParameter("a"));
+		 
 		 if(action.equalsIgnoreCase("show")&&  (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 		 int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 		 CArea temp_area=dbo.getCAreaEspecifico(idarea);
@@ -63,7 +64,8 @@ public class SArea extends HttpServlet {
 			 result= "{nombre:\""+temp_area.getnombre()+" \",size:\""+temp_area.getsize()+"\",idimagen:"+temp_area.getidmultimedia().getidimagen()+",direccion_relativa:\""+
 				 temp_area.getidmultimedia().getdireccion_relativa()+"\", contenido:\""+temp_area.getdescripcion()+"\"}";
 		 }
-		 out.println(base64.codificar(result));
+		 response.setContentType("text/html;charset="+codificacion);
+		 out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
 		}else if(action.equalsIgnoreCase("guardaredit")&& (user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";			
 			int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));

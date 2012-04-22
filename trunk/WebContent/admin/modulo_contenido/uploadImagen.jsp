@@ -135,6 +135,9 @@
 						            	
 						            });
 						            $("#validacion_imagen").html(cadena);
+						        },
+						        change: function (e, data) {
+						        	$("#pathimagen").text("Subiendo imagen por favor espere");
 						        }
 						    });
 						});
@@ -157,8 +160,8 @@
 							   $("#validacion_pdf").html("");
 						}
 						function guardarImagen(){
-							var titulo=convertirCaracter($.trim($("#tituloimagen").val()));
-							var descripcion=convertirCaracter($.trim($("#descripcionimagen").val()));	
+							var titulo=($.trim($("#tituloimagen").val()));
+							var descripcion=($.trim($("#descripcionimagen").val()));	
 							b=editidmenu<1;
 							if(b) $("#validacion_imagen").html("Debe seleccionar un item");
 							else{ b=titulo=="";

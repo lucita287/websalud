@@ -121,8 +121,9 @@ public class SNoticia extends HttpServlet {
 												 noti.getAreaidarea().getnombre()+"\",idimagen:"+noti.getMultimediaidmultimedia().getidimagen()+",idimagendir:\""+noti.getMultimediaidmultimedia().getdireccion_relativa()+"\","
 											 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+noti.getTitulo()+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+noti.getDescripcion_corta()+"\",estado:"+noti.getEstado()+",idpdf:"+noti.getMultimediaidmultimedia_pdf().getidimagen()+",idpdfdir:\""+noti.getMultimediaidmultimedia_pdf().getdireccion_relativa()+"\"}";
 									 }
-									 out.println(base64.codificar(result));
-									//MODIFICAR NOTICIA 
+									 response.setContentType("text/html;charset="+codificacion);
+									 out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
+									 //MODIFICAR NOTICIA 
 								}else if(action.equalsIgnoreCase("safe_noticia")&& (user_permiso.getIdpermiso().indexOf(226)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));

@@ -18,10 +18,11 @@ if(area!=null){
 <link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />	
 <h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=area.getnombre()%></h3>
 <br/>
-		<% if(area.getsize()>0 & area.getsize()<4){ %>
+		<% if(area.getsize()>0 & area.getsize()<5){ %>
 		<div id="panel-texto-c<%=area.getsize()%>" class="ui-widget-content ui-corner-all  panel-texto-desc" >
 				<div style="margin-left:20px;margin-right:20px;">
 					<%=area.getdescripcion()%>				
+					<%=area.getHtml_adicional() %>
 				</div>
 		</div>
 		<% } %>
@@ -39,6 +40,7 @@ $(function(){
 	$('#panel-texto-c1').jScrollPane();
 	$('#panel-texto-c2').jScrollPane();
 	$('#panel-texto-c3').jScrollPane();
+	$('#panel-texto-c4').jScrollPane();
 });
 
 </script>

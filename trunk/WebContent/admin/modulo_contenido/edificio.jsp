@@ -69,8 +69,8 @@
 			  }
 			  
 			  
-			  var nombre=convertirCaracter($.trim($("#nombre_lugar").val()));
-			   var direccion=convertirCaracter($.trim($("#dir_lugar").val()));
+			  var nombre=($.trim($("#nombre_lugar").val()));
+			   var direccion=($.trim($("#dir_lugar").val()));
 			  cadena = [ 'idedificio='     + idedificio,
 				            'a='+action,
 				            'nombre='+Base64.encode(nombre),

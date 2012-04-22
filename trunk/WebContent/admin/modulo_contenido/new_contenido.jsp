@@ -56,6 +56,7 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 												<div class="col_titulo">*Tama&ntilde;o</div>
 												<div class="col">
 													<select id="new-tam"> 
+															<option value="4">Enorme</option>
 															<option value="3">Grande</option>
 															<option value="2">Mediano</option>
 															<option value="1">Peque&ntilde;o</option>
@@ -111,8 +112,8 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 
 					  if($.trim($('#new-titulo').val())!=""){
 						  if($('#new-submenu').val()>0 && $('#new-area').val()>0){	
-								  var data_cont=Base64.encode(convertirCaracter($('#cont-text').val()));
-								  var titulo=Base64.encode(convertirCaracter($('#new-titulo').val()));
+								  var data_cont=Base64.encode(($('#cont-text').val()));
+								  var titulo=Base64.encode(($('#new-titulo').val()));
 								  var submenu=$('#new-submenu').val();
 									cadena = [ 	'a=guardarnew',
 										            'titulo='+titulo,

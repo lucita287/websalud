@@ -133,14 +133,17 @@
 							            	
 							            });
 							            $("#validacion_pdf").html(cadena);
+							        },
+							        change: function (e, data) {
+							        	$("#pathpdf").text("Subiendo imagen por favor espere");
 							        }
 							    });
 							});
 							
 							function guardarPDF(){
 								
-								var titulo=convertirCaracter($.trim($("#titulopdf").val()));
-								var descripcion=convertirCaracter($.trim($("#descripcionpdf").val()));	
+								var titulo=($.trim($("#titulopdf").val()));
+								var descripcion=($.trim($("#descripcionpdf").val()));	
 								b=editidmenu<1;
 								if(b) $("#validacion_pdf").html("Debe seleccionar un item");
 								else{ b=titulo=="";

@@ -167,8 +167,8 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			  }
 			  function GuardarActividad(){
 				  
-				  var titulo=convertirCaracter($.trim($("#titulo_actividad").val()));
-					var descripcion=convertirCaracter($.trim($("#descripcion_actividad").val()));
+				  var titulo=($.trim($("#titulo_actividad").val()));
+					var descripcion=($.trim($("#descripcion_actividad").val()));
 				    var action="new_noticia";
 				if(idactividad==0){
 					action="new_actividad";

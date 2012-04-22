@@ -18,7 +18,7 @@
 			
 			</div>
 			<div style="width: 600px; margin:0 auto 0 auto;">
-			<div id="validacion_prin" class="validacion"></div>
+			
 			<table id="flex1" style="display:none"></table>
 			</div>
 			
@@ -30,7 +30,7 @@
 			</ul>
 			
 			<div id="tabs-1" style="width:750px; ">
-			
+			<div id="validacion_prin" class="validacion"></div>
 						<div class="perfil">
 				<div class="tabla">
 							<div class="fila">
@@ -45,6 +45,7 @@
 								<div class="col_titulo">Tama&ntilde;o:</div>
 								<div class="col">
 									<select id="edit-tam"> 
+									<option value="4">Enorme</option>
 									<option value="3">Grande</option>
 									<option value="2">Mediano</option>
 									<option value="1">Peque&ntilde;o</option>
@@ -85,6 +86,7 @@
 					 $('#fileup_prin').fileupload({
 				        dataType: 'json',
 				        url: '../uploadimagen',
+				        
 				        done: function (e, data) {
 				        	
 				        	cadena="";
@@ -102,10 +104,14 @@
 				            	}
 				            	if(index=='Mensaje'&&ok==false){
 				            		cadena=cadena+file+"<br/>";	
+				            		$("#pathimagen_prin").text("No se ha subido imagen");
 				            	}
 				            	
 				            });
 				            $("#validacion_prin").html(cadena);
+				        },
+				        change: function (e, data) {
+				        	$("#pathimagen_prin").text("Subiendo imagen por favor espere");
 				        }
 				    });
 				});
@@ -203,7 +209,7 @@
 			  }
 			  function GuardarArea(){
 				  if(editiarea>0){
-					  var contenido=convertirCaracter($('#cont-text').val());
+					  var contenido=($('#cont-text').val());
 					  var data_cont=Base64.encode(contenido);
 					  cadena = [ 'idarea='     + editiarea,
 						         'a=guardaredit',

@@ -68,7 +68,9 @@ public class SMenu extends HttpServlet {
 										 temp_menu.getareaidarea().getnombre()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
 										 +"size:\""+temp_menu.getsize()+"\",contenido:\""+temp_menu.getcontenido()+" \"}";
 								 }
-								 out.println(base64.codificar(result));
+								 response.setContentType("text/html;charset="+codificacion);
+									out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
+								 
 					//MENU DEL PORTAL
 					 }else if(action.equalsIgnoreCase("admin")){
 								int idmenu=valid.ConvertEntero(request.getParameter("idmenu")==null?"1":request.getParameter("idmenu"));
@@ -117,7 +119,8 @@ public class SMenu extends HttpServlet {
 									}
 									
 										String result=	" {\"menus\": [  "+data+" ] }";
-										out.println(result);
+										 response.setContentType("text/html;charset="+codificacion);
+										out.println(valid.Imprimirvalor(result,codificacion));
 					//NUEVO CONTENIDO
 					}else if(action.equalsIgnoreCase("guardarnew")&& (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
