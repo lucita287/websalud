@@ -223,6 +223,9 @@
 				            	
 				            });
 				            $("#validacion_imagen").html(cadena);
+				        },
+				        change: function (e, data) {
+				        	$("#pathimagen").text("Subiendo imagen por favor espere");
 				        }
 				    });		 
 				});
@@ -251,6 +254,9 @@
 				            	
 				            });
 				            $("#validacion_imagen").html(cadena);
+				        },
+				        change: function (e, data) {
+				        	$("#pathpdf").text("Subiendo imagen por favor espere");
 				        }
 				    });
 				});
@@ -279,9 +285,9 @@
 				  $("#validacion_imagen").html('');
 			  }
 			  function Guardaredit(){
-					var titulo=convertirCaracter($.trim($("#titulo_noticia").val()));
-					var descripcion=convertirCaracter($.trim($("#editnoti").val()));
-				    var descripcion_corta=convertirCaracter($.trim($("#descripcion_noti").val()));
+					var titulo=($.trim($("#titulo_noticia").val()));
+					var descripcion=($.trim($("#editnoti").val()));
+				    var descripcion_corta=($.trim($("#descripcion_noti").val()));
 				    var action="new_noticia";
 				if(idnoticia==0){
 					action="new_noticia";

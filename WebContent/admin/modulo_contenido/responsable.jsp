@@ -94,8 +94,8 @@
 			  }else{
 				  action='modificar_responsable';
 			  }
-			  var nombre=convertirCaracter($.trim($('#nombre_respon').val()));
-				var apellido=convertirCaracter($.trim($('#apellido_respon').val()));
+			  var nombre=($.trim($('#nombre_respon').val()));
+				var apellido=($.trim($('#apellido_respon').val()));
 			  cadena = [ 'idresponsable='     + idrespon,
 				            'a='+action,
 				            'nombre='+Base64.encode(nombre),

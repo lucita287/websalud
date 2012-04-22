@@ -140,7 +140,7 @@ public class CDataBase {
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
 				CMultimedia multi2=new CMultimedia(rs.getInt("idmultimedia2"),rs.getString("direccion_m2"),rs.getString("direccion_rel2"),0L,0,null);
 				CNoticia news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
@@ -160,11 +160,12 @@ public class CDataBase {
 		CMenu temp_menu=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido, ifnull(idmenu_rec,0) idmenu_rec, size FROM Menu where  idmenu=? ");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion,ifnull(m.areaidarea,0) areaidarea,m.contenido, ifnull(m.idmenu_rec,0) idmenu_rec, m.size, a.nombre area_nombre FROM menu m inner join area a on a.idarea=m.areaidarea where  idmenu=? ");
 			stm.setInt(1, idmenu);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
-				CArea temp_c=this.getCAreaEspecifico(rs2.getInt("areaidarea"));
+				CArea temp_c=new CArea(rs2.getInt("areaidarea"),rs2.getString("area_nombre"),"", 0,null,null,"");
+						//this.getCAreaEspecifico(rs2.getInt("areaidarea"));
 				CMenu temp_menu1=(rs2.getInt("idmenu")!=0)?getMenuEspecifico(rs2.getInt("idmenu_rec")):null;
 				temp_menu=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),temp_c,rs2.getString("contenido"),rs2.getInt("size"),temp_menu1);
 			}
@@ -181,7 +182,7 @@ public class CDataBase {
 		try {
 			
 			String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,' ') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , ifnull(m.idmultimedia,0) idmultimedia , "
-					+" ifnull(m.direccion,'') direccion, ifnull(m.direccion_relativa,'No se ha seleccionado Imagen') direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre "
+					+" ifnull(m.direccion,'') direccion, ifnull(m.direccion_relativa,'No se ha seleccionado Imagen') direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre, ifnull(a.html_adicional,'') html_adicional "
 					+" FROM area a left outer join multimedia m on a.multimediaidmultimedia=m.idmultimedia " 
 					+" where  a.idarea=? ";
 			stm = (PreparedStatement)conn.prepareStatement(sql);
@@ -189,8 +190,8 @@ public class CDataBase {
 			ResultSet rs=stm.executeQuery();
 			if(rs.next()){
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);
-            	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null);
-            	temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea);
+            	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null,"");
+            	temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea,rs.getString("html_adicional"));
             	
 			}
 		} catch (SQLException e) {
@@ -202,13 +203,13 @@ public class CDataBase {
 	public ArrayList<CMenu> getMenu(int area){
 		ArrayList<CMenu> ret=new ArrayList<CMenu>();
 		try{
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,size FROM Menu where areaidarea=? and  idmenu_rec is null");
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,size FROM menu where areaidarea=? and  idmenu_rec is null");
 			stm.setInt(1, area);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CMenu temp_menu=null;
 				
-				PreparedStatement stm2=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,size,idmenu_rec FROM Menu where  idmenu_rec=? ");
+				PreparedStatement stm2=(PreparedStatement)conn.prepareStatement("SELECT idmenu,descripcion,ifnull(areaidarea,0) areaidarea,contenido,size,idmenu_rec FROM menu where  idmenu_rec=? ");
 				stm2.setInt(1, rs.getInt("idmenu"));
 				ResultSet rs2=stm2.executeQuery();
 				ArrayList<CMenu> temp_list=new ArrayList<CMenu>();
@@ -291,14 +292,13 @@ public class CDataBase {
                 String query="select * from "
                                 +"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion, '' contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
                                 +"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
-                                +"FROM Menu m, (SELECT @rownum:=0) ro, Area a  "
+                                +"FROM menu m, (SELECT @rownum:=0) ro, area a  "
                                 +"where a.idarea=m.areaidarea and"
                                 +" upper("+(type==1?"m.descripcion":"a.nombre")+") like ?  and a.idarea in ("+ConvertString(lista)+")"
                                 +") data "
                                 +"where  rownum>=? and rownum<=? ORDER BY ? "+((asc==1)?"ASC":"DESC");
-
-
-                        PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
+                
+                		PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
                 
                 stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
                 int id=2;
@@ -315,7 +315,7 @@ public class CDataBase {
                                                 
                                 CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist);
                                 
-                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+                                CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
                                 CMenu temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp);
                                 ret.add(temp_menu);                        
                 }
@@ -336,7 +336,7 @@ public class CDataBase {
 		try {
 			String query="";
         		query="select count(m.idmenu) cant from "
-				+" Menu m , Area a  "
+				+" menu m , area a  "
 				+"where m.areaidarea=a.idarea and upper("+(type==1?"m.descripcion":"a.nombre")+") like ? and a.idarea in ("+ConvertString(lista)+")";
         		
 			
@@ -362,14 +362,15 @@ public class CDataBase {
         ArrayList<CArea> ret=new ArrayList<CArea>();
         try{
         	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia, "+
-        				"m.direccion, m.direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre " +
+        				"m.direccion, m.direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre, ifnull(html_adicional,'') html_adicional " +
         				"FROM area a left outer join multimedia m on a.multimediaidmultimedia=m.idmultimedia" ;
                 PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                 	CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);
-                	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null);
-                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea);
+                	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null,rs.getString("html_adicional"));
+                	
+                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea,"");
                 	ret.add(temp);
                         
                 }
@@ -388,7 +389,7 @@ public class CDataBase {
         try{
         	
         	String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,'') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , m.idmultimedia, "+
-    				"m.direccion, m.direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre " +
+    				"m.direccion, m.direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre, ifnull(html_adicional,'') html_adicional " +
     				"FROM area a left outer join multimedia m on a.multimediaidmultimedia=m.idmultimedia " +
     				" where a.idarea in  ("+this.ConvertString(lista)+")";
 
@@ -400,8 +401,8 @@ public class CDataBase {
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                 	CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);
-                	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null);
-                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea);
+                	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null,"");
+                	CArea temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea,rs.getString("html_adicional"));
                 	ret.add(temp);
                         
                 }
@@ -460,7 +461,7 @@ public class CDataBase {
                 PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
-        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null);
+        			CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null,"");
                 	ret.add(temp);
                         
                 }
@@ -481,7 +482,7 @@ public class CDataBase {
         		stm.setInt(1,idarea);
                 ResultSet rs2=stm.executeQuery();
                 while(rs2.next()){
-                	CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null);
+                	CArea temp=new CArea( rs2.getInt("idarea"),rs2.getString("nombre"),"",0,null,null,"");
                 	ret.add(temp);
                         
                 }
@@ -757,7 +758,7 @@ public CContenido getContenido(int idcontenido){
                 ResultSet rs=stm.executeQuery();
                 while(rs.next()){
                 		CMultimedia temp_mult=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0,0,null);
-                        CArea temp=new CArea(rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),temp_mult,null);
+                        CArea temp=new CArea(rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),temp_mult,null,"");
                         CEncabezado encabezado=new CEncabezado(temp,temp_mult);
                         ret.add(encabezado);
                         
@@ -835,7 +836,7 @@ public CContenido getContenido(int idcontenido){
 			stm.setInt(id++,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
 				CMultimedia multi2=new CMultimedia(rs.getInt("idmultimedia2"),rs.getString("direccion_m2"),rs.getString("direccion_rel2"),0L,0,null);
 				CNoticia news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
@@ -918,7 +919,7 @@ public CContenido getContenido(int idcontenido){
 			stm.setInt(1,idnoticia);
 			ResultSet rs=stm.executeQuery();
 			if(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
 				CMultimedia multi2=new CMultimedia(rs.getInt("idmultimedia2"),rs.getString("direccion_m2"),rs.getString("direccion_rel2"),0L,0,null);
 				news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
@@ -946,7 +947,7 @@ public CContenido getContenido(int idcontenido){
 			stm.setInt(1,idnoticia);
 			ResultSet rs=stm.executeQuery();
 			if(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
 				CMultimedia multi2=new CMultimedia(rs.getInt("idmultimedia2"),rs.getString("direccion_m2"),rs.getString("direccion_rel2"),0L,0,null);
 				news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
@@ -1044,7 +1045,7 @@ public CContenido getContenido(int idcontenido){
 			String query="";
 
         		query="select count(m.idusuario) cant from "
-				+" Usuario m "
+				+" usuario m "
 				+"where  upper("+pqtype+") like ?";
         		
 			
@@ -1372,7 +1373,7 @@ public ArrayList<CResponsable> getListaResponsables(int ordenar,int asc,int min,
 		stm.setInt(4,ordenar);
 		ResultSet rs=stm.executeQuery();
 		while(rs.next()){
-			CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+			CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 			CResponsable cr=new CResponsable(rs.getInt("idresponsable"),rs.getString("nombre"),rs.getString("apellido"),null,area);
 			ret.add(cr);
 			
@@ -1445,7 +1446,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(1,idresponsable);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CUsuario user=new CUsuario(rs.getInt("idusuario"),rs.getString("user_nombre"),rs.getString("user_apellido"),"","","","",0,"");
 				ret=new CResponsable(rs.getInt("idresponsable"),rs.getString("r_nombre"),rs.getString("r_apellido"),user,area);
 				
@@ -1506,7 +1507,7 @@ public int getResponsableTotal(int type,String busqueda){
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CResponsable cr=new CResponsable(rs.getInt("idresponsable"),rs.getString("nombre"),rs.getString("apellido"),null,area);
 				ret.add(cr);
 				
@@ -1529,7 +1530,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(1,idactividad);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CResponsable cr=new CResponsable(rs.getInt("idresponsable"),rs.getString("nombre"),rs.getString("apellido"),null,area);
 				ret.add(cr);
 				
@@ -1717,7 +1718,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(id++,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("edificio_nombre"),"","");
 				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"));
 				//CActividad(int idactividad, String titulo, CArea areaidarea,String descripcion, CResponsable responsableidresponsable,CEdificio edificioidedificio)
@@ -1837,7 +1838,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(1,idactividad);
 			ResultSet rs=stm.executeQuery();
 			if(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("edi_nombre"),"","");
 				news=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"));
 				
@@ -2192,7 +2193,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setDate(1,new java.sql.Date(fecha_inicio.getTime()));
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("area_nombre"),"",0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("area_nombre"),"",0,null,null,"");
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
 				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"));
 				ret.add(act);
@@ -2245,7 +2246,7 @@ public int getResponsableTotal(int type,String busqueda){
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
-				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"", 0,null,null);
+				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"", 0,null,null,"");
 				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"));
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),fecha_inicio,new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);

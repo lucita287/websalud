@@ -84,7 +84,7 @@
 				$("#editor").cleditor()[0].focus();
 			}
 			function GuardarPonde(){
-				var interpretacion=Base64.encode(convertirCaracter($.trim($("#editor").val())));
+				var interpretacion=Base64.encode(($.trim($("#editor").val())));
 				if(idcate_pond==0){
 					action="new_cate_pond";
 				}else{

@@ -11,7 +11,7 @@ idmenu=Integer.parseInt(request.getParameter("idmenu"));
 } catch (NumberFormatException e) {
 }
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 if(temp_menu!=null){
 ArrayList<CContenido> list=dbo.getContenidoLista(1, idmenu);
@@ -22,7 +22,7 @@ dbo.Close();
 <link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />
 		<h3 id="Panel-texto-tit" class="ui-state-default ui-corner-all"><%=temp_menu.getdescripcion()%></h3>
 		<br/>
-		<% if(temp_menu.getsize()>0 & temp_menu.getsize()<4){ %>
+		<% if(temp_menu.getsize()>0 & temp_menu.getsize()<5){ %>
 		<div id="panel-texto-c<%=temp_menu.getsize()%>" class="ui-widget-content ui-corner-all panel-texto-desc" >
 				<div style="margin-left:20px;margin-right:20px;">
 					<%=temp_menu.getcontenido()%>				
@@ -111,6 +111,7 @@ if(listpdf.size()>0){ %>
 						
 <script >
 $(function(){
+	$('#panel-texto-c4').jScrollPane();
 	$('#panel-texto-c1').jScrollPane();
 	$('#panel-texto-c2').jScrollPane();
 	$('#panel-texto-c3').jScrollPane();
@@ -142,4 +143,6 @@ $(document).ready(function() {
 });
 
 </script>
-<%} %>
+<%} 
+
+	}%>

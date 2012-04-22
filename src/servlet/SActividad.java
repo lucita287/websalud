@@ -118,7 +118,8 @@ public class SActividad extends HttpServlet {
 										 result= "{titulo:\""+act.getTitulo()+"\",descripcion:\""+act.getDescripcion()+"\",salon:\""+act.getSalon()+"\",idedificio:\""+act.getEdificioidedificio().getIdedificio()+"\","+
 										 		"idarea:\""+act.getAreaidarea().getidarea()+"\","+data+"}";
 									 }
-									 out.println(base64.codificar(result));
+									 response.setContentType("text/html;charset="+codificacion);
+									 out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
 									//MODIFICAR NOTICIA 
 								}else if(action.equalsIgnoreCase("safe_actividad")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";

@@ -117,6 +117,9 @@ $(function () {
            	
            });
            $("#validacion_imagen").html(cadena);
+       },
+       change: function (e, data) {
+       	$("#pathimagen").text("Subiendo imagen por favor espere");
        }
    });
 });

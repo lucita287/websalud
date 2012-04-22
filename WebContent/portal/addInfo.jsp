@@ -4,7 +4,7 @@
 <%@ page import="data.CConfiguracion" %>
 <%
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 CConfiguracion temp=dbo.getConfiguracion();
 dbo.Close();
 %>
@@ -16,3 +16,4 @@ dbo.Close();
 					</div>
 							
 </div>
+<% } %>

@@ -114,11 +114,21 @@ public class CValidation {
 		
 		return date1;
 	}
-
+	public String Imprimirvalor(String campo,String codificacion){
+		campo=campo.trim();
+	    byte[] arrByte;
+		try {
+			arrByte = campo.getBytes( "UTF-8");
+			campo = new String(arrByte,codificacion);
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		return campo;
+	}
 
 	public String Limpiarvalor(String campo,String codificacion){
 		//campo=JavascriptUtil.unescapeJavaScript(campo);
-		campo=campo.replaceAll("\"", "'");
+		campo=campo.replaceAll("\"", "\'");
 		campo=campo.replaceAll("\t", " ");
 		campo=campo.replaceAll("\r", " ");
 		campo=campo.replaceAll("\f", " ");

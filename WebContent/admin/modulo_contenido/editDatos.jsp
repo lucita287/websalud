@@ -43,8 +43,8 @@
 						} );
 			
 						function Guardaredit(){
-							var titulo=convertirCaracter($.trim($('#edit-titulo').val()));
-							var descripcion=convertirCaracter($.trim($('#editconte').val()));
+							var titulo=($.trim($('#edit-titulo').val()));
+							var descripcion=($.trim($('#editconte').val()));
 							
 							b=editidmenu<1;
 							if(b) $("#validacion_data").html("Debe seleccionar un item");
@@ -167,6 +167,7 @@
 															<div class="col_titulo">*Tama&ntilde;o</div>
 															<div class="col">
 																			<select id="edit-tam"> 
+																			<option value="4">Enorme</option>
 																			<option value="3">Grande</option>
 																			<option value="2">Mediano</option>
 																			<option value="1">Peque&ntilde;o</option>
