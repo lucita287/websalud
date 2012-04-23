@@ -44,7 +44,7 @@ public class SLogin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CDataExam dbo=new CDataExam();
-		 dbo.Connect();
+		 if(dbo.Connect()){
 		 response.setContentType("text/html;charset=UTF-8"); 
 		 CValidation valid=new CValidation();
 		 String user=valid.ValidarRequest(request.getParameter("user").toLowerCase());
@@ -86,6 +86,7 @@ public class SLogin extends HttpServlet {
 			 response.sendRedirect("index.jsp?e=1");
 		 }
 		 dbo.Close();
+		 }
 	}
 
 }

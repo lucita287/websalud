@@ -5,7 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 int idarea=1;
 try{
 idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
@@ -44,4 +44,4 @@ $(function(){
 });
 
 </script>
-<%} %>
+<%}	} %>

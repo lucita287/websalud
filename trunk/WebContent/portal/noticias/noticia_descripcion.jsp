@@ -8,7 +8,7 @@
 		CValidation valid=new CValidation();
 		int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 		CDataBase dbo=new CDataBase();
-		dbo.Connect();
+		if(dbo.Connect()){
 		CNoticia info_new=dbo.getNoticiaEspecifica(idnoticia);
 		dbo.Close();
 		if(info_new!=null){
@@ -38,5 +38,5 @@
 					</div>
 					<% } %>
 			</div>
-		<%} %>
+		<%} } %>
 		

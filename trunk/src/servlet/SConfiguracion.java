@@ -41,7 +41,9 @@ public class SConfiguracion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
-		PrintWriter out = response.getWriter(); 
+		PrintWriter out = response.getWriter();
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		CValidation valid=new CValidation();
 		String action=valid.ValidarRequest(request.getParameter("a"));
 		 HttpSession sessiones = request.getSession(false);
@@ -53,9 +55,9 @@ public class SConfiguracion extends HttpServlet {
 								if(action.equalsIgnoreCase("GuardarConfig")&& (user_permiso.getIdpermiso().indexOf(233)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="";
 									CConfiguracion configurar=dbo.getConfiguracion();
-									String telefono=valid.ValidarRequest(request.getParameter("telefono"));
-									String fax=valid.ValidarRequest(request.getParameter("fax"));
-									String direccion=valid.ValidarRequest(request.getParameter("dir"));
+									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")),codificacion);
+									String fax=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("fax")),codificacion);
+									String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("dir")),codificacion);
 									int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 									String validacion=valid.ValidarRango(size, 1, 10, "{\"resultado\":\"ERROR\",\"mensaje\":\"El rango de tama&ntilde;o subir archivos debe ser entre [1-10]\"}");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(telefono, "Telefono"):validacion;
