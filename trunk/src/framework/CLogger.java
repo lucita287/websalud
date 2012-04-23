@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 public class CLogger {
 
-	static String file_path="/log.txt";
+	static String file_path="C:\\Users\\lucita\\log.txt";
 	static BufferedWriter bufferedWriter;
 	static int onlinehost=0;
 	
@@ -20,7 +20,7 @@ public class CLogger {
 			bufferedWriter = new BufferedWriter(new FileWriter(file_path,true));
 			SimpleDateFormat dformat=new SimpleDateFormat("dd/MM/yyyy h:mm:ss a");
 			Calendar date=Calendar.getInstance();
-            bufferedWriter.write("Error: "+dformat.format(date.getTime())+"      "+obj.toString()+" "+str);
+            bufferedWriter.write("Error: "+dformat.format(date.getTime())+",     "+obj.toString()+", "+str);
             bufferedWriter.newLine();
             bufferedWriter.write(e.getMessage());
             bufferedWriter.newLine();

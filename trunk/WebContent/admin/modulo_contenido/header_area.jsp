@@ -209,7 +209,7 @@
 			  }
 			  function GuardarArea(){
 				  if(editiarea>0){
-					  var contenido=($('#cont-text').val());
+					  var contenido=convertirCaracter($('#cont-text').val());
 					  var data_cont=Base64.encode(contenido);
 					  cadena = [ 'idarea='     + editiarea,
 						         'a=guardaredit',
