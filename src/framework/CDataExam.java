@@ -1113,7 +1113,7 @@ public class CDataExam extends CDataBase {
 		
 				try {
 					String sql="SELECT count(*) cant  "+
-						" FROM Parentesco tc where upper(tc.nombre) like ? ";
+						" FROM parentesco tc where upper(tc.nombre) like ? ";
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 					
 					stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
@@ -1240,7 +1240,7 @@ public class CDataExam extends CDataBase {
 		
 				try {
 					String sql="SELECT count(*) cant  "+
-						" FROM Categoria tc where upper(tc.descripcion) like ? ";
+						" FROM categoria tc where upper(tc.descripcion) like ? ";
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 					
 					stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
@@ -1651,7 +1651,7 @@ public class CDataExam extends CDataBase {
 		
 				try {
 					String sql="SELECT count(*) cant  "+
-						" FROM Pregunta  ";
+						" FROM pregunta  ";
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 					ResultSet rs2=stm.executeQuery();
 					if(rs2.next())
@@ -1991,7 +1991,6 @@ public class CDataExam extends CDataBase {
 		return ret;
 	}
 	public ArrayList<CMenu_Categoria> getListaMenu_Categoria(int auto,int multi){
-		ArrayList<CMenu_Categoria> ret=new ArrayList<CMenu_Categoria>();
 		ArrayList<CMenu_Categoria> list=new ArrayList<CMenu_Categoria>();
 		try{
 

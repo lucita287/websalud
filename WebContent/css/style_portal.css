@@ -5,7 +5,7 @@
 /************* PORTAL ******************/
 
 		#menu-principal {  width:25%;  float:left; }
-		#menu-salud{ background: #325179;}
+		
 		#noticias {width:730px; float:left; }
 		
 		
@@ -103,6 +103,9 @@
 				
 /************** MENU ***********************/
 			
+			
+			#menu-salud{ background: #25587E;}
+			
 			ul#menu, ul#menu ul {
 			  list-style-type:none;
 			  margin: 0;
@@ -123,7 +126,8 @@
 				background: #ccc;
 			}
 			ul#menu li a {
-			   background: #325179;
+			  // background: #325179;
+			  background: #25587E;
 			  color: #fff;	
 			  padding: 0.5em;
 			}

@@ -6,7 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%  
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 int idarea=1;
 try{
 idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
@@ -50,7 +50,7 @@ dbo.Close();
 					CArea temp=list_submenu.get(j);
 					%>
 				<li>
-					<a  href="#"  onclick="menuarea(<%= temp.getidarea()%>);"><%= temp.getnombre()%></a>
+					<a  href="index.jsp?idarea=<%= temp.getidarea()%>"><%= temp.getnombre()%></a>
 				</li>
 				<% } %>
 		</ul>
@@ -59,3 +59,4 @@ dbo.Close();
 	<li><a target="_blank" href="calendario.jsp?idarea=<%=idarea %>">Calendario</a></li>
 	<li><a  href="index.jsp">Regresar a Menu</a></li>	
 </ul>
+<% } %>

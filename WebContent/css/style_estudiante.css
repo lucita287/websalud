@@ -12,7 +12,12 @@
 		#dato_personal {  padding: 0.4em; background: #fff; }
 		#dato_personal h3 { margin: 0; padding: 0.4em; text-align: center; }
 		
-		#menu-principal {  width:250px;   float:left; background: #325179;}
+		#menu-principal {  
+		width:250px;   
+		float:left; 
+		background: #25587E;
+		//background: #325179;
+		}
 		
 		.error{
 			border: 1px solid #CD0A0A;
@@ -125,7 +130,8 @@
 		}
 		
 		ul#menu li a {
-		  background: #325179;
+		  //background: #325179;
+		  background: #25587E;
 		  color: #fff;	
 		  padding: 0.5em;
 		}

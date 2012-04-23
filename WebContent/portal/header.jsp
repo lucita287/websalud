@@ -11,7 +11,7 @@ idarea=Integer.parseInt(request.getParameter("idarea"));
 } catch (NumberFormatException e) {
 }
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 ArrayList<CEncabezado> lista=dbo.getEncabezadoLista(idarea);
 CArea area=dbo.getCAreaEspecifico(idarea);
 dbo.Close();
@@ -60,3 +60,5 @@ if(lista.size()>0){
 <h2><%=(area!=null)?area.getnombre().toUpperCase():""%></h2>
 
     </div>	
+    <% } %>
+    

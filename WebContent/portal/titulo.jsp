@@ -7,6 +7,7 @@ String titulo=(request.getParameter("titulo")==null)?"":request.getParameter("ti
 %>    
 <div style="float:left">
 <img src="images/usalud.png" width="100px" height="100px" />
+<img src="images/usac.png" width="100px" height="100px" />
 </div>
 <div style="float: right;" class="ui-widget-content ui-corner-all">
 <h2>Compatible con</h2>
@@ -19,7 +20,7 @@ String titulo=(request.getParameter("titulo")==null)?"":request.getParameter("ti
 </p>
 </div>
 <div style="float:left" >
-<h1><a href="#">Unidad de Salud</a></h1>
+<h1><a href="#">Unidad de Salud USAC</a></h1>
 <h2><a href="#" id="metamorph"><%=titulo%></a></h2>
 </div>
 <div style="clear: both;"></div>    

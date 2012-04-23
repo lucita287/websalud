@@ -5,7 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%  
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 ArrayList<CNoticia> list_news=dbo.getNoticias();
 dbo.Close();
 %>
@@ -86,3 +86,4 @@ function update_noti(id){
 <div style="clear: both;"></div>
 </div>
 <div style="clear: both;"></div>
+<% } %>

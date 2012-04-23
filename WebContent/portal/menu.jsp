@@ -6,7 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%  
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 ArrayList<CMenu> list_menu=dbo.getMenu(1);
 ArrayList<CArea> list_area=dbo.getAreaListaMenu();
 dbo.Close();
@@ -45,8 +45,7 @@ dbo.Close();
 					CArea temp_area=list_area.get(h);
 					%>
 					<li>
-					<a href="#" onclick="menuarea(<%= temp_area.getidarea()%>)"><%= temp_area.getnombre()%></a>
-							
+					<a  href="index.jsp?idarea=<%= temp_area.getidarea()%>"><%= temp_area.getnombre()%></a>							
 					</li>
 				<% 	} %>
 					
@@ -54,3 +53,4 @@ dbo.Close();
 	</li>
 	
 </ul>
+<% } %>

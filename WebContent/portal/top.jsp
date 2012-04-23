@@ -3,8 +3,18 @@
 
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="" />
-<meta name="description" content="" />
+
+<meta name=ROBOTS content="INDEX,FOLLOW">
+<meta name=description content="Unidad de Salud de la Universidad de San Carlos de Guatemala USAC">
+<meta name=abstract content="Unidad de Salud">
+<meta name=keywords content="USAC, Salud, Unidad, unidad de salud, medicina, deportes, Voluntariado, examen, examen salud">
+<meta name=author content="USAC 2012">
+<meta name=publisher content="">
+<meta name=copyright content="Unidad de Salud USAC 2012">
+<meta name=rating content=General>
+<meta name=creation_Date content="22/04/2012">
+<meta name=expires content="">
+
 <link rel="shortcut icon" href="favi.ico" type="image/x-icon" />
 
 <link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
