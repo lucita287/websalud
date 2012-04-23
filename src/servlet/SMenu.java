@@ -92,7 +92,7 @@ public class SMenu extends HttpServlet {
 								validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "titulo"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
-								validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 3, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
+								validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 4, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
 									if(validacion.compareTo("")==0){
 											CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 												if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().trim().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){

@@ -43,8 +43,8 @@
 						} );
 			
 						function Guardaredit(){
-							var titulo=($.trim($('#edit-titulo').val()));
-							var descripcion=($.trim($('#editconte').val()));
+							var titulo=convertirCaracter($.trim($('#edit-titulo').val()));
+							var descripcion=convertirCaracter($.trim($('#editconte').val()));
 							
 							b=editidmenu<1;
 							if(b) $("#validacion_data").html("Debe seleccionar un item");

@@ -21,7 +21,7 @@ BEGIN
             END LOOP c0_loop;
             CLOSE c0;
                       
-            DELETE FROM Menu WHERE idmenu=pidmenu;
+            DELETE FROM menu WHERE idmenu=pidmenu;
             set eliminar=1;
     else
             set eliminar=0;
