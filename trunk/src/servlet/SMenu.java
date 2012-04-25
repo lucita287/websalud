@@ -136,7 +136,7 @@ public class SMenu extends HttpServlet {
 									String validacion=valid.ValidarCampoVacio(titulo, "titulo");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
-									validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 3, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 4, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar el area\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idsubmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un submenu\"}"):validacion;
 														

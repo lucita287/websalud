@@ -15,7 +15,6 @@ import data.CMenu;
 import data.CMultimedia;
 import data.CUsuarioPermiso;
 
-import framework.Base64core;
 import framework.CDataBase;
 import framework.CValidation;
 
@@ -53,14 +52,13 @@ public class SContenido extends HttpServlet {
 		 HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
-								Base64core base64=new Base64core();
 								CDataBase dbo=new CDataBase();
 								dbo.Connect();
 								//MODIFICAR CONTENIDO
 								if(action.equalsIgnoreCase("guardaredit")&& (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-									String titulo=base64.decodificar(valid.ValidarRequest(request.getParameter("titulo")));
+									String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 									titulo=valid.Limpiarvalor(titulo, codificacion);
-									String contenido=base64.decodificar(valid.ValidarRequest(request.getParameter("contenido")));
+									String contenido=valid.ValidarRequest(request.getParameter("contenido"));
 									contenido=valid.Limpiarvalor(contenido,codificacion);
 									int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));
 									int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
@@ -94,12 +92,12 @@ public class SContenido extends HttpServlet {
 									if(contenido!=null){
 									String result="{titulo:\""+contenido.gettitulo()+"\",descripcion:\""+contenido.getdescripcion()+"\",idimagen:"+contenido.getmultimedia().getidimagen()+",direccion:\""+contenido.getmultimedia().getdireccion_relativa()+"\"}";
 									
-									out.println(base64.codificar(result));
+									out.println(result);
 									}
 									//MODIFICAR CONTENIDO
 								}else if(action.equalsIgnoreCase("updateedit")&& (user_permiso.getIdpermiso().indexOf(222)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-									String titulo=base64.decodificar(request.getParameter("titulo"));
-									String contenido=base64.decodificar(request.getParameter("contenido"));
+									String titulo=request.getParameter("titulo");
+									String contenido=request.getParameter("contenido");
 									contenido=valid.Limpiarvalor(contenido,codificacion);
 									titulo=valid.Limpiarvalor(titulo,codificacion);
 									int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idimagen")));

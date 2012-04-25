@@ -98,8 +98,8 @@
 				var apellido=($.trim($('#apellido_respon').val()));
 			  cadena = [ 'idresponsable='     + idrespon,
 				            'a='+action,
-				            'nombre='+Base64.encode(nombre),
-				            'apellido='+Base64.encode(apellido),
+				            'nombre='+nombre,
+				            'apellido='+apellido,
 				            'idarea='+$('#area_respon').val(),
 				            'usuario='+$('#usuario_respon').val(),
 				        ].join('&');

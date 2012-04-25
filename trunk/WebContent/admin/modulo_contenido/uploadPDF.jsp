@@ -97,7 +97,7 @@
 							       data: cadena,
 							 	    type: 'post',
 							       success: function(data){
-							    	   var data_desc=Base64.decode( data );
+							    	   var data_desc= data ;
 							       		result=eval("("+data_desc+")");
 							    	   idpdf=result.idimagen;
 							    	   $('#titulopdf').val(result.titulo);
@@ -163,8 +163,8 @@
 										}
 									cadena = [ 	'idimagen='   + idpdf,
 								             	'a='+action,
-									            'titulo='+Base64.encode(titulo),
-									            'contenido='+Base64.encode(descripcion),
+									            'titulo='+titulo,
+									            'contenido='+descripcion,
 									            'idmenu='     + editidmenu,
 									            'idconte='+idmultimedia2
 									        ].join('&');

@@ -7,6 +7,7 @@ CDataBase dbo=new CDataBase();
 if(dbo.Connect()){
 CConfiguracion temp=dbo.getConfiguracion();
 dbo.Close();
+if(temp!=null){
 %>
 <div class="row-top">
 					<div class="row-padding">
@@ -16,4 +17,4 @@ dbo.Close();
 					</div>
 							
 </div>
-<% } %>
+<% }} %>

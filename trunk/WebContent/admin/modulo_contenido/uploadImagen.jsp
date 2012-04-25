@@ -99,7 +99,7 @@
 						       data: cadena,
 						 	    type: 'post',
 						       success: function(data){
-						    	   var data_desc=Base64.decode( data );
+						    	   var data_desc= data ;
 						      		result=eval("("+data_desc+")");
 						    	   idimagen=result.idimagen;
 						    	   $('#tituloimagen').val(result.titulo);
@@ -179,8 +179,8 @@
 									}
 									cadena = [ 	'idimagen='   + idimagen,
 								             	'a='+action,
-									            'titulo='+Base64.encode(titulo),
-									            'contenido='+Base64.encode(descripcion),
+									            'titulo='+titulo,
+									            'contenido='+descripcion,
 									            'idmenu='     + editidmenu,
 									            'idconte='+idmultimedia
 									        ].join('&');
