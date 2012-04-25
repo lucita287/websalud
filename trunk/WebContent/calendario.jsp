@@ -12,16 +12,10 @@ CArea area=null;
 String mes=request.getParameter("mes");
 
 int idarea=1;
-if(request.getParameter("idarea")!=null){
 	try{
 		idarea=Integer.parseInt(request.getParameter("idarea"));
 		area=dbo.getCAreaEspecifico(idarea);
-	}catch(Exception e){
-		
-	}
-	
-	
-}
+	}catch(Exception e){}
 dbo.Close();
 %>
   
@@ -31,6 +25,7 @@ dbo.Close();
 
 <title> <%="CALENDARIO"%>/Unidad de Salud</title>
 <jsp:include page="portal/top.jsp" />
+<meta name=description content="Divisi&oacute;n de Bienestar EstudiantiL, USAC. Dentro de las actividades de servicio, se encuentra la realizaci&oacute;n del examen obligatorio de salud a todos los estudiantes de primer ingreso." />
 <script type='text/javascript' src='lib/jquery.weekcalendar.js'></script>
 <script type='text/javascript' src='lib/date.js'></script>
 <script src="lib/i18n/ui.datepicker-es.js"></script>
@@ -52,20 +47,19 @@ dbo.Close();
 <div id="retorna_unidad">
 <a href="index.jsp?idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
 </div>
-<div class="bt_actividad_calendario"><a href="calendario.jsp" class="ui-state-default ui-corner-all button">ACTIVIDADES</a></div>
-<div class="bt_actividad_calendario"><a href="calendario.jsp?mes=" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
-<div class="bt_actividad_calendario"><a href="calendario.jsp?idarea=1" class="ui-state-default ui-corner-all button">SEMANAL</a></div>
-<% if(area!=null){%> 
+<div class="bt_actividad_calendario"><a href="calendario.jsp?mes=&idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
+<div class="bt_actividad_calendario"><a href="calendario.jsp?idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">SEMANAL</a></div>
+<% if(mes==null&&area!=null){%> 
 <div id="titulo_area_calendario"><%=area.getnombre() %></div>
 <% }else{ %>
 <div id="titulo_area_calendario">UNIDAD DE SALUD</div>
 <% } %>
 <div style="clear: both;"></div>
 
-<% if(area!=null){%>  
-   			<jsp:include page="portal/calendar/weekcalendar.jsp?idarea=<%=idarea%>" />
-<% }else if(mes!=null){ %>
-			<jsp:include page="portal/calendar/actividad_mes.jsp?idarea=<%=idarea%>" />
+<% if(mes==null&&area!=null){%>  
+   			<jsp:include page="portal/calendar/weekcalendar.jsp" />
+<% }else { %>
+			<jsp:include page="portal/calendar/actividad_mes.jsp" />
 <% }%>
 	<div style="clear: both;"></div>
 

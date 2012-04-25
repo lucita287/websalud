@@ -6,10 +6,7 @@ String mes=request.getParameter("mes");
 java.util.GregorianCalendar calendar=new java.util.GregorianCalendar();	
 if(mes!=null){
 	try{
-		
 		month=calendar.get(calendar.MONTH);
-		
-		//month=Integer.parseInt(request.getParameter("mes"));
 	}catch(Exception e){}
 }
 

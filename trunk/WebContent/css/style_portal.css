@@ -20,7 +20,10 @@
 		#Panel-texto { width:90%;  padding: 0.4em; background: #fff; }
 		#Panel-texto h3 { margin: 0; padding: 0.4em; text-align: center; }
 		
-		#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
+		#Panel-texto-tit { 
+		margin: 0; padding: 0.4em; text-align: center; 
+		font-size:1.5em;
+		}
 		#button_login { margin: 0; padding: 0.4em; text-align: center; }
 		.divbutton_login {margin:0 auto 0 auto; width:80px;  }
 			
@@ -37,7 +40,7 @@
 			  }
 			  #pdf_div{
 			  		margin:0 auto 0 auto;
-					width: 500px;
+					width: 200px;
 					background: #eeeef4;
 					height: 350px;
 					overflow: auto;
@@ -170,6 +173,10 @@
 		}
 		.news_vermas2{
 		float:right;
+		}
+		.news_vermas3{
+		margin: 0 auto 0 auto;
+		width: 400px;
 		}
 		
 /************** LOGIN ******************************/
