@@ -73,8 +73,8 @@
 			   var direccion=($.trim($("#dir_lugar").val()));
 			  cadena = [ 'idedificio='     + idedificio,
 				            'a='+action,
-				            'nombre='+Base64.encode(nombre),
-				            'direccion='+Base64.encode(direccion),
+				            'nombre='+nombre,
+				            'direccion='+direccion,
 				            'telefono='+$("#tel_lugar").val()
 				        ].join('&');
 			  $.ajax({

@@ -54,6 +54,7 @@
 								</div>
 							</div>
 							<div class="fila">
+							<h3 style="color:red;">Tama&ntilde;o recomendado,  ancho = 550px, alto =440px </h3>
 								<div class="col_titulo">Imagen Principal</div>
 								<div class="col">
 									<input id="fileup_prin" type="file" name="files[]" ><BR/>

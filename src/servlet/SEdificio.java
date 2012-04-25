@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import data.CEdificio;
 import data.CUsuarioPermiso;
-import framework.Base64core;
 import framework.CDataBase;
 import framework.CValidation;
 
@@ -46,7 +45,6 @@ public class SEdificio extends HttpServlet {
     	String codificacion=request.getCharacterEncoding();
 		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	CValidation valid=new CValidation();
-		Base64core base64=new Base64core();
 		HttpSession sessiones = request.getSession(false);
 		String action=valid.ValidarRequest(request.getParameter("a"));
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -58,8 +56,8 @@ public class SEdificio extends HttpServlet {
 								 //MODIFICAR EDIFICIO
 								 if(action.equalsIgnoreCase("guardar_edificio")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
-									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))),codificacion);
+									String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+									String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")),codificacion);
 									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")),codificacion);
 
 									String validacion=valid.ValidarCampoVacio(nombre, "Nombre");
@@ -90,8 +88,8 @@ public class SEdificio extends HttpServlet {
 									//MODIFICAR EDIFICIO 
 								}else if(action.equalsIgnoreCase("modificar_edificio")&& (user_permiso.getIdpermiso().indexOf(229)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-									String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
-									String direccion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("direccion"))),codificacion);
+									String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+									String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")),codificacion);
 									String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")),codificacion);
 									int idedificio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idedificio")));
 									

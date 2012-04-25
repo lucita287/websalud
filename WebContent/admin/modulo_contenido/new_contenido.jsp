@@ -88,32 +88,33 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 	                        "rule image link unlink | cut copy paste pastetext | print"
 					    });
 				  $("#cont-text").cleditor()[0].focus();
+				  
+				 
 			  });
 			  $( function(){
-					
-				  var cledit = $("#cont-text").cleditor()[0];
-				  $(cledit.$frame[0]).attr("id","cleditCool");
+				  var cledit1 = $("#cont-text").cleditor()[0];
+				  $(cledit1.$frame[0]).attr("id","cleditCool");
 
-				  var cleditFrame;
-				  if(!document.frames) cleditFrame = $("#cleditCool")[0].contentWindow.document;
-				  else cleditFrame = document.frames["cleditCool"].document;
-				    
-			$(cleditFrame).contents().find('body').bind('paste', function(){
-				  
-			      setTimeout(function() {
-			          mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
-			      	$("#cont-text").cleditor()[0].clear();
-			      }, 100);
-			     
-			});
-			} );
+				  var cleditFrame1;
+				  if(!document.frames) cleditFrame1 = $("#cleditCool")[0].contentWindow.document;
+				  else cleditFrame1 = document.frames["cleditCool"].document;
+					$(cleditFrame1).contents().find('body').bind('paste', function(){
+						  
+					      setTimeout(function() {
+					          mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
+					      	$("#cont-text").cleditor()[0].clear();
+					      	$("#cont-text").cleditor()[0].focus();
+					      }, 100);
+					     
+					});  
+			  });
 			  
 			  function Guardarnew(){
 
 					  if($.trim($('#new-titulo').val())!=""){
 						  if($('#new-submenu').val()>0 && $('#new-area').val()>0){	
-								  var data_cont=Base64.encode(($('#cont-text').val()));
-								  var titulo=Base64.encode(($('#new-titulo').val()));
+								  var data_cont=Base64.encode(convertirCaracter($('#cont-text').val()));
+								  var titulo=Base64.encode(convertirCaracter($('#new-titulo').val()));
 								  var submenu=$('#new-submenu').val();
 									cadena = [ 	'a=guardarnew',
 										            'titulo='+titulo,

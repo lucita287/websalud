@@ -39,7 +39,7 @@
 			  		margin:0 auto 0 auto;
 					width: 500px;
 					background: #eeeef4;
-					height: 180px;
+					height: 350px;
 					overflow: auto;
 			  }	
  				#first_conte{
@@ -167,6 +167,9 @@
 			border-top-left-radius: 4px;
 			border: 1px solid #AAAAAA;
     		font-weight:bold;
+		}
+		.news_vermas2{
+		float:right;
 		}
 		
 /************** LOGIN ******************************/

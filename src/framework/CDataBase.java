@@ -30,8 +30,16 @@ public class CDataBase {
 	private String user="root"; 
 	private String pass="123456";
 	private String host="localhost";
+	private String webhost="http://websalud.jelastic.servint.net";
 
 	
+	
+	/**
+	 * @return the webhost
+	 */
+	public String getWebhost() {
+		return webhost;
+	}
 	public Connection connHostDevelopment(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();

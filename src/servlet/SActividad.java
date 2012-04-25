@@ -81,6 +81,7 @@ public class SActividad extends HttpServlet {
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "Descripcion"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Descripcion"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(salon, 100, "Salon"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
 									if(validacion.compareTo("")==0){
 										CArea area=dbo.getCAreaEspecifico(idarea);
 										CEdificio edi=dbo.getEdificioEspecifica(idedificio);
@@ -141,6 +142,7 @@ public class SActividad extends HttpServlet {
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idedificio, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un lugar\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 150, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(contenido, "Descripcion"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Descripcion"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(salon, 100, "Salon"):validacion;
 									if(validacion.compareTo("")==0){

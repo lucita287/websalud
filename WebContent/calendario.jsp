@@ -5,21 +5,24 @@
 <%@ page import="data.CArea" %>
 <%
 CDataBase dbo=new CDataBase();
-dbo.Connect();
+if(dbo.Connect()){
 
 CArea area=null;
 
 String mes=request.getParameter("mes");
 
-
+int idarea=1;
 if(request.getParameter("idarea")!=null){
 	try{
-		int idarea=Integer.parseInt(request.getParameter("idarea"));
+		idarea=Integer.parseInt(request.getParameter("idarea"));
 		area=dbo.getCAreaEspecifico(idarea);
-	}catch(Exception e){}
+	}catch(Exception e){
+		
+	}
 	
-	dbo.Close();
+	
 }
+dbo.Close();
 %>
   
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -47,7 +50,7 @@ if(request.getParameter("idarea")!=null){
 
  <div id="main">
 <div id="retorna_unidad">
-<a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
+<a href="index.jsp?idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
 </div>
 <div class="bt_actividad_calendario"><a href="calendario.jsp" class="ui-state-default ui-corner-all button">ACTIVIDADES</a></div>
 <div class="bt_actividad_calendario"><a href="calendario.jsp?mes=" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
@@ -60,12 +63,10 @@ if(request.getParameter("idarea")!=null){
 <div style="clear: both;"></div>
 
 <% if(area!=null){%>  
-   			<jsp:include page="portal/calendar/weekcalendar.jsp" />
+   			<jsp:include page="portal/calendar/weekcalendar.jsp?idarea=<%=idarea%>" />
 <% }else if(mes!=null){ %>
-			<jsp:include page="portal/calendar/actividad_mes.jsp" />
-<% }else{ %>
-   			<jsp:include page="portal/calendar/actividad.jsp" />
-<% }%>	
+			<jsp:include page="portal/calendar/actividad_mes.jsp?idarea=<%=idarea%>" />
+<% }%>
 	<div style="clear: both;"></div>
 
 
@@ -86,4 +87,4 @@ if(request.getParameter("idarea")!=null){
 </body>
 
 </html>
-			
+<%} %>			
