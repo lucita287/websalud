@@ -6,7 +6,7 @@
 <title>Unidad de Salud / USAC</title>
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery.validate.password.css" />
 <jsp:include page="portal/top.jsp" />
-
+<meta name=description content="Divisi&oacute;n de Bienestar EstudiantiL, USAC. Dentro de las actividades de servicio, se encuentra la realizaci&oacute;n del examen obligatorio de salud a todos los estudiantes de primer ingreso." />
 <script src="lib/jquery.maskedinput-1.2.2.js"></script>
 <script src="lib/jquery.validate.js"></script>
 <script src="lib/jquery.validate.password.js"></script>

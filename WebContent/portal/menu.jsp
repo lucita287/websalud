@@ -40,7 +40,7 @@ dbo.Close();
 	
 	<%} %>
 	<li>
-		<a target="_blank" href="calendario.jsp?mes=&idarea=<%=idarea%>">Calendario</a>
+		<a href="calendario.jsp?mes=&idarea=<%=idarea%>">Calendario</a>
 	</li>
 	<li>
 		<a>Areas Profesionales</a>

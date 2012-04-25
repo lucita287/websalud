@@ -6,6 +6,7 @@
 <%String area=request.getParameter("idarea");%>
 <title>Unidad de Salud / USAC</title>
 <jsp:include page="portal/top.jsp" />
+<meta name=description content="Divisi&oacute;n de Bienestar EstudiantiL, USAC. Dentro de las actividades de servicio, se encuentra la realizaci&oacute;n del examen obligatorio de salud a todos los estudiantes de primer ingreso." />
 </head>
 <body>
 <div class="back_all">
@@ -26,7 +27,7 @@
 <div style="clear: both;"></div>
 <div id="menu-principal" >
 
-	<%if(area==null){ %>
+	<%if(area==null || area.equalsIgnoreCase("1") ){ %>
 	<div id="menu-salud" class="ui-widget-content ui-corner-all">
 	<jsp:include page="portal/menu.jsp" />
 	</div>

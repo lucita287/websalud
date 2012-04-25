@@ -12,6 +12,11 @@ try{
 idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getParameter("idarea")));
 }catch(Exception e){}
 ArrayList<CMenu> list_menu=dbo.getMenu(idarea);
+int narea=1;
+CArea area=dbo.getCAreaEspecifico(idarea);
+if(area!=null&&area.getareaidarea()!=null&& area.getareaidarea().getidarea()>0){
+	narea=area.getareaidarea().getidarea();
+}
 ArrayList<CArea> list_submenu=dbo.getAreaListaMenuSubmenu(idarea);
 dbo.Close();
 %>
@@ -56,7 +61,7 @@ dbo.Close();
 		</ul>
 	</li>
 		<% } %>
-	<li><a target="_blank" href="calendario.jsp?idarea=<%=idarea %>">Calendario</a></li>
-	<li><a  href="index.jsp">Regresar a Menu</a></li>	
+	<li><a  href="calendario.jsp?idarea=<%=idarea %>">Calendario</a></li>
+	<li><a  href="index.jsp?idarea=<%=narea %>">Regresar a Menu</a></li>	
 </ul>
 <% } %>

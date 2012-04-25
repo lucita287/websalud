@@ -9,6 +9,7 @@
 		int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 		CDataBase dbo=new CDataBase();
 		dbo.Connect();
+		String host=dbo.getWebhost();
 		CNoticia info_new=dbo.getNoticiaEspecificaV(idnoticia);
 		ArrayList<CNoticia> list_news=dbo.getNoticias();
 		dbo.Close();
@@ -20,12 +21,16 @@
 <head>
 <title> <%=(info_new!=null)?info_new.getTitulo():"NOTICIAS"%>/Unidad de Salud</title>
 <jsp:include page="portal/top.jsp" />
+<% if(info_new!=null){ %>
+<meta name=description content="<%= info_new.getDescripcion_corta()%>" />
+<% }else { %>
+<meta name=description content="Divisi&oacute;n de Bienestar EstudiantiL, USAC. Dentro de las actividades de servicio, se encuentra la realizaci&oacute;n del examen obligatorio de salud a todos los estudiantes de primer ingreso." />
+<%  }%>
 </head>
 
 <body>
 <div class="back_all">
 <div id="content">
-
 <div class="top">
 <jsp:include page="portal/titulo.jsp">
 <jsp:param name="titulo" value="Noticias" />	
@@ -53,14 +58,20 @@
 				<center>
 				<img width="750px"  src="<%=info_new.getMultimediaidmultimedia().getdireccion_relativa() %>"/>		
 				</center>
-						<div style="clear: both;"></div>
-				<% if(info_new.getMultimediaidmultimedia_pdf()!=null&&info_new.getMultimediaidmultimedia_pdf().getidimagen()>0){ %>
+						
+			<%} %>
+			<% if(info_new.getMultimediaidmultimedia_pdf()!=null&&info_new.getMultimediaidmultimedia_pdf().getidimagen()>0){ %>
 					<div class="news_vermas_especifica">
 						<a   target="_blank" href="<%= info_new.getMultimediaidmultimedia_pdf().getdireccion_relativa() %>">VER PDF</a>
 					</div>
 					<div style="clear: both;"></div>
 					<% } %>
-			<%} %>	
+			
+					<div class="news_vermas3">
+						<a id="news_mas" target="_blank"  href="http://www.facebook.com/sharer.php?u=<%=host%>/noticia.jsp?idnoticia=<%=info_new.getIdnoticia()%>"><img src="images/facebook.jpg" /></a>
+						<a id="news_mas"  target="_blank" href="http://twitter.com/home?status=Leyendo ahora: <%=host%>/noticia.jsp?idnoticia=<%=info_new.getIdnoticia()%>"><img src="images/twitter.jpg" /></a>
+					</div>	
+			<div style="clear: both;"></div>		
 		<% }else{ 
 		for(int i=0; i<list_news.size();i++){
 				CNoticia temp_news=list_news.get(i);
@@ -89,6 +100,12 @@
 						<a   target="_blank" href="<%= temp_news.getMultimediaidmultimedia().getdireccion_relativa() %>">VER AFICHE</a>
 					</div>
 					<% } %>
+					<div class="news_vermas2">
+					<a id="news_mas" target="_blank"  href="http://www.facebook.com/sharer.php?u=<%=host%>/noticia.jsp?idnoticia=<%=temp_news.getIdnoticia()%>"><img src="images/facebook_counter.png" /></a>
+					</div>
+					<div class="news_vermas2">
+					<a id="news_mas"  target="_blank" href="http://twitter.com/home?status=Leyendo ahora: <%=host%>/noticia.jsp?idnoticia=<%=temp_news.getIdnoticia()%>"><img src="images/twitter_counter.png" /></a>
+					</div>
 		
 		<div style="clear: both;"></div>
 		</div>
