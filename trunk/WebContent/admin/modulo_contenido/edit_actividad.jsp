@@ -53,9 +53,9 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    width: 600,
 					    height: 200,
 					    searchitems : [
-						{display: 'titulo', name : 'titulo'},
+						{display: 'titulo', name : 'titulo', isdefault: true},
 						{display: 'lugar', name : 'lugar'},
-						{display: 'area', name : 'area', isdefault: true}
+						{display: 'area', name : 'area'}
 						]
 					});
 			      $('.pSearch').click();

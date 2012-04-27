@@ -63,7 +63,7 @@
 			caracter=replaceAll(caracter,String.fromCharCode(8216),"&#34;");
 			caracter=replaceAll(caracter,String.fromCharCode(8217),"&#34;");
 			caracter=replaceAll(caracter,String.fromCharCode(8218),"&#44;");
-			
+			caracter=replaceAll(caracter,String.fromCharCode(8230),"&#8230;");
 			return caracter;
 		}
 	  function replaceAll( text, busca, reemplaza ){
