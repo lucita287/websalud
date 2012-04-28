@@ -10,7 +10,7 @@
 				<li><a href="#tabs-2">Fechas Actividades</a></li>
 				<li><a href="#tabs-3">Responsables</a></li>
 				<li><a href="#tabs-4">Lugar</a></li>
-				<li><a href="#tabs-5">Reportes</a></li>
+				
 			</ul>
 			<div id="tabs-1" style="width:700px; ">
 				<jsp:include page="edit_actividad.jsp" />
@@ -23,9 +23,6 @@
 			</div>
 			<div id="tabs-4" style="width:700px; ">
 				<jsp:include page="edificio.jsp" />
-			</div>
-			<div id="tabs-5" style="width:700px; ">
-				
 			</div>
 	</div>	
 	<div style="clear: both;"></div>	

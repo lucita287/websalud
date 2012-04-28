@@ -3,7 +3,11 @@
 <% 
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAttribute("user_permiso")!=null){
-	Integer portal=(Integer)(sessiones.getAttribute("portal")==null?1:sessiones.getAttribute("portal"));
+
+	Integer portal=1;
+	try{
+	portal=Integer.parseInt(request.getParameter("portal"));
+	}catch (Exception e){}
 	String user=(String)sessiones.getAttribute("username");
 	
 %>

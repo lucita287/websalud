@@ -6,16 +6,19 @@
 <%@ page import="java.util.ArrayList" %>
 <% 
 HttpSession sessiones = request.getSession(false);
-if(sessiones!=null && sessiones.getAttribute("portal")!=null&& sessiones.getAttribute("user_permiso")!=null){
+if(sessiones!=null && sessiones.getAttribute("user_permiso")!=null){
 
-Integer portal=(Integer)sessiones.getAttribute("portal");
+Integer portal=1;
+try{
+portal=Integer.parseInt(request.getParameter("portal"));
+}catch (Exception e){}
 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
 %>
 	
 <ul id="menu"  >
 	<li >
-	<a id="1">Perfil</a>
+	<a href="index.jsp?portal=1">Perfil</a>
 	</li>
 
 	<%if (user_permiso.getIdpermiso().indexOf(221)>-1  
@@ -30,19 +33,23 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			<ul id="admin_conte">
 			<%if (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li  >
-					<a id="2" >Gestionar Contenido</a>
+					<a href="index.jsp?portal=2" >Nuevo Contenido</a>
+				</li>
+			<%} if (user_permiso.getIdpermiso().indexOf(221)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
+				<li  >
+					<a href="index.jsp?portal=3" >Gestionar Contenido</a>
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(225)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
-					<a id="3">Gestionar Noticias</a>
+					<a href="index.jsp?portal=4">Gestionar Noticias</a>
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(228)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
-					<a id="4">Gestionar Actividades</a>
+					<a href="index.jsp?portal=5">Gestionar Actividades</a>
 				</li>
 			<%} if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>	
 				<li>
-					<a  id="5">Gestionar Areas</a>
+					<a  href="index.jsp?portal=6">Gestionar Areas</a>
 				</li>
 			<%}%>	
 			</ul>
@@ -57,19 +64,19 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			<ul id="admin">
 			<%if (user_permiso.getIdpermiso().indexOf(233)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 				<li >
-					<a id="6">Gestionar Usuarios</a>
+					<a href="index.jsp?portal=7">Gestionar Usuarios</a>
 				</li>
 		   <% } if (user_permiso.getIdpermiso().indexOf(235)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 				<li>
-					<a id="7">Gestionar Permisos</a>
+					<a href="index.jsp?portal=8">Gestionar Permisos</a>
 				</li>
 		 <% } if (user_permiso.getIdpermiso().indexOf(246)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
 				<li>
-					<a id="8">Configuraci&oacute;n</a>
+					<a href="index.jsp?portal=9">Configuraci&oacute;n</a>
 				</li>
 		 <% } if (user_permiso.getIdpermiso().indexOf(246)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
 				<li>
-					<a id="9">Archivos sin uso</a>
+					<a href="index.jsp?portal=10">Archivos sin uso</a>
 				</li>
 		<% } %>		
 			</ul>	
@@ -79,19 +86,19 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 		<a >Configurar Examen de Salud</a>
 			<ul id="exam">
 				<li>
-					<a id="10" >Mantenimiento de Propiedades</a>
+					<a href="index.jsp?portal=11" >Mantenimiento de Propiedades</a>
 				</li>
 				<li>
-					<a id="11" >Mantenimiento de Carreras</a>
+					<a href="index.jsp?portal=12" >Mantenimiento de Carreras</a>
 				</li>
 				<li>
-					<a id="12" >Mantenimiento de Categorias</a>
+					<a href="index.jsp?portal=13" >Mantenimiento de Categorias</a>
 				</li>
 				<li>
-					<a id="13" >Gestionar Examen de Salud</a>
+					<a href="index.jsp?portal=14" >Gestionar Examen de Salud</a>
 				</li>
 				<li>
-					<a id="14">PENDIENTE</a>
+					<a href="index.jsp?portal=15">PENDIENTE</a>
 				</li >
 			</ul>
 	
@@ -100,7 +107,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 		<a >Estudiantes</a>
 			<ul id="estudiante">
 				<li>
-					<a id="15" >Perfil de estudiantes</a>
+					<a href="index.jsp?portal=16" >Perfil de estudiantes</a>
 				</li>
 				
 			</ul>
@@ -113,10 +120,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	<a >Reportes</a>
 			<ul id="report">
 				<li>
-					<a id="16">Reportes</a>
+					<a href="index.jsp?portal=17">Reportes</a>
 				</li>
 				<li>
-					<a id="17" >Dashboard</a>
+					<a href="index.jsp?portal=18" >Dashboard</a>
 				</li>
 			</ul>	
 	</li>
@@ -141,15 +148,15 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	function initMenu() {
 	  $('#menu ul').hide();
 	  
-	  <% if(portal>1 && portal<6){%>
+	  <% if(portal>1 && portal<7){%>
 	  $('#admin_conte').show();
-	  <% }else if(portal>5 && portal<10){ %>
+	  <% }else if(portal>6 && portal<11){ %>
 	  $('#admin').show();
-	  <% }else if(portal>9 && portal<15){ %>
+	  <% }else if(portal>10 && portal<16){ %>
 	  $('#exam').show();
-	  <% }else if(portal>14 && portal<16){ %>
+	  <% }else if(portal>15 && portal<17){ %>
 	  $('#estudiante').show();
-	  <% }else if(portal>15 && portal<18){ %>
+	  <% }else if(portal>16 && portal<19){ %>
 	  $('#report').show();
 	  <%} %>
 	  
@@ -166,19 +173,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	        checkElement.slideDown('normal');
 	        return false;
 	        }
-	      cadena = [ 'idmenu='     + $(this).attr("id"),
-		             'a=admin'
-		  		        ].join('&');
 	      
-		  $.ajax({
-			  url: "../SMenu",
-		        data: cadena,
-		  	    type: 'post',
-		        success: function(data){
-		        	window.location.href="index.jsp";
-		        }
-			
-		    });
 
 	      }
 	    );

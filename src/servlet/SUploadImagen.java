@@ -23,6 +23,7 @@ import data.CUsuario;
 import data.CUsuarioPermiso;
 
 import framework.CDataBase;
+import framework.CValidation;
 
 /**
  * Servlet implementation class SUploadImagen
@@ -53,6 +54,9 @@ public class SUploadImagen extends HttpServlet {
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
 		}
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
+		CValidation valid=new CValidation();
 		ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
@@ -91,12 +95,11 @@ public class SUploadImagen extends HttpServlet {
 													String name=item.getName();
 													File file2 = new File(name);
 													int id=dbo.getMultimediaTotal();
-													name=id+file2.getName();
-													name=name.replaceAll(" ","");
+													name=file2.getName();
 													name=name.toLowerCase();
-													
+													String name2=id+"myimagen"+((name.endsWith(".png"))?".png":((name.endsWith(".gif"))?".gif":((name.endsWith(".jpg"))?".jpg":"")));
 													if(name.endsWith(".png")||name.endsWith(".gif")||name.endsWith(".jpg")){
-															CMultimedia imagen=new CMultimedia(0, repositorio+name,repositorio_relativo+ name,item.getSize(),1,usuario);						
+															CMultimedia imagen=new CMultimedia(0, repositorio+name2,repositorio_relativo+ name2,item.getSize(),1,usuario);						
 															File file = new File(imagen.getdireccion());
 															item.write(file);
 															boolean b=dbo.SafeMultimedia(imagen);

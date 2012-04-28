@@ -102,10 +102,9 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 						  
 					      setTimeout(function() {
 					          mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
-					      	$("#cont-text").cleditor()[0].clear();
 					      	$("#cont-text").cleditor()[0].focus();
 					      }, 100);
-					     
+					     return false;
 					});  
 			  });
 			  

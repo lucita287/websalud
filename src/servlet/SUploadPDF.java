@@ -22,6 +22,7 @@ import data.CMultimedia;
 import data.CUsuario;
 import data.CUsuarioPermiso;
 import framework.CDataBase;
+import framework.CValidation;
 
 /**
  * Servlet implementation class SUploadPDF
@@ -52,10 +53,14 @@ public class SUploadPDF extends HttpServlet {
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
 		}
+		
+		String codificacion=request.getCharacterEncoding();
+		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
 		HttpSession sessiones = request.getSession(false);
+		CValidation valid=new CValidation();
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");			 
 			 if( (user_permiso.getIdpermiso().indexOf(222)>-1  ||user_permiso.getIdpermiso().indexOf(226)>-1 ||user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
@@ -80,15 +85,14 @@ public class SUploadPDF extends HttpServlet {
 					if (!item.isFormField()) {
 
 						if(item.getSize()<=(tam_max*1048576)){
-								String name=item.getName();
+								String name= item.getName();
 								File file2 = new File(name);
 								int id=dbo.getMultimediaTotal();
-								name=id+file2.getName();
-								name=name.replaceAll(" ","");
+								name=file2.getName();
 								name=name.toLowerCase();
-								
+								String name2=id+"mypdf.pdf";
 								if(name.endsWith(".pdf")){
-										CMultimedia imagen=new CMultimedia(0, repositorio+name,repositorio_relativo+ name,item.getSize(),2,usuario);						
+										CMultimedia imagen=new CMultimedia(0, repositorio+name2,repositorio_relativo+ name2,item.getSize(),2,usuario);						
 										File file = new File(imagen.getdireccion());
 										item.write(file);
 										boolean b=dbo.SafeMultimedia(imagen);

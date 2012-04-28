@@ -157,8 +157,8 @@
 					    width: 600,
 					    height: 200,
 					    searchitems : [
-						{display: 'titulo', name : 'titulo'},
-						{display: 'area', name : 'area', isdefault: true}
+						{display: 'titulo', name : 'titulo', isdefault: true},
+						{display: 'area', name : 'area'}
 						]
 					});
 				  $('.pSearch').click();
@@ -191,10 +191,9 @@
 				  
 			        setTimeout(function() {
 			            mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
-			        	$("#editnoti").cleditor()[0].clear();
 			        	$("#editnoti").cleditor()[0].focus();
 			        }, 100);
-			       
+			       return false;
 			  });
 			  } );
 			  
