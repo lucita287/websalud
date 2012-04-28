@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CUsuarioPermiso;
-import framework.Base64core;
 import framework.CDataBase;
 import framework.CValidation;
 
@@ -47,7 +46,6 @@ public class SFecha_actividad extends HttpServlet {
 		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
     	CValidation valid=new CValidation();
     	String action=valid.ValidarRequest(request.getParameter("a"));
-		Base64core base64=new Base64core();
 		
 		
 		HttpSession sessiones = request.getSession(false);
@@ -62,13 +60,13 @@ public class SFecha_actividad extends HttpServlet {
 									String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									int idactividad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idactividad")));
 									String fecha_inicio=(valid.ValidarRequest(request.getParameter("fecha_inicio")));		
-									fecha_inicio=valid.Limpiarvalor(base64.decodificar(fecha_inicio),codificacion);
+									fecha_inicio=valid.Limpiarvalor(fecha_inicio,codificacion);
 									String fecha_fin=(valid.ValidarRequest(request.getParameter("fecha_fin")));		
-									fecha_fin=valid.Limpiarvalor(base64.decodificar(fecha_fin),codificacion);
+									fecha_fin=valid.Limpiarvalor(fecha_fin,codificacion);
 									String hora_inicio=(valid.ValidarRequest(request.getParameter("hora_inicio")));		
-									hora_inicio=valid.Limpiarvalor(base64.decodificar(hora_inicio),codificacion);
+									hora_inicio=valid.Limpiarvalor(hora_inicio,codificacion);
 									String hora_fin=(valid.ValidarRequest(request.getParameter("hora_fin")));		
-									hora_fin=valid.Limpiarvalor(base64.decodificar(hora_fin),codificacion);
+									hora_fin=valid.Limpiarvalor((hora_fin),codificacion);
 									String phora_inicio=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("hora_inicio_mm")),codificacion);
 									String phora_fin=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("hora_fin_mm")),codificacion);
 									String validacion=valid.ValidarSiesMayor(idactividad, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una ACTIVIDAD\"}");
@@ -94,9 +92,9 @@ public class SFecha_actividad extends HttpServlet {
 											int r=dbo.SafeActividadDetalle(idactividad,valid.CambiarFormatoddmmyy(fecha_inicio),valid.CambiarFormatoddmmyy(fecha_fin), valid.CambiarFormatohhmm(hora_inicio,phora_inicio), valid.CambiarFormatohhmm(hora_fin,phora_fin),lunes,martes,miercoles,jueves,viernes,sabado,domingo);
 											if(r>=1)
 											result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-											else result="{\"resultado\":\"ERROR\",\"mensaje\":\" Error al guardar ó no existe ningun \n día de la semana  en el rango de fechas \"}";
+											else result="{\"resultado\":\"ERROR\",\"mensaje\":\" Error al guardar o no existe ningun \n dia de la semana  en el rango de fechas \"}";
 										}else{
-											result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar almenos un d&iacute;a \"}";
+											result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar almenos un dia \"}";
 										}
 										
 									}else{
@@ -108,11 +106,11 @@ public class SFecha_actividad extends HttpServlet {
 									 String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 									 int idactividad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idactividad")));
 										String fecha=(valid.ValidarRequest(request.getParameter("fecha")));		
-										fecha=valid.Limpiarvalor(base64.decodificar(fecha),codificacion);
+										fecha=valid.Limpiarvalor((fecha),codificacion);
 										String hora_inicio=(valid.ValidarRequest(request.getParameter("hora_inicio")));		
-										hora_inicio=valid.Limpiarvalor(base64.decodificar(hora_inicio),codificacion);
+										hora_inicio=valid.Limpiarvalor((hora_inicio),codificacion);
 										String hora_fin=(valid.ValidarRequest(request.getParameter("hora_fin")));		
-										hora_fin=valid.Limpiarvalor(base64.decodificar(hora_fin),codificacion);
+										hora_fin=valid.Limpiarvalor((hora_fin),codificacion);
 										String phora_inicio=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("hora_inicio_mm")),codificacion);
 										String phora_fin=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("hora_fin_mm")),codificacion);
 										String validacion=valid.ValidarSiesMayor(idactividad, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una ACTIVIDAD\"}");

@@ -83,10 +83,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  
 			        setTimeout(function() {
 			            mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
-			        	$("#descripcion_actividad").cleditor()[0].clear();
+			        	//$("#descripcion_actividad").cleditor()[0].clear();
 			        	$("#descripcion_actividad").cleditor()[0].focus();
+			        	
 			        }, 100);
-			       
+			        return false; 
 			  });
 			  } );
 			  function RecargarResponsable(){

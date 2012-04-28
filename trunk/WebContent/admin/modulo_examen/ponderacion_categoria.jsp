@@ -68,9 +68,8 @@
 				  
 			      setTimeout(function() {
 			          mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
-			      	$("#editor").cleditor()[0].clear();
 			      }, 100);
-			     
+			     return false;
 			});
 			} );  
 			function NewPonde(){

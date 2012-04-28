@@ -64,7 +64,7 @@ public class SEdificio extends HttpServlet {
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Nombre"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(direccion, "Direccion"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(direccion, 250, "Direccion"):validacion;
-									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(direccion, 50, "Telefono"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(telefono, 50, "Telefono"):validacion;
 									if(validacion.compareTo("")==0){
 										CEdificio edi=new CEdificio(0,nombre,direccion,telefono);
 										boolean b=dbo.SafeEdificio(edi);
@@ -98,7 +98,7 @@ public class SEdificio extends HttpServlet {
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Nombre"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(direccion, "Direccion"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(direccion, 250, "Direccion"):validacion;
-									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(direccion, 50, "Telefono"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(telefono, 50, "Telefono"):validacion;
 									if(validacion.compareTo("")==0){
 										CEdificio edi=new CEdificio(idedificio,nombre,direccion,telefono);
 										boolean b=dbo.UpdateEdificio(edi);

@@ -39,6 +39,7 @@ BEGIN
     DECLARE mday int;
     SET mday=0;
     SET mydate = fecha_inicio;
+    SET fecha_fin = date_add(fecha_fin, INTERVAL 1 DAY);
     IF fecha_inicio<=fecha_fin and hora_inicio<hora_fin then
         WHILE mydate < fecha_fin DO
             

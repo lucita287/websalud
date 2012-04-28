@@ -25,7 +25,7 @@ public class CValidation {
 		String result="";
 		campo=campo.trim();
 		if(campo.length()<=0){
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" no puede estar vacío \"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" no puede estar vacio \"}";
 		}
 		return result;
 	}
@@ -182,7 +182,7 @@ public class CValidation {
 		String result="";
 		campo=campo.trim();
 		if(campo.length()>longitud){
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" tiene una longitud mayor, la longitu maxima es "+longitud+" \"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\"El campo "+nombre_campo+" tiene una longitud mayor, la longitud maxima es "+longitud+" \"}";
 		}
 		return result;
 	}
@@ -209,7 +209,7 @@ public class CValidation {
 				result="{\"resultado\":\"ERROR\",\"mensaje\":\"El password debe contener almenos 6 caracteres\"}";
 			}
 		}else{
-			result="{\"resultado\":\"ERROR\",\"mensaje\":\" El password no coincide con la confirmación de password\"}";
+			result="{\"resultado\":\"ERROR\",\"mensaje\":\" El password no coincide con la confirmacion de password\"}";
 		}
 		return result;
 	}

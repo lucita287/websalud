@@ -8,6 +8,7 @@
 <link type="text/css" href="../css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 <link href="../css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="../css/style_admin.css" rel="stylesheet" type="text/css" media="screen" />
+
 <link rel="stylesheet" type="text/css" href="../css/flexigrid.css"/>
 <link rel="stylesheet" type="text/css" href="../css/jquery.cleditor.css" />
 

@@ -45,7 +45,11 @@ dbo.Close();
 
  <div id="main">
 <div id="retorna_unidad">
-<a href="index.jsp?idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">RETORNA A LA UNIDAD DE SALUD</a> 
+
+<a href="index.jsp" class="ui-state-default ui-corner-all button">RETORNA A UNIDAD DE SALUD</a> 
+<% if(idarea!=1&&area!=null){%> 
+<a href="index.jsp?idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">RETORNA A <%=area.getnombre().toUpperCase() %></a>
+<% }%>
 </div>
 <div class="bt_actividad_calendario"><a href="calendario.jsp?mes=&idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">MENSUAL</a></div>
 <div class="bt_actividad_calendario"><a href="calendario.jsp?idarea=<%=idarea%>" class="ui-state-default ui-corner-all button">SEMANAL</a></div>

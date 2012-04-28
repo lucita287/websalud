@@ -61,11 +61,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			  function GuardarRango(){
 				  cadena = [ 'a=guardar_rango',
 					            'idactividad='     + idactividad,
-					            'fecha_inicio='+Base64.encode($("#r_fecha_inicio").val()+" "),
-					            'fecha_fin='+Base64.encode($("#r_fecha_fin").val()+" "),
-					            'hora_inicio='+Base64.encode($("#r_hora_inicio").val()+" "),
+					            'fecha_inicio='+$("#r_fecha_inicio").val(),
+					            'fecha_fin='+$("#r_fecha_fin").val(),
+					            'hora_inicio='+$("#r_hora_inicio").val(),
 					            'hora_inicio_mm='+$("#horario_rh_inicio").val(),
-					            'hora_fin='+Base64.encode($("#r_hora_fin").val()+" "),
+					            'hora_fin='+$("#r_hora_fin").val(),
 					            'hora_fin_mm='+$("#horario_rh_fin").val(),
 					            'lunes='+(($("#lunes").is(":checked")==true)?1:0),
 					            'martes='+(($("#martes").is(":checked")==true)?1:0),
@@ -91,10 +91,10 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			  function GuardarEspecifico(){
 				  cadena = [ 'a=guardarespecifico',
 					            'idactividad='     + idactividad,
-					            'fecha='+Base64.encode($("#r_fecha").val()+" "),
-					            'hora_inicio='+Base64.encode($("#r_hora_inicio1").val()+" "),
+					            'fecha='+$("#r_fecha").val(),
+					            'hora_inicio='+$("#r_hora_inicio1").val(),
 					            'hora_inicio_mm='+$("#horario_rh_inicio1").val(),
-					            'hora_fin='+Base64.encode($("#r_hora_fin1").val()+" "),
+					            'hora_fin='+$("#r_hora_fin1").val(),
 					            'hora_fin_mm='+$("#horario_rh_fin1").val(),
 					        ].join('&');
 				  $.ajax({
@@ -121,7 +121,9 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  $("#fe_ini_buscar").val("");
 				  $("#fe_fin_buscar").val("");
 				  $(".semana").attr('checked', false);
+				  BuscarFecha();
 				  $('#fecha_actividad').flexReload();
+				  
 			  }
 			  function EliminarFecha(com, grid){
 				  if(com=="Eliminar"){
