@@ -135,8 +135,8 @@ function preguntaedit(){
 							<div class="fila">
 								<div class="col_titulo">*Opcion Multiple</div>
 								<div class="col">
-									<input  type="radio" id="emultiple1" name="emultiple" value="1" class="check emultiple"/><label for="emultiple1">SI</label>
-									<input  type="radio" id="emultiple2" name="emultiple" value="0" class="check emultiple" CHECKED/><label for="emultiple2">NO</label>
+									<input  type="radio" id="emultiple1" name="emultiple" value="1" class="check emultiple" <%= (preg.getMultiple()==1)?"CHECKED":"" %>/><label for="emultiple1">SI</label>
+									<input  type="radio" id="emultiple2" name="emultiple" value="0" class="check emultiple" <%= (preg.getMultiple()==0)?"CHECKED":"" %> /><label for="emultiple2">NO</label>
 								</div>
 							</div>
 							<script>

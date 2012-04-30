@@ -17,6 +17,7 @@ import data.CMenu_Categoria;
 import data.CPaciente;
 import data.CParentesco;
 import data.CPregunta;
+import data.CPregunta_Paciente;
 import data.CPregunta_Titulo_Respuesta;
 import data.CTipo_Pregunta;
 import data.CTipo_Sangre;
@@ -1818,7 +1819,7 @@ public class CDataExam extends CDataBase {
 	public boolean UpdatePaciente1(CPaciente  pac){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET tipo_sangreidtipo_sangre = ?, estado_civilidestado_civil = ?, titulo_secundaria = ?, crecio_en = ?, emer_nombre = ?, emer_telefono = ?, emer_movil = ? WHERE idpaciente = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET tipo_sangreidtipo_sangre = ?, estado_civilidestado_civil = ?, titulo_secundaria = ?, crecio_en = ?, emer_nombre = ?, emer_telefono = ?, emer_movil = ?, idemer_parentesco = ? WHERE idpaciente = ?");
 			stm.setInt(1, pac.getIdtipo_sangre());
 			stm.setInt(2, pac.getEstado_civilidestado_civil());
 			stm.setString(3, pac.getTitulo_secundaria());
@@ -1827,6 +1828,7 @@ public class CDataExam extends CDataBase {
 			stm.setString(6, pac.getEmer_telefono());
 			stm.setString(7, pac.getEmer_movil());
 			stm.setInt(8, pac.getIdpaciente());
+			stm.setInt(9, pac.getIdemer_parentesco());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1958,7 +1960,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CPregunta> getListaPreguntas(CCategoria categoria, int auto, int multi){
 		ArrayList<CPregunta> ret=new ArrayList<CPregunta>();
 		try{
-			String sql="SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, "+
+			String sql="SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, pe.largo, pe.multiple, "+
 					" pe.descripcion, pe.auto_evaluacion, pe.multifasico, pe.estado, tp.idtipo_pregunta, tp.descripcion  descripcion_preg, tp.idgrupo "+
 					" FROM pregunta pe inner join tipo_pregunta tp on tp.idtipo_pregunta=pe.idtipo_pregunta " +
 					" where pe.categoriaidcategoria=? and (pe.auto_evaluacion=? or pe.multifasico=?) order by pe.orden ASC";
@@ -1977,7 +1979,47 @@ public class CDataExam extends CDataBase {
 					getListaPreguntaTitulo(ct, rs.getInt("idpregunta"));
 				CPregunta news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
 						categoria, rs.getString("descripcion"),ct,rs.getInt("auto_evaluacion"),
-						rs.getInt("multifasico"),0,0,rs.getInt("estado"));
+						rs.getInt("multifasico"),rs.getInt("largo"),rs.getInt("multiple"),rs.getInt("estado"));
+				
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	/*** aqui ****/
+	public ArrayList<CPregunta> getListaPreguntas(int menu ,int auto, int multi){
+		ArrayList<CPregunta> ret=new ArrayList<CPregunta>();
+		try{
+			String sql="SELECT pe.idpregunta, pe.orden, pe.requerida, pe.pregunta, pe.largo, pe.multiple, "+
+					" pe.descripcion, pe.auto_evaluacion, pe.multifasico, pe.estado, tp.idtipo_pregunta, tp.descripcion  descripcion_preg, tp.idgrupo, "+
+					" cat.idcategoria idcate, cat.descripcion nombre_cat " +
+					" FROM pregunta pe inner join tipo_pregunta tp on tp.idtipo_pregunta=pe.idtipo_pregunta " +
+					" inner join categoria cat on cat.idcategoria=pe.categoriaidcategoria "+
+					" inner join menu_categoria mc on mc.idmenu_categoria=cat.idmenu_categoria "+
+					" where mc.idmenu_categoria=? and (pe.auto_evaluacion=? or pe.multifasico=?) order by pe.orden ASC";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, menu);
+			stm.setInt(2,auto);
+			stm.setInt(3,multi);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ArrayList<CTitulo_Respuesta> lista=new ArrayList<CTitulo_Respuesta>();
+					if(rs.getInt("idtipo_pregunta")>3){
+						lista= this.getListaTitulo_Respuesta(rs.getInt("idgrupo"));
+						
+					}
+					CCategoria categoria=new CCategoria(rs.getInt("idcate"),rs.getString("nombre_cat"),0,0, 0, 0,null);
+					CTipo_Pregunta ct=new CTipo_Pregunta(rs.getInt("idtipo_pregunta"),rs.getString("descripcion_preg"),lista);
+					getListaPreguntaTitulo(ct, rs.getInt("idpregunta"));
+					CPregunta news=new CPregunta(rs.getInt("idpregunta"),rs.getInt("orden"), rs.getInt("requerida"),rs.getString("pregunta"),
+						categoria, rs.getString("descripcion"),ct,rs.getInt("auto_evaluacion"),
+						rs.getInt("multifasico"),rs.getInt("largo"),rs.getInt("multiple"),rs.getInt("estado"));
 				
 				ret.add(news);
 				
@@ -2012,5 +2054,65 @@ public class CDataExam extends CDataBase {
 		}
 		
 		return list;
+	}
+	public boolean SafeRespuesta(CPregunta_Paciente tipo){
+		PreparedStatement stm;
+		try {
+			
+			String sql=" SELECT ifnull(idpaciente,0) cant FROM pregunta_paciente where idpregunta=? and idpaciente=? ";
+				stm=(PreparedStatement)conn.prepareStatement(sql);
+				stm.setInt(1, tipo.getIdpregunta());
+				stm.setInt(2, tipo.getIdpaciente());
+				
+				ResultSet rs2=stm.executeQuery();
+				int temp=0;
+				if(rs2.next()) temp=rs2.getInt("cant");
+				
+				if(temp==0){
+				stm = (PreparedStatement)conn.prepareStatement("INSERT INTO pregunta_paciente (respuesta, cantidad,idpregunta, idpaciente) VALUES (?,?,?,?)");
+				}else{
+
+				stm = (PreparedStatement)conn.prepareStatement("UPDATE pregunta_paciente SET respuesta = ?, cantidad = ? WHERE idpregunta = ? AND idpaciente = ?");	
+				}
+				
+				if(tipo.getRespuesta()==null) stm.setNull(1, java.sql.Types.NULL);
+				else stm.setString(1, tipo.getRespuesta());
+				if(tipo.getCantidad()==null) stm.setNull(2, java.sql.Types.NULL);
+				else stm.setInt(2, tipo.getCantidad());
+				stm.setInt(3,tipo.getIdpregunta());
+				stm.setInt(4, tipo.getIdpaciente());
+				
+				
+			if(stm.executeUpdate()>0 ){
+					if(tipo.getLista().size()>0){
+						stm = (PreparedStatement)conn.prepareStatement("DELETE FROM pregunta_paciente_titulo_respuesta WHERE idpregunta = ? AND idpaciente = ?");
+						
+						stm.setInt(1,tipo.getIdpregunta());
+						stm.setInt(2, tipo.getIdpaciente());
+						stm.executeUpdate();
+						Iterator<Integer> it=tipo.getLista().iterator();
+							while(it.hasNext()){
+								int idtitulo=it.next();
+								stm = (PreparedStatement)conn.prepareStatement("INSERT INTO pregunta_paciente_titulo_respuesta (idpregunta,idpaciente, idtitulo_respuesta) VALUES (?,?,?)");
+								stm.setInt(1,tipo.getIdpregunta());
+								stm.setInt(2, tipo.getIdpaciente());
+								stm.setInt(3, idtitulo);
+								stm.executeUpdate();
+							}
+						
+						return true;
+					}	
+				}
+					//return true;
+				
+				
+				
+				
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

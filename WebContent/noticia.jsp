@@ -9,7 +9,7 @@
 		int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 		CDataBase dbo=new CDataBase();
 		dbo.Connect();
-		String host=dbo.getWebhost();
+		String host=CDataBase.getWebhost();
 		CNoticia info_new=dbo.getNoticiaEspecificaV(idnoticia);
 		ArrayList<CNoticia> list_news=dbo.getNoticias();
 		dbo.Close();
@@ -68,8 +68,8 @@
 					<% } %>
 			
 					<div class="news_vermas3">
-						<a id="news_mas" target="_blank"  href="http://www.facebook.com/sharer.php?u=<%=host%>/noticia.jsp?idnoticia=<%=info_new.getIdnoticia()%>"><img src="images/facebook.jpg" /></a>
-						<a id="news_mas"  target="_blank" href="http://twitter.com/home?status=Leyendo ahora: <%=host%>/noticia.jsp?idnoticia=<%=info_new.getIdnoticia()%>"><img src="images/twitter.jpg" /></a>
+						<a id="news_mas" target="_blank"  href="http://www.facebook.com/sharer.php?u=<%=host%>noticia.jsp?idnoticia=<%=info_new.getIdnoticia()%>"><img src="images/facebook.jpg" /></a>
+						<a id="news_mas"  target="_blank" href="http://twitter.com/home?status=Leyendo ahora: <%=host%>noticia.jsp?idnoticia=<%=info_new.getIdnoticia()%>"><img src="images/twitter.jpg" /></a>
 					</div>	
 			<div style="clear: both;"></div>		
 		<% }else{ 

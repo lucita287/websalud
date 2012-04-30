@@ -30,7 +30,7 @@ int year=0;
 		
 		%>
 	<div class="ui-widget-content ui-corner-all mes_calendar">
-	<div class="day_calendar ui-corner-all"><%=cal.get(cal.DAY_OF_MONTH)%></div>
+	<div class="day_calendar ui-corner-all"><%=cal.get(GregorianCalendar.DAY_OF_MONTH)%></div>
 	
 	
 	<div class="tabla">

@@ -23,7 +23,6 @@ import data.CUsuario;
 import data.CUsuarioPermiso;
 
 import framework.CDataBase;
-import framework.CValidation;
 
 /**
  * Servlet implementation class SUploadImagen
@@ -56,7 +55,6 @@ public class SUploadImagen extends HttpServlet {
 		}
 		String codificacion=request.getCharacterEncoding();
 		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
-		CValidation valid=new CValidation();
 		ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");

@@ -12,11 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-import data.CCarrera;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CMenu_Categoria;
-import data.CResponsable;
 import data.CUsuarioPermiso;
 import framework.Base64core;
 import framework.CDataExam;

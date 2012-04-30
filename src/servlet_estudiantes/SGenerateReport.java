@@ -6,7 +6,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -41,7 +40,7 @@ public class SGenerateReport extends HttpServlet {
      */
     public SGenerateReport() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
@@ -54,6 +53,7 @@ public class SGenerateReport extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -63,7 +63,7 @@ public class SGenerateReport extends HttpServlet {
 		
 		
 		
-		HttpSession session=request.getSession(false);
+		//HttpSession session=request.getSession(false);
 			response.setHeader( "Content-disposition","inline; filename=\"" + request.getParameter("report_name")+".html" + "\"" );
 			response.setContentType("text/html");
 			response.setCharacterEncoding("utf-8");
@@ -74,13 +74,15 @@ public class SGenerateReport extends HttpServlet {
 				if (!reportFile.exists())
 					throw new JRRuntimeException("El archivo "+request.getParameter("report")+".jasper no se encontro.");
 
+				
 				JasperReport jasperReport = (JasperReport)JRLoader.loadObject(reportFile.getPath());
 			
-				Map parameters = new HashMap();
+				
+				Map<String,Object> parameters = new HashMap<String,Object>();
 				String[] params;
 				params=(request.getParameter("parameters")!="") ? request.getParameter("parameters").toString().split(",") :  null;
 				if(params!=null){
-					String[] values=request.getParameter("values").toString().split("\\|");
+					//String[] values=request.getParameter("values").toString().split("\\|");
 					//for(int i=0; i<params.length;i++){
 					//	String param=params[i];
 						parameters.put("idpaciente", 1);
