@@ -13,14 +13,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JRRuntimeException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -41,7 +39,6 @@ public class SGenerateReportPDF extends HttpServlet {
      */
     public SGenerateReportPDF() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -54,9 +51,9 @@ public class SGenerateReportPDF extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unchecked")
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession(false);
+		//HttpSession session=request.getSession(false);
 			response.setHeader( "Content-Disposition", "attachment; filename=\"" + request.getParameter("report_name")+".pdf" + "\"" );
 			response.setContentType("application/pdf");
 			try{
@@ -67,12 +64,13 @@ public class SGenerateReportPDF extends HttpServlet {
 				if (!reportFile.exists())
 					throw new JRRuntimeException("El archivo "+request.getParameter("report")+".jasper no se encontro.");
 
+				
+				@SuppressWarnings("deprecation")
 				JasperReport jasperReport = (JasperReport)JRLoader.loadObject(reportFile.getPath());
 				
-				Map parameters = new HashMap();
-				String[] params;
-				params=(request.getParameter("parameters")!="") ? request.getParameter("parameters").toString().split(",") :  null;
-					String[] values=request.getParameter("values").toString().split("\\|");
+				Map<String,Object> parameters = new HashMap<String,Object>();
+				//String[] params=(request.getParameter("parameters")!="") ? request.getParameter("parameters").toString().split(",") :  null;
+					//String[] values=request.getParameter("values").toString().split("\\|");
 					parameters.put("idpaciente", 1);
 					parameters.put("SUBREPORT_DIR","./");
 				
@@ -84,7 +82,7 @@ public class SGenerateReportPDF extends HttpServlet {
 					JasperPrint jp2 =(JasperPrint) JRLoader.loadObject(r2);
 					JasperPrint jp3 =(JasperPrint) JRLoader.loadObject(r3);
 					//=JasperFillManager.fillReport(r2.getPath(), null, db.getconnection());
-					List pages = jp2 .getPages();
+					List<JRPrintPage> pages = jp2 .getPages();
 					
 					for (int j = 0; j < pages.size(); j++) {
 			            JRPrintPage object = (JRPrintPage)pages.get(j);

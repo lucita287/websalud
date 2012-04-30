@@ -9,7 +9,7 @@
 		        		date: "Por favor ingrese una fecha valida.",
 		        		dateISO: "Please enter a valid date (ISO).",
 		        		dateDE: "Bitte geben Sie ein gültiges Datum ein.",
-		        		number: "Por favor ingrese un numero validor.",
+		        		number: "Por favor ingrese un numero.",
 		        		numberDE: "Bitte geben Sie eine Nummer ein.",
 		        		digits: "Por favor ingrese solo digitos",
 		        		creditcard: "Por favor ingrese un numero de tarjeta de credito.",

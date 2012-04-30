@@ -22,7 +22,6 @@ import data.CMultimedia;
 import data.CUsuario;
 import data.CUsuarioPermiso;
 import framework.CDataBase;
-import framework.CValidation;
 
 /**
  * Servlet implementation class SUploadPDF
@@ -60,7 +59,6 @@ public class SUploadPDF extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
 		HttpSession sessiones = request.getSession(false);
-		CValidation valid=new CValidation();
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");			 
 			 if( (user_permiso.getIdpermiso().indexOf(222)>-1  ||user_permiso.getIdpermiso().indexOf(226)>-1 ||user_permiso.getIdpermiso().indexOf(232)>-1  || user_permiso.getIdusuario().getidusuario()==1)){

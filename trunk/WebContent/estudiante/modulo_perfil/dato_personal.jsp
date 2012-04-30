@@ -26,11 +26,11 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 			  $(document).ready(function () {
 				  $("#MainForm").validate({
 								rules: {
-									emer_par: {
+									emer_par_personal: {
 										min:1
 									}
 								}, messages: {
-									emer_par: {
+									emer_par_personal: {
 										min:"Seleccione un parentesco"
 									}
 								}	

@@ -10,6 +10,7 @@
     <script>
 $(function() {
 	$( ".check" ).button();
+	$("#MainForm").validate();
 });
 </script>
 	<form id="MainForm" name="MainForm" action="../SRespuesta" method="post">
@@ -19,6 +20,7 @@ $(function() {
 	</div>
 	<div class="button-sig">
 	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 
+	
 	</div>
 	<div style="clear: both;"></div>
 	
@@ -28,6 +30,12 @@ $(function() {
     int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
     int multi=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multi")));
     int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
+    
+    %>
+    <input type="hidden" name="a" value="<%=menu%>" />
+    <input type="hidden" name="auto" value="<%=auto%>" />
+    <input type="hidden" name="multi" value="<%=multi%>" />
+    <% 
     CDataExam data=new CDataExam();
     data.Connect();
     ArrayList<CCategoria> cate= data.getListaCategoriaMenu(auto,multi,menu);
@@ -39,7 +47,6 @@ $(function() {
     	
     	ArrayList<CPregunta> preg=data.getListaPreguntas(categoria,auto, multi);
     %>
-    
     <div id="dato_personal" class="ui-widget-content ui-corner-all">
 		<h3 class="ui-state-default ui-corner-all"><%= categoria.getDescripcion().toUpperCase() %></h3>
 				<div class="perfil">
@@ -65,11 +72,21 @@ $(function() {
 												while(it4.hasNext()){
 													CTitulo_Respuesta titulo=it4.next();
 													%>
-													<input type="radio" 
+													<input type="<%=(pregunta.getMultiple()==0?"radio":"checkbox")%>" value="<%= titulo.getIdtitulo_respuesta() %>"
 													id="pregunta_<%= pregunta.getIdpregunta() %>_<%= titulo.getIdtitulo_respuesta() %>"
-													name="pregunta_<%= pregunta.getIdpregunta() %>" class="check" />
+													name="pregunta_<%= pregunta.getIdpregunta() %>" class="check<%=(pregunta.getRequerida()==1)?" required":""%>" />
 													<label for="pregunta_<%= pregunta.getIdpregunta() %>_<%= titulo.getIdtitulo_respuesta() %>"><%= titulo.getDescripcion() %></label>
 											<% 	} 
+											} else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==1){
+												%><input type="text" size="10" id="pregunta_<%= pregunta.getIdpregunta() %>" name="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>" ><% 
+											} else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2 ){
+													
+													if(pregunta.getLargo()>=1 && pregunta.getLargo()<=2){%>
+													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"65")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>" >
+										  <%		}else{%>
+											  		<textarea id="pregunta_<%= pregunta.getIdpregunta() %>" rows="3" cols="50"  name="pregunta_<%= pregunta.getIdpregunta() %>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%>></textarea>
+										  			<%}
+													
 											}%>
 									</div>
 							</div>		

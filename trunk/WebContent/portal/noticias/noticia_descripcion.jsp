@@ -41,10 +41,10 @@
 					</div>
 					<% } %>
 					<div class="news_vermas2">
-					<a id="news_mas" target="_blank"  href="http://www.facebook.com/sharer.php?u=<%=host%>/noticia.jsp?idnoticia=<%=idnoticia%>"><img src="images/facebook_counter.png" /></a>
+					<a id="news_mas" target="_blank"  href="http://www.facebook.com/sharer.php?u=<%=host%>noticia.jsp?idnoticia=<%=idnoticia%>"><img src="images/facebook_counter.png" /></a>
 					</div>
 					<div class="news_vermas2">
-					<a id="news_mas"  target="_blank" href="http://twitter.com/home?status=Leyendo ahora: <%=host%>/noticia.jsp?idnoticia=<%=idnoticia%>"><img src="images/twitter_counter.png" /></a>
+					<a id="news_mas"  target="_blank" href="http://twitter.com/home?status=Leyendo ahora: <%=host%>noticia.jsp?idnoticia=<%=idnoticia%>"><img src="images/twitter_counter.png" /></a>
 					</div>
 			</div>
 		<%} } %>

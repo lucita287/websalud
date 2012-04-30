@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
-import data.CDependencia;
 import data.CMenu_Categoria;
 import data.CUsuarioPermiso;
 import framework.CDataExam;
