@@ -9,7 +9,7 @@
 		CValidation valid=new CValidation();
 		int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 		CDataBase dbo=new CDataBase();
-		String host=dbo.getWebhost();
+		String host=CDataBase.getWebhost();
 		if(dbo.Connect()){
 		CNoticia info_new=dbo.getNoticiaEspecifica(idnoticia);
 		dbo.Close();

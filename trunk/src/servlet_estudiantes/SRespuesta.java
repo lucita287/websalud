@@ -1,7 +1,6 @@
 package servlet_estudiantes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CPaciente;
+import data.CPaciente_Menu_Categoria;
 import data.CPregunta;
 import data.CPregunta_Paciente;
 import framework.CDataExam;
@@ -45,7 +45,7 @@ public class SRespuesta extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		HttpSession sessiones=request.getSession(false); 
-		PrintWriter out = response.getWriter(); 
+		//PrintWriter out = response.getWriter(); 
 		String codificacion=request.getCharacterEncoding();
 		codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 		CValidationMensaje valid=new CValidationMensaje();
@@ -83,43 +83,42 @@ public class SRespuesta extends HttpServlet {
 							ArrayList<Integer> lista=new ArrayList<Integer>();
 							if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==1){
 								int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
-								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),num,null,lista);
+								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),num,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
 								data.SafeRespuesta(preg_pac);
 							}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2){
 								String respuesta=valid.Limpiarvalor( valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())),codificacion);
-								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,respuesta,lista);
+								if(respuesta.length()>150) respuesta=respuesta.substring(0,150);
+								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,respuesta,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
 								data.SafeRespuesta(preg_pac);
 							}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()>=3){
 								if(pregunta.getMultiple()==1){
 									String[] param = request.getParameterValues("pregunta_"+pregunta.getIdpregunta());
 									 for(int i=0; i<param.length; i++){
 										 int num=valid.ConvertEntero(param[i]);
-										 if(num>0) lista.add(num);
-										 
+										 if(num>0) lista.add(num);			 
 									 }
 								}else{
 									int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
 									if(num>0) lista.add(num);
 								}
 								
-								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,null,lista);
+								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
 								data.SafeRespuesta(preg_pac);
 							}
-						}	
+						}
+						data.SafeMenu_Paciente(new CPaciente_Menu_Categoria(pac.getIdpaciente(),action,
+								auto, multi));
+						if(auto==1) response.sendRedirect("estudiante/index.jsp?portal=6");
+						else response.sendRedirect("estudiante/index.jsp?portal=5");
 					}else{
 						
 					}
-				}
+				}else response.sendRedirect("index.jsp");
 				
-				
-				//String[] whisky = request.getParameterValues("pregunta_37");
-				// for(int i=0; i<whisky.length; i++){
-				//pw.println("<br>Pregunta 37 : " + whisky[i]);
-				// }
 				
 				data.Close();
-			}	
-		}	
+			}else response.sendRedirect("index.jsp");
+		}else response.sendRedirect("index.jsp");	
 	}
 
 }
