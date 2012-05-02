@@ -3,27 +3,44 @@ package data;
 import java.util.ArrayList;
 
 public class CPregunta_Paciente {
-	int idpregunta;
-	int idpaciente;
-	Integer cantidad;
-	String respuesta;
-	ArrayList<Integer> lista;
+	private int idpregunta;
+	private int idpaciente;
+	private Integer cantidad;
+	private String respuesta;
+	private ArrayList<Integer> lista;
+	private int tipo;
 	/**
 	 * @param idpregunta
 	 * @param idpaciente
 	 * @param cantidad
 	 * @param respuesta
 	 * @param lista
+	 * @param tipo
 	 */
 	public CPregunta_Paciente(int idpregunta, int idpaciente, Integer cantidad,
-			String respuesta,ArrayList<Integer> lista) {
+			String respuesta,ArrayList<Integer> lista,int tipo) {
 		this.idpregunta = idpregunta;
 		this.idpaciente = idpaciente;
 		this.cantidad = cantidad;
 		this.respuesta = respuesta;
 		this.lista = lista;
+		this.tipo=tipo;
 	}
 	
+	/**
+	 * @return the tipo
+	 */
+	public int getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
 	/**
 	 * @return the lista
 	 */

@@ -7,7 +7,18 @@
     <%@ page import="java.util.Iterator" %>
     <%@ page import="data.CPregunta" %> 
 	<%@ page import="data.CTitulo_Respuesta" %>
+	<%@ page import="data.CPregunta_Paciente" %>
+	<%@ page import="data.CPaciente" %>
+	<%@ page import="java.util.Map" %>
     <script>
+    
+    <% 
+    HttpSession sessiones=request.getSession(false); 
+    if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
+    	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
+    		
+    %>	
+    
 $(function() {
 	$( ".check" ).button();
 	$("#MainForm").validate();
@@ -39,13 +50,14 @@ $(function() {
     CDataExam data=new CDataExam();
     data.Connect();
     ArrayList<CCategoria> cate= data.getListaCategoriaMenu(auto,multi,menu);
-    
+    Map<Integer,CPregunta_Paciente> ppaciente=data.getListaPreguntas_Paciente(menu,auto,multi, pac.getIdpaciente());
     Iterator<CCategoria> it=cate.iterator();
 
     while(it.hasNext()){
     	CCategoria categoria=it.next();	
     	
     	ArrayList<CPregunta> preg=data.getListaPreguntas(categoria,auto, multi);
+    	
     %>
     <div id="dato_personal" class="ui-widget-content ui-corner-all">
 		<h3 class="ui-state-default ui-corner-all"><%= categoria.getDescripcion().toUpperCase() %></h3>
@@ -74,17 +86,18 @@ $(function() {
 													%>
 													<input type="<%=(pregunta.getMultiple()==0?"radio":"checkbox")%>" value="<%= titulo.getIdtitulo_respuesta() %>"
 													id="pregunta_<%= pregunta.getIdpregunta() %>_<%= titulo.getIdtitulo_respuesta() %>"
+													<%= (ppaciente.containsKey(pregunta.getIdpregunta())?(ppaciente.get(pregunta.getIdpregunta()).getLista().indexOf(titulo.getIdtitulo_respuesta())>-1?"checked=\"checked\"":""):"") %>
 													name="pregunta_<%= pregunta.getIdpregunta() %>" class="check<%=(pregunta.getRequerida()==1)?" required":""%>" />
 													<label for="pregunta_<%= pregunta.getIdpregunta() %>_<%= titulo.getIdtitulo_respuesta() %>"><%= titulo.getDescripcion() %></label>
 											<% 	} 
 											} else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==1){
-												%><input type="text" size="10" id="pregunta_<%= pregunta.getIdpregunta() %>" name="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>" ><% 
+												%><input type="text" size="10" id="pregunta_<%= pregunta.getIdpregunta() %>" name="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>" value="<%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getCantidad()+"":"" %>" ><% 
 											} else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2 ){
 													
 													if(pregunta.getLargo()>=1 && pregunta.getLargo()<=2){%>
-													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"65")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>" >
+													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"65")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>"  value="<%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":"" %>">
 										  <%		}else{%>
-											  		<textarea id="pregunta_<%= pregunta.getIdpregunta() %>" rows="3" cols="50"  name="pregunta_<%= pregunta.getIdpregunta() %>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%>></textarea>
+											  		<textarea id="pregunta_<%= pregunta.getIdpregunta() %>" rows="3" cols="50"  name="pregunta_<%= pregunta.getIdpregunta() %>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%>><%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":""%></textarea>
 										  			<%}
 													
 											}%>
@@ -100,7 +113,7 @@ $(function() {
 				<div style="clear: both;"></div>			
 	</div>
 <%  } 
-data.Close();
+data.Close(); }
 %>
 	</form>
     
