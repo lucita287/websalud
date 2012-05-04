@@ -2040,7 +2040,7 @@ public class CDataExam extends CDataBase {
 		ArrayList<CMenu_Categoria> list=new ArrayList<CMenu_Categoria>();
 		try{
 
-			String sql="SELECT  distinct mc.idmenu_categoria, mc.nombre FROM menu_categoria mc inner join categoria c on mc.idmenu_categoria=c.idmenu_categoria where c.autoevaluacion=? or c.multifasico=?";
+			String sql="SELECT  distinct mc.idmenu_categoria, mc.nombre FROM menu_categoria mc inner join categoria c on mc.idmenu_categoria=c.idmenu_categoria where c.autoevaluacion=? or c.multifasico=? order by c.orden";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1, auto);
 			stm.setInt(2, multi);

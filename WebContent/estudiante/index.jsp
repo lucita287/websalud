@@ -50,6 +50,8 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 <jsp:include page="modulo_perfil/auto_eva.jsp" />
 <% }else if(portal==9){ %>
 <jsp:include page="modulo_perfil/examen_categoria.jsp" />
+<% }else if(portal==7){ %>
+<jsp:include page="modulo_perfil/report.jsp" />
 <% } %>
 </div>
 </div>

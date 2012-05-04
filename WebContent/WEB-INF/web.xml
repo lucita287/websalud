@@ -47,9 +47,8 @@
     <servlet-name>SRimage</servlet-name>
     <url-pattern>/SRimage</url-pattern>
   </servlet-mapping>
-    <error-page>
+  <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/jsp/404.jsp</location>
   </error-page>
-  
 </web-app>

@@ -15,7 +15,7 @@
     <% 
     CDataExam dbo=new CDataExam();
     dbo.Connect();
-    ArrayList<CMenu_Categoria> lista=dbo.getListaMenu_Categoria(1,0);
+    ArrayList<CMenu_Categoria> lista=dbo.getListaMenu_Categoria(0,1);
     ArrayList<Integer> lista_menu=dbo.ListaMenu_Categoria_Multi(pac.getIdpaciente() );
     dbo.Close();
     Iterator<CMenu_Categoria> it=lista.iterator();
