@@ -91,19 +91,21 @@ public class SRespuesta extends HttpServlet {
 								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,respuesta,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
 								data.SafeRespuesta(preg_pac);
 							}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()>=3){
-								if(pregunta.getMultiple()==1){
-									String[] param = request.getParameterValues("pregunta_"+pregunta.getIdpregunta());
-									 for(int i=0; i<param.length; i++){
-										 int num=valid.ConvertEntero(param[i]);
-										 if(num>0) lista.add(num);			 
-									 }
-								}else{
-									int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
-									if(num>0) lista.add(num);
+								if(request.getParameter("pregunta_"+pregunta.getIdpregunta())!=null){
+									if(pregunta.getMultiple()==1){
+										String[] param = request.getParameterValues("pregunta_"+pregunta.getIdpregunta());
+										 for(int i=0; i<param.length; i++){
+											 int num=valid.ConvertEntero(param[i]);
+											 if(num>0) lista.add(num);			 
+										 }
+									}else{
+										int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
+										if(num>0) lista.add(num);
+									}
+									
+									CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
+									data.SafeRespuesta(preg_pac);
 								}
-								
-								CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
-								data.SafeRespuesta(preg_pac);
 							}
 						}
 						data.SafeMenu_Paciente(new CPaciente_Menu_Categoria(pac.getIdpaciente(),action,
