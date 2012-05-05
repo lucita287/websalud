@@ -43,11 +43,13 @@ public class SLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		CValidation valid=new CValidation();
 		CDataExam dbo=new CDataExam();
-		 if(dbo.Connect()){
+		String user=valid.ValidarRequest(request.getParameter("user").toLowerCase()).trim(); 
+		if(dbo.Connect() && !user.isEmpty()){
 		 response.setContentType("text/html;charset=UTF-8"); 
-		 CValidation valid=new CValidation();
-		 String user=valid.ValidarRequest(request.getParameter("user").toLowerCase());
+		 
+		 
 		 String pass=valid.ValidarRequest(request.getParameter("pass"));
 		 String perfil=valid.ValidarRequest(request.getParameter("perfil"));
 		 if(perfil.equalsIgnoreCase("2")){

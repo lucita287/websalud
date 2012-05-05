@@ -82,6 +82,7 @@ public class CDataBase {
 		
 	}
 	public CUsuario getUsuario(String user){
+		
 		CUsuario temp=null;
 		try{    
         	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT idusuario, nombre, apellido, nick, password, telefono, email,  estado, ifnull(no_personal,'') no_personal FROM usuario where nick=? ");
