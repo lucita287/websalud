@@ -95,7 +95,7 @@ public class SUploadImagen extends HttpServlet {
 													int id=dbo.getMultimediaTotal();
 													name=file2.getName();
 													name=name.toLowerCase();
-													String name2=id+"myimagen"+((name.endsWith(".png"))?".png":((name.endsWith(".gif"))?".gif":((name.endsWith(".jpg"))?".jpg":"")));
+													String name2=id+"usalud"+((name.endsWith(".png"))?".png":((name.endsWith(".gif"))?".gif":((name.endsWith(".jpg"))?".jpg":"")));
 													if(name.endsWith(".png")||name.endsWith(".gif")||name.endsWith(".jpg")){
 															CMultimedia imagen=new CMultimedia(0, repositorio+name2,repositorio_relativo+ name2,item.getSize(),1,usuario);						
 															File file = new File(imagen.getdireccion());
