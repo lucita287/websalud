@@ -184,3 +184,71 @@ BEGIN
     RETURN 1;
 END
 $$
+DELIMITER $$
+DROP FUNCTION IF EXISTS `Rango_cintas`$$
+CREATE FUNCTION Rango_cintas(fecha_inicio DATETIME,fecha_fin DATETIME,hora_inicio DATETIME, cupo INT, examen INT, estado INT, lunes INT,martes INT,miercoles INT,jueves INT, viernes INT, sabado INT,domingo INT) RETURNS int
+    DETERMINISTIC
+BEGIN
+    DECLARE mydate DATETIME;
+    DECLARE mday int;
+    SET mday=0;
+    SET mydate = fecha_inicio;
+    SET fecha_fin = date_add(fecha_fin, INTERVAL 1 DAY);
+    IF fecha_inicio<=fecha_fin  then
+        WHILE mydate < fecha_fin DO
+            
+            if (lunes=1 and DAYOFWEEK(mydate)=2) then
+                
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            if (martes=1 and DAYOFWEEK(mydate)=3) then
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            if (miercoles=1 and DAYOFWEEK(mydate)=4) then
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            if (jueves=1 and DAYOFWEEK(mydate)=5) then
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            if (viernes=1 and DAYOFWEEK(mydate)=6) then
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            if (sabado=1 and DAYOFWEEK(mydate)=7) then
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            if (domingo=1 and DAYOFWEEK(mydate)=1) then
+                SET mday=mday+InsertarCita(mydate,hora_inicio,cupo,estado , examen );
+            end if;
+            SET mydate = date_add(mydate, INTERVAL 1 DAY);
+        END WHILE;
+    end if;
+       
+    RETURN mday;
+END
+$$
+DELIMITER $$
+DROP FUNCTION IF EXISTS `InsertarCita`$$
+CREATE FUNCTION `InsertarCita`(pfecha datetime,phora datetime,pcupo INT,pestado INT, pexamen INT ) RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+   DECLARE idday int DEFAULT 0;
+   select ifnull(max(idcita),0) into idday from cita where fecha=pfecha and hora=phora and tipo_examen=pexamen ;
+
+if idday=0 then
+    INSERT INTO cita
+  (estado, 
+  tipo_examen, 
+  cupo, 
+  fecha, 
+  hora) 
+VALUES 
+  (pestado, 
+  pexamen, 
+  pcupo,
+  pfecha, 
+  phora);
+
+end if;
+    RETURN 1;
+END
+$$

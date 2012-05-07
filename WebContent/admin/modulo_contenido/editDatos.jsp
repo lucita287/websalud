@@ -57,7 +57,8 @@
 										             	'a=guardaredit',
 											            'titulo='+Base64.encode(titulo),
 											            'contenido='+Base64.encode(descripcion),
-											            'size='+$('#edit-tam').val()
+											            'size='+$('#edit-tam').val(),
+											            'estado='+$('#edit-estado').val()
 											        ].join('&');	  
 										  $.ajax({
 										        url: "../SMenu",
@@ -96,6 +97,7 @@
 											$('#edit-submenu').text(result.submenu);
 								        	$('#edit-titulo').val(result.descripcion);
 								        	$('#edit-tam').val(result.size);
+								        	$('#edit-estado').val(result.estado);
 								        	$("#editconte").cleditor()[0].execCommand("inserthtml",result.contenido,null,null);
 											$("#editconte").cleditor()[0].focus();
 											
@@ -130,6 +132,7 @@
 															$('#edit-submenu').text('');
 												        	$('#edit-titulo').val('');
 												        	$('#edit-id').text('');
+												        	$('#edit-estado').text(1);
 												        	LimpiarImagenes();
 											  	  		}	
 											        }});
@@ -172,6 +175,15 @@
 																			<option value="2">Mediano</option>
 																			<option value="1">Peque&ntilde;o</option>
 																			<option value="0">Sin Texto</option>
+																			</select>
+															</div>
+														</div>
+														<div class="fila">
+															<div class="col_titulo">Estado</div>
+															<div class="col">
+																			<select id="edit-estado"> 
+																			<option value="1">HABILITADO</option>
+																			<option value="0">DESHABILITADO</option>
 																			</select>
 															</div>
 														</div>

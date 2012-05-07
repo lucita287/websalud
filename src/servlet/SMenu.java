@@ -66,7 +66,7 @@ public class SMenu extends HttpServlet {
 								 if(temp_menu!=null){
 									 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\",idarea:\""+temp_menu.getareaidarea().getidarea()+"\",areanombre:\""+
 										 temp_menu.getareaidarea().getnombre()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
-										 +"size:\""+temp_menu.getsize()+"\",contenido:\""+temp_menu.getcontenido()+" \"}";
+										 +"size:\""+temp_menu.getsize()+"\",contenido:\""+temp_menu.getcontenido()+" \",estado:\""+temp_menu.getEstado()+" \"}";
 								 }
 								 response.setContentType("text/html;charset="+codificacion);
 									out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
@@ -82,6 +82,7 @@ public class SMenu extends HttpServlet {
 								int idmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
 								
 								int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
+								int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 								String titulo=valid.ValidarRequest(request.getParameter("titulo"));
 								titulo=base64.decodificar(titulo);
 								titulo=valid.Limpiarvalor(titulo,codificacion);
@@ -98,6 +99,7 @@ public class SMenu extends HttpServlet {
 												if((temp_menu.getidmenu_rec()==null && temp_menu.getdescripcion().trim().equalsIgnoreCase(titulo))||temp_menu.getidmenu_rec()!=null){
 													temp_menu.setcontenido(contenido);
 													temp_menu.setdescripcion(titulo);
+													temp_menu.setEstado(estado);
 													temp_menu.setsize(size);
 													boolean b=dbo.UpdateMenu(temp_menu);
 													if(b)result="{\"resultado\":\"OK\",\"mensaje\":\"ACTUALIZACI&Oacute;N\"}";
@@ -133,6 +135,7 @@ public class SMenu extends HttpServlet {
 									int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 									int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("area")));
 									int idsubmenu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("submenu")));
+									int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 									String validacion=valid.ValidarCampoVacio(titulo, "titulo");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
@@ -144,7 +147,7 @@ public class SMenu extends HttpServlet {
 											
 											CMenu menu=dbo.getMenuEspecifico(idsubmenu);
 											CArea area=dbo.getCAreaEspecifico(idarea);
-											CMenu newmenu=new CMenu(0,titulo,area,contenido,size,menu);
+											CMenu newmenu=new CMenu(0,titulo,area,contenido,size,menu,estado);
 											boolean b=dbo.SafeMenu(newmenu);
 											if(b)result="{\"resultado\":\"OK\",\"mensaje\":\"ACTUALIZACI&Oacute;N\"}";
 											else result="{\"resultado\":\"ERROR\",\"mensaje\":\"PROBLEMA AL GUARDAR\"}";
