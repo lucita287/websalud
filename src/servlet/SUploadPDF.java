@@ -88,7 +88,7 @@ public class SUploadPDF extends HttpServlet {
 								int id=dbo.getMultimediaTotal();
 								name=file2.getName();
 								name=name.toLowerCase();
-								String name2=id+"mypdf.pdf";
+								String name2=id+"usalud.pdf";
 								if(name.endsWith(".pdf")){
 										CMultimedia imagen=new CMultimedia(0, repositorio+name2,repositorio_relativo+ name2,item.getSize(),2,usuario);						
 										File file = new File(imagen.getdireccion());
