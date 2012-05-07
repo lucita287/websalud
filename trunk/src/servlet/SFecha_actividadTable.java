@@ -55,21 +55,14 @@ public class SFecha_actividadTable extends HttpServlet {
 						CDataBase dbo=new CDataBase();
 						 dbo.Connect();
 						 CValidation valid=new CValidation();
-						 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
-						 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
 						 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
 						 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
-						 String fecha_inicio=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_ini")),codificacion);
-						 String fecha_fin=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("f_fin")),codificacion);
-						 
-						 fecha_inicio=(fecha_inicio.trim().compareTo("")==0)?fecha_fin:fecha_inicio;
-						 fecha_fin=(fecha_fin.trim().compareTo("")==0)?fecha_inicio:fecha_fin;
+						 int mes = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("mes")));
+						 int anio = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("anio")));
 						 int idactividad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idactividad")));
 						
 						 						
 												 
-												 int min=((page-1)*rp)+1;
-												 int max=page*(rp);
 												 int ordenar=1;
 												 
 												 if(order.equalsIgnoreCase("idfecha_actividad")){
@@ -87,23 +80,11 @@ public class SFecha_actividadTable extends HttpServlet {
 													 asc=1;
 												 }
 												 
-												 ArrayList<CDetalleActividad> list=new ArrayList<CDetalleActividad>();
-												 int maximo=0;
-												 if(fecha_inicio.compareTo("")==0){
-													 maximo=dbo.getDetalleActividadTotal(idactividad);
-													 list=dbo.getListaDetalleActividad(idactividad,ordenar,asc,min,max);
+												 ArrayList<CDetalleActividad> list=dbo.getListaDetalleActividad(idactividad,ordenar,asc,mes,anio);
+												 int maximo=list.size();
 												 
-												 }else{
-													 
-													 java.util.Date fecha1=valid.CambiarFormatoNull(fecha_inicio);
-													 java.util.Date fecha2=valid.CambiarFormatoNull(fecha_fin);
-													 if(fecha1!=null && fecha2!=null){
-														 list=dbo.getListaDetalleActividad(idactividad,ordenar,asc,min,max,fecha1,fecha2);
-														 maximo=dbo.getDetalleActividadTotal(idactividad,fecha1,fecha2);
-													 }
-												 }
 												 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-												 info+="<rows><page>"+page+"</page><total>"+maximo+"</total>";
+												 info+="<rows><total>"+maximo+"</total>";
 												 
 												 String data="";
 												 for(int i=0; i<list.size();i++){

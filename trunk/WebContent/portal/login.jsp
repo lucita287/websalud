@@ -9,15 +9,15 @@
 										<h3 class="ui-widget-header ui-corner-all">Ingreso</h3>
 										<br/>
 										
-												<% if(request.getParameter("e")!=null && request.getParameter("e").toString().compareTo("1")==0){ %>
-										 		<span class="error_label">Error en el usuario y/o password</span>
+												<% if(request.getParameter("e")!=null){ %>
+										 		<span class="error_label"><%=request.getParameter("e") %></span>
 										 		<br/>
 										 <% } %>
 										
 											<table>
 												<tr>	
 													<td>Usuario</td>
-													<td><input id="user" name="user" autocomplete="off" type="text" value="" size="13"/></td>
+													<td><input id="user" name="user" type="text" value="" size="13"/></td>
 												</tr>
 												<tr>	
 													<td>Contraseña</td>
@@ -39,9 +39,11 @@
 										</div>	
 										<hr/>
 										 <div id="button-login">
-										<br/> <a href="registrarse.jsp?a=get_pass">¿Olvid&oacute; su contraseña?</a>
+										
+										<br/> <a href="http://rye.usac.edu.gt/">¿Olvid&oacute; su contraseña?</a>
  										<br/> <a href="registrarse.jsp?a=registrarse">Obtener Usuario</a> 
 										</div>
+										<br/> Ingresar a este sitio por medio de su carnet y pin generado en el Departamento de Registro y Estadística
 									</div>
 								</div>
 		</div>

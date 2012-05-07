@@ -1,8 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="data.CUsuarioPermiso" %>    
+<%@ page import="data.CUsuarioPermiso" %>  
+<%@ page import="java.util.ArrayList" %>
+<%@page import="framework.CDataBase" %>
+<%@page import="java.util.ArrayList"%>    
+<%@page import="java.util.Iterator"%>
 <%
 HttpSession sessiones = request.getSession(false);
+java.util.GregorianCalendar calendar=new java.util.GregorianCalendar();	
+int month=calendar.get(java.util.GregorianCalendar.MONTH);
+int year=calendar.get(java.util.GregorianCalendar.YEAR);
+CDataBase dbo=new CDataBase();
+if(dbo.Connect()){
+ArrayList<Integer> lista=dbo.listaAnioDetalleActividad();
 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 	
 	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
@@ -38,16 +48,14 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						],
 						<%}%>
 						showTableToggleBtn: true,
-					    usepager: true,
 					    sortname: "idfecha_actividad",
 						sortorder: "desc",
 					    title: 'ACTIVIDADES FECHAS',
 					    useRp: true,
-					    rp: 15,
 					    width: 600,
 					    height: 200,
 						params : [ 
-						          {name: 'idactividad', value: 0},{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} 
+						          {name: 'idactividad', value: 0},{name: 'mes', value: $("#mes").val()},{name: 'anio', value: $("#anio").val()} 
 						        ]
 					});
 			  });  
@@ -118,13 +126,29 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  $("#r_fecha_fin").val("");
 				  $("#r_hora_inicio").val("");
 				  $("#r_hora_fin").val("");
-				  $("#fe_ini_buscar").val("");
-				  $("#fe_fin_buscar").val("");
 				  $(".semana").attr('checked', false);
 				  BuscarFecha();
 				  $('#fecha_actividad').flexReload();
 				  
 			  }
+			  function RecargarAnios(){
+				  cadena = [ 'a=show_list',].join('&');
+					 
+					 $.ajax({
+					        url: "../SFecha_actividad",
+					        data: cadena,
+					  	    type: 'post',
+					  	  	success: function(data){
+					        	result=eval("("+data+")");
+					        	var array=result.rows;
+					        	$('#anio').empty();
+					        	for (var x = 0 ; x < array.length ; x++) {
+						        	$('#anio').append('<option value="'+array[x].value+'" >'+array[x].value+'</option>');
+					        	}
+					        }
+					    });
+			  }
+			  
 			  function EliminarFecha(com, grid){
 				  if(com=="Eliminar"){
 						  	var array_values = [];
@@ -170,7 +194,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  }		  
 			  }
 			  function BuscarFecha(){
-				  $('#fecha_actividad').flexOptions({params : [{name: 'idactividad', value: idactividad}, {name: 'f_ini', value: $("#fe_ini_buscar").val()},{name: 'f_fin', value: $("#fe_fin_buscar").val()} ]});
+				  $('#fecha_actividad').flexOptions({params : [{name: 'idactividad', value: idactividad},{name: 'mes', value: $("#mes").val()},{name: 'anio', value: $("#anio").val()} ]});
 				  $('#fecha_actividad').flexReload();
 			  }
 			</script>
@@ -257,11 +281,36 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div style="clear: both;"></div>
 						</div>
 						
-						Fecha Inicio: <input  type="text" id="fe_ini_buscar" size="10" class="datepicker"/> Fecha Fin: <input type="text" id="fe_fin_buscar" size="10" class="datepicker"/> 
-			<button class="buscar" onclick="BuscarFecha()">Buscar</button>
+		Mes: <select id="mes" onchange="BuscarFecha()">
+					<option value="1" <%= (month==0)?"selected":"" %>>Enero</option>
+					<option value="2" <%= (month==1)?"selected":"" %> >Febrero</option>
+					<option value="3" <%= (month==2)?"selected":"" %> >Marzo</option>
+					<option value="4" <%= (month==3)?"selected":"" %> >Abril</option>
+					<option value="5" <%= (month==4)?"selected":"" %> >Mayo</option>
+					<option value="6" <%= (month==5)?"selected":"" %> >Junio</option>
+					<option value="7" <%= (month==6)?"selected":"" %> >Julio</option>
+					<option value="8" <%= (month==7)?"selected":"" %> >Agosto</option>
+					<option value="9" <%= (month==8)?"selected":"" %> >Septiembre</option>
+					<option value="10" <%= (month==9)?"selected":"" %> >Octubre</option>
+					<option value="11" <%= (month==10)?"selected":"" %> >Noviembre</option>
+					<option value="12" <%= (month==11)?"selected":"" %> >Diciembre</option>
+				</select>	
+			A&ntilde;o: <select id="anio" onchange="BuscarFecha()">
+					<% 
+					Iterator<Integer> it=lista.iterator();
+					while(it.hasNext()){
+						Integer num=it.next();
+					%>
+						<option value="<%=num %>" <%= (year==num)?"selected":"" %>><%=num %></option>
+					<% } %>
+					
+				</select>
+				
 			<div class="fecha_tabla">
 			
 			<table id="fecha_actividad" style="display:none"></table>
 			</div>			
 		<%} %>							
-<%	}	} %>					
+<%	}	} 
+
+	}%>					

@@ -160,7 +160,18 @@ public class SFecha_actividad extends HttpServlet {
 											result=validacion;
 										}
 									 out.println(result); 
-								 }
+								 }else if(action.equalsIgnoreCase("show_list")){
+										ArrayList<Integer> list_edi=dbo.listaAnioDetalleActividad();
+										String result="{total:"+list_edi.size()+",rows:[";
+										String data="";
+										for(int j=0; j<list_edi.size();j++){ 
+											Integer edi=list_edi.get(j);
+											data+=(data.compareTo("")==0)?"":",";
+											data+="{value:"+edi+"}";
+										}
+										result+=data+"]}";
+										out.println(result);
+									}
 								dbo.Close();
 		 }
 	}
