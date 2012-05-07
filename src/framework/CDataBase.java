@@ -522,7 +522,7 @@ public class CDataBase {
 		int temp=0;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(idmultimedia),0) cant  FROM multimedia");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(idmultimedia),0)+1 cant  FROM multimedia");
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
 			temp=rs2.getInt("cant");
