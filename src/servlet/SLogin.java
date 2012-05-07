@@ -18,6 +18,7 @@ import data.CUsuarioPermiso;
 
 import framework.CDataExam;
 import framework.CValidation;
+import framework.CWebService;
 /**
  * Servlet implementation class SLogin
  */
@@ -72,23 +73,52 @@ public class SLogin extends HttpServlet {
 					response.sendRedirect("admin/index.jsp");
 					
 			 }else{
-				 response.sendRedirect("index.jsp?e=1");
+				 response.sendRedirect("index.jsp?e=Error en el usuario y/o password");
 			 }
 		 }else{
 			 
 			 HttpSession session = request.getSession(true);
-			 CPaciente pac= dbo.getEstudianteEspecifica(user, pass);
-			 if(pac!=null){
+			 CWebService servicio=new CWebService();
+			 int status=servicio.VerificarPin(user, pass);
+			 
+			 
+			 switch(status) { // Eleige la opcion acorde al numero de mes
+			 case 1:
+				 CPaciente pac= dbo.getEstudianteEspecifica(user);
 				 session.setAttribute("estudiante", user);
-				 session.setAttribute("examen",1);
-				 session.setAttribute("paciente",pac);
-				 response.sendRedirect("estudiante/index.jsp?portal=1");
+				 session.setAttribute("pin", pass);
 				 
-			 }else
-			 response.sendRedirect("index.jsp?e=1");
+				 if(pac!=null){
+					 session.setAttribute("paciente",pac);
+					 session.setAttribute("examen",1);
+					 response.sendRedirect("estudiante/index.jsp?portal=1");
+				 }else{
+					 response.sendRedirect("registro_estudiante.jsp");
+				 }
+				 break;	
+			 case 2:
+				 response.sendRedirect("index.jsp?e=Estudiante no inscrito");
+				 break;
+			 case 3:
+				 response.sendRedirect("index.jsp?e=Usuario no registrado");
+				 break;
+			 default:
+				 response.sendRedirect("index.jsp?e=Error en la conexion con registro y estadistica");
+				 break;
+			 	 
+			 }
+			 //CPaciente pac= dbo.getEstudianteEspecifica(user, pass);
+			 //if(pac!=null){
+			 //	 session.setAttribute("estudiante", user);
+			 //	 session.setAttribute("examen",1);
+			 //	 session.setAttribute("paciente",pac);
+			 //	 response.sendRedirect("estudiante/index.jsp?portal=1");
+				 
+			 // }else
+			 //response.sendRedirect("index.jsp?e=1");
 		 }
 		 dbo.Close();
-		 }
+		 }else response.sendRedirect("index.jsp?e=Campos vacios");
 	}
 
 }

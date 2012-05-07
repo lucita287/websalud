@@ -1913,16 +1913,16 @@ public int getResponsableTotal(int type,String busqueda){
 		
 		return temp;
 	}
-	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad,int ordenar,int asc,int min,int max){
+	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad,int ordenar,int asc,int mes,int anio){
 		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
 		try{
-			String sql="select * from (SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, @rownum:=@rownum+1 rownum "+
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, @rownum:=@rownum+1 rownum "+
 			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad,(SELECT @rownum:=0) ro "+
-			" where idactividad=?) table1 where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") ;
+			" where idactividad=? and month(fecha)=? and year(fecha)=? order by ? "+((asc==1)?"ASC":"DESC") ;
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idactividad);
-			stm.setInt(2,min);
-			stm.setInt(3,max);
+			stm.setInt(2,mes);
+			stm.setInt(3,anio);
 			stm.setInt(4,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
@@ -1934,7 +1934,7 @@ public int getResponsableTotal(int type,String busqueda){
 			rs.close();
 			stm.close();
 		}catch(Throwable e){
-			
+			e.printStackTrace();
 			 CLogger.write("77", this, e);
 		}
 		return ret;
@@ -1960,68 +1960,23 @@ public int getResponsableTotal(int type,String busqueda){
 		}
 		return ret;
 	}
-	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad,int ordenar,int asc,int min,int max,java.util.Date fecha_inicio, java.util.Date fecha_fin){
-		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
-		try{
-			String sql="select * from (SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, @rownum:=@rownum+1 rownum "+
-			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad,(SELECT @rownum:=0) ro "+
-			" where idactividad=? and fecha>=? and fecha<=?) table1 where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") ;
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-			stm.setInt(1,idactividad);
-			stm.setDate(2,new java.sql.Date(fecha_inicio.getTime()));
-			stm.setDate(3,new java.sql.Date(fecha_fin.getTime()));
-			stm.setInt(4,min);
-			stm.setInt(5,max);
-			stm.setInt(6,ordenar);
-			ResultSet rs=stm.executeQuery();
-			while(rs.next()){
-				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"");
-				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
-				ret.add(dacti);
-				
-			}
-			rs.close();
-			stm.close();
+	public ArrayList<Integer> listaAnioDetalleActividad(){
+		ArrayList<Integer> list=new ArrayList<Integer>();
+		try{    
+        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement("select distinct (year(fecha)) anio from detalleactividad ");
+        	    ResultSet rs=stm.executeQuery();
+                while(rs.next()){                							
+                                list.add(rs.getInt("anio")); 
+                }
+                rs.close();
+                stm.close();
 		}catch(Throwable e){
-			
-			 CLogger.write("79", this, e);
+			CLogger.write("78a", this, e);
 		}
-		return ret;
+		return list;
 	}
-	public int getDetalleActividadTotal(int idactividad){
-		int temp=0;
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(da.iddetalleactividad),0) cant FROM detalleactividad da  where da.actividadidactividad=?");
-			stm.setInt(1,idactividad);
-			ResultSet rs2=stm.executeQuery();
-			if(rs2.next())
-			temp=rs2.getInt("cant");
-		}catch(Throwable e){
-			
-			 CLogger.write("80", this, e);
-		}
-		
-		return temp;
-	}
-	public int getDetalleActividadTotal(int idactividad,java.util.Date fecha_inicio, java.util.Date fecha_fin){
-		int temp=0;
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT ifnull(count(da.iddetalleactividad),0) cant FROM detalleactividad da  where da.actividadidactividad=? and fecha>=? and fecha<=?");
-			stm.setInt(1,idactividad);
-			stm.setDate(2,new java.sql.Date(fecha_inicio.getTime()));
-			stm.setDate(3,new java.sql.Date(fecha_fin.getTime()));
-			ResultSet rs2=stm.executeQuery();
-			if(rs2.next())
-			temp=rs2.getInt("cant");
-		}catch(Throwable e){
-			
-			 CLogger.write("81", this, e);
-		}
-		
-		return temp;
-	}
+
+	
 	public int SafeActividadDetalle(int idactividad,java.util.Date fecha, java.util.Date horaInicio, java.util.Date horaFin){
 		int temp=0;
 		PreparedStatement stm;

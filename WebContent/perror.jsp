@@ -5,7 +5,7 @@
 <head>
 <%String area=request.getParameter("idarea");%>
 <title>Unidad de Salud / USAC</title>
-<jsp:include page="../../portal/top.jsp" />
+<jsp:include page="portal/top_404.jsp" />
 <meta name=description content="Divisi&oacute;n de Bienestar EstudiantiL, USAC. Dentro de las actividades de servicio, se encuentra la realizaci&oacute;n del examen obligatorio de salud a todos los estudiantes de primer ingreso." />
 </head>
 
@@ -14,7 +14,7 @@
 <div id="content">
 
 <div class="top">
-<jsp:include page="../../portal/titulo.jsp">
+<jsp:include page="portal/titulo_404.jsp">
 <jsp:param name="titulo" value="PAGINA NO ENCONTRADA" />	
 </jsp:include>
 </div>

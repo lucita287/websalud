@@ -1717,7 +1717,7 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
-	public CPaciente getEstudianteEspecifica(String usuario,String password){
+	public CPaciente getEstudianteEspecifica(String usuario){
 		CPaciente news=null;
 		try{
 			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.carreraidcarrera,0) idcarrera, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.centro_regionalidcentro_regional,0) idcentro_regional, ifnull(p.unidad_academicaidunidad_academica,0) idunidad_academica, ifnull(p.titulo_secundaria,'') titulo_secundaria, ifnull(p.dependenciaiddependencia,0) iddependencia, p.usuario, ifnull(p.parentesco_ced,0) idparentesco, p.ced, sexo, "+
@@ -1727,10 +1727,9 @@ public class CDataExam extends CDataBase {
 		" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
 		" ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(no_personal,0) no_personal "+
 		" FROM paciente p "+
-		" where  usuario=? and password=? ";
+		" where  usuario=?  ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setString(1,usuario.toLowerCase());
-			stm.setString(2, password);
 			
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){

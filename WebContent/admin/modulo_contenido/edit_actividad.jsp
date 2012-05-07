@@ -125,9 +125,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    });
 			  }
 			  function editaractividad(id){
-				  $("#fe_ini_buscar").val("");
-				  $("#fe_fin_buscar").val("");	
-				  $('#fecha_actividad').flexOptions({ params : [{name: 'idactividad', value: id},{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} ]});
+				  $('#fecha_actividad').flexOptions({params : [{name: 'idactividad', value: id},{name: 'mes', value: $("#mes").val()},{name: 'anio', value: $("#anio").val()} ]});
 				  $('#fecha_actividad').flexReload();
 				  $("#descripcion_actividad").cleditor()[0].clear();
 				  $("#respon_actividad").attr('selectedIndex', '-1').children("option:selected").removeAttr("selected");
@@ -212,7 +210,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  $("#area_actividad").val(1);
 				  $("#respon_actividad").attr('selectedIndex', '-1').children("option:selected").removeAttr("selected");
 				  idactividad=0;
-				  $('#fecha_actividad').flexOptions({ params : [{name: 'idactividad', value: idactividad},{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} ]});
+				  $('#fecha_actividad').flexOptions({params : [{name: 'idactividad', value: id},{name: 'mes', value: $("#mes").val()},{name: 'anio', value: $("#anio").val()} ]});
 				  $('#fecha_actividad').flexReload();
 				  $("#id_actividad_f").text("NEW");
 				  $("#titulo_actividad_f").text("SELECCIONE UNA ACTIVIDAD");
