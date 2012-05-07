@@ -167,14 +167,14 @@ public class CDataBase {
 		CMenu temp_menu=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion,ifnull(m.areaidarea,0) areaidarea,m.contenido, ifnull(m.idmenu_rec,0) idmenu_rec, m.size, a.nombre area_nombre FROM menu m inner join area a on a.idarea=m.areaidarea where  idmenu=? ");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion,ifnull(m.areaidarea,0) areaidarea,m.contenido, ifnull(m.idmenu_rec,0) idmenu_rec, m.size, a.nombre area_nombre, m.estado estado_menu FROM menu m inner join area a on a.idarea=m.areaidarea where  idmenu=? ");
 			stm.setInt(1, idmenu);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
 				CArea temp_c=new CArea(rs2.getInt("areaidarea"),rs2.getString("area_nombre"),"", 0,null,null,"");
 						//this.getCAreaEspecifico(rs2.getInt("areaidarea"));
 				CMenu temp_menu1=(rs2.getInt("idmenu")!=0)?getMenuEspecifico(rs2.getInt("idmenu_rec")):null;
-				temp_menu=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),temp_c,rs2.getString("contenido"),rs2.getInt("size"),temp_menu1);
+				temp_menu=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),temp_c,rs2.getString("contenido"),rs2.getInt("size"),temp_menu1,rs2.getInt("estado_menu"));
 			}
 		}catch(Throwable e){
 			
@@ -212,13 +212,13 @@ public class CDataBase {
 	public ArrayList<CMenu> getMenu(int area){
 		ArrayList<CMenu> ret=new ArrayList<CMenu>();
 		try{
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion, m.areaidarea ,m.contenido,m.size , a.nombre area_nombre  FROM menu m inner join area a  on a.idarea=m.areaidarea  where m.areaidarea=? and  idmenu_rec is null ");
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion, m.areaidarea ,m.contenido,m.size , a.nombre area_nombre,m.estado estado_menu  FROM menu m inner join area a  on a.idarea=m.areaidarea  where m.areaidarea=? and  idmenu_rec is null and m.estado=1 ");
 			stm.setInt(1, area);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CMenu temp_menu=null;
 				
-				PreparedStatement stm2=(PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion,m.areaidarea,m.contenido,m.size, m.idmenu_rec, a.nombre area_nombre FROM menu m inner join area a on a.idarea=m.areaidarea where  idmenu_rec=? ");
+				PreparedStatement stm2=(PreparedStatement)conn.prepareStatement("SELECT m.idmenu,m.descripcion,m.areaidarea,m.contenido,m.size, m.idmenu_rec, a.nombre area_nombre,m.estado estado_menu  FROM menu m inner join area a on a.idarea=m.areaidarea where  idmenu_rec=?  and m.estado=1 ");
 				stm2.setInt(1, rs.getInt("idmenu"));
 				ResultSet rs2=stm2.executeQuery();
 				ArrayList<CMenu> temp_list=new ArrayList<CMenu>();
@@ -227,12 +227,12 @@ public class CDataBase {
 							//this.getCAreaEspecifico(rs2.getInt("areaidarea"));
 					CMenu temp_menu1=null;
 					CMenu temp_menu2=null;
-					temp_menu1=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),temp_c,rs2.getString("contenido"),rs2.getInt("size"),temp_menu2);
+					temp_menu1=new CMenu( rs2.getInt("idmenu"),rs2.getString("descripcion"),temp_c,rs2.getString("contenido"),rs2.getInt("size"),temp_menu2,rs2.getInt("estado_menu"));
 					temp_list.add(temp_menu1);
 				}
 				//CArea temp_c1=this.getCAreaEspecifico(rs.getInt("areaidarea"));
 				CArea temp_c1=new CArea( rs.getInt("areaidarea"),rs.getString("area_nombre"),"",0,null,null,"");
-				temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c1,rs.getString("contenido"),rs.getInt("size"),temp_list);
+				temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c1,rs.getString("contenido"),rs.getInt("size"),temp_list,rs.getInt("estado_menu"));
 				ret.add(temp_menu);
 				
 			}
@@ -247,7 +247,7 @@ public class CDataBase {
 	public boolean UpdateMenu(CMenu menu){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE menu SET descripcion = ?, areaidarea = ?, contenido = ?, idmenu_rec = ?, size= ? WHERE idmenu=?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE menu SET descripcion = ?, areaidarea = ?, contenido = ?, idmenu_rec = ?, size= ?,estado=? WHERE idmenu=?");
 			
 			stm.setString(1, menu.getdescripcion());
 			stm.setInt(2, menu.getareaidarea().getidarea());
@@ -259,7 +259,8 @@ public class CDataBase {
 				stm.setInt(4, menu.getidmenu_rec().getidmenu());
 			}
 			stm.setInt(5,menu.getsize());
-			stm.setInt(6,menu.getidmenu());
+			stm.setInt(6,menu.getEstado());
+			stm.setInt(7,menu.getidmenu());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -273,7 +274,7 @@ public class CDataBase {
 	public boolean SafeMenu(CMenu menu){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO menu (descripcion,areaidarea,contenido,idmenu_rec,size)VALUES (?,?,?,?,?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO menu (descripcion,areaidarea,contenido,idmenu_rec,size,estado)VALUES (?,?,?,?,?,?)");
 			
 			stm.setString(1, menu.getdescripcion());
 			stm.setInt(2, menu.getareaidarea().getidarea());
@@ -285,6 +286,7 @@ public class CDataBase {
 				stm.setInt(4, menu.getidmenu_rec().getidmenu());
 			}
 			stm.setInt(5,menu.getsize());
+			stm.setInt(6, menu.getEstado());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -301,7 +303,7 @@ public class CDataBase {
         try{
                 String query="select * from "
                                 +"(SELECT @rownum:=@rownum+1 rownum, m.idmenu,m.descripcion, '' contenido,ifnull(m.idmenu_rec,0) idmenu_rec,  m.size,"
-                                +"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu "
+                                +"a.idarea,a.nombre nombre_area,IF(idmenu_rec is null,'',(select descripcion from menu where idmenu=m.idmenu_rec) ) descripcion_menu, m.estado estado_menu "
                                 +"FROM menu m, (SELECT @rownum:=0) ro, area a  "
                                 +"where a.idarea=m.areaidarea and"
                                 +" upper("+(type==1?"m.descripcion":"a.nombre")+") like ?  and a.idarea in ("+ConvertString(lista)+")"
@@ -323,10 +325,10 @@ public class CDataBase {
                 while(rs.next()){
                                                 ArrayList<CMenu> templist=null;
                                                 
-                                CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist);
+                                CMenu temp=new CMenu(rs.getInt("idmenu_rec"),rs.getString("descripcion_menu"),null,"",0,templist,0);
                                 
                                 CArea temp_c=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
-                                CMenu temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp);
+                                CMenu temp_menu=new CMenu( rs.getInt("idmenu"),rs.getString("descripcion"),temp_c,rs.getString("contenido"),rs.getInt("size"),temp,rs.getInt("estado_menu"));
                                 ret.add(temp_menu);                        
                 }
                 rs.close();

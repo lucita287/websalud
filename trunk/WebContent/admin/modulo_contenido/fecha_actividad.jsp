@@ -129,7 +129,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				  $(".semana").attr('checked', false);
 				  BuscarFecha();
 				  $('#fecha_actividad').flexReload();
-				  
+				  RecargarAnios();
 			  }
 			  function RecargarAnios(){
 				  cadena = [ 'a=show_list',].join('&');

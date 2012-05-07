@@ -64,6 +64,15 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 													</select>
 												</div>
 									</div>
+									<div class="fila">
+												<div class="col_titulo">Estado</div>
+												<div class="col">
+																			<select id="new-estado"> 
+																			<option value="1">HABILITADO</option>
+																			<option value="0">DESHABILITADO</option>
+																			</select>
+												</div>
+									</div>
 						</div>
 				</div>											
 				<div style="clear: both;"></div>
@@ -120,6 +129,7 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 										            'contenido='+data_cont,
 										            'size='+$('#new-tam').val(),
 										            'area='+$('#new-area').val(),
+										            'estado='+$('#new-estado').val(),
 										            'submenu='+submenu
 										        ].join('&');
 									 $("#validacion_conte").html("No se ha actualizado"); 
@@ -148,6 +158,7 @@ if (user_permiso.getIdpermiso().indexOf(224)>-1  || user_permiso.getIdusuario().
 				$("#cont-text").cleditor()[0].clear();
         		$('#new-titulo').val('');
         		 $("#validacion_conte").html("");
+        		 $('#new-estado').val("1");
 			}
 			</script>
 	<% 	} } %>			

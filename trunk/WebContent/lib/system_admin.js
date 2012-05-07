@@ -64,6 +64,8 @@
 			caracter=replaceAll(caracter,String.fromCharCode(8217),"&#34;");
 			caracter=replaceAll(caracter,String.fromCharCode(8218),"&#44;");
 			caracter=replaceAll(caracter,String.fromCharCode(8230),"&#8230;");
+			caracter=replaceAll(caracter,String.fromCharCode(33),"&#33;");
+			caracter=replaceAll(caracter,String.fromCharCode(161),"&#161;");
 			return caracter;
 		}
 	  function replaceAll( text, busca, reemplaza ){
