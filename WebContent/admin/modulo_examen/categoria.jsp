@@ -42,6 +42,7 @@
 					],
 				    params : [ {name: 'a', value: 'categoria'} ]
 				});
+		      
 		  });  
 		  function Editarcategoria(id,nombre,orden,g1,g2,menu){
 			  $("#id_cate").text(id);

@@ -18,7 +18,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	data.Connect();
 	ArrayList<CEstado_Civil> estado=data. getListaEstadoCivil();
 	ArrayList<CTipo_Sangre> tsangre=data.getListaTipo_Sangre();
-	ArrayList<CParentesco> paren=data.getListaParentesco(0,0, 1);
+	ArrayList<CParentesco> paren=data.getListaParentesco();
 	ArrayList<CDepartamento> depto=data.getListaDepartamentos();
 	ArrayList<CTitulo_Secundaria> secu=data.getListaTitulo_Secundaria();
 %>
@@ -79,7 +79,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 						<div class="border">
 							
 									<div class="col_titulo">Nombre</div>
-									<div class="col"><%= pac.getNombre() %></div>
+									<div class="col"><%= pac.getNombre()+", "+pac.getApellido() %></div>
 									
 							<div style="clear: both;"></div>
 						</div>

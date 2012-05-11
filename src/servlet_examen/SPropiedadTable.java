@@ -155,7 +155,7 @@ public class SPropiedadTable extends HttpServlet {
 							 String data="";
 							 for(int i=0; i<lista.size();i++){
 								 CParentesco temp=lista.get(i);
-								 	data+="<row id='"+temp.getIdparentesco()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarparentesco("+temp.getIdparentesco()+",\""+temp.getNombre()+"\","+temp.getBooleano(temp.getGrupo_familiar())+","+temp.getBooleano(temp.getAntecendentes_familiares())+","+temp.getBooleano(temp.getEmergencias())+")' name='idparentesco' value='"+temp.getIdparentesco()+"' />]]></cell><cell><![CDATA["+temp.getIdparentesco()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getGrupo_familiar())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAntecendentes_familiares())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getEmergencias())+"]]></cell></row>";	 
+								 	data+="<row id='"+temp.getIdparentesco()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarparentesco("+temp.getIdparentesco()+",\""+temp.getNombre()+"\")' name='idparentesco' value='"+temp.getIdparentesco()+"' />]]></cell><cell><![CDATA["+temp.getIdparentesco()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell></row>";	 
 							 }
 							 info+=data+"</rows>";
 							 out.println(info);
