@@ -21,6 +21,7 @@
 							$("#editor").cleditor()[0].focus();
 		        	}
 		    });
+			
 		}
 		  $(document).ready(function () {
 			  $("#categoria_ponderacion").flexigrid
@@ -44,7 +45,7 @@
 				    params : [ {name: 'idcategoria', value: '0'},{name: 'a', value: 'ponderacion'} ]
 				});
 		      $("#editor").cleditor({
-				    width:        450,
+				    width:        500,
 				    height:       300,
 				    controls:     // controls to add to the toolbar
                     "bold italic underline strikethrough subscript superscript | font size " +
@@ -83,7 +84,7 @@
 				$("#editor").cleditor()[0].focus();
 			}
 			function GuardarPonde(){
-				var interpretacion=Base64.encode(($.trim($("#editor").val())));
+				var interpretacion=Base64.encode(convertirCaracter($.trim(($("#editor").val()))));
 				if(idcate_pond==0){
 					action="new_cate_pond";
 				}else{

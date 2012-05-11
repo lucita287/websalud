@@ -40,6 +40,7 @@ public class CDataBase {
 	public static String getWebhost() {
 		return webhost;
 	}
+	
 	public Connection connHostDevelopment(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -1936,7 +1937,6 @@ public int getResponsableTotal(int type,String busqueda){
 			rs.close();
 			stm.close();
 		}catch(Throwable e){
-			e.printStackTrace();
 			 CLogger.write("77", this, e);
 		}
 		return ret;
@@ -2383,4 +2383,5 @@ public int getResponsableTotal(int type,String busqueda){
 		return list;
 		
 	}
+	
 }

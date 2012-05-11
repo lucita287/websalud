@@ -51,4 +51,7 @@
     <error-code>404</error-code>
     <location>/perror.jsp</location>
   </error-page>
+  <session-config>
+    <session-timeout>40</session-timeout>
+  </session-config>
 </web-app>

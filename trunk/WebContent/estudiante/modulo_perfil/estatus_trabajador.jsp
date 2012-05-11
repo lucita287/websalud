@@ -6,6 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>   
 <%@ page import="framework.CValidation" %> 
+<%@ page import="data.CConfiguracion" %> 
 <%
 	CValidation valid=new CValidation();
 	Integer portal=valid.ConvertEntero(request.getParameter("portal"));
@@ -43,13 +44,14 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 		
 	CDataExam	data=new CDataExam();
 	data.Connect();
+	CConfiguracion confi = data.getConfiguracion();
 	ArrayList<CDependencia> lista_dep=data.getListaDependencia();
 %>	
 
 	<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
 
 	<div style="float:left;">
-	<h2>PASO 1 / OPCIONAL, SOLO PARA TRABAJADORES</h2>
+	<h2>PASO 1 / OPCIONAL, SOLO PARA TRABAJADORES DE LA USAC</h2>
 	</div>
 	<div class="button-sig">
 	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 
@@ -59,6 +61,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     <div id="dato_personal" class="ui-widget-content ui-corner-all">
 	<h3 class="ui-state-default ui-corner-all">Estatus del trabajador</h3>
 		<div class="perfil">
+		*DE NO EXISTIR SU DEPENDENCIA FAVOR LLAMAR A LA UNIDAD DE SALUD <%= confi.gettelefono() %>
 					<div class="tabla">
 						<div class="border">
 							

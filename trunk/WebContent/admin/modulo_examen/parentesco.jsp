@@ -15,10 +15,7 @@
 				    colModel: [
 					{display: 'Seleccionar', name : 'chkparentesco', width : 30, sortable : false, align: 'left'},           
 					{ display: 'ID', name: 'idparentesco', width: 40, sortable: true, align: 'left' },
-					{ display: 'Descripcion', name: 'nombre', width: 150, sortable: true, align: 'left' },
-					{ display: 'Grupo Familiar', name: 'grupo_familiar', width: 80, sortable: true, align: 'left' },
-					{ display: 'Antecedentes Familiares', name: 'antec_familiar', width: 120, sortable: true, align: 'left' },
-					{ display: 'Emergencias', name: 'emergencia', width: 80, sortable: true, align: 'left' }
+					{ display: 'Descripcion', name: 'nombre', width: 150, sortable: true, align: 'left' }
 					],
 					sortname: "idparentesco",
 					sortorder: "desc",
@@ -35,26 +32,14 @@
 				    params : [ {name: 'a', value: 'parentesco'} ]
 				});
 		  });  
-		  function Editarparentesco(id,nombre,g1,g2,g3){
+		  function Editarparentesco(id,nombre){
 			  $("#id_paren").text(id);
 			  $("#nombre_paren").val(nombre);
-			  $("#grupo_familiar").attr('checked', g1);
-      		  $("#grupo_familiar").button('refresh');
-      		  $("#antecedentes").attr('checked', g2);
-     		  $("#antecedentes").button('refresh');
-     		 $("#emergencias").attr('checked', g3);
-    		  $("#emergencias").button('refresh');
 			  idparen=id;
 		  }
 		  function limpiarparen(){
 			  $("#id_paren").text("NEW");
 			  $("#nombre_paren").val("");
-			  $("#grupo_familiar").attr('checked', false);
-      		  $("#grupo_familiar").button('refresh');
-      		  $("#antecedentes").attr('checked', false);
-     		  $("#antecedentes").button('refresh');
-     		 $("#emergencias").attr('checked', false);
-    		  $("#emergencias").button('refresh');
 			  idparen=0;
 			  $('#parentesco').flexReload();
 		  }
@@ -66,9 +51,7 @@
 			  cadena = [ 	'id_paren='   + idparen,
 			             	'a='+action,
 				            'nombre='+$("#nombre_paren").val(),
-				            'grupo_familiar='+(($("#grupo_familiar").is(":checked")==true)?1:0),
-				            'antecedentes='+(($("#antecedentes").is(":checked")==true)?1:0),
-				            'emergencias='+(($("#emergencias").is(":checked")==true)?1:0),
+				            
 				        ].join('&');
 			  $.ajax({
 			        url: "../SPropiedad",
@@ -118,15 +101,6 @@
 							<div class="fila">
 								<div class="col_titulo">Descripci&oacute;n</div>
 								<div class="col"><input id='nombre_paren' type="text" size="40"/></div>
-							</div>
-							<div class="fila">
-								<div class="col_titulo">Areas</div>
-								<div class="col">
-										<input type="checkbox" id="grupo_familiar" class="check" /><label for="grupo_familiar">FORMULARIO DE GRUPO FAMILIAR</label>
-										<input type="checkbox" id="antecedentes" class="check" /><label for="antecedentes">FORMULARIO DE ANTECENDENTES FAMILIARES</label>
-										<input type="checkbox" id="emergencias" class="check" /><label for="emergencias">FORMULARIO DE EMERGENCIAS</label>
-										
-								</div>
 							</div>
 				</div>
 		</div>				

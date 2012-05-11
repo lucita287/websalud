@@ -40,10 +40,11 @@
 										<hr/>
 										 <div id="button-login">
 										
-										<br/> <a href="http://rye.usac.edu.gt/">¿Olvid&oacute; su contraseña?</a>
- 										<br/> <a href="registrarse.jsp?a=registrarse">Obtener Usuario</a> 
+										<br/> <a href="http://rye.usac.edu.gt/index.php?ring=4" TARGET = "_blank">¿Olvid&oacute; su contraseña?</a>
 										</div>
-										<br/> Ingresar a este sitio por medio de su carnet y pin generado en el Departamento de Registro y Estadística
+										<br/> <div style="text-align:justify;"> 
+										Ingresar a este sitio por medio de su carnet y pin generado en el Departamento de Registro y Estadística
+										</div>
 									</div>
 								</div>
 		</div>

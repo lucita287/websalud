@@ -21,6 +21,14 @@ public class CValidation {
 	public CValidation(){
 		
 	}
+	public Date ConvertoDate(Long start){
+		if(start<1000000000000L){
+			start=start*1000;
+		}
+		Date fecha_inicio=new Date();
+		fecha_inicio.setTime(start);
+		return fecha_inicio;
+	}
 	public String ValidarCampoVacio(String campo,String nombre_campo){
 		String result="";
 		campo=campo.trim();
@@ -110,6 +118,14 @@ public class CValidation {
 		Date date1=new Date();
 		try {
 			date1 = new SimpleDateFormat("dd/MM/yy").parse(fecha);
+		} catch (java.text.ParseException e) {}
+		
+		return date1;
+	}
+	public Date CambiarFormatoyyyymmdd(String fecha){
+		Date date1=new Date();
+		try {
+			date1 = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 		} catch (java.text.ParseException e) {}
 		
 		return date1;
@@ -262,6 +278,26 @@ public class CValidation {
 		}
 		return lista;
 	}
+	public String ValidarFormatoHora2(String horario,String campo){
+		String result="{\"resultado\":\"ERROR\",\"mensaje\":\"No tiene el formato de hora, "+campo+"\"}";
+		horario+=":";
+		String[]  splittArray = horario.split(":");
+		if(splittArray.length==2){
+			try{
+				int hora=Integer.parseInt(splittArray[0]);
+				int minuto=Integer.parseInt(splittArray[1]);
+				if(hora>=0&&hora<=24){
+					if(minuto>=0&&minuto<=60){
+						result="";
+					}
+				}
+					
+			}catch(Exception e){
+				
+			}
+		}
+		return result;
+	}
 	public String ValidarFormatoHora(String horario,String campo){
 		String result="{\"resultado\":\"ERROR\",\"mensaje\":\"No tiene el formato de hora, "+campo+"\"}";
 		horario+=":";
@@ -318,6 +354,14 @@ public class CValidation {
 	     }
 		return result;
 	}
+	public String validarHoraMayoraOtra(Date fecha,Date fecha1){
+		String result="{\"resultado\":\"ERROR\",\"mensaje\":\"HORA INICIO DEBE SER MAYOR QUE OTRA\"}";
+		if(fecha1.compareTo(fecha)>0){
+	    	 result="";
+	     }
+	     
+		return result;
+	}
 	public String validarMinyMax(int min,int max, String minmensaje,String mensaje){
 		String result="";
 		if(min>=max){
@@ -345,6 +389,18 @@ public class CValidation {
 		
 		return date1;
 	}
+	public Date CambiarFormatohhmm2(String hora){
+		Date date1=new Date();
+		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+		try {
+			date1 = (Date)formatter.parse(hora+":00");
+			
+		} catch (java.text.ParseException e) {
+			
+		}
+		
+		return date1;
+	}
 	public Long ConvertLong(String num){
 		Long result=0L;
 		try{
@@ -367,6 +423,18 @@ public class CValidation {
 			
 		}
 		return validacion;
+	}
+	public Date CambiarFormatohhmm(String hora){
+		Date date1=new Date();
+		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Integer[] horario=getHorario(hora);
+			
+			date1 = (Date)formatter.parse(horario[0]+":"+horario[1]+":00");
+			
+		} catch (java.text.ParseException e) {}
+		
+		return date1;
 	}
 	
 }

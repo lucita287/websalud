@@ -17,7 +17,7 @@
 		int idregistro=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idregistro")));		
 		CDataExam	data=new CDataExam();
 		data.Connect();
-		ArrayList<CParentesco> lista_paren=data.getListaParentesco(0,1,0);
+		ArrayList<CParentesco> lista_paren=data.getListaParentesco();
 		String a="";
 		if(idregistro==4)
 			a="guardarpaciente";

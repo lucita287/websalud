@@ -28,7 +28,7 @@
     	CMenu_Categoria menu=it.next();
     	
     %>
-    	<a class="menu" href="index.jsp?portal=9&idmenu=<%=menu.getIdmenu_categoria()%>&auto=1&multi=0&titulo=<%= menu.getNombre() %>">
+    	<a class="menu" href="index.jsp?portal=10&idmenu=<%=menu.getIdmenu_categoria()%>&auto=1&multi=0&titulo=<%= menu.getNombre() %>">
     	<img  src="<%= (lista_menu.indexOf(menu.getIdmenu_categoria())>-1)?"../images/check.png":"../images/uncheck.png" %>"  width="32px" heigth="32px" />
     	<%= menu.getNombre() %>
     	</a><br>

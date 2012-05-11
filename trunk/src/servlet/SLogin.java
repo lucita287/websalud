@@ -78,22 +78,36 @@ public class SLogin extends HttpServlet {
 		 }else{
 			 
 			 HttpSession session = request.getSession(true);
-			 CWebService servicio=new CWebService();
+			 CWebService servicio=new CWebService(2012);
 			 int status=servicio.VerificarPin(user, pass);
 			 
 			 
 			 switch(status) { // Eleige la opcion acorde al numero de mes
 			 case 1:
-				 CPaciente pac= dbo.getEstudianteEspecifica(user);
+				 CPaciente paciente= dbo.getEstudianteEspecifica(user);
 				 session.setAttribute("estudiante", user);
 				 session.setAttribute("pin", pass);
 				 
-				 if(pac!=null){
-					 session.setAttribute("paciente",pac);
+				 if(paciente!=null){
+					 session.setAttribute("paciente",paciente);
 					 session.setAttribute("examen",1);
 					 response.sendRedirect("estudiante/index.jsp?portal=1");
 				 }else{
-					 response.sendRedirect("registro_estudiante.jsp");
+					 paciente=servicio.VerificarEstudiante(user,dbo);
+					 dbo.SafePaciente(paciente);
+					 int idusuario=dbo.getIdPaciente(paciente.getCarne()+"");
+					 paciente.setIdpaciente(idusuario);
+					 paciente.setCrecio_en("");
+					 paciente.setEstado_civilidestado_civil(0);
+					 paciente.setIdtipo_sangre(0);
+					 paciente.setIdemer_parentesco(0);
+					 paciente.setEmer_movil("");
+					 paciente.setEmer_telefono("");
+					 paciente.setEmer_nombre("");
+					 paciente.setTitulo_secundaria("");
+					 session.setAttribute("paciente",paciente);
+					 session.setAttribute("examen",1);
+					 response.sendRedirect("estudiante/index.jsp?portal=1");
 				 }
 				 break;	
 			 case 2:

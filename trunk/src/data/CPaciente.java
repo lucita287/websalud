@@ -12,17 +12,13 @@ public class CPaciente {
 	private String direccion;
 	private String telefono;
 	private String movil;
-	private int idcarrera;
-	private int idcentro;
-	private int idunidad;
 	private int iddependencia;
 	private int sexo;
 	private String password;
 	private String email;
 	private String usuario;
-	private int parentesco_ced;
-	private String cedula;
 	private int no_personal;
+	private String apellido;
 	
 	private int estado_civilidestado_civil;
 	private String emer_nombre;
@@ -32,7 +28,10 @@ public class CPaciente {
 	private int idtipo_sangre;
 	private String titulo_secundaria;
 	private String crecio_en;
-
+	private int estado;
+	private int examen_linea;
+	private int nacionalidad;
+	private int departamento;
 	/**
 	 * @param idpaciente
 	 * @param nombre
@@ -58,10 +57,15 @@ public class CPaciente {
 	 */
 	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
 			int carne, String direccion, String telefono, String movil,
-			int idcarrera, int idcentro,
-			int idunidad, int iddependencia, int sexo,
+			 int iddependencia, int sexo,
 			String password, String email,
-			String usuario, int parentesco_ced, String cedula, int no_personal) {
+			String usuario,  int no_personal,String apellido,int nacionalidad,int departamento,
+			int estado, int examen_linea) {
+		this.estado=estado;
+		this.departamento=departamento;
+		this.examen_linea=examen_linea;
+		this.nacionalidad=nacionalidad;
+		this.departamento=departamento;
 		this.idpaciente = idpaciente;
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -69,17 +73,13 @@ public class CPaciente {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.movil = movil;
-		this.idcarrera = idcarrera;
-		this.idcentro = idcentro;
-		this.idunidad = idunidad;
 		this.iddependencia = iddependencia;
 		this.sexo = sexo;
 		this.password = password;
 		this.email = email;
 		this.usuario = usuario;
-		this.parentesco_ced = parentesco_ced;
-		this.cedula = cedula;
 		this.no_personal= no_personal;
+		this.apellido=apellido;
 	}
 
 	
@@ -114,15 +114,20 @@ public class CPaciente {
 	 */
 	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
 			int carne, String direccion, String telefono, String movil,
-			int idcarrera, int idcentro,
-			int idunidad, int iddependencia, int sexo,
+			int iddependencia, int sexo,
 			String password, String email, String usuario,
-			int parentesco_ced, String cedula,int no_personal,
+			int no_personal,
 			int estado_civilidestado_civil, String emer_nombre,
 			int idemer_parentesco, String emer_telefono,
 			String emer_movil, int idtipo_sangre, String titulo_secundaria,
-			String crecio_en) {
+			String crecio_en,String apellido,int nacionalidad,int departamento,
+			int estado, int examen_linea) {
+		this.departamento=departamento;
+		this.examen_linea=examen_linea;
+		this.nacionalidad=nacionalidad;
+		this.departamento=departamento;
 		this.idpaciente = idpaciente;
+		this.apellido=apellido;
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
 		this.carne = carne;
@@ -130,16 +135,11 @@ public class CPaciente {
 		this.telefono = telefono;
 		this.movil = movil;
 		this.estado_civilidestado_civil=estado_civilidestado_civil;
-		this.idcarrera = idcarrera;
-		this.idcentro = idcentro;
-		this.idunidad = idunidad;
 		this.iddependencia = iddependencia;
 		this.sexo = sexo;
 		this.password = password;
 		this.email = email;
 		this.usuario = usuario;
-		this.parentesco_ced = parentesco_ced;
-		this.cedula = cedula;
 		this.estado_civilidestado_civil = estado_civilidestado_civil;
 		this.emer_nombre = emer_nombre;
 		this.idemer_parentesco = idemer_parentesco;
@@ -149,6 +149,96 @@ public class CPaciente {
 		this.titulo_secundaria = titulo_secundaria;
 		this.crecio_en = crecio_en;
 		this.no_personal= no_personal;
+	}
+
+	
+
+	/**
+	 * @return the estado
+	 */
+	public int getEstado() {
+		return estado;
+	}
+
+
+
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+
+
+	/**
+	 * @return the examen_linea
+	 */
+	public int getExamen_linea() {
+		return examen_linea;
+	}
+
+
+
+	/**
+	 * @param examen_linea the examen_linea to set
+	 */
+	public void setExamen_linea(int examen_linea) {
+		this.examen_linea = examen_linea;
+	}
+
+
+
+	/**
+	 * @return the nacionalidad
+	 */
+	public int getNacionalidad() {
+		return nacionalidad;
+	}
+
+
+
+	/**
+	 * @param nacionalidad the nacionalidad to set
+	 */
+	public void setNacionalidad(int nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+
+
+	/**
+	 * @return the departamento
+	 */
+	public int getDepartamento() {
+		return departamento;
+	}
+
+
+
+	/**
+	 * @param departamento the departamento to set
+	 */
+	public void setDepartamento(int departamento) {
+		this.departamento = departamento;
+	}
+
+
+
+	/**
+	 * @return the apellido
+	 */
+	public String getApellido() {
+		return apellido;
+	}
+
+
+
+	/**
+	 * @param apellido the apellido to set
+	 */
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 
@@ -279,58 +369,6 @@ public class CPaciente {
 
 
 
-	/**
-	 * @return the idcarrera
-	 */
-	public int getIdcarrera() {
-		return idcarrera;
-	}
-
-
-
-	/**
-	 * @param idcarrera the idcarrera to set
-	 */
-	public void setIdcarrera(int idcarrera) {
-		this.idcarrera = idcarrera;
-	}
-
-
-
-	/**
-	 * @return the idcentro
-	 */
-	public int getIdcentro() {
-		return idcentro;
-	}
-
-
-
-	/**
-	 * @param idcentro the idcentro to set
-	 */
-	public void setIdcentro(int idcentro) {
-		this.idcentro = idcentro;
-	}
-
-
-
-	/**
-	 * @return the idunidad
-	 */
-	public int getIdunidad() {
-		return idunidad;
-	}
-
-
-
-	/**
-	 * @param idunidad the idunidad to set
-	 */
-	public void setIdunidad(int idunidad) {
-		this.idunidad = idunidad;
-	}
-
 
 
 	/**
@@ -422,40 +460,6 @@ public class CPaciente {
 	}
 
 
-
-	/**
-	 * @return the parentesco_ced
-	 */
-	public int getParentesco_ced() {
-		return parentesco_ced;
-	}
-
-
-
-	/**
-	 * @param parentesco_ced the parentesco_ced to set
-	 */
-	public void setParentesco_ced(int parentesco_ced) {
-		this.parentesco_ced = parentesco_ced;
-	}
-
-
-
-	/**
-	 * @return the cedula
-	 */
-	public String getCedula() {
-		return cedula;
-	}
-
-
-
-	/**
-	 * @param cedula the cedula to set
-	 */
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
-	}
 
 
 
@@ -622,6 +626,10 @@ public class CPaciente {
 	 public String getFormatoFechaDes(Date date){
          SimpleDateFormat formatter = new SimpleDateFormat("E ',' dd 'de' MMMM 'de' yyyy", new Locale("es"));
          return formatter.format(date);
+	 }
+	 public String getddmmyyFecha(){
+         SimpleDateFormat formatter = new SimpleDateFormat("dd'/'MM'/'yyyy", new Locale("es"));
+         return formatter.format(this.fecha_nacimiento);
 	 }
 	
 }

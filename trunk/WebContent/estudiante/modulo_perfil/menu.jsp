@@ -20,14 +20,9 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 					<a href="index.jsp?portal=1">Datos Generales</a>
 				</li>
 				<li>
-					<a href="index.jsp?portal=2">Estatus del estudiante</a>
-				</li>
-				<li>
 					<a href="index.jsp?portal=3">Estatus del trabajador</a>
 				</li>
-				<li>
-					<a href="index.jsp?portal=4">Datos Personales</a>
-				</li>
+				
 			</ul>	
 	</li>
 	<li >
@@ -45,11 +40,15 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 		<a >PASO 3</a>
 			<ul id="cita">
 				<li >
-					<a href="index.jsp?portal=7">Citas</a>
+					<a href="index.jsp?portal=7">Resultado</a>
 				</li>
 				<li>
-					<a href="index.jsp?portal=8">Reportes</a>
+					<a href="index.jsp?portal=9">Dash</a>
 				</li>
+				<li >
+					<a href="index.jsp?portal=8">Citas</a>
+				</li>
+				
 			</ul>	
 	</li>
 	
@@ -76,10 +75,10 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 	  <% if(portal>0 && portal<5){%>
 	  $('#personal').show();
 	  <% }%>
-	  <% if((portal>4 && portal<7)|| (portal==9)){%>
+	  <% if((portal>4 && portal<7)|| (portal==10)){%>
 	  $('#examen_fa').show();
 	  <% }%>
-	  <% if(portal>6 && portal<9){%>
+	  <% if(portal>6 && portal<10){%>
 	  $('#cita').show();
 	  <% }%>
 	  $('#menu li a').click(

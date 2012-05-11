@@ -100,8 +100,6 @@ public class SPaciente extends HttpServlet {
 			
 			int no_personal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("no_personal")));
 			int dependencia = valid.ConvertEntero(valid.ValidarRequest(request.getParameter("dependencia")));
-			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
-			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
 			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
 			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
@@ -117,7 +115,6 @@ public class SPaciente extends HttpServlet {
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
-			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMCarne(carne,dbo);
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
@@ -134,9 +131,8 @@ public class SPaciente extends HttpServlet {
 				
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						carne, direccion, tel_usuario, movil_usuario,
-						carrera, centro,
-						facultad, dependencia, genero,
-						password, email,username,parentesco,ced,no_personal);
+						 dependencia, genero,
+						password, email,username,no_personal,"",0,0,2,0);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);		
 			}
@@ -149,8 +145,6 @@ public class SPaciente extends HttpServlet {
 			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
 			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
 			
-			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
-			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
 			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
 			String tel_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_usuario")),codificacion);
@@ -161,7 +155,6 @@ public class SPaciente extends HttpServlet {
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
-			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
 			mensaje+=valid.ValidarMPassword(password, password_confirm);
@@ -173,9 +166,9 @@ public class SPaciente extends HttpServlet {
 			}else{
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
-						0, 0,0, dependencia, genero,
-						password,email,username,parentesco,ced,no_personal);
-				boolean b=dbo.SafePacienteTrab(paciente);
+						 dependencia, genero,
+						password,email,username,no_personal,"",0,0,2,0);
+				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}	
 		}else if(action.equalsIgnoreCase("guardarestudiante")){
@@ -187,8 +180,6 @@ public class SPaciente extends HttpServlet {
 			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
 			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
 			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
-			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
-			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
 			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
@@ -200,7 +191,6 @@ public class SPaciente extends HttpServlet {
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
-			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMCarne(carne,dbo);
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
@@ -214,9 +204,8 @@ public class SPaciente extends HttpServlet {
 			}else{
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						carne, direccion, tel_usuario, movil_usuario,
-						carrera, centro,
-						facultad, 0, genero,
-						password,email,username,parentesco,ced,0);
+						 0, genero,
+						password,email,username,0,"",0,0,2,0);
 				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}
@@ -226,8 +215,6 @@ public class SPaciente extends HttpServlet {
 			String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre_usuario")),codificacion);
 			String email=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_electronico")),codificacion);
 			String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("datepicker")),codificacion);
-			int parentesco=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("paren_usuario")));
-			String ced=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("ced_usuario")),codificacion);
 			
 			int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
 			String movil_usuario=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("movil_usuario")),codificacion);
@@ -239,7 +226,6 @@ public class SPaciente extends HttpServlet {
 			String mensaje=valid.ValidarMCaptcha(request);
 			mensaje+=valid.ValidarMNombre(nombre,"NOMBRE");
 			mensaje+=valid.ValidarMNombre(direccion,"DIRECCI&Oacute;N");
-			mensaje+=valid.ValidarMNombre(ced,"CEDULA");
 			mensaje+=valid.ValidarMEmail(email);
 			mensaje+=valid.ValidarMFecha(fecha);
 			
@@ -250,11 +236,11 @@ public class SPaciente extends HttpServlet {
 			}else{
 				CPaciente paciente =new CPaciente(0, nombre,valid.CambiarFormatoddmmyy(fecha),
 						0, direccion, tel_usuario, movil_usuario,
-						0, 0,0, 0, genero,
-						password,email,username,parentesco,ced,0);
+						 0, genero,
+						password,email,username,0,"",0,0,2,0);
 				
 				
-				boolean b=dbo.SafePacienteTrab(paciente);
+				boolean b=dbo.SafePaciente(paciente);
 				iniciarSession(b, dbo,username, request, response, paciente, out);
 			}	
 		}	

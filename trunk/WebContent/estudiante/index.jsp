@@ -34,24 +34,21 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 <div id="contenido">
 <div id="cont_dato_personal">
 <% if(portal==1){ %>
-
 <jsp:include page="modulo_perfil/dato_personal.jsp" />
-<% }else if(portal==2){ %>
-<jsp:include page="modulo_perfil/estatus_estudiante.jsp" />
 <% }else if(portal==3){ %>
 <jsp:include page="modulo_perfil/estatus_trabajador.jsp" />
-<% }else if(portal==4){ %>
-<jsp:include page="modulo_perfil/dato_general.jsp" />
-<% }else if(portal==4){ %>
-<jsp:include page="modulo_perfil/dato_general.jsp" />
 <% }else if(portal==5){ %>
 <jsp:include page="modulo_perfil/multi.jsp" />
 <% }else if(portal==6){ %>
 <jsp:include page="modulo_perfil/auto_eva.jsp" />
 <% }else if(portal==9){ %>
-<jsp:include page="modulo_perfil/examen_categoria.jsp" />
-<% }else if(portal==7){ %>
 <jsp:include page="modulo_perfil/report.jsp" />
+<% }else if(portal==7){ %>
+<jsp:include page="modulo_perfil/evaluacion.jsp" />
+<% }else if(portal==8){ %>
+<jsp:include page="modulo_perfil/citas.jsp" />
+<% }else if(portal==10){ %>
+<jsp:include page="modulo_perfil/examen_categoria.jsp" />
 <% } %>
 </div>
 </div>

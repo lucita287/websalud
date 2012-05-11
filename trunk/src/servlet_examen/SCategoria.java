@@ -141,17 +141,15 @@ public class SCategoria extends HttpServlet {
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
-						int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("menu_cate")));
 						
 						String validacion=valid.ValidarSiesMayor(idcate_pond, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(interpretacion, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcategoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una categoria\"}"):validacion;
-						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(menu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un Menu para la categoria\"}"):validacion;
 						
 						if(validacion.compareTo("")==0){
-							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0,new CMenu_Categoria(menu,""));
+							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0,null);
 							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(idcate_pond,max, min, interpretacion,categoria) ;
 							boolean b=dbo.UpdateCategoria_Interpretacion(cate);
 							if(!b){
