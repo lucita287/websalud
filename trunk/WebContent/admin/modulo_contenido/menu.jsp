@@ -89,9 +89,6 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 					<a href="index.jsp?portal=11" >Mantenimiento de Propiedades</a>
 				</li>
 				<li>
-					<a href="index.jsp?portal=12" >Mantenimiento de Carreras</a>
-				</li>
-				<li>
 					<a href="index.jsp?portal=13" >Mantenimiento de Categorias</a>
 				</li>
 				<li>
