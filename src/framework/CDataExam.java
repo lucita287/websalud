@@ -2357,7 +2357,7 @@ public class CDataExam extends CDataBase {
 		ArrayList<CCita> ret=new ArrayList<CCita>();
 		try{
 			String sql="SELECT da.idcita, da.fecha, da.hora_inicio, da.hora_fin, da.tipo_examen , da.cupo, da.estado, "+
-			" (select count(*) from cita c inner join cita_paciente cp on c.idcita=cp.idcita where cp.estado = 1 and c.idcita= da.idcita) cant "+ 		
+			" (select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cant "+ 		
 			" FROM cita da "+
 			" where (da.fecha>=? and da.fecha<=?) ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -2393,7 +2393,7 @@ public class CDataExam extends CDataBase {
 			GregorianCalendar  calendar2=new GregorianCalendar();
 			calendar2.setTime(fecha_fin);
 			 String sql="SELECT da.idcita, estado, tipo_examen, cupo, fecha, hora_inicio, hora_fin, "+
-					 " (select count(*) from cita c inner join cita_paciente cp on c.idcita=cp.idcita where cp.estado = 1 and c.idcita= da.idcita) cant " 
+					 " (select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cant " 
 					 +" FROM cita da where da.fecha=? and hour(hora_inicio)=? and minute(hora_inicio)=? "+
             " and hour(hora_fin)=? and minute(hora_fin)=? ";
 			
@@ -2428,9 +2428,9 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CCita> ListCitas(int ordenar, int asc, int tipo_examen,int mes, int anio){
 		 ArrayList<CCita> lista=new  ArrayList<CCita>();
 		 try{    
-			 String sql="SELECT idcita, estado, tipo_examen, cupo, fecha, hora_inicio, hora_fin, "+
-					 " (select count(*) from cita c inner join cita_paciente cp on c.idcita=cp.idcita where cp.estado = 1 ) cant " 
-					 +" FROM cita where month(fecha)=? and year(fecha)=? ";
+			 String sql="SELECT t.idcita, t.estado, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, "+
+					 " (select count(*) from cita_paciente cp where cp.estado = 1 and t.idcita=cp.idcita) cant " 
+					 +" FROM cita t where month(t.fecha)=? and year(t.fecha)=? ";
 			 if(tipo_examen==1){
 				 sql+=" and tipo_examen=2 ";
 			 }else if(tipo_examen==2){
@@ -2456,6 +2456,60 @@ public class CDataExam extends CDataBase {
 	                                				rs.getInt("tipo_examen"),
 	                                				rs.getInt("cupo"),
 	                                				rs.getInt("cant"))
+	                                		); 
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				e.printStackTrace();
+				 //CLogger.write("1", this, e);
+			} 
+		 
+		 return lista;
+		 
+	}
+	public int AsignarCita(int idcita,int idpaciente){
+		System.out.println(idcita+ " "+idpaciente);
+		int temp=0;
+		try {
+					String sql="select asignar_cita(?,?) cant ";
+					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+					
+					stm.setInt(1,idcita);
+					stm.setInt(2,idpaciente);
+					
+					ResultSet rs2=stm.executeQuery();
+					if(rs2.next())
+					temp=rs2.getInt("cant");
+				} catch (SQLException e) {
+		
+					e.printStackTrace();
+				}
+		
+		return temp;
+	}
+	public ArrayList<CCita> ListCitasEstudiante(int idcita){
+		 ArrayList<CCita> lista=new  ArrayList<CCita>();
+		 try{    
+			 String sql="SELECT t.idcita, t.estado, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, cp.estado "
+					 +" FROM cita t inner join cita_paciente cp on cp.idcita=t.idcita  where cp.idpaciente=? ";
+
+			 
+	        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+	        	stm.setInt(1, idcita);
+	        	
+	        	    ResultSet rs=stm.executeQuery();
+	                while(rs.next()){                							
+	                                lista.add(
+	                                		new CCita(
+	                                				rs.getInt("idcita"),
+	                                				new java.util.Date(rs.getDate("fecha").getTime()),
+	                                				new java.util.Date(rs.getTimestamp("hora_inicio").getTime()),
+	                                				new java.util.Date(rs.getTimestamp("hora_fin").getTime()),
+	                                				rs.getInt("estado"),
+	                                				rs.getInt("tipo_examen"),
+	                                				rs.getInt("cupo"),
+	                                				rs.getInt("estado"))
 	                                		); 
 	                }
 	                rs.close();

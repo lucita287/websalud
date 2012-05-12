@@ -11,6 +11,8 @@
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null){
 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+ArrayList<CCita> list=(ArrayList<CCita>)sessiones.getAttribute("paci_list");
+if(list==null) list=new ArrayList<CCita>();
 CValidation valid=new CValidation();
 String action=valid.ValidarRequest(request.getParameter("a"));
 if(action.equalsIgnoreCase("especifico_calendar")){
@@ -24,16 +26,28 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				ArrayList<CCita> cita= dbo.getDetalleCita(fecha_inicio,fecha_fin);
 				%>
 		<link rel='stylesheet' type='text/css' href="../css/system_secre.css" />		
+		<div style="float:left;">
 		<button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR NOMBRE</button>
 		<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR CARNE</button>		
+		</div>
+		  <div style="float:right;">			
+			<a  class="ui-state-default ui-corner-all button-save" onclick="Cancelar()"> <img  width="24px"  height="24px" src="../images/delete.png" />Cerrar</a>
+		  </div>
+		<div style="clear: both;"></div>  
 		<div class="ui-widget-content ui-corner-all">
 			<div style="float:left; width:400px;">
 			<%=(pac==null)?"":pac.getCarne()%><br/>
-			<%=(pac==null)?"":(pac.getNombre()+" "+pac.getApellido()) %><br/>
+			<%=(pac==null)?"":pac.getIdpaciente()+ ")"+(pac.getNombre()+" "+pac.getApellido()) %><br/>
 			<%=(pac==null)?"":(pac.getddmmyyFecha()) %>
 			</div>
 			<div style="float:left; width:300px;">
-			Prueba
+			<% 
+			Iterator<CCita> it3=list.iterator();
+			while(it3.hasNext()){
+				CCita cc=it3.next();
+				%>
+				<%= cc.getFormatoFechaddmmyy(cc.getFecha()) %> <%= cc.getFormatoFechahhmm(cc.getHora_inicio()) %> <%= cc.getTipo_examenD() %>
+			<%}%>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
@@ -58,7 +72,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							<td><%=cc.getFormatoFechaddmmyy(cc.getFecha()) %></td> 
 							<td><%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %></td>
 							<td><%=cc.getTipo_examenD()%></td>  
-							<td><%=citaact%><% if(citaact>0){%><a class="mybutton" onclick="asignar(<%=cc.getIdcita()%>,'<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a><% } %></td>
+							<td><%=citaact%> <% if(citaact>0){%><a class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a><% } %></td>
 							<td>
 							<a class="mybutton"> VER <%=cc.getCupo_disp() %></a><br/>
 							<a class="mybutton" onclick="r_dia_examen_<%=cc.getIdcita()%>()">(VER PDF)</a><br/>
@@ -72,8 +86,13 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						}
 				%></table>
 				<script>
+				function Cancelar(){
+					$( "#dialog-form" ).dialog( "close" );
+					 document.location.href="index.jsp?portal=1&start="+<%=request.getParameter("start") %>+"&end="+<%=request.getParameter("end") %>;
+				}
 				$(function() {
 					$( ".mybutton" ).button();
+					$( ".button-save" ).button();
 				});
 					function BuscarNombre(init,end){
 						$( "#dialog-form" ).dialog( "close" );
@@ -87,7 +106,22 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						$( "#dialog-form" ).dialog( "open" );
 					}
 					function asignar(id,init,end){
-						alert(id);
+						cadena = [ 'a=asignar_cita','idcita='+id,].join('&');
+						 
+						 $.ajax({
+						        url: "../SCita",
+						        data: cadena,
+						  	    type: 'post',
+						  	  	dataType: 'json',
+						  	  	success: function(data){
+						        	alert(data.mensaje);
+						  	  		if(data.resultado=='OK'){
+							  	  		$( "#dialog-form" ).dialog( "close" );
+										$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
+										$( "#dialog-form" ).dialog( "open" );
+						        	}
+						        }
+						    });
 					}
 				<%
 						Iterator<CCita> it2=cita.iterator();

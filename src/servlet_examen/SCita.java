@@ -10,8 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import data.CCita;
+import data.CPaciente;
 
 import framework.CDataBase;
 import framework.CDataExam;
@@ -95,7 +97,7 @@ public class SCita extends HttpServlet {
 				result=validacion;
 			}
 			out.println(result);
-			dbo.Close();
+			
 			
 		}else if(action.compareTo("guardarespecifico")==0){
 			
@@ -155,7 +157,26 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			 data+=lista_data+"]";
 			 out.print(data);
 			
+		}else if(action.equalsIgnoreCase("asignar_cita")){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+			HttpSession sessiones=request.getSession(false); 
+			if(sessiones!=null){
+				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+				if(pac!=null && idcita>0){
+					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente());
+					if(respuesta>0){
+						result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+					}else{
+						result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ya tiene asignado esa fecha, o ya no existe cupo. actualize la pagina\"}";
+					}
+				}else{
+					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un paciente o cita\"}";
+				}
+			}else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ha finalizado la sesion\"}";
+			out.print(result);
 		}
+		dbo.Close();
 		 }
 	}
 

@@ -65,28 +65,42 @@ CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				     $("#fecha_citas").flexigrid
 						({
 							method: 'POST',
-							// url: '../SFecha_actividadTable',
+							url: '../SCitaTable',
 							 dataType : 'xml',
 						    colModel: [
-							{display: 'Seleccionar', name : 'chkactividad', width : 30, sortable : false, align: 'left'},           
-							{ display: 'ID', name: 'idfecha_actividad', width: 40, sortable: true, align: 'left' },
-							{ display: 'Fecha', name: 'fecha', width: 80, sortable: true, align: 'left' },
-							{ display: 'Estado', name: 'hora_inicio', width: 90, sortable: true, align: 'left' },
+							{ display: 'ID', name: 'idfecha_actividad', width: 40, sortable: false, align: 'left' },
+							{ display: 'Fecha', name: 'fecha', width: 80, sortable: false, align: 'left' },
+							{ display: 'Descripcion', name: 'fecha', width: 130, sortable: false, align: 'left' },
+							{ display: 'Hora', name: 'fecha', width: 80, sortable: false, align: 'left' },
+							{ display: 'Tipo Examen', name: 'fecha', width: 80, sortable: false, align: 'left' },
+							{ display: 'Estado', name: 'hora_inicio', width: 70, sortable: false, align: 'left' },
 							],
 							showTableToggleBtn: true,
-						    usepager: true,
 						    sortname: "idfecha_actividad",
 							sortorder: "desc",
 						    title: 'FECHAS DE CITAS',
-						    useRp: true,
-						    rp: 30,
 						    width: 600,
 						    height: 300,
 							params : [ 
-							          {name: 'idactividad', value: 0},{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} 
+							          {name: 'a', value: 'est_cita'} 
 							        ]
 						});
-				  });  
+				  }); 
+			function Modificar(id){
+				cadena = [ 'a=estu_cita','idcita='+id,].join('&');
+				 
+				 $.ajax({
+				        url: "../SCita",
+				        data: cadena,
+				  	    type: 'post',
+				  	  	dataType: 'json',
+				  	  	success: function(data){
+				  	  	document.location.href="index.jsp?portal=3";
+				        }
+				    });
+				
+				alert(id);
+			}
 			</script>
 	</form>			
 <% } %>			

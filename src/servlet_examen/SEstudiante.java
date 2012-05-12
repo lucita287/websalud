@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CCita;
 import data.CPaciente;
-import data.CUsuario;
-import data.CUsuarioPermiso;
 import framework.CDataExam;
 import framework.CValidation;
 import framework.CWebService;
@@ -49,27 +48,38 @@ public class SEstudiante extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		if(!user.isEmpty()){	 
 			CPaciente pac= dbo.getEstudianteEspecifica(user);
+			int idpaciente=0;
 			if(pac==null){
 			 CWebService servicio=new CWebService(2012);
 			 pac=servicio.VerificarEstudiante(user, dbo);
 					 if(pac!=null){
-						 session.setAttribute("resultado","1");
-						 session.setAttribute("paci_consulta",pac);
 						 dbo.SafePaciente(pac);
+						 idpaciente=dbo.getIdPaciente(pac.getUsuario());
+						 pac.setIdpaciente(idpaciente);
+						 session.setAttribute("resultado","1");
+						 ArrayList<CCita> list=dbo.ListCitasEstudiante(idpaciente);
+						 session.setAttribute("paci_list",list);
+						 session.setAttribute("paci_consulta",pac);
+						 
 					 }else{
 						 session.setAttribute("resultado","0");
 						 session.setAttribute("paci_consulta",null);
+						 session.setAttribute("paci_list",null);
 					 }
 					 
 			}else{
-			session.setAttribute("paci_consulta",pac);
-			session.setAttribute("resultado","1");
+				idpaciente=pac.getIdpaciente();
+				ArrayList<CCita> list=dbo.ListCitasEstudiante(idpaciente);
+				session.setAttribute("paci_consulta",pac);
+				session.setAttribute("resultado","1");
+				session.setAttribute("paci_list",list);
 			
 			}
 		 dbo.Close();
 		 }else {
 			 session.setAttribute("resultado","0");
 			 session.setAttribute("paci_consulta",null);
+			 session.setAttribute("paci_list",null);
 		 }
 		response.sendRedirect("interno/index.jsp?portal=3");
 	}

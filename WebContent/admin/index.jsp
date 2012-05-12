@@ -58,8 +58,6 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <jsp:include page="modulo_contenido/multimedia.jsp" />
 <% }else if(portal==11){ %>
 <jsp:include page="modulo_examen/propiedades.jsp" />
-<% }else if(portal==12){ %>
-<jsp:include page="modulo_examen/mantenimiento.jsp" />
 <% }else if(portal==13){ %>
 <jsp:include page="modulo_examen/mant_categorias.jsp" />
 <% }else if(portal==14){ %>

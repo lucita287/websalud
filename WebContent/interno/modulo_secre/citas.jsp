@@ -42,15 +42,15 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 						    title: 'FECHAS CITAS',
 						    width: 800,
 						    height: 400,
-							params : [{name: 'mes', value: $("#mes").val()},{name: 'anio', value: $("#anio").val()},{name: 'tipo_examen', value: $("input[@name='exam']:checked").val()}]
+							params : [{name: 'mes', value: $("#mes").val()},{name: 'a',value:'allcitas'},{name: 'anio', value: $("#anio").val()},{name: 'tipo_examen', value: $("input[@name='exam']:checked").val()}]
 						});
 				  });  
 			  function BuscarFecha(){
-				  $('#fecha_citas').flexOptions({params : [{name: 'mes', value: $("#mes").val()},{name: 'anio', value: $("#anio").val()},{name: 'tipo_examen', value: $("input[@name='exam']:checked").val()}]});
+				  $('#fecha_citas').flexOptions({params : [{name: 'mes', value: $("#mes").val()},{name: 'a',value:'allcitas'},{name: 'anio', value: $("#anio").val()},{name: 'tipo_examen', value: $("input[@name='exam']:checked").val()}]});
 				  $('#fecha_citas').flexReload();
 			  }
 			  function limpiar_cita(){
-				  $('#fecha_citas').flexReload();
+				  BuscarFecha();
 				  $("#r_fecha_inicio").val("");
 				  $("#r_fecha_fin").val("");
 				  $("#r_hora_inicio").val("");

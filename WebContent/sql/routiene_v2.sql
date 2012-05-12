@@ -256,3 +256,35 @@ end if;
     RETURN 1;
 END
 $$
+
+DELIMITER $$
+DROP FUNCTION IF EXISTS `asignar_cita`$$
+CREATE FUNCTION asignar_cita(pidcita int,pidpaciente int) RETURNS int
+    DETERMINISTIC
+BEGIN
+   DECLARE vcupo int DEFAULT 0;
+   
+   select (c.cupo-
+   (
+    select count(*) from cita_paciente pc where pc.idcita=pidcita
+    and pc.estado=1
+    )) as cupo_d into vcupo
+    from cita c
+    where c.idcita=pidcita;
+    if vcupo>0 then
+         INSERT INTO cita_paciente
+              (idcita, 
+              idpaciente, 
+              estado) 
+            VALUES 
+              (pidcita, 
+              pidpaciente, 
+              1);
+          return 1;    
+    else
+        return 0;
+    
+    end if;
+   return 0;
+END
+$$

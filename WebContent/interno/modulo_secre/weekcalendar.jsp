@@ -9,7 +9,11 @@
 
 <div style="clear: both;"></div>
 <div id='calendar'></div>
-
+<style>
+.ui-dialog-titlebar-close{
+    display: none;
+}
+</style>
 <script>
 
  
@@ -23,12 +27,14 @@
 		$( "#datepicker" ).datepicker( "option", "dateFormat", "mm/dd/yy");
 	
 			$( "#dialog-form" ).dialog({
+				
 				autoOpen: false,
 				height: 450,
 				width: 800,
 				modal: true
 			});
 			$( "#dialog:ui-dialog" ).dialog( "destroy" );
+			
 			
 	  });	
 	   
