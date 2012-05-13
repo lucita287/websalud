@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import data.CCita;
 import data.CPaciente;
 
-import framework.CDataBase;
 import framework.CDataExam;
 import framework.CValidation;
 
@@ -79,7 +78,7 @@ public class SCita extends HttpServlet {
 			validacion=(validacion.compareTo("")==0)?valid.isFechaValida(fecha_fin,  "Fecha fin"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.validarFechaMayoraOtra(fecha_inicio,fecha_fin,"Fecha de Inicio","Fecha de Fin"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_inicio,"Hora de Inicio"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_fin,"Hora de Inicio"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_fin,"Hora de Fin"):validacion;
 			System.out.println("* "+hora_inicio+" "+hora_fin);
 			validacion=(validacion.compareTo("")==0)?valid.validarHoraMayoraOtra(valid.CambiarFormatohhmm2(hora_inicio),valid.CambiarFormatohhmm2(hora_fin)):validacion;
 			if(validacion.compareTo("")==0){
@@ -114,14 +113,14 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			String validacion=valid.ValidarSiesMayor(cupo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe ingresar una cupo\"}");
 			validacion=(validacion.compareTo("")==0)?valid.isFechaValida(fecha,  "Fecha inicio"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_inicio,"Hora de Inicio"):validacion;
-			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_fin,"Hora de Inicio"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_fin,"Hora de Fin"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.validarHoraMayoraOtra(valid.CambiarFormatohhmm2(hora_inicio),valid.CambiarFormatohhmm2(hora_fin)):validacion;
 			if(validacion.compareTo("")==0){
 				
 					int r=dbo.SafeCita(valid.CambiarFormatoddmmyy(fecha), valid.CambiarFormatohhmm2(hora_inicio), valid.CambiarFormatohhmm2(hora_fin), cupo, tipo_examen,estado);
 					if(r>=1)
 					result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
-					else result="{\"resultado\":\"ERROR\",\"mensaje\":\" Error al guardar o no existe ningun \n dia de la semana  en el rango de fechas \"}";
+					else result="{\"resultado\":\"ERROR\",\"mensaje\":\" Error al guardar  \"}";
 					
 			}else{
 				result=validacion;
@@ -152,7 +151,7 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				 lista_data+=(lista_data.compareTo("")==0)?"":",";
 				// lista_data+="{\"id\":"+da.getIddetalleactividad()+", \"start\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorainicio())+"\", \"end\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorafin())+"\", \"title\":\""+da.getActividadidactividad().getTitulo()+"\"}";
 				 
-				 lista_data+="{\"id\":"+da.getIdcita()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"\"}";
+				 lista_data+="{\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"\"}";
 			 }
 			 data+=lista_data+"]";
 			 out.print(data);
@@ -174,6 +173,38 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un paciente o cita\"}";
 				}
 			}else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Ha finalizado la sesion\"}";
+			out.print(result);
+		}else if(action.equalsIgnoreCase("estu_cita")){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+			HttpSession sessiones=request.getSession(false); 
+			if(sessiones!=null){
+				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+				if(pac!=null && idcita>0){
+					boolean respuesta=dbo.UpdatePacienteCita(idcita, pac.getIdpaciente());
+					if(respuesta){
+						result="{\"resultado\":\"OK\"}";
+					}else{
+						result="{\"resultado\":\"ERROR\"}";
+					}
+				}else{
+					result="{\"resultado\":\"ERROR\"}";
+				}
+			}else result="{\"resultado\":\"ERROR\"}";
+			out.print(result);
+		}else if(action.equalsIgnoreCase("estu_cita_pac")){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			int idpaciente=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpaciente")));
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+				if(idpaciente>0 && idcita>0){
+					boolean respuesta=dbo.UpdatePacienteCita(idcita, idpaciente);
+					if(respuesta){
+						result="{\"resultado\":\"OK\"}";
+					}else{
+						result="{\"resultado\":\"ERROR\"}";
+					}
+				
+			}else result="{\"resultado\":\"ERROR\"}";
 			out.print(result);
 		}
 		dbo.Close();

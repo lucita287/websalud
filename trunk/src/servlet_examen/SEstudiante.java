@@ -1,7 +1,7 @@
 package servlet_examen;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.CCita;
 import data.CPaciente;
 import framework.CDataExam;
 import framework.CValidation;
@@ -41,47 +40,83 @@ public class SEstudiante extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8"); 
+    	PrintWriter out = response.getWriter(); 
 		CValidation valid=new CValidation();
 		CDataExam dbo=new CDataExam();
 		dbo.Connect();
 		String user=valid.ValidarRequest(request.getParameter("user")).trim().toLowerCase(); 
+		String action=valid.ValidarRequest(request.getParameter("a"));
 		HttpSession session = request.getSession(true);
-		if(!user.isEmpty()){	 
-			CPaciente pac= dbo.getEstudianteEspecifica(user);
-			int idpaciente=0;
-			if(pac==null){
-			 CWebService servicio=new CWebService(2012);
-			 pac=servicio.VerificarEstudiante(user, dbo);
-					 if(pac!=null){
-						 dbo.SafePaciente(pac);
-						 idpaciente=dbo.getIdPaciente(pac.getUsuario());
-						 pac.setIdpaciente(idpaciente);
-						 session.setAttribute("resultado","1");
-						 ArrayList<CCita> list=dbo.ListCitasEstudiante(idpaciente);
-						 session.setAttribute("paci_list",list);
-						 session.setAttribute("paci_consulta",pac);
-						 
-					 }else{
-						 session.setAttribute("resultado","0");
-						 session.setAttribute("paci_consulta",null);
-						 session.setAttribute("paci_list",null);
-					 }
+		if(action.equalsIgnoreCase("estudiante_ver")){
+				
+				if(!user.isEmpty()){	 
+					CPaciente pac= dbo.getEstudianteEspecifica(user);
+					int idpaciente=0;
+					if(pac==null){
+					 CWebService servicio=new CWebService(2012);
+					 pac=servicio.VerificarEstudiante(user, dbo);
+							 if(pac!=null){
+								 dbo.SafePaciente(pac);
+								 idpaciente=dbo.getIdPaciente(pac.getUsuario());
+								 pac.setIdpaciente(idpaciente);
+								 session.setAttribute("resultado","1");
+								 session.setAttribute("paci_consulta",pac);
+								 
+							 }else{
+								 session.setAttribute("resultado","0");
+								 session.setAttribute("paci_consulta",null);
+								 
+							 }
+							 
+					}else{
+						idpaciente=pac.getIdpaciente();
+						session.setAttribute("paci_consulta",pac);
+						session.setAttribute("resultado","1");
+					
+					}
+				 }else {
+					 session.setAttribute("resultado","0");
+					 session.setAttribute("paci_consulta",null);
 					 
-			}else{
-				idpaciente=pac.getIdpaciente();
-				ArrayList<CCita> list=dbo.ListCitasEstudiante(idpaciente);
-				session.setAttribute("paci_consulta",pac);
-				session.setAttribute("resultado","1");
-				session.setAttribute("paci_list",list);
-			
+				 }
+				response.sendRedirect("interno/index.jsp?portal=3");
+		}else if(action.equalsIgnoreCase("estudiante_consulta")){
+			String carne=valid.ValidarRequest(request.getParameter("carne"));
+			String result="ERROR<br/>Debe ingrese el carne";
+			CPaciente pac=null;
+			if(!carne.isEmpty()){
+				
+				pac= dbo.getEstudianteEspecifica(carne);
+				if(pac==null){
+					CWebService servicio=new CWebService(2012);
+					 pac=servicio.VerificarEstudiante(carne, dbo);
+							 if(pac!=null){
+								 dbo.SafePaciente(pac);
+								 int idpaciente=dbo.getIdPaciente(pac.getUsuario());
+								 pac.setIdpaciente(idpaciente);
+								 
+							 }
+				}
+				
+					
 			}
-		 dbo.Close();
-		 }else {
-			 session.setAttribute("resultado","0");
-			 session.setAttribute("paci_consulta",null);
-			 session.setAttribute("paci_list",null);
-		 }
-		response.sendRedirect("interno/index.jsp?portal=3");
+			if(pac!=null){
+				session.setAttribute("paci_consulta",pac);
+				result="<table>";
+				result+="<tr><td>Nombre</td><td>"+pac.getNombre()+"</td><td>Apellido</td><td>"+pac.getApellido()+"</td></tr>";
+				result+="<tr><td>Telefono</td><td>"+pac.getTelefono()+"</td><td>Movil</td><td>"+pac.getMovil()+"</td></tr>";
+				result+="<tr><td>Email</td><td>"+pac.getEmail()+"</td><td>Facultad</td><td></td></tr>";
+				result+="</table>";
+			}else{
+				result="ERROR CARNE NO ENCONTRADO";
+				session.setAttribute("paci_consulta",null);
+			}
+			
+			out.println(result);
+			
+		}
+		dbo.Close();
 	}
 
 }
