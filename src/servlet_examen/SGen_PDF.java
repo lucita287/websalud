@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import framework.CDataBase;
 
@@ -51,7 +51,7 @@ public class SGen_PDF extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession(false);
+		//HttpSession session=request.getSession(false);
 			response.setHeader( "Content-Disposition", "attachment; filename=\"" + request.getParameter("report_name")+".pdf" + "\"" );
 			response.setContentType("application/pdf");
 			try{
