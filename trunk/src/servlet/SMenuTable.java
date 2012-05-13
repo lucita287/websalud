@@ -93,7 +93,7 @@ public class SMenuTable extends HttpServlet {
 								 String data="";
 								 for(int i=0; i<list.size();i++){
 									 CMenu temp=list.get(i);
-								data+="<row id='"+temp.getidmenu()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />]]></cell><cell><![CDATA["+temp.getidmenu()+"]]></cell><cell><![CDATA["+temp.getdescripcion()+"]]></cell><cell><![CDATA["+temp.getareaidarea().getnombre()+"]]></cell><cell><![CDATA["+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"]]></cell></row>";	 
+									 data+="<row id='"+temp.getidmenu()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='editar("+temp.getidmenu()+")' name='idmenu_radio' value='"+temp.getidmenu()+"' />]]></cell><cell><![CDATA["+temp.getidmenu()+"]]></cell><cell><![CDATA["+temp.getdescripcion()+"]]></cell><cell><![CDATA["+temp.getareaidarea().getnombre()+"]]></cell><cell><![CDATA["+((temp.getidmenu_rec()!=null)?temp.getidmenu_rec().getdescripcion():"")+"]]></cell></row>";	 
 						
 								 }
 								 info+=data+"</rows>";
