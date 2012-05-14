@@ -69,7 +69,16 @@
 			},
 			height: function($calendar){
 				return $(window).height() - $("h1").outerHeight(true);
-			},
+			}
+			,eventRender : function(calEvent, $event) {
+		        if (calEvent.estado ==0) {
+		          $event.css('backgroundColor', '#aaa');
+		          $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
+		        }else if(calEvent.estado==3){
+		        	$event.css('backgroundColor', '#F62217');
+			        $event.find('.time').css({'backgroundColor': '#F62217', 'border':'1px solid #888'});
+		        }
+		      },
 	        data: function(start, end, callback) {
 	        	  
 	        	
@@ -95,9 +104,7 @@
 		});
 		  
 	});
-	function displayMessage(message) {
-		$("#message").html(message).fadeIn();
-	}
+	
 	$('#datepicker').datepicker().change(function() {
 	   $('#calendar').weekCalendar("gotoWeek", new Date($('#datepicker').val()));
 	});

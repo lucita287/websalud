@@ -49,6 +49,10 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 				  $('#fecha_citas').flexOptions({params : [{name: 'mes', value: $("#mes").val()},{name: 'a',value:'allcitas'},{name: 'anio', value: $("#anio").val()},{name: 'tipo_examen', value: $("input[@name='exam']:checked").val()}]});
 				  $('#fecha_citas').flexReload();
 			  }
+			  function Modificar(id){
+				  $( "#dialog-form" ).load("modulo_secre/modifi_cita.jsp?idcita="+id);
+				  $( "#dialog-form" ).dialog( "open" );
+			  }
 			  function limpiar_cita(){
 				  BuscarFecha();
 				  $("#r_fecha_inicio").val("");

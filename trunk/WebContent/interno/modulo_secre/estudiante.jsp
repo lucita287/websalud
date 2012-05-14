@@ -9,7 +9,7 @@ if(sessiones!=null){
 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 %>    
     <form id="MainForm" name="MainForm" action="../SEstudiante" method="post">
-    	
+    		<input type="hidden" name="a" value="estudiante_ver" />
     
     		<script  type="text/javascript">
 				
@@ -73,7 +73,7 @@ CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 							{ display: 'Descripcion', name: 'fecha', width: 130, sortable: false, align: 'left' },
 							{ display: 'Hora', name: 'fecha', width: 80, sortable: false, align: 'left' },
 							{ display: 'Tipo Examen', name: 'fecha', width: 80, sortable: false, align: 'left' },
-							{ display: 'Estado', name: 'hora_inicio', width: 70, sortable: false, align: 'left' },
+							{ display: 'Estado', name: 'hora_inicio', width: 70, sortable: false, align: 'left' }
 							],
 							showTableToggleBtn: true,
 						    sortname: "idfecha_actividad",
@@ -99,7 +99,6 @@ CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				        }
 				    });
 				
-				alert(id);
 			}
 			</script>
 	</form>			

@@ -12,7 +12,8 @@
 	function GuardarEspecifico(){
 		  cadena = [ 'a=guardarespecifico',
 			            'fecha='+$("#r_fecha1").val(),
-			            'hora='+$("#r_hora1").val(),
+			            'hora_inicio='+$("#r_hora_inicio1").val(),
+			            'hora_fin='+$("#r_hora_fin1").val(),
 			            'tipo_examen='+$("#r_tipo_examen1").val(),
 			            'cupo='+$("#r_cupo1").val(),
 			            'estado='+$("#r_estado1").val(),
@@ -51,17 +52,23 @@
 									<tr>
 										<td>Fecha</td>
 										<td><input type="text" id="r_fecha1" size="10" class="datepicker"/></td>
-										<td>Hora</td>
-										<td><input size="10" id="r_hora1" type="text" class="time"/> 
+									</tr>
+									<tr>	
+										<td>Hora Inicio</td>
+										<td><input size="10" id="r_hora_inicio1" type="text" class="time"/> 
 											
 										</td>
-									</tr>
+										<td>Hora Fin</td>
+										<td><input size="10" id="r_hora_fin1" type="text" class="time"/> 
+										</td>
+									</tr>	
+										
 									<tr>	
 										<td>Cupo</td>
 										<td><input size="10" id="r_cupo1" type="text" /></td>
 										<td>Tipo de Examen</td>
-										<td>
-											<select id="r_tipo_examen1">
+										<td><select id="r_tipo_examen1">
+											<option value="0">SELECCIONE EXAMEN</option>
 											<option value="1">AutoEvaluacion</option>
 											<option value="2">Multifásico</option>
 											</select>
