@@ -141,6 +141,11 @@ public class CCita {
 		
 		return formatter.format(date);
 	}
+	public String getFormatoFechahhmm2(Date date){
+		DateFormat formatter = new SimpleDateFormat("HH:mm");
+		
+		return formatter.format(date);
+	}
 	public String getFormatoFechaDes(Date date){
 		SimpleDateFormat formatter = new SimpleDateFormat("E ',' dd 'de' MMMM 'de' yyyy", new Locale("es"));
 		return formatter.format(date);

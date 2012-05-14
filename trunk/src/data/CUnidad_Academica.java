@@ -3,13 +3,15 @@ package data;
 public class CUnidad_Academica {
 	private int idunidad_academica;
 	private String nombre;
+	private int codigo;
 	/**
 	 * @param idunidad_academica
 	 * @param nombre
 	 */
-	public CUnidad_Academica(int idunidad_academica, String nombre) {
+	public CUnidad_Academica(int idunidad_academica, String nombre,int codigo) {
 		this.idunidad_academica = idunidad_academica;
 		this.nombre = nombre;
+		this.codigo = codigo;
 	}
 	/**
 	 * @return the idunidad_academica
