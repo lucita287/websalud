@@ -263,6 +263,7 @@ CREATE FUNCTION asignar_cita(pidcita int,pidpaciente int) RETURNS int
     DETERMINISTIC
 BEGIN
    DECLARE vcupo int DEFAULT 0;
+   DECLARE vidcita int DEFAULT 0;
    
    select (c.cupo-
    (
@@ -272,15 +273,27 @@ BEGIN
     from cita c
     where c.idcita=pidcita;
     if vcupo>0 then
-         INSERT INTO cita_paciente
-              (idcita, 
-              idpaciente, 
-              estado) 
-            VALUES 
-              (pidcita, 
-              pidpaciente, 
-              1);
-          return 1;    
+        
+        select idcita into vidcita from cita_paciente where idcita=pidcita and idpaciente=pidpaciente;
+        
+        
+        if vidcita<=0 then
+                INSERT INTO cita_paciente
+                      (idcita, 
+                      idpaciente, 
+                      estado) 
+                    VALUES 
+                      (pidcita, 
+                      pidpaciente, 
+                      1);
+        else
+                UPDATE cita_paciente SET 
+                  estado = 1 
+                WHERE
+                  idcita = pidcita AND idpaciente = pidpaciente;
+        end if;
+        
+        return 1;    
     else
         return 0;
     
