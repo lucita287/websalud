@@ -23,18 +23,39 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				
 				ArrayList<CCita> cita= dbo.getDetalleCita(fecha_inicio,fecha_fin);
 				%>
-
+<div style="float:left;">
 <button class="mybutton" onclick="NuevaCita('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">REGRESAR A CITA</button>
 <button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR NOMBRE</button>
+</div>
+ <div style="float:right;">			
+	<a  class="ui-state-default ui-corner-all button-save" onclick="Cancelar()"> <img  width="24px"  height="24px" src="../images/delete.png" />Cerrar</a>
+</div>
+<div style="clear: both;"></div>
 <H2>BUSQUEDA POR CARNE</H2>
-
-
-
-
-
+Carne<input type="text" id="carne" name="carne"  size="20px"/><button onclick="buscar()" class="mybutton">BUSCAR</button>
+<div id="respuesta"></div>
 <script>
+function Cancelar(){
+	$( "#dialog-form" ).dialog( "close" );
+	$('#calendar').weekCalendar("gotoWeek", new Date(<%=request.getParameter("start")%>));
+}
+function buscar(){
+
+	cadena = [ 'a=estudiante_consulta','carne='+$("#carne").val(),].join('&');
+	 
+	 $.ajax({
+	        url: "../SEstudiante",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	success: function(data){
+	     		$("#respuesta").html(data);   	
+	        }
+	    });
+}
+
 $(function() {
 	$( ".mybutton" ).button();
+	$( ".button-save" ).button();
 });
 function NuevaCita(init,end){
 	$( "#dialog-form" ).dialog( "close" );

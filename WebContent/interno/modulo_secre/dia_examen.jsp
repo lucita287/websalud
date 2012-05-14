@@ -11,13 +11,18 @@
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null){
 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
-ArrayList<CCita> list=(ArrayList<CCita>)sessiones.getAttribute("paci_list");
-if(list==null) list=new ArrayList<CCita>();
+
+
 CValidation valid=new CValidation();
 String action=valid.ValidarRequest(request.getParameter("a"));
 if(action.equalsIgnoreCase("especifico_calendar")){
+	
+	
 	CDataExam dbo=new CDataExam();
 	if(dbo.Connect()){
+		
+		ArrayList<CCita> list=new ArrayList<CCita>();
+		if(pac!=null) list=dbo.ListCitasEstudiante(pac.getIdpaciente());
 				Long start=valid.ConvertLong(valid.ValidarRequest(request.getParameter("start")));
 				Date fecha_inicio=valid.ConvertoDate(start);
 				Long end=valid.ConvertLong(valid.ValidarRequest(request.getParameter("end")));
@@ -74,7 +79,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							<td><%=cc.getTipo_examenD()%></td>  
 							<td><%=citaact%> <% if(citaact>0){%><a class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a><% } %></td>
 							<td>
-							<a class="mybutton"> VER <%=cc.getCupo_disp() %></a><br/>
+							<a class="mybutton" onclick="asignados('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')"> VER <%=cc.getCupo_disp() %></a><br/>
 							<a class="mybutton" onclick="r_dia_examen_<%=cc.getIdcita()%>()">(VER PDF)</a><br/>
 							<a class="mybutton" onclick="Er_dia_examen_<%=cc.getIdcita()%>()">(VER EXCEL)</a><br/>
 							</td>
@@ -88,7 +93,8 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				<script>
 				function Cancelar(){
 					$( "#dialog-form" ).dialog( "close" );
-					 document.location.href="index.jsp?portal=1&start="+<%=request.getParameter("start") %>+"&end="+<%=request.getParameter("end") %>;
+					$('#calendar').weekCalendar("gotoWeek", new Date(<%=request.getParameter("start")%>));
+					 
 				}
 				$(function() {
 					$( ".mybutton" ).button();
@@ -122,6 +128,11 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						        	}
 						        }
 						    });
+					}
+					function asignados(id,init,end){
+						$( "#dialog-form" ).dialog( "close" );
+						$( "#dialog-form" ).load("modulo_secre/lista_paciente.jsp?idcita="+id+"&start="+init+"&end="+end+"&a=especifico_calendar&");
+						$( "#dialog-form" ).dialog( "open" );
 					}
 				<%
 						Iterator<CCita> it2=cita.iterator();

@@ -71,7 +71,6 @@
 										</td>
 										<td>Hora Fin</td>
 										<td><input size="10" id="r_hora_fin" type="text" class="time"/> 
-											
 										</td>
 									</tr>	
 									<tr>	

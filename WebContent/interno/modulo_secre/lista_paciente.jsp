@@ -20,21 +20,51 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				Date fecha_inicio=valid.ConvertoDate(start);
 				Long end=valid.ConvertLong(valid.ValidarRequest(request.getParameter("end")));
 				Date fecha_fin=valid.ConvertoDate(end);
-				
+				int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
 				ArrayList<CCita> cita= dbo.getDetalleCita(fecha_inicio,fecha_fin);
 				%>
 <div style="float:left;">
 <button class="mybutton" onclick="NuevaCita('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">REGRESAR A CITA</button>
-<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR CARNE</button>
 </div>
  <div style="float:right;">			
 	<a  class="ui-state-default ui-corner-all button-save" onclick="Cancelar()"> <img  width="24px"  height="24px" src="../images/delete.png" />Cerrar</a>
 </div>
 		<div style="clear: both;"></div>
-<H2>BUSQUEDA POR NOMBRE (LOCALMENTE)</H2>
-Nombre <input type="text" id="nombre" />
-Apellido <input type="text" id="apellido" />
+<table id="estudiantes" style="display:none"></table>
 <script>
+$(document).ready(function () {
+    $("#estudiantes").flexigrid
+		({
+			method: 'POST',
+			url: '../SCitaTable',
+			dataType : 'xml',
+		    colModel: [
+			{display: 'ID', name : 'chkactividad', width : 30, sortable : false, align: 'left'},           
+			{ display: 'Carne', name: 'carne', width: 140, sortable: true, align: 'left' },
+			{ display: 'Nombre', name: 'nombre', width: 140, sortable: true, align: 'left' },
+			{ display: 'Apellido', name: 'apellido', width: 90, sortable: true, align: 'left' },
+			{ display: 'Unidad Academica', name: 'unidad', width: 100, sortable: true, align: 'left' },
+			{ display: 'Estado', name: 'estado', width: 90, sortable: true, align: 'left' }
+			],
+			usepager: true,
+		    sortname: "carne",
+			sortorder: "desc",
+		    title: 'PACIENTES',
+		    useRp: true,
+		    rp: 15,
+		    showTableToggleBtn: true,
+		    searchitems : [
+							{display: 'carne', name : 'carne'},
+							{display: 'nombre', name : 'nombre'},
+							{display: 'apellido', name : 'apellido'}
+							],
+		    width: 750,
+		    height: 250,
+			params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>}]
+		});
+   		$('.pSearch').click();
+ });
+
 function Cancelar(){
 	$( "#dialog-form" ).dialog( "close" );
 	 document.location.href="index.jsp?portal=1&start="+<%=request.getParameter("start") %>+"&end="+<%=request.getParameter("end") %>;
@@ -49,10 +79,23 @@ function NuevaCita(init,end){
 	$( "#dialog-form" ).dialog( "open" );
 	
 }
-function BuscarCarne(init,end){
-	$( "#dialog-form" ).dialog( "close" );
-	$( "#dialog-form" ).load("modulo_secre/bcarne.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
-	$( "#dialog-form" ).dialog( "open" );
+function Modificar(idpaciente,idcita){
+	cadena = [ 'a=estu_cita_pac','idcita='+idcita,'idpaciente='+idpaciente].join('&');
+	 
+	 $.ajax({
+	        url: "../SCita",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	dataType: 'json',
+	  	  	success: function(data){
+	  	  		if(data.resultado=='OK'){
+	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>} ]});
+				  $('#estudiantes').flexReload();
+	  	  		}else{
+	  	  			alert("No se ha cambiado");
+	  	  		}
+	        }
+	    });
 }
 </script>
 <%  dbo.Close(); }
