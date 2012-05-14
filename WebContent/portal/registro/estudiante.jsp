@@ -5,9 +5,7 @@
     <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
     <%@ page import="framework.CValidation" %>
     <%@ page import="framework.CDataExam" %>
-    <%@ page import="data.CCentro_Regional" %>
     <%@ page import="data.CUnidad_Academica" %>
-    <%@ page import="data.CCarrera" %>
     <%@ page import="data.CDependencia" %>
     <%@ page import="data.CParentesco" %>
     <%@ page import="java.util.ArrayList" %>
@@ -44,18 +42,6 @@
 								required: true,
 								minlength: 7,
 								number: true
-							},
-							centro_registro: {
-								min:1,
-								required: true
-							},
-							facultad: {
-								min:1,
-								required: true
-							},
-							carrera: {
-								min:1,
-								required: true
 							},
 							<% } if(idregistro==3||idregistro==4){%>
 							dependencia: {
@@ -134,73 +120,6 @@
 	<form class="cmxform" id="registro" method="post" action="SPaciente" accept-charset="UTF-8">
 	<input type="hidden" id="a" name="a" value="<%=a %>" />
 	<div class="registro_user"> 
-	<% if(idregistro==2||idregistro==4){ 
-		ArrayList<CCentro_Regional> centro=data.getListaCentro_Regional();
-		ArrayList<CUnidad_Academica> facultad=data.getListaUnidad_Academica();
-		ArrayList<CCarrera> carrera=data.getListaCarrera();
-	%>
-			<h3 class="ui-widget-header ui-corner-all">Estatus del Estudiante</h3>
-		<div class="tabla">
-						<div class="fila">
-									<div class="col_titulo">*Carne</div>
-									<div class="col"><input type="text" id="carne" name="carne" class="required"  size="20"></div>
-						</div>
-						<div class="fila">
-									<div class="col_titulo">*Centro Universitario</div>
-									<div class="col">
-										<select id="centro_registro"  name="centro_registro" >
-												<option value="0">SELECCIONE SU CENTRO UNIVERSITARIO</option>
-										<%
-										Iterator<CCentro_Regional> it=centro.iterator();
-										while (it.hasNext()) {
-											CCentro_Regional cen=it.next();
-												out.println("<option value=\""+cen.getIdcentro_regional()+"\">"+cen.getNombre()+"</option>");
-										    }
-											%>			
-										</select>
-										
-									</div>
-						</div>
-					
-						<div class="fila">
-									<div class="col_titulo">*Facultad</div>
-									<div class="col">
-										<select id="facultad" name="facultad" >
-												<option value="0">SELECCIONE SU FACULTAD</option>	
-												<%
-										Iterator<CUnidad_Academica> it2=facultad.iterator();
-										while (it2.hasNext()) {
-											CUnidad_Academica fac=it2.next();
-												out.println("<option value=\""+fac.getIdunidad_academica()+"\">"+fac.getNombre()+"</option>");
-										    }
-											%>			
-										</select>
-									</div>
-						</div>
-						
-						<div class="fila">
-									<div class="col_titulo">*Carrera</div>
-									
-						</div>
-						<div class="fila">
-									<div class="col">
-										<select id="carrera" name="carrera" >
-												<option value="0">SELECCIONE SU CARRERA</option>	
-												<%
-													Iterator<CCarrera> it3=carrera.iterator();
-													while (it3.hasNext()) {
-														CCarrera car=it3.next();
-															out.println("<option value=\""+car.getIdcarrera()+"\">"+car.getNombre()+"</option>");
-													    }
-												%>
-										</select>
-									</div>
-						</div>
-						
-		</div>												
-		
-	
-	<% } %>
 	<div style="clear: both;"></div>
 	<% if(idregistro==3||idregistro==4){ 
 		ArrayList<CDependencia> lista_dep=data.getListaDependencia();
