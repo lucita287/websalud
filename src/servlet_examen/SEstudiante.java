@@ -80,7 +80,7 @@ public class SEstudiante extends HttpServlet {
 					 session.setAttribute("paci_consulta",null);
 					 
 				 }
-				response.sendRedirect("interno/index.jsp?portal=3");
+				response.sendRedirect("secretaria/index.jsp?portal=3");
 		}else if(action.equalsIgnoreCase("estudiante_consulta")){
 			String carne=valid.ValidarRequest(request.getParameter("carne"));
 			String result="ERROR<br/>Debe ingrese el carne";

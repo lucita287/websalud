@@ -80,6 +80,7 @@ public class CPaciente {
 		this.usuario = usuario;
 		this.no_personal= no_personal;
 		this.apellido=apellido;
+		
 	}
 
 	
@@ -149,6 +150,8 @@ public class CPaciente {
 		this.titulo_secundaria = titulo_secundaria;
 		this.crecio_en = crecio_en;
 		this.no_personal= no_personal;
+		this.estado=estado;
+		
 	}
 
 	

@@ -56,7 +56,7 @@ public class SGen_PDF extends HttpServlet {
 			response.setContentType("application/pdf");
 			try{
 				String realpath=getServletContext().getRealPath("/");
-				File reportFile = new File(realpath+"/interno/report_view/"+request.getParameter("report")+".jasper");
+				File reportFile = new File(realpath+"/secretaria/report_view/"+request.getParameter("report")+".jasper");
 				if (!reportFile.exists())
 					throw new JRRuntimeException("El archivo "+request.getParameter("report")+".jasper no se encontro.");
 				@SuppressWarnings("deprecation")
@@ -73,7 +73,7 @@ public class SGen_PDF extends HttpServlet {
 						
 					}
 				}
-				parameters.put(JRParameter.REPORT_FILE_RESOLVER, new SimpleFileResolver(new File(realpath+"/interno/report_view/")));
+				parameters.put(JRParameter.REPORT_FILE_RESOLVER, new SimpleFileResolver(new File(realpath+"/secretaria/report_view/")));
 				CDataBase db=new CDataBase();
 				if(db.Connect()){
 					JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters,db.getconnection());
