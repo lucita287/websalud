@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.mysql.jdbc.PreparedStatement;
 
+import data.CAnuncio;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CCita;
@@ -1965,7 +1966,7 @@ public class CDataExam extends CDataBase {
 				stm.setInt(1, idpaciente);
 				ResultSet rs=stm.executeQuery();
 				while(rs.next()){
-					String html="<h3>"+rs.getString("desc_categoria")+"</h3><br>"+rs.getString("interpretacion")+"<br>";
+					String html="<br>"+rs.getString("interpretacion")+"<br>";
 					lista.add(html);
 				}
 		}catch(SQLException e){
@@ -2344,5 +2345,59 @@ public class CDataExam extends CDataBase {
 			 //CLogger.write("86", this, e);
 		}
 		return ret;
+	}
+	public ArrayList<CAnuncio> getAnuncioLista(){
+        ArrayList<CAnuncio> ret=new ArrayList<CAnuncio>();
+        try{
+        	String sql="SELECT idanuncio, nombre, descripcion, contenido FROM anuncio" ;
+                PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+                ResultSet rs=stm.executeQuery();
+                while(rs.next()){
+                	CAnuncio temp=new CAnuncio(rs.getInt("idanuncio"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("contenido"));
+                	ret.add(temp);    
+                }
+                rs.close();
+                stm.close();
+        }catch(Throwable e){
+			
+			e.printStackTrace();
+		}
+        return ret;
+	}
+	public CAnuncio getAnuncioEspecifico(int idanuncio){
+		CAnuncio temp=null;
+		PreparedStatement stm;
+		try {
+			
+			String sql="SELECT idanuncio, nombre, descripcion, contenido  FROM anuncio where idanuncio=? ";
+			stm = (PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, idanuncio);
+			ResultSet rs=stm.executeQuery();
+			if(rs.next()){
+				temp=new CAnuncio(rs.getInt("idanuncio"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("contenido"));
+			}
+		}catch(Throwable e){
+			
+			 e.printStackTrace();
+		}
+		return temp;
+	}
+	public boolean UpdateAnuncio(CAnuncio anuncio){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE anuncio SET   contenido = ? WHERE idanuncio = ?");
+			
+			stm.setString(1, anuncio.getContenido());
+			stm.setInt(2, anuncio.getIdanuncio());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		}catch(Throwable e){
+			
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

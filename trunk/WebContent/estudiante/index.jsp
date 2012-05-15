@@ -1,6 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+<%@ page import="framework.CValidation" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<%@ page import="framework.CValidation" %>
 <% 
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
@@ -49,6 +52,8 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 <jsp:include page="modulo_perfil/citas.jsp" />
 <% }else if(portal==10){ %>
 <jsp:include page="modulo_perfil/examen_categoria.jsp" />
+<% }else{ %>
+<jsp:include page="modulo_perfil/instru.jsp" />
 <% } %>
 </div>
 </div>

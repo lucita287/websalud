@@ -91,7 +91,7 @@ public class SLogin extends HttpServlet {
 				 if(paciente!=null){
 					 session.setAttribute("paciente",paciente);
 					 session.setAttribute("examen",1);
-					 response.sendRedirect("estudiante/index.jsp?portal=1");
+					 response.sendRedirect("estudiante/index.jsp");
 				 }else{
 					 paciente=servicio.VerificarEstudiante(user,dbo);
 					 dbo.SafePaciente(paciente);
@@ -107,7 +107,7 @@ public class SLogin extends HttpServlet {
 					 paciente.setTitulo_secundaria("");
 					 session.setAttribute("paciente",paciente);
 					 session.setAttribute("examen",1);
-					 response.sendRedirect("estudiante/index.jsp?portal=1");
+					 response.sendRedirect("estudiante/index.jsp");
 				 }
 				 break;	
 			 case 2:

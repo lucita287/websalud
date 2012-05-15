@@ -13,8 +13,12 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 %>
 	
 <ul id="menu"  >
+	<li>
+		<a href="index.jsp" >INSTRUCCIONES</a>
+	</li>
 	<li >
-		<a >PASO 1</a>
+		<a  >PASO 1</a>
+		
 			<ul id="personal">
 				<li >
 					<a href="index.jsp?portal=1">Datos Generales</a>

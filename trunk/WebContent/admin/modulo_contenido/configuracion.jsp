@@ -47,6 +47,18 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div class="col_titulo">Tama&ntilde;o para subir archivos</div>
 								<div class="col"><input id="size_confi" size="10" type="text" value="<%= configurar.gettamanio_sub() %>"/></div>
 							</div>
+							<div class="fila">
+								<div class="col_titulo">Ciclo Actual</div>
+								<div class="col"><input type="text" size="10" value="<%= configurar.getCiclo() %>" id="ciclo"></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Impresi&oacute;n completa de multif&aacute;co</div>
+								<div class="col">
+									<input type="radio" name="multifa" class="multifa" id="simultifa" value="0" <%= (configurar.getMultifa_reporte()==0)?"checked":"" %> /><label for="simultifa">NO</label>
+									<input type="radio" name="multifa" class="multifa" id="nomultifa" value="1" <%= (configurar.getMultifa_reporte()==1)?"checked":"" %> /><label for="nomultifa">SI</label>
+								</div>
+							</div>
+							
 				</div>
 </div>							
 	
@@ -54,12 +66,17 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						<a href="#" onclick="GuardarConfi()" class="ui-state-default ui-corner-all button-save"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>					
 				</div>
 		<script>
+		 $(function() {
+				$( ".multifa" ).button();
+			});
 		function GuardarConfi(){
 			cadena = ['telefono='   + $("#tel_confi").val(),
 			          'fax='+ $("#fax_confi").val(),
 			          'dir='+$("#dir_confi").val(),
 			          'size='+$("#size_confi").val(),
-			          'a=GuardarConfig'
+			          'a=GuardarConfig',
+			          'ciclo='+$("#ciclo").val(),
+			          'multifa='+$("input[@name='multifa']:checked").val(),
 			        ].join('&');
 			$.ajax({
 		        url: "../SConfiguracion",
@@ -68,7 +85,6 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 		        dataType: 'json',
 		        success: function(data){
 		        	mensaje(data.mensaje);
-		        	
 		        }
 		    });
 		}

@@ -11,9 +11,11 @@ public class CConfiguracion {
 	private String dir_rel_imagen;
 	private String dir_rel_pdf;
 	private String direccion;
-	
+	private int ciclo;
+	private int multifa_reporte;
 	public CConfiguracion(int idconfiguracion,String telefono, String correo_electronico, String fax, String direccion_imagen,
-			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion){
+			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte){
+		
 		this.idconfiguracion=idconfiguracion;
 		this.telefono=telefono;
 		this.correo_electronico=correo_electronico;
@@ -24,8 +26,48 @@ public class CConfiguracion {
 		this.dir_rel_imagen=dir_rel_imagen;
 		this.dir_rel_pdf=dir_rel_pdf;
 		this.direccion=direccion;
+		this.ciclo=ciclo;
+		this.multifa_reporte=multifa_reporte;
 	}
 	
+	
+	
+	/**
+	 * @return the ciclo
+	 */
+	public int getCiclo() {
+		return ciclo;
+	}
+
+
+
+	/**
+	 * @param ciclo the ciclo to set
+	 */
+	public void setCiclo(int ciclo) {
+		this.ciclo = ciclo;
+	}
+
+
+
+	/**
+	 * @return the multifa_reporte
+	 */
+	public int getMultifa_reporte() {
+		return multifa_reporte;
+	}
+
+
+
+	/**
+	 * @param multifa_reporte the multifa_reporte to set
+	 */
+	public void setMultifa_reporte(int multifa_reporte) {
+		this.multifa_reporte = multifa_reporte;
+	}
+
+
+
 	/**
 	 * @param idconfiguracion the idconfiguracion to set
 	 */

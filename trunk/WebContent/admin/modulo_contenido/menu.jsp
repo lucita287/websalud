@@ -100,6 +100,9 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				<li>
 					<a href="index.jsp?portal=15">Menu de anuncios</a>
 				</li >
+				<li>
+					<a href="index.jsp?portal=16">Seleccionar examen segun su carne</a>
+				</li >
 			</ul>
 	
 	</li>
@@ -107,7 +110,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 		<a >Estudiantes</a>
 			<ul id="estudiante">
 				<li>
-					<a href="index.jsp?portal=16" >Perfil de estudiantes</a>
+					<a href="index.jsp?portal=17" >Perfil de estudiantes</a>
 				</li>
 				
 			</ul>
@@ -120,10 +123,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	<a >Reportes</a>
 			<ul id="report">
 				<li>
-					<a href="index.jsp?portal=17">Reportes</a>
+					<a href="index.jsp?portal=18">Reportes</a>
 				</li>
 				<li>
-					<a href="index.jsp?portal=18" >Dashboard</a>
+					<a href="index.jsp?portal=19" >Dashboard</a>
 				</li>
 			</ul>	
 	</li>
@@ -152,11 +155,11 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	  $('#admin_conte').show();
 	  <% }else if(portal>6 && portal<11){ %>
 	  $('#admin').show();
-	  <% }else if(portal>10 && portal<16){ %>
+	  <% }else if(portal>10 && portal<17){ %>
 	  $('#exam').show();
-	  <% }else if(portal>15 && portal<17){ %>
+	  <% }else if(portal>16 && portal<18){ %>
 	  $('#estudiante').show();
-	  <% }else if(portal>16 && portal<19){ %>
+	  <% }else if(portal>17 && portal<20){ %>
 	  $('#report').show();
 	  <%} %>
 	  

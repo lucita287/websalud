@@ -1,19 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+<%@ page import="framework.CDataExam" %>    
+<%@ page import="data.CAnuncio" %>
+<% 
+    CDataExam dbo=new CDataExam();
+    dbo.Connect();
+    CAnuncio anuncio=dbo.getAnuncioEspecifico(5);
+    
+%>    
+ <h2>DASH </h2>   
+ <%= anuncio.getContenido() %>
 <form id="form_report" name="form_report" action="../SGenerateReportPDF" method="post" target="_blank">
-  	<input type="submit" value="enviar" />
+  	<center>
+  	<input type="submit" id="enviar" value="Descargar Dash" />
+  	</center>
   	<input type="hidden" name="report" id="report" value="Primera_parte" />
   	<input type="hidden" name="report_name" id="report_name" value="Primera_parte" />
   	<input type="hidden" name="parameters" id="parameters" value="idpaciente" />
   	<input type="hidden" name="values" id="values" value="1" />
   </form>
-</body>
-</html>
+<script>
+		 $(function() {
+				$( "#enviar" ).button();
+			});
+</script>		 
