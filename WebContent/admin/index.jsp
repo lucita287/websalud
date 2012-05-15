@@ -67,6 +67,8 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <jsp:include page="modulo_examen/preguntas.jsp" />
 <% }else if(portal==15){ %>
 <jsp:include page="modulo_examen/menu_preguntas.jsp" />
+<% }else if(portal==16){ %>
+<jsp:include page="modulo_examen/carne.jsp" />
 <% } %>
 </div>
 <div style="clear: both;"></div>

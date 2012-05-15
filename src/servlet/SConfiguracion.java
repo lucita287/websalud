@@ -59,6 +59,8 @@ public class SConfiguracion extends HttpServlet {
 									String fax=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("fax")),codificacion);
 									String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("dir")),codificacion);
 									int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
+									int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
+									int ciclo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("ciclo")));
 									String validacion=valid.ValidarRango(size, 1, 10, "{\"resultado\":\"ERROR\",\"mensaje\":\"El rango de tama&ntilde;o subir archivos debe ser entre [1-10]\"}");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(telefono, "Telefono"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(fax, "Fax"):validacion;
@@ -66,11 +68,17 @@ public class SConfiguracion extends HttpServlet {
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(telefono, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(fax, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(direccion, 250, "Titulo"):validacion;
+									if(validacion.isEmpty() && ciclo<2000){
+										validacion="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe ingresar el ciclo actual, o el ciclo que se este ingresando\"}";
+									}
+									
 									if(validacion.compareTo("")==0){
 										configurar.setTelefono(telefono);
 										configurar.setFax(fax);
 										configurar.setDireccion(direccion);
 										configurar.setTamanio_sub(size);
+										configurar.setCiclo(ciclo);
+										configurar.setMultifa_reporte(multifa);
 										boolean b=dbo.UpdateConfiguracion(configurar);
 										if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 										else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";

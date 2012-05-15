@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.CArea;
+import data.CAnuncio;
 import data.CUsuarioPermiso;
-import framework.CDataBase;
+import framework.CDataExam;
 
 /**
  * Servlet implementation class SAnuncio_Table
  */
-@WebServlet("/SAnuncio_Table")
-public class SAnuncio_Table extends HttpServlet {
+@WebServlet("/SAnuncioTable")
+public class SAnuncioTable extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SAnuncio_Table() {
+    public SAnuncioTable() {
         super();
     }
 
@@ -47,18 +47,18 @@ public class SAnuncio_Table extends HttpServlet {
 		 HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
-				if( (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
-					 CDataBase dbo=new CDataBase();
+				if( (user_permiso.getIdpermiso().indexOf(254)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					CDataExam dbo=new CDataExam();
 					 dbo.Connect(); 
 					 
-					 ArrayList<CArea> lista=dbo.getAreaLista(user_permiso.getIdarea());
+					 ArrayList<CAnuncio> lista=dbo.getAnuncioLista();
 					 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 					 info+="<rows><page>1</page><total>"+lista.size()+"</total>";
 					 
 					 String data="";
 					 for(int i=0; i<lista.size();i++){
-						 CArea temp=lista.get(i);
-					data+="<row id='"+temp.getidarea()+"'><cell><![CDATA[<input type='radio' class='area_radio' onclick='editararea("+temp.getidarea()+")' name='idmenu_radio' value='"+temp.getidarea()+"' />]]></cell><cell><![CDATA["+temp.getidarea()+"]]></cell><cell><![CDATA["+temp.getnombre()+"]]></cell><cell><![CDATA["+((temp.getareaidarea()!=null)?temp.getareaidarea().getnombre():"")+"]]></cell></row>";	 
+						 CAnuncio temp=lista.get(i);
+						 data+="<row id='"+temp.getIdanuncio()+"'><cell><![CDATA[<input type='radio' class='anuncio_radio' onclick='editaranuncio("+temp.getIdanuncio()+")' name='idmenu_radio' value='"+temp.getIdanuncio()+"' />]]></cell><cell><![CDATA["+temp.getIdanuncio()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell></row>";	 
 			
 					 }
 					 info+=data+"</rows>";
