@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CConfiguracion;
 import data.CPaciente;
 
 import net.sf.jasperreports.engine.JRException;
@@ -28,6 +29,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.SimpleFileResolver;
 import framework.CDataBase;
+import framework.CDataExam;
 
 /**
  * Servlet implementation class SGenerateReportPDF
@@ -78,11 +80,11 @@ public class SGenerateReportPDF extends HttpServlet {
 				//String[] params=(request.getParameter("parameters")!="") ? request.getParameter("parameters").toString().split(",") :  null;
 					//String[] values=request.getParameter("values").toString().split("\\|");
 					parameters.put("idpaciente",pac.getIdpaciente() );
-					//parameters.put("SUBREPORT_DIR","./");
+					parameters.put("SUBREPORT_DIR","./");
 				
 				parameters.put(JRParameter.REPORT_FILE_RESOLVER, new SimpleFileResolver(new File(realpath+"/estudiante/report_view/")));
 				
-				CDataBase db=new CDataBase();
+				CDataExam db=new CDataExam();
 				if(db.Connect()){
 					JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters,db.getconnection());
 					JasperPrint jp1 = JasperFillManager.fillReport(jasperR2,parameters,db.getconnection());
@@ -93,12 +95,17 @@ public class SGenerateReportPDF extends HttpServlet {
 			            JRPrintPage object = (JRPrintPage)pages.get(j);
 			            jasperPrint.addPage(object);
 					}
-					//pages = jp2 .getPages();
-					//for (int j = 0; j < pages.size(); j++) {
-					//  JRPrintPage object = (JRPrintPage)pages.get(j);
-					//    jasperPrint.addPage(object);
-					//}
-					
+				CConfiguracion conf=db.getConfiguracion();	
+				
+				if(conf.getMultifa_reporte()==1){
+					File r2 = new File(realpath+"/estudiante/report_view/exam.jrprint");
+					JasperPrint jp2 =(JasperPrint) JRLoader.loadObject(r2);
+					pages = jp2 .getPages();
+					for (int j = 0; j < pages.size(); j++) {
+					  JRPrintPage object = (JRPrintPage)pages.get(j);
+					    jasperPrint.addPage(object);
+					}
+				}	
 					response.setContentType("application/pdf");
 
 					JRPdfExporter exporter = new JRPdfExporter();

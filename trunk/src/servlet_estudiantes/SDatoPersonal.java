@@ -75,7 +75,7 @@ public class SDatoPersonal extends HttpServlet {
 						pac.setIdemer_parentesco(emer_idpar);
 						boolean b=data.UpdatePaciente1(pac);
 						if(b){
-							response.sendRedirect("estudiante/index.jsp?portal=6");
+							response.sendRedirect("estudiante/index.jsp?portal=5");
 						}else{
 							response.sendRedirect("estudiante/index.jsp?e=Error al guardar&portal=1");
 						}

@@ -95,7 +95,7 @@ $(function() {
 											} else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2 ){
 													
 													if(pregunta.getLargo()>=1 && pregunta.getLargo()<=2){%>
-													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"65")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="number<%=(pregunta.getRequerida()==1)?" required":""%>"  value="<%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":"" %>">
+													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"65")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="<%=(pregunta.getRequerida()==1)?" required":""%>"  value="<%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":"" %>">
 										  <%		}else{%>
 											  		<textarea id="pregunta_<%= pregunta.getIdpregunta() %>" rows="3" cols="50"  name="pregunta_<%= pregunta.getIdpregunta() %>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%>><%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":""%></textarea>
 										  			<%}

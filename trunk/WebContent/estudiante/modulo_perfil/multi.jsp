@@ -12,7 +12,18 @@
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
     		
     %>
+    <script>
+	$(function() {
+		$(".siguiente").button();
+	});
+	</script>
+    <div style="float:right;">
+	<a href="index.jsp?portal=9" class="siguiente">SIGUIENTE</a>
+	</div>
 <h2>PASO 2 / EXAMEN MULTIF&Aacute;SICO</h2>
+    
+	
+    
     <% 
     CDataExam dbo=new CDataExam();
     dbo.Connect();
