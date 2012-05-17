@@ -23,9 +23,6 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 				<li >
 					<a href="index.jsp?portal=1">Datos Generales</a>
 				</li>
-				<li>
-					<a href="index.jsp?portal=3">Estatus del trabajador</a>
-				</li>
 				
 			</ul>	
 	</li>
@@ -35,17 +32,12 @@ if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
 				<li >
 					<a href="index.jsp?portal=5">EXAMEN MULTIF&Aacute;SICO</a>
 				</li>
-				<li >
-					<a href="index.jsp?portal=6">EXAMEN AUTOEVALUACI&Oacute;N</a>
-				</li>
+				
 			</ul>	
 	</li>
 	<li >
 		<a >PASO 3</a>
 			<ul id="cita">
-				<li >
-					<a href="index.jsp?portal=7">Resultado</a>
-				</li>
 				<li>
 					<a href="index.jsp?portal=9">Dash</a>
 				</li>

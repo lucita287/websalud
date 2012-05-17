@@ -19,7 +19,6 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	ArrayList<CEstado_Civil> estado=data. getListaEstadoCivil();
 	ArrayList<CTipo_Sangre> tsangre=data.getListaTipo_Sangre();
 	ArrayList<CParentesco> paren=data.getListaParentesco();
-	ArrayList<CDepartamento> depto=data.getListaDepartamentos();
 	ArrayList<CTitulo_Secundaria> secu=data.getListaTitulo_Secundaria();
 %>
     <script  type="text/javascript">
@@ -37,13 +36,6 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				  });
 			  });
 			  $(function() {
-					var departamento = [
-							<% Iterator<CDepartamento> it_dep= depto.iterator();
-								while(it_dep.hasNext()){
-									CDepartamento dep=it_dep.next();
-									out.println("'"+dep.getNombre()+"'"+((it_dep.hasNext())?",":""));
-								}%>
-					];
 					var secundaria=
 						[
 						 	<% Iterator<CTitulo_Secundaria> it_secu= secu.iterator();
@@ -55,10 +47,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 					$( "#tit_secun_personal" ).autocomplete({
 						source: secundaria
 					});
-					$( "#crecio_en_personal" ).autocomplete({
-						source: departamento
-					});
 					$( ".check" ).button();	
+					$(".siguiente").button();
 				});
 
 	</script>		  
@@ -67,7 +57,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 <h2>PASO 1</h2>
 </div>
 <div class="button-sig">
-<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Siguiente/Guardar"/> 
+<input type="submit" id="button_sig" class="ui-state-default ui-corner-all siguiente" value="Siguiente/Guardar"/> 
 </div>
 <div style="clear: both;"></div>
 <input type="hidden" name="idestatus" value="1" id="idestatus"/>
