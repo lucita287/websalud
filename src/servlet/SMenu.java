@@ -92,7 +92,7 @@ public class SMenu extends HttpServlet {
 								String validacion=valid.ValidarSiesMayor(idmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 								validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "titulo"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
-								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
+								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 8990, "Contenido"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 4, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
 									if(validacion.compareTo("")==0){
 											CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
@@ -138,7 +138,7 @@ public class SMenu extends HttpServlet {
 									int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
 									String validacion=valid.ValidarCampoVacio(titulo, "titulo");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 48, "Titulo"):validacion;
-									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 8990, "Contenido"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 4, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar el area\"}"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idsubmenu, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar un submenu\"}"):validacion;

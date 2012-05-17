@@ -60,7 +60,7 @@ public class SDatoPersonal extends HttpServlet {
 					mensaje+=valid.ValidarECombo(emer_idpar,"parentesco en caso de emergencia");
 					mensaje+=valid.ValidarECombo(tsange,"tipo de sangre");
 					mensaje+=valid.ValidarENombre(crecio_en, 100, "Crecio en");
-					mensaje+=valid.ValidarENombreV(tit_secun, 150, "Titulo de Secundaria");
+					mensaje+=valid.ValidarENombreV2(tit_secun, 150, "Titulo de Secundaria");
 					mensaje+=valid.ValidarENombre(emer_tel, 50, "Telefono de emergencia");
 					mensaje+=valid.ValidarENombre(emer_movil, 50, "Telefono movil");
 					mensaje+=valid.ValidarENombre(nombre_emer, 50, "Nombre de emergencia");

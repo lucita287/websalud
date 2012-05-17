@@ -43,7 +43,7 @@ dbo.Close();
 		<a href="calendario.jsp?mes=&idarea=<%=idarea%>">Calendario</a>
 	</li>
 	<li>
-		<a>Areas Profesionales</a>
+		<a href="#">Areas Profesionales</a>
 			<ul>
 				<% for(int h=0; h<list_area.size(); h++){ 
 					CArea temp_area=list_area.get(h);

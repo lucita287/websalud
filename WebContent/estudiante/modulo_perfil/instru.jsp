@@ -3,7 +3,10 @@
 <%@ page import="framework.CDataExam" %>    
 <%@ page import="data.CConfiguracion" %>
 <%@ page import="data.CAnuncio" %>    
+
 <% 	
+HttpSession sessiones=request.getSession(false); 
+if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	CDataExam dbo=new CDataExam();
 	if(dbo.Connect()){
 	CConfiguracion configu=dbo.getConfiguracion();
@@ -20,5 +23,7 @@
 	</div>
 	<h2>EXAMEN DE SALUD, PARA LOS CARNE <%=configu.getCiclo() %></h2>
 	<%= anuncio.getContenido() %>
-<% } %>
+<% }
+	
+}%>
 	

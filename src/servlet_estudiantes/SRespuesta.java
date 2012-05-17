@@ -110,10 +110,13 @@ public class SRespuesta extends HttpServlet {
 						}
 						data.SafeMenu_Paciente(new CPaciente_Menu_Categoria(pac.getIdpaciente(),action,
 								auto, multi));
+						
+						
 						if(auto==1) response.sendRedirect("estudiante/index.jsp?portal=6");
 						else response.sendRedirect("estudiante/index.jsp?portal=5");
-					}else{
 						
+					}else{
+						response.sendRedirect("estudiante/index.jsp?portal=10&idmenu="+action+"&auto="+auto+"&multi="+multi+"&e="+validaciones);
 					}
 				}else response.sendRedirect("index.jsp");
 				

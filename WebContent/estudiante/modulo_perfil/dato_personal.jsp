@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataExam" %>    
+<%@ page import="framework.CValidation" %> 
 <%@ page import="data.CPaciente" %>
 <%@ page import="data.CParentesco" %>
 <%@ page import="data.CEstado_Civil" %>
-<%@ page import="data.CDepartamento" %>
 <%@ page import="data.CTipo_Sangre" %>
 <%@ page import="data.CTitulo_Secundaria" %>
 <%@ page import="java.util.ArrayList" %>
@@ -56,6 +56,14 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 <div style="float:left;">
 <h2>PASO 1</h2>
 </div>
+	<%
+	CValidation valid=new CValidation();
+String error=valid.ValidarRequest(request.getParameter("e"));
+    
+	if(!error.isEmpty()){
+		out.println("<div class='ui-state-default ui-corner-all  ui-state-error'>"+error+"</div>");
+	}
+	 %>
 <div class="button-sig">
 <input type="submit" id="button_sig" class="ui-state-default ui-corner-all siguiente" value="Siguiente/Guardar"/> 
 </div>
@@ -81,7 +89,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
-							
+								<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>							
 									<div class="col_titulo">*Estado Civil</div>
 									<div class="col">
 										<% 
@@ -96,9 +104,10 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 									</div>
 									
 							<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>
 						</div>
 						<div class="border">
-							
+							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Tipo de Sangre</div>
 									<div class="col">
 										<% 
@@ -110,7 +119,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 										<% } %>									
 									</div>
 									
-							<div style="clear: both;"></div>
+								<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>	
 						</div>
 						<div class="border">
 							
@@ -120,11 +130,12 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 							<div style="clear: both;"></div>
 						</div>
 						<div class="border">
-							
+							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Crecio en</div>
 									<div class="col"><input type="text" id="crecio_en_personal" name="crecio_en_personal" size="40" value="<%= pac.getCrecio_en() %>" class="required" /><br/><span>Lugar</span></div>
 									
-							<div style="clear: both;"></div>
+								<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>		
 						</div>
 					</div>
 				</div>
@@ -137,14 +148,15 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				<div class="perfil">
 					<div class="tabla">
 						<div class="border">
-							
+							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Nombre</div>
 									<div class="col"><input type="text" name="emer_nombre_personal" id="emer_nombre_personal" value="<%= pac.getEmer_nombre() %>" size="60" class="required" /></div>
 									
-							<div style="clear: both;"></div>
+								<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>	
 						</div>
 						<div class="border">
-							
+							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Parentesco</div>
 									<div class="col">
 											<select id="emer_par_personal" name="emer_par_personal">
@@ -160,20 +172,23 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 									</div>
 									
 							<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>
 						</div>
 						<div class="border">
-							
+							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Telefono casa</div>
 									<div class="col"><input type="text" id="tel_personal" name="tel_personal" value="<%=pac.getEmer_telefono() %>" class="required" size="20"/></div>
 									
-							<div style="clear: both;"></div>
+								<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>	
 						</div>
 						<div class="border">
-							
+							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Telefono movil</div>
 									<div class="col"><input type="text" id="movil_personal" name="movil_personal" value="<%=pac.getEmer_movil() %>" class="required" size="20"/></div>
 									
 							<div style="clear: both;"></div>
+							<%if(!error.isEmpty()) out.println("</div>"); %>	
 						</div>
 					</div>
 				</div>	
