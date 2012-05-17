@@ -39,7 +39,7 @@ public class SValidEstudiante extends HttpServlet {
 		HttpSession sessiones = request.getSession(false);
 		 PrintWriter out = response.getWriter();  
 		 
-		if(sessiones!=null &&  sessiones.getAttribute("estudiante")!=null){
+		 if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 			 out.print("0");
 		 }else{
 			 out.print("1");

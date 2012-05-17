@@ -15,40 +15,53 @@
     <% 
     HttpSession sessiones=request.getSession(false); 
     if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
+        CDataExam data=new CDataExam();
+        if(data.Connect()){
+        
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
     		
     %>	
     
 $(function() {
 	$( ".check" ).button();
+	$(".button_sig").button();
 	$("#MainForm").validate();
 });
 </script>
 	<form id="MainForm" name="MainForm" action="../SRespuesta" method="post">
 	
 	<div style="float:left;">
-	<h2>PASO 2 / <%= request.getParameter("titulo") %></h2>
+	 <% 
+    CValidation valid=new CValidation();
+    int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
+    int multi=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multi")));
+    int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
+    String menu_desc=data.getMenuCategoria(menu);
+    String error=valid.ValidarRequest(request.getParameter("e"));
+    %>
+	
+	<h2>PASO 2 / <%= menu_desc %> </h2>
+	
 	</div>
+	
+	<%
+	if(!error.isEmpty()){
+		out.println("<div class='ui-state-default ui-corner-all  ui-state-error'>"+error+"</div>");
+	}
+	 %>
 	<div class="button-sig">
-	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button" value="Guardar"/> 
+	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" value="Guardar"/> 
 	
 	</div>
 	<div style="clear: both;"></div>
 	
 	
-    <% 
-    CValidation valid=new CValidation();
-    int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
-    int multi=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multi")));
-    int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
-    
-    %>
+   
     <input type="hidden" name="a" value="<%=menu%>" />
     <input type="hidden" name="auto" value="<%=auto%>" />
     <input type="hidden" name="multi" value="<%=multi%>" />
     <% 
-    CDataExam data=new CDataExam();
-    data.Connect();
+
     ArrayList<CCategoria> cate= data.getListaCategoriaMenu(auto,multi,menu);
     Map<Integer,CPregunta_Paciente> ppaciente=data.getListaPreguntas_Paciente(menu,auto,multi, pac.getIdpaciente());
     Iterator<CCategoria> it=cate.iterator();
@@ -71,12 +84,17 @@ $(function() {
 									CPregunta pregunta=it2.next();
 								%>
 						<div class="border">
+	<% 
+	if(!error.isEmpty()&&pregunta.getRequerida()==1){
+		out.println("<div class='ui-state-default ui-corner-all ui-state-highlight '>");
+	}
+	%>					
 							<div class="fila">
 									<% if(pregunta.getDescripcion().length()>0){ %>
 										<div  class="ui-state-error ui-corner-all col_mensaje"><%=pregunta.getDescripcion() %></div>
 										<div style="clear: both;"></div>
 									<% } %>	
-									<div class="col_pregunta"><font  color="red"><%=pregunta.getOrden() %>)</font> <%=pregunta.getPregunta() %></div>
+									<div class="col_pregunta"><font  color="red"><%=(pregunta.getRequerida()==1)?"*":""%><%=pregunta.getOrden() %>)</font> <%=pregunta.getPregunta() %></div>
 									<div class="col_examen">
 										<% 
 											if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()>=3){
@@ -102,8 +120,14 @@ $(function() {
 													
 											}%>
 									</div>
-							</div>		
+							</div>
+										
 							<div style="clear: both;"></div>
+	<% 
+	if(!error.isEmpty()&&pregunta.getRequerida()==1){
+		out.println("</div>");
+	}
+	%>						
 						</div>		
 							<% }%>
 						
@@ -112,7 +136,12 @@ $(function() {
 				</div>
 				<div style="clear: both;"></div>			
 	</div>
+	<div class="button-sig">
+	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" value="Guardar"/> 
+	
+	</div>
 <%  } 
+        }
 data.Close(); }
 %>
 	</form>

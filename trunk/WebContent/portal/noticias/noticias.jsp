@@ -12,8 +12,12 @@ dbo.Close();
 
 <% 
 if(list_news.size()>0){ %>
+
+<style>
+.xlink {cursor:pointer}
+</style>
 <div id="Panel-inicio" class="ui-widget-content ui-corner-all">
-						<h3 class="ui-widget-header ui-corner-all">Noticias</h3>				
+						<h3 class="ui-widget-header ui-corner-all ">Noticias</h3>				
 
 
 			<div id="tabs1-inicio-info">
@@ -21,7 +25,7 @@ if(list_news.size()>0){ %>
 							
 							<div class="info-noticias">
 							
-								<div id="prev_info">
+								<div id="prev_info" class="xlink">
 								<h3 class="ui-state-default ui-corner-all"><img src="images/up.png" /></h3>
 								</div>
 								
@@ -35,7 +39,7 @@ if(list_news.size()>0){ %>
 				String sub_descrip=temp_news.getDescripcion_corta();
 		%>
 										<li>
-										<div <%= (i==0?" style='background:#CCC;' ":"")%> class="ui-widget-content ui-corner-all news-inicio noticia<%=temp_news.getIdnoticia()%>"  onclick="update_noti(<%=temp_news.getIdnoticia()%>)" >
+										<div <%= (i==0?" style='background:#CCC;' ":"")%> class="ui-widget-content ui-corner-all news-inicio xlink noticia<%=temp_news.getIdnoticia()%>"  onclick="update_noti(<%=temp_news.getIdnoticia()%>)" >
 												
 												<div class="news-text"  >
 												<div class="titulo_noticias"><%=temp_news.getTitulo() %></div> 
@@ -48,7 +52,7 @@ if(list_news.size()>0){ %>
 									</ul>
 
 								</div>
-								<div id="next_info">
+								<div id="next_info" class="xlink">
 									<h3 class="ui-state-default ui-corner-all"><img src="images/down.png" /></h3>
 								</div>
 								<div style="clear: both;"></div>

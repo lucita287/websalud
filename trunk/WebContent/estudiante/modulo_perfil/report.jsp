@@ -3,6 +3,8 @@
 <%@ page import="framework.CDataExam" %>    
 <%@ page import="data.CAnuncio" %>
 <% 
+HttpSession sessiones=request.getSession(false); 
+if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     CDataExam dbo=new CDataExam();
     dbo.Connect();
     CAnuncio anuncio=dbo.getAnuncioEspecifico(5);
@@ -24,3 +26,4 @@
 				$( "#enviar" ).button();
 			});
 </script>		 
+<% } %>

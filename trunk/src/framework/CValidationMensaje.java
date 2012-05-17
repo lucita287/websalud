@@ -149,4 +149,11 @@ public class CValidationMensaje extends CValidation {
 		}
 		return result;
 	}
+	public String ValidarENombreV2(String name,int longitud,String tipo){
+		String result="";
+		if(name.length()>longitud){
+			result="DEBE INGRESAR EL CAMPO DE "+tipo+" NO MAYOR A 300 CARACTERES <br>";
+		}
+		return result;
+	}
 }

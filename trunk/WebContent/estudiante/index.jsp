@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <% 
 HttpSession sessiones=request.getSession(false); 
-if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
+if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	CValidation valid=new CValidation();
 	Integer portal=valid.ConvertEntero(request.getParameter("portal"));
 	String user=(String)sessiones.getAttribute("estudiante");

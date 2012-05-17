@@ -7,7 +7,7 @@
 <%@ page import="framework.CValidation" %>
 <% 
 HttpSession sessiones=request.getSession(false); 
-if(sessiones!=null && sessiones.getAttribute("estudiante")!=null){
+if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	CValidation valid=new CValidation();
 	Integer portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal")));
 %>

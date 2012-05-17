@@ -13,7 +13,6 @@ import data.CAnuncio;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CCita;
-import data.CDepartamento;
 import data.CDependencia;
 import data.CEstado_Civil;
 import data.CMenu_Categoria;
@@ -34,27 +33,24 @@ public class CDataExam extends CDataBase {
 	public CDataExam(){
 		super();
 	}
-	public ArrayList<CDepartamento> getListaDepartamentos(){
-		ArrayList<CDepartamento> list=new ArrayList<CDepartamento>();
+	
+	public String getMenuCategoria(int id){
+		String ret="";
 		try{
-
-			String sql="select iddepartamento, nombre from departamento ";
+			String sql="select  nombre  from menu_categoria where idmenu_categoria = ? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-			
+			stm.setInt(1,id);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CDepartamento dep=new CDepartamento(rs.getInt("iddepartamento"),rs.getString("nombre"));
-				list.add(dep);
-				
+				ret=rs.getString("nombre");
 			}
 			rs.close();
 			stm.close();
-		}
-		catch(Throwable e){
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
-		
-		return list;
+		return ret;
 	}
 	public ArrayList<CEstado_Civil> getListaEstadoCivil(){
 		ArrayList<CEstado_Civil> list=new ArrayList<CEstado_Civil>();
@@ -336,26 +332,7 @@ public class CDataExam extends CDataBase {
 		
 		return temp;
 	}
-	public CDepartamento getDepartamentoEspecifico(int iddepartamento){
-		CDepartamento ret=null;
-		try{
-			String sql="select depto.iddepartamento,depto.nombre from departamento depto where depto.iddepartamento=?";
-			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-			stm.setInt(1,iddepartamento);
-			ResultSet rs=stm.executeQuery();
-			while(rs.next()){
-				ret=new CDepartamento(rs.getInt("iddepartamento"),rs.getString("nombre"));
-				
-				
-			}
-			rs.close();
-			stm.close();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		return ret;
-	}
+	
 
 	public int getUnidadAcademicaTotal(String busqueda){
 		int temp=0;
@@ -1474,6 +1451,25 @@ public class CDataExam extends CDataBase {
 			stm.setString(7, pac.getEmer_movil());
 			stm.setInt(8, pac.getIdemer_parentesco());
 			stm.setInt(9, pac.getIdpaciente());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean UpdatePacientePaso(int idpaciente, int idpaso){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET examen_linea = ? WHERE idpaciente = ?");
+			
+			stm.setInt(1,idpaso);
+			stm.setInt(2,idpaciente);
+			
 			
 			if(stm.executeUpdate()>0)
 				return true;

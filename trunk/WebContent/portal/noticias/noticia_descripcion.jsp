@@ -15,6 +15,17 @@
 		dbo.Close();
 		if(info_new!=null){
 		%>
+		<script>
+		$('#menu').hover(function() {
+			
+			$(this).css('cursor','pointer');
+			
+			}, function() {
+			
+			$(this).css('cursor','auto');
+			
+		});	
+		</script>
 		<link href="css/style_portal.css" rel="stylesheet" type="text/css" media="screen" />
 		<div id="widget-info"> 
 					<h3 id="titulo_noticia_descripcion"><%=info_new.getTitulo()%></h3>
