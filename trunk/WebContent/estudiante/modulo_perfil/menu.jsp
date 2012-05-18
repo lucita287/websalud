@@ -71,7 +71,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	  <% if(portal>0 && portal<5){%>
 	  $('#personal').show();
 	  <% }%>
-	  <% if((portal>4 && portal<7)|| (portal==10)){%>
+	  <% if((portal>4 && portal<7)|| (portal==10)|| (portal==11)){%>
 	  $('#examen_fa').show();
 	  <% }%>
 	  <% if(portal>6 && portal<10){%>

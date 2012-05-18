@@ -15,6 +15,7 @@ import data.CCategoria_Interpretacion;
 import data.CCita;
 import data.CDependencia;
 import data.CEstado_Civil;
+import data.CGrupo_Familiar;
 import data.CMenu_Categoria;
 import data.CPaciente;
 import data.CPaciente_Menu_Categoria;
@@ -43,6 +44,24 @@ public class CDataExam extends CDataBase {
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				ret=rs.getString("nombre");
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public String getAmbienteFamiliar(int id){
+		String ret="";
+		try{
+			String sql="SELECT descripcion FROM ambiente_familiar where idpaciente=?";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,id);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ret=rs.getString("descripcion");
 			}
 			rs.close();
 			stm.close();
@@ -2391,6 +2410,123 @@ public class CDataExam extends CDataBase {
 			
 		}catch(Throwable e){
 			
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean SafeAmbienteFamiliar(int idpaciente, String descripcion){
+		PreparedStatement stm;
+		try {
+			descripcion=descripcion.trim();
+			if(descripcion.isEmpty()) return true;
+			
+			String sql="SELECT idpaciente cant FROM ambiente_familiar where idpaciente=? ";
+				stm=(PreparedStatement)conn.prepareStatement(sql);
+				stm.setInt(1, idpaciente);
+				
+				ResultSet rs2=stm.executeQuery();
+				int temp=0;
+				if(rs2.next()){ 
+					temp=rs2.getInt("cant");
+				}
+				if(temp==0){
+				stm = (PreparedStatement)conn.prepareStatement("INSERT INTO ambiente_familiar (descripcion,idpaciente) VALUES (?, ?)");
+				}else{
+
+				stm = (PreparedStatement)conn.prepareStatement("UPDATE ambiente_familiar SET descripcion = ? WHERE idpaciente = ?");	
+				}
+				
+				stm.setString(1,descripcion);
+				stm.setInt(2, idpaciente);
+				
+			if(stm.executeUpdate()>0 ) return true;
+				
+				
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean SafeGrupoFamiliar(CGrupo_Familiar grupo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO grupo_familiar(idpaciente, idparentesco,genero,ocupacion,ingreso,salud, lugar,edad) VALUES (?, ?, ?, ?, ?, ?,?,?)");
+			
+			stm.setInt(1,grupo.getIdpaciente());
+			stm.setInt(2,grupo.getIdparentesco());
+			stm.setInt(3,grupo.getGenero());
+			stm.setString(4,grupo.getOcupacion());
+			stm.setDouble(5, grupo.getIngreso());
+			stm.setInt(6,grupo.getSalud());
+			stm.setString(7,grupo.getLugar());
+			stm.setInt(8,grupo.getEdad());
+			if(stm.executeUpdate()>0) return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public String getParentescoEspecifico(int id){
+		String ret="";
+		try{
+			String sql="SELECT idparentesco, nombre FROM parentesco where  idparentesco=?";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,id);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ret=rs.getString("nombre");
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<CGrupo_Familiar> getListaGrupoFamiliar(int idpaciente){
+		ArrayList<CGrupo_Familiar> lista=new  ArrayList<CGrupo_Familiar>();
+		 try{    
+			 String sql="SELECT idpaciente, idgrupo_familiar, idparentesco, genero, ocupacion, ingreso, salud, lugar, edad FROM grupo_familiar where idpaciente=? ";
+			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+	        	stm.setInt(1, idpaciente);
+	        	
+	        	    ResultSet rs=stm.executeQuery();
+	                while(rs.next()){                							
+	                                lista.add(
+	                                		new CGrupo_Familiar(rs.getInt("idpaciente"), rs.getInt("idgrupo_familiar"),
+	                                				rs.getInt("idparentesco"),rs.getInt("genero"),rs.getString("ocupacion"), rs.getDouble("ingreso"),
+	                                				rs.getString("lugar"), rs.getInt("salud"), rs.getInt("edad"))
+	                                		); 
+
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				e.printStackTrace();
+				 //CLogger.write("1", this, e);
+			} 
+		 
+		 return lista;
+	}
+	public boolean deleteGrupoFamiliar(int idgrupo,int idpaciente){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM grupo_familiar WHERE idgrupo_familiar = ? and idpaciente=?");
+			
+			stm.setInt(1,idgrupo);
+			stm.setInt(2,idpaciente);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 		

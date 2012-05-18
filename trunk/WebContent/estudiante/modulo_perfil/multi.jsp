@@ -13,11 +13,7 @@
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
     		
     %>
-    <script>
-	$(function() {
-		$(".siguiente").button();
-	});
-	</script>
+
     <div style="float:right;">
 	<a href="index.jsp?portal=9" class="siguiente">SIGUIENTE</a>
 	</div>
@@ -35,7 +31,8 @@
     Iterator<CMenu_Categoria> it=lista.iterator();
     out.println(anuncio.getContenido());
     %>
-    <center>
+	<center>
+    				<a href="index.jsp?portal=11" class="siguiente">AMBIENTE FAMILIAR</a>
     <table>
     <%
     while(it.hasNext()){
@@ -68,7 +65,7 @@
     <script>
 	$(function() {
 		$( "a.menu").button();
-		
+		$(".siguiente").button();		
 	});
 	</script>
 	<% 
