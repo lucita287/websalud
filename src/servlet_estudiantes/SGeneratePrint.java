@@ -110,6 +110,7 @@ public class SGeneratePrint extends HttpServlet {
 				JRPdfExporter exporter = new JRPdfExporter();
 				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp2);
 				JRSaver.saveObject(jp2, realpath+"/estudiante/report_view/PrintServiceReport.jrprint");
+				System.out.println(realpath+"/estudiante/report_view/PrintServiceReport.jrprint");
 				OutputStream ouputStream = response.getOutputStream();
 				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, ouputStream);
 				

@@ -42,17 +42,18 @@ $(function() {
 	
 	<h2>PASO 2 / <%= menu_desc %> </h2>
 	
-	</div>
 	
+	</div>
+	<div class="button-sig">
+	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" value="Guardar/Continuar"/> 
+	
+	</div>
 	<%
 	if(!error.isEmpty()){
 		out.println("<div class='ui-state-default ui-corner-all  ui-state-error'>"+error+"</div>");
 	}
 	 %>
-	<div class="button-sig">
-	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" value="Guardar"/> 
 	
-	</div>
 	<div style="clear: both;"></div>
 	
 	
@@ -136,10 +137,7 @@ $(function() {
 				</div>
 				<div style="clear: both;"></div>			
 	</div>
-	<div class="button-sig">
-	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" value="Guardar"/> 
 	
-	</div>
 <%  } 
         }
 data.Close(); }

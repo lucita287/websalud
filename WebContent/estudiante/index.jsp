@@ -52,6 +52,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 <jsp:include page="modulo_perfil/citas.jsp" />
 <% }else if(portal==10){ %>
 <jsp:include page="modulo_perfil/examen_categoria.jsp" />
+<% }else if(portal==11){ %>
+<jsp:include page="modulo_perfil/psico.jsp" />
 <% }else{ %>
 <jsp:include page="modulo_perfil/instru.jsp" />
 <% } %>

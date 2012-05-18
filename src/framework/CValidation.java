@@ -171,6 +171,15 @@ public class CValidation {
 		}
 		return result;
 	}
+	public Double ConvertDouble(String num){
+		Double result=0d;
+		try{
+			result=Double.parseDouble(num);
+		}catch(Exception e){
+			
+		}
+		return result;
+	}
 	public String ValidarSiesMayor(int valor, int compara,String message){
 		if(valor>=compara){
 			return "";

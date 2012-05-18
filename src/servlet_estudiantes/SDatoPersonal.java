@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CGrupo_Familiar;
 import data.CPaciente;
 import framework.CDataExam;
 import framework.CValidationMensaje;
@@ -82,9 +83,60 @@ public class SDatoPersonal extends HttpServlet {
 					}else{
 						response.sendRedirect("estudiante/index.jsp?e="+mensaje+"&portal=1");
 					}
+			}else if(idestatus==2){
+				String descripcion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("descripcion")), codificacion);
+				if(descripcion.length()>=300)
+				descripcion=descripcion.substring(0,300);
+				boolean b=data.SafeAmbienteFamiliar(pac.getIdpaciente(), descripcion);
+				if(b){
+					response.sendRedirect("estudiante/index.jsp?portal=11");
+				}else{
+					response.sendRedirect("estudiante/index.jsp?e=Error al guardar&portal=11");
+				}
+			}else if(idestatus==3){
+				int idparen=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("par_personal")));
+				int edad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("edad")));
+				int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
+				int salud=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("salud")));
+				String trabajo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("trabajo")), codificacion);
+				Double mensual=valid.ConvertDouble(valid.ValidarRequest(request.getParameter("mensual")));
+				String lugar=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("lugar")), codificacion);
+				String error="";
+				if(idparen==0) error+="Debe seleccionar parentesco<br/>";
+				if(edad==0) error+="Debe ingresar una edad valida<br/>";
+				if(salud==0) error+="Debe ingresar su estado de salud<br/>";
+				if(trabajo.length()>30) error+="La longitud maxima del trabajo es 30<br/>";
+				if(lugar.length()>50) error+="La longitud maxima del lugar es 50<br/>";
+				
+				if(error.compareTo("")==0){
+					CGrupo_Familiar grupo=new CGrupo_Familiar(pac.getIdpaciente(),0,
+							idparen, genero,trabajo, mensual,
+							lugar,salud,edad);
+					boolean b=data.SafeGrupoFamiliar(grupo);
+					if(b){
+						response.sendRedirect("estudiante/index.jsp?portal=11");
+					}else{
+						response.sendRedirect("estudiante/index.jsp?e=Error al guardar&portal=11");
+					}
+				}else{
+					String param="&e="+error+"&idparen="+idparen+"&edad="+edad+"&genero="+genero+"&salud="+salud+"&trabajo="+trabajo+"&mensual="+mensual+"&lugar="+lugar;
+					response.sendRedirect("estudiante/index.jsp?portal=11"+param);
+				}
+			}else if(idestatus==4){
+				int id=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id")));
+				boolean b=data.deleteGrupoFamiliar(id,pac.getIdpaciente());
+				if(b){
+					response.sendRedirect("estudiante/index.jsp?portal=11");
+				}else{
+					response.sendRedirect("estudiante/index.jsp?e=Error al eliminar&portal=11");
+				}
+			}else{
+				response.sendRedirect("index.jsp");
 			}
 			
 			data.Close();
+		}else{
+			response.sendRedirect("index.jsp");
 		}
 	}
 
