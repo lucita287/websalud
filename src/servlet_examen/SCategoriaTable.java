@@ -148,7 +148,7 @@ public class SCategoriaTable extends HttpServlet {
 									 String data="";
 									 for(int i=0; i<lista.size();i++){
 										 CMenu_Categoria temp=lista.get(i);
-										 	data+="<row id='"+temp.getIdmenu_categoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarmenu_categoria("+temp.getIdmenu_categoria()+",\""+temp.getNombre()+"\")' name='idcentro_radio' value='"+temp.getIdmenu_categoria()+"' />]]></cell><cell><![CDATA["+temp.getIdmenu_categoria()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell></row>";	 
+										 	data+="<row id='"+temp.getIdmenu_categoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarmenu_categoria("+temp.getIdmenu_categoria()+",\""+temp.getNombre()+"\")' name='idcentro_radio' value='"+temp.getIdmenu_categoria()+"' />]]></cell><cell><![CDATA["+temp.getIdmenu_categoria()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getInstruccion()+"]]></cell></row>";	 
 									 }
 									 info+=data+"</rows>";
 									 out.println(info);

@@ -67,7 +67,7 @@ public class SPregunta extends HttpServlet {
 											int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 											int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 											int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
-											
+											int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
 											String descrip=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("descrip")),codificacion);
 											
 											String validacion=valid.ValidarCampoVacio(pregunta, "Pregunta");
@@ -83,7 +83,7 @@ public class SPregunta extends HttpServlet {
 											if(tipo==1 && validacion.compareTo("")==0){
 												CTipo_Pregunta ctipo=dbo.getTipo_PreguntaEspecifica(tipo);
 												CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-												CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,0,estado);
+												CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,0,estado,genero);
 												boolean b=dbo.SafePregunta(pregun);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -96,7 +96,7 @@ public class SPregunta extends HttpServlet {
 												validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(size_pregunta, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar el tama&ntilde;o del texto de la pregunta\"}"):validacion;
 												if(validacion.compareTo("")==0){
 													CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-													CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa,size_pregunta,0,estado);
+													CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa,size_pregunta,0,estado,genero);
 													boolean b=dbo.SafePregunta(pregun);
 													if(!b){
 														result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -122,7 +122,7 @@ public class SPregunta extends HttpServlet {
 												if(validacion.compareTo("")==0){
 													CTipo_Pregunta ctipo=dbo.getTipo_PreguntaEspecifica(tipo);
 													CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-													CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,multiple,estado);
+													CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,multiple,estado,genero);
 													boolean b=dbo.SafePregunta(pregun);
 													if(!b){
 														result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -158,7 +158,7 @@ public class SPregunta extends HttpServlet {
 												}
 												CTipo_Pregunta ctipo=dbo.getTipo_PreguntaEspecifica(tipo);
 												CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-												CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,multiple,estado);
+												CPregunta pregun=new CPregunta(0,orden,requerida, pregunta,cate, descrip,ctipo,auto,multifa, 0,multiple,estado,genero);
 												boolean b=dbo.SafePregunta(pregun);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -200,6 +200,7 @@ public class SPregunta extends HttpServlet {
 				validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(tipo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una tipo de pregunta\"}"):validacion;
 				validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(pregunta, 250, "Pregunta"):validacion;
 				validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descrip, 200, "Descripcion"):validacion;
+				int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
 				if((auto==0 && multifa==0) && validacion.compareTo("")==0){
 					validacion="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar almenos un examen, Autoevaluaci&oacute;n ó Multif&aacute;sico\"}";
 				}
@@ -207,7 +208,7 @@ public class SPregunta extends HttpServlet {
 
 				if(tipo==1 && validacion.compareTo("")==0){
 					CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-					CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa, 0,0,estado);
+					CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa, 0,0,estado,genero);
 					boolean b=dbo.UpdatePregunta(pregun);
 					if(!b){
 						result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha actualizado\"}";
@@ -220,7 +221,7 @@ public class SPregunta extends HttpServlet {
 					validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(size_pregunta, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar el tama&ntilde;o del texto de la pregunta\"}"):validacion;
 					if(validacion.compareTo("")==0){
 						CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-						CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa,size_pregunta,0,estado);
+						CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa,size_pregunta,0,estado,genero);
 						boolean b=dbo.UpdatePregunta(pregun);
 						if(!b){
 							result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha actualizado\"}";
@@ -231,7 +232,7 @@ public class SPregunta extends HttpServlet {
 				}else if(tipo>=3  && validacion.compareTo("")==0){
 					int multiple=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multiple")));
 					CCategoria cate=new CCategoria(categoria,"",0,0,0,0,null);
-					CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa,0,multiple,estado);
+					CPregunta pregun=new CPregunta(idpregunta,orden,requerida, pregunta,cate, descrip,null,auto,multifa,0,multiple,estado,genero);
 					 ArrayList<CPregunta_Titulo_Respuesta> lista_det=dbo.getListaPregunta_Titulo_Respuesta(pregun);
 					 Iterator<CPregunta_Titulo_Respuesta> it=lista_det.iterator();
 					 ArrayList<CPregunta_Titulo_Respuesta> lista_guardar=new ArrayList<CPregunta_Titulo_Respuesta>();
@@ -255,7 +256,45 @@ public class SPregunta extends HttpServlet {
 					}
 		 		}else result=validacion;
 				out.println(result);
-		 }
+		 }else if(action.equalsIgnoreCase("deletePregunta")){
+			 int idpregunta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpregunta")));
+			 if(idpregunta>0){
+				 dbo.deletePregunta(idpregunta);
+				 out.println("{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}");
+			 }else{
+				 out.println("{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una pregunta\"}");
+			 }
+		 }else if(action.equalsIgnoreCase("show_titulo")){
+				String result=" ";
+				int idtitulo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idtitulo")));
+				CTitulo_Respuesta edi=dbo.getTitulo_RespuestaEspecifica(idtitulo);
+				 if(edi!=null){
+					 result= "{nombre:\""+edi.getDescripcion()+"\"}";
+				 }
+				 out.println(result);
+				//MODIFICAR EDIFICIO 
+		 }else if(action.equalsIgnoreCase("guardar_titulo")){
+				String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+				String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+				int idtitulo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idtitulo")));
+				
+				String validacion=valid.ValidarSiesMayor(idtitulo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+				validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Nombre"):validacion;
+				validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Nombre"):validacion;
+				if(validacion.compareTo("")==0){
+					CTitulo_Respuesta edi=new CTitulo_Respuesta(idtitulo,nombre);
+					boolean b=dbo.UpdateTitulo_Respuesta(edi);
+					if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+					else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";
+				}else{
+					result=validacion;
+				}
+				
+				out.println(result);
+				//ELIMINAR EDIFICIO
+			}
+			
+		dbo.Close();			
 		 }
 	}
 

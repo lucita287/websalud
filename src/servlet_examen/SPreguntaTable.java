@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CPregunta;
+import data.CTitulo_Respuesta;
 import framework.CDataExam;
 import framework.CValidation;
 
@@ -59,11 +60,8 @@ public class SPreguntaTable extends HttpServlet {
 					 String order=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortname")),codificacion);
 					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
 					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
-					 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")),codificacion);
-					 int pqtype=1;
-					 if(qtype.equalsIgnoreCase("categoria")){
-						 pqtype=2;
-					 }
+					 int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("cate")));
+					 
 					 int min=((page-1)*rp)+1;
 					 int max=page*(rp);
 					 int ordenar=1;					 
@@ -86,14 +84,42 @@ public class SPreguntaTable extends HttpServlet {
 						 asc=1;
 					 }
 					 
-					 		ArrayList<CPregunta> lista=dbo.getListaPreguntas(ordenar, asc, min, max,pqtype,busqueda);
+					 		ArrayList<CPregunta> lista=dbo.getListaPreguntas(ordenar, asc, min, max,busqueda,idcategoria);
 					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-							 info+="<rows><page>"+page+"</page><total>"+dbo.getPreguntaTotal()+"</total>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getPreguntaTotal(idcategoria)+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<lista.size();i++){
 								 CPregunta temp=lista.get(i);
-								 	data+="<row  id='"+temp.getIdpregunta()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EditarPregunta("+temp.getIdpregunta()+")\"><img src=\"../images/modificar.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdpregunta()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getIdcategoria().getDescripcion()+"]]></cell><cell><![CDATA["+temp.getPregunta()+"]]></cell><cell><![CDATA["+temp.getEstadoMensaje()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAuto_evaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
+								 	data+="<row  id='"+temp.getIdpregunta()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EditarPregunta("+temp.getIdpregunta()+")\"><img src=\"../images/modificar.png\"/></a>]]></cell><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"ElimPregunta("+temp.getIdpregunta()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdpregunta()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getPregunta()+"]]></cell><cell><![CDATA["+temp.getEstadoMensaje()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAuto_evaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell><cell><![CDATA["+temp.getIdcategoria().getDescripcion()+"]]></cell></row>";	 
+							 }
+							 info+=data+"</rows>";
+							 out.println(info);
+					 dbo.Close();
+				}else if(action.equalsIgnoreCase("titulo_respuesta")){
+					CDataExam dbo=new CDataExam();
+					 dbo.Connect();
+					 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
+					 int rp=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("rp")));
+					 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
+					 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
+					 
+					 int min=((page-1)*rp)+1;
+					 int max=page*(rp);
+					 
+					 int asc=0;
+					 if(typeorder.equalsIgnoreCase("asc")){
+						 asc=1;
+					 }
+					 
+					 		ArrayList<CTitulo_Respuesta> lista=dbo.getListaTitulo_Respuesta( asc, min, max,busqueda);
+					 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+							 info+="<rows><page>"+page+"</page><total>"+dbo.getTitulo_RespuestaTotal()+"</total>";
+							 
+							 String data="";
+							 for(int i=0; i<lista.size();i++){
+								 CTitulo_Respuesta temp=lista.get(i);
+								 	data+="<row  id='"+temp.getIdtitulo_respuesta()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarTitulo("+temp.getIdtitulo_respuesta()+")' name='idcentro_radio' value='"+temp.getIdtitulo_respuesta()+"' />]]></cell><cell><![CDATA["+temp.getIdtitulo_respuesta()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell></row>";	 
 							 }
 							 info+=data+"</rows>";
 							 out.println(info);

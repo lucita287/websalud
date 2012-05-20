@@ -1,18 +1,49 @@
 package data;
 
 public class CMenu_Categoria {
-	int idmenu_categoria;
-	String nombre;
+	private int idmenu_categoria;
+	private String nombre;
+	private String instruccion;
+	private int area_examen;
 	
 	
 	
 	/**
 	 * @param idmenu_categoria
 	 * @param nombre
+	 * @param instruccion
+	 * @param area_examen
 	 */
-	public CMenu_Categoria(int idmenu_categoria, String nombre) {
+	public CMenu_Categoria(int idmenu_categoria, String nombre,
+			String instruccion, int area_examen) {
 		this.idmenu_categoria = idmenu_categoria;
 		this.nombre = nombre;
+		this.instruccion = instruccion;
+		this.area_examen = area_examen;
+	}
+	/**
+	 * @return the instruccion
+	 */
+	public String getInstruccion() {
+		return instruccion;
+	}
+	/**
+	 * @param instruccion the instruccion to set
+	 */
+	public void setInstruccion(String instruccion) {
+		this.instruccion = instruccion;
+	}
+	/**
+	 * @return the area_examen
+	 */
+	public int getArea_examen() {
+		return area_examen;
+	}
+	/**
+	 * @param area_examen the area_examen to set
+	 */
+	public void setArea_examen(int area_examen) {
+		this.area_examen = area_examen;
 	}
 	/**
 	 * @return the idmenu_categoria
