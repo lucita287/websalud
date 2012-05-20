@@ -1,6 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%@ page import="framework.CDataExam" %>
+<%@ page import="data.CCategoria" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Iterator" %>
+<%
+CDataExam dbo=new CDataExam();
+if(dbo.Connect()){
+ArrayList<CCategoria> lista=dbo.getListaCategoria();
+Iterator<CCategoria> it=lista.iterator();
+%>
+
+SELECCIONE LA CATEGORIA:
+
+<select id="categoria" name="categoria" onchange="cambiarCategoria()">
+<% while(it.hasNext()){ 
+	CCategoria cat=it.next();
+	%>
+  <option value="<%=cat.getIdcategoria() %>"><%=cat.getDescripcion() %></option>
+
+<% } %>  
+</select>
+    
     <script>
+    function cambiarCategoria(){
+    	 $('#Pregunta_table').flexOptions({params : [{name: 'a', value: 'preguntas'},{name: 'cate', value:$("#categoria").val()} ]});
+		  $('#Pregunta_table').flexReload();
+    	 
+    }
+    function ElimPregunta(id){
+    	$("#dialog-delete").html("CONFIRMA QUE DESEA ELIMINARLO? <br> ESTE PROCESO ES IRREVERSIBLE");
+    	$( "#dialog-delete" ).dialog({
+    		resizable: false,
+			height:140,
+			modal: true,
+			buttons: {
+				"Eliminar": function() {
+					$( this ).dialog( "close" );
+					cadena = [ 	'a=deletePregunta',
+					           	'idpregunta='+id,
+					        ].join('&');
+					
+					  $.ajax({
+				        url: "../SPregunta",
+				        data: cadena,
+				  	    type: 'post',
+				        dataType: 'json',
+				        success: function(data){
+				        	cambiarCategoria();
+				        }
+				    });
+					
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+    	
+    }
     $(function() {
 		
 		$( "#dialog-form" ).dialog({
@@ -20,14 +78,16 @@
 						 url: '../SPreguntaTable',
 						 dataType : 'xml',
 					    colModel: [
-						{display: 'MODIFICAR', name : 'chkactividad', width : 50, sortable : false, align: 'left'},           
+						{display: 'MODIFICAR', name : 'chkactividad', width : 50, sortable : false, align: 'left'}, 
+						{display: 'ELIMINAR', name : 'ddactividad', width : 50, sortable : false, align: 'left'}, 
 						{ display: 'ID', name: 'idpregunta', width: 30, sortable: true, align: 'left' },
 						{ display: 'Orden', name: 'orden', width: 40, sortable: true, align: 'left' },
-						{ display: 'Categoria', name: 'categoria', width: 80, sortable: true, align: 'left' },
-						{ display: 'Pregunta', name: 'pregunta', width: 200, sortable: true, align: 'left' },
+						{ display: 'Pregunta', name: 'pregunta', width: 250, sortable: true, align: 'left' },
 						{ display: 'Estado', name: 'estado', width: 80, sortable: true, align: 'left' },
 						{ display: 'AutoEvaluacion', name: 'auto', width: 70, sortable: true, align: 'left' },
-						{ display: 'Multifasico', name: 'multi', width: 60, sortable: true, align: 'left' }
+						
+						{ display: 'Multifasico', name: 'multi', width: 60, sortable: true, align: 'left' },
+						{ display: 'Categoria', name: 'categoria', width: 80, sortable: true, align: 'left' }
 						],
 						buttons : [
 						   		{name: 'Nuevo', bclass: 'add', onpress : Nuevo}
@@ -39,22 +99,21 @@
 						sortorder: "desc",
 					    title: 'Pregunta',
 					    useRp: true,
-					    rp: 15,
-					    width: 710,
+					    rp: 20,
+					    width: 660,
 					    height: 300,
 					    params : [ 
-						          {name: 'a', value: 'preguntas'}//,{name: 'f_ini', value: ''},{name: 'f_fin', value: ''} 
+						          {name: 'a', value: 'preguntas'},{name: 'cate', value:$("#categoria").val()} 
 						        ],
 						searchitems : [
-						   					{display: 'Pregunta', name : 'pregunta'},
-						   					{display: 'Categoria', name : 'categoria'}
+						   					{display: 'Pregunta', name : 'pregunta'}
 						    		],        
 					});
 			     $('.pSearch').click();
 			  }); 
 		  function Nuevo(com, grid){
 			  $( "#dialog-form" ).load("modulo_examen/new_pregunta.jsp");
-			  $( "#dialog-form" ).dialog( "open" );
+			   $( "#dialog-form" ).dialog( "open" );
 		  }
 		  function EditarPregunta(id){
 			  $( "#dialog-form" ).load("modulo_examen/edit_pregunta.jsp?idpregunta="+id);
@@ -66,5 +125,8 @@
 	
 	<div id="dialog-form" title="FORMULARIO DE PREGUNTA">
 	</div>
-
+	<div id="dialog-delete" title="CONFIRMA QUE DESEA ELIMINAR">
 	
+	</div>
+
+<% } %>	

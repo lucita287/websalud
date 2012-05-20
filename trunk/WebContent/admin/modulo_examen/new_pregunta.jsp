@@ -35,6 +35,7 @@ data.Close();
 		            'multifa='+(($("#multifa_pregunta").is(':checked')==true)?"1":"0"),
 		            'descrip='+$("#descripcion_pregunta").val(),
 		            'orden='+$("#orden_pregunta").val(),
+		            'genero='+$("#genero_pregunta").val(),
 		            'estado='+$("#estado_pregunta").val()
 		        ].join('&');
     	cadena=cadena+"&"+mensaje_cadena();
@@ -83,6 +84,16 @@ data.Close();
 								</div>
 							</div>
 							<div class="fila">
+								<div class="col_titulo">Dirigida al genero</div>
+								<div class="col">
+									<select id="genero_pregunta" name="genero_pregunta"  >
+													<option value="0" selected>AMBOS</option>
+													<option value="2" >MUJERES</option>
+													<option value="1" >HOMBRES</option>
+												</select>
+								</div>
+							</div>
+							<div class="fila">
 								<div class="col_titulo">*Tipo de Pregunta</div>
 								<div class="col">
 												<select id="tipo_pregunta" name="tipo_pregunta" onchange="tipo_pregunta()" >
@@ -109,8 +120,8 @@ data.Close();
 								<div class="col_titulo">Estado</div>
 								<div class="col">
 									<select id="estado_pregunta" name="estado_pregunta"  >
-													<option value="0" >DESHABILITADA</option>
-													<option value="1" selected>HABILITADO</option>
+													<option value="0" >NO MOSTRAR EN DASH</option>
+													<option value="1" selected>MOSTRAR EN DASH</option>
 												</select>
 								</div>
 							</div>
