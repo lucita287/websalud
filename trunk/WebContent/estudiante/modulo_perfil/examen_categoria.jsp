@@ -83,6 +83,7 @@ $(function() {
 								Iterator<CPregunta> it2=preg.iterator();
 								while(it2.hasNext()){
 									CPregunta pregunta=it2.next();
+									if(pregunta.getGenero()==0 || pregunta.getGenero()==pac.getSexo()){
 								%>
 						<div class="border">
 	<% 
@@ -130,7 +131,7 @@ $(function() {
 	}
 	%>						
 						</div>		
-							<% }%>
+							<% } }%>
 						
 						
 					</div>
