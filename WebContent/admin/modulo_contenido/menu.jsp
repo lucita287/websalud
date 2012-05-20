@@ -89,10 +89,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 					<a href="index.jsp?portal=11" >Mantenimiento de Propiedades</a>
 				</li>
 				<li>
-					<a href="index.jsp?portal=12" >Mantenimiento Dependencias</a>
+					<a href="index.jsp?portal=12" >Mantenimiento de Categorias</a>
 				</li>
 				<li>
-					<a href="index.jsp?portal=13" >Mantenimiento de Categorias</a>
+					<a href="index.jsp?portal=13" >Menu de Categorias</a>
 				</li>
 				<li>
 					<a href="index.jsp?portal=14" >Gestionar Examen de Salud</a>
@@ -116,21 +116,6 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			</ul>
 	
 	</li>
-	<%if (user_permiso.getIdpermiso().indexOf(237)>-1  
-		||user_permiso.getIdpermiso().indexOf(238)>-1
-		||user_permiso.getIdusuario().getidusuario()==1){%>	
-	<li>
-	<a >Reportes</a>
-			<ul id="report">
-				<li>
-					<a href="index.jsp?portal=18">Reportes</a>
-				</li>
-				<li>
-					<a href="index.jsp?portal=19" >Dashboard</a>
-				</li>
-			</ul>	
-	</li>
-	<% }%>
 	<li>
 	<a  href="../SunLogin">Salir</a>
 			
@@ -159,10 +144,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	  $('#exam').show();
 	  <% }else if(portal>16 && portal<18){ %>
 	  $('#estudiante').show();
-	  <% }else if(portal>17 && portal<20){ %>
-	  $('#report').show();
-	  <%} %>
-	  
+	  <% } %>
 	  
 	  $('#menu li a').click(
 	    function() {

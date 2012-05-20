@@ -55,6 +55,25 @@ var editanuncio=0;
 					
 		        }});
 	}
+	$( function(){
+		
+		  var cledit = $("#cont-text").cleditor()[0];
+		  $(cledit.$frame[0]).attr("id","cleditCool");
+
+		  var cleditFrame;
+		  if(!document.frames) cleditFrame = $("#cleditCool")[0].contentWindow.document;
+		  else cleditFrame = document.frames["cleditCool"].document;
+		    
+	  $(cleditFrame).contents().find('body').bind('paste', function(){
+		  
+	        setTimeout(function() {
+	            mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
+	        	$("#cont-text").cleditor()[0].focus();
+	        }, 100);
+	       return false;
+	  });
+	  } );
+	
 $(document).ready(function () {
 	  $("#cont-text").cleditor({
 		    width:        600,

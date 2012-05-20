@@ -42,6 +42,7 @@ function preguntaedit(){
 	            'multifa='+(($("#multifa_epregunta").is(':checked')==true)?"1":"0"),
 	            'descrip='+$("#descripcion_epregunta").val(),
 	            'orden='+$("#orden_epregunta").val(),
+	            'genero='+$("#genero_pregunta").val(),
 	            'estado='+$("#estado_epregunta").val()
 	        ].join('&');
 	cadena=cadena+"&"+mensaje_ecadena();
@@ -55,6 +56,7 @@ function preguntaedit(){
         	mensaje(data.mensaje);
         	if(data.resultado=='OK'){
         		$( "#dialog-form" ).dialog( "close" );
+        		
         		$('#Pregunta_table').flexReload();
         	}
         }
@@ -82,6 +84,16 @@ function preguntaedit(){
 														CCategoria edi=lista_cate.get(j);%>
 														<option value="<%=edi.getIdcategoria() %>" <%if(preg.getIdcategoria().getIdcategoria()==edi.getIdcategoria()){ out.println("selected"); } %>><%=edi.getDescripcion() %></option>
 													<% } %>
+												</select>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Dirigida al genero</div>
+								<div class="col">
+									<select id="genero_pregunta" name="genero_pregunta"  >
+													<option value="0" <%=((preg.getGenero()==0)?"selected":"") %> >AMBOS</option>
+													<option value="2" <%=((preg.getGenero()==2)?"selected":"") %> >MUJERES</option>
+													<option value="1" <%=((preg.getGenero()==1)?"selected":"") %>>HOMBRES</option>
 												</select>
 								</div>
 							</div>
@@ -175,8 +187,8 @@ function preguntaedit(){
 								<div class="col_titulo">Estado</div>
 								<div class="col">
 									<select id="estado_epregunta" name="estado_epregunta"  >
-													<option value="0"  <%=( preg.getEstado()==0?"selected":"" ) %>>DESHABILITADA</option>
-													<option value="1" <%=( preg.getEstado()==1?"selected":"" ) %>>HABILITADO</option>
+													<option value="0"  <%=( preg.getEstado()==0?"selected":"" ) %>>NO MOSTRAR EN DASH</option>
+													<option value="1" <%=( preg.getEstado()==1?"selected":"" ) %>>MOSTRAR EN DASH</option>
 												</select>
 								</div>
 							</div>
