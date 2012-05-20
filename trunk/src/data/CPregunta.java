@@ -13,6 +13,7 @@ public class CPregunta {
 	private int largo;
 	private int multiple;
 	private int estado;
+	private int genero;
 	/**
 	 * @param idpregunta
 	 * @param orden
@@ -31,7 +32,7 @@ public class CPregunta {
 	public CPregunta(int idpregunta, int orden, int requerida, String pregunta,
 			CCategoria idcategoria, String descripcion,
 			CTipo_Pregunta idtipo_pregunta, int auto_evaluacion,
-			int multifasico, int largo, int multiple,int estado) {
+			int multifasico, int largo, int multiple,int estado,int genero) {
 		this.idpregunta = idpregunta;
 		this.orden = orden;
 		this.requerida = requerida;
@@ -44,9 +45,26 @@ public class CPregunta {
 		this.largo = largo;
 		this.multiple = multiple;
 		this.estado = estado;
+		this.genero=genero;
 	}
 	
 	
+	/**
+	 * @return the genero
+	 */
+	public int getGenero() {
+		return genero;
+	}
+
+
+	/**
+	 * @param genero the genero to set
+	 */
+	public void setGenero(int genero) {
+		this.genero = genero;
+	}
+
+
 	/**
 	 * @return the estado
 	 */
