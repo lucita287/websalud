@@ -24,11 +24,12 @@ import data.CParentesco;
 import data.CPregunta;
 import data.CPregunta_Paciente;
 import data.CPregunta_Titulo_Respuesta;
+import data.CResultado_Examen;
+import data.CTipo_Interpretacion;
 import data.CTipo_Pregunta;
 import data.CTipo_Sangre;
 import data.CTitulo_Respuesta;
 import data.CTitulo_Secundaria;
-import data.CUnidad_Academica;
 
 public class CDataExam extends CDataBase {
 
@@ -390,74 +391,7 @@ public class CDataExam extends CDataBase {
 	}
 	
 
-	public int getUnidadAcademicaTotal(String busqueda){
-		int temp=0;
-		
-				try {
-					String sql="SELECT count(*) cant  "+
-						" FROM unidad_academica tc where upper(tc.nombre) like ? ";
-					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-					
-					stm.setString(1,"%"+busqueda.trim().toUpperCase()+"%");
-					ResultSet rs2=stm.executeQuery();
-					if(rs2.next())
-					temp=rs2.getInt("cant");
-				} catch (SQLException e) {
-		
-					e.printStackTrace();
-				}
-		
-		return temp;
-	}
-	public boolean UpdateUnidadAcademica(CUnidad_Academica ctipo){
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE unidad_academica SET nombre = ? WHERE idunidad_academica = ?");
-			
-			stm.setString(1, ctipo.getNombre());
-			stm.setInt(2,ctipo.getIdunidad_academica());
-			if(stm.executeUpdate()>0)
-				return true;
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
-	public boolean SafeUnidadAcademica(CUnidad_Academica ctipo){
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO unidad_academica(nombre)VALUES (?)");
-			
-			stm.setString(1,ctipo.getNombre());
-			if(stm.executeUpdate()>0)
-				return true;
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
-	public boolean deleteUnidadAcademica(int ctipo){
-		PreparedStatement stm;
-		try {
-			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM unidad_academica WHERE idunidad_academica = ?");
-			
-			stm.setInt(1,ctipo);
-			if(stm.executeUpdate()>0)
-				return true;
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
+	
 	public ArrayList<CDependencia> getListaDependencia(int ordenar,int asc,int min,int max, String busqueda){
 		ArrayList<CDependencia> ret=new ArrayList<CDependencia>();
 		try{
@@ -634,7 +568,7 @@ public class CDataExam extends CDataBase {
 	public boolean SafePaciente(CPaciente paciente){
 		PreparedStatement stm;
 		try {
-			String sql="INSERT INTO paciente (nombre, apellido, fecha_nac, carne, direccion, telefono, movil, email, password, usuario, sexo,  estado, idnacionalidad, iddepartamento) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql="INSERT INTO paciente (nombre, apellido, fecha_nac, carne, direccion, telefono, movil, email, usuario, sexo,  estado, idnacionalidad, iddepartamento, idunidad_academica) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			stm = (PreparedStatement)conn.prepareStatement(sql);
 			
@@ -647,14 +581,15 @@ public class CDataExam extends CDataBase {
 			stm.setString(7,paciente.getMovil());
 			stm.setString(8,paciente.getEmail());
 			
-			stm.setString(9, paciente.getPassword());
-			stm.setString(10, paciente.getUsuario());
+			stm.setString(9, paciente.getUsuario());
 			
-			stm.setInt(11, paciente.getSexo());
-			stm.setInt(12, paciente.getEstado());
-			if(paciente.getNacionalidad()>0) stm.setInt(13, paciente.getNacionalidad());
+			stm.setInt(10, paciente.getSexo());
+			stm.setInt(11, paciente.getEstado());
+			if(paciente.getNacionalidad()>0) stm.setInt(12, paciente.getNacionalidad());
+			else stm.setNull(12,java.sql.Types.NULL );
+			if(paciente.getDepartamento()>0) stm.setInt(13, paciente.getDepartamento());
 			else stm.setNull(13,java.sql.Types.NULL );
-			if(paciente.getDepartamento()>0) stm.setInt(14, paciente.getDepartamento());
+			if(paciente.getDepartamento()>0) stm.setInt(14, paciente.getIdunidad_academica());
 			else stm.setNull(14,java.sql.Types.NULL );
 			if(stm.executeUpdate()>0)
 				return true;
@@ -934,14 +869,14 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CCategoria_Interpretacion> getListaCategoria(int ordenar,int asc,int idcategoria){
 		ArrayList<CCategoria_Interpretacion> ret=new ArrayList<CCategoria_Interpretacion>();
 		try{
-			String sql=" SELECT ci.idcategoria_interpretacion, ci.ponderacion_max, ci.ponderacion_min,  ca.idcategoria, ca.descripcion FROM categoria_interpretacion ci inner join categoria ca on ca.idcategoria=ci.idcategoria where ci.idcategoria=? order by ? "+((asc==1)?"ASC":"DESC") +"";
+			String sql=" SELECT ci.idcategoria_interpretacion, ci.ponderacion_max, ci.ponderacion_min,  ca.idcategoria, ca.descripcion, ci.titulo, ci.size FROM categoria_interpretacion ci inner join categoria ca on ca.idcategoria=ci.idcategoria where ci.idcategoria=? order by ? "+((asc==1)?"ASC":"DESC") +"";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idcategoria);
 			stm.setInt(2,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CCategoria cate=new CCategoria(rs.getInt("idcategoria"),rs.getString("descripcion"),0,0,0,0,null);
-				CCategoria_Interpretacion news=new CCategoria_Interpretacion(rs.getInt("idcategoria_interpretacion"),rs.getInt("ponderacion_max"),rs.getInt("ponderacion_min"),"",cate);
+				CCategoria_Interpretacion news=new CCategoria_Interpretacion(rs.getInt("idcategoria_interpretacion"),rs.getInt("ponderacion_max"),rs.getInt("ponderacion_min"),"",cate,rs.getString("titulo"),rs.getInt("size"));
 				ret.add(news);
 				
 			}
@@ -956,12 +891,12 @@ public class CDataExam extends CDataBase {
 	public CCategoria_Interpretacion getCategoria_InterpretacionEspecifico(int idcate){
 		CCategoria_Interpretacion ret=null;
 		try{
-			String sql="SELECT idcategoria_interpretacion, ponderacion_max, ponderacion_min, interpretacion, idcategoria FROM categoria_interpretacion where idcategoria_interpretacion=?";
+			String sql="SELECT idcategoria_interpretacion, ponderacion_max, ponderacion_min, interpretacion, idcategoria, titulo, size FROM categoria_interpretacion where idcategoria_interpretacion=?";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idcate);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				ret=new CCategoria_Interpretacion(rs.getInt("idcategoria_interpretacion"),rs.getInt("ponderacion_max"),rs.getInt("ponderacion_min"),rs.getString("interpretacion"),null);
+				ret=new CCategoria_Interpretacion(rs.getInt("idcategoria_interpretacion"),rs.getInt("ponderacion_max"),rs.getInt("ponderacion_min"),rs.getString("interpretacion"),null,rs.getString("titulo"),rs.getInt("size"));
 			}
 			rs.close();
 			stm.close();
@@ -974,12 +909,14 @@ public class CDataExam extends CDataBase {
 	public boolean UpdateCategoria_Interpretacion(CCategoria_Interpretacion cate){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE categoria_interpretacion SET ponderacion_max = ?, ponderacion_min = ?, interpretacion = ? WHERE idcategoria_interpretacion = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE categoria_interpretacion SET ponderacion_max = ?, ponderacion_min = ?, interpretacion = ?,  titulo = ?, size = ? WHERE idcategoria_interpretacion = ?");
 			
 			stm.setInt(1,cate.getPonderacion_max());
 			stm.setInt(2,cate.getPonderacion_min());
 			stm.setString(3,cate.getInterpretacion());
-			stm.setInt(4,cate.getIdcategoria_interpretacion());
+			stm.setString(4,cate.getTitulo());
+			stm.setInt(5,cate.getSize());
+			stm.setInt(6,cate.getIdcategoria_interpretacion());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -993,11 +930,13 @@ public class CDataExam extends CDataBase {
 	public boolean SafeCategoria_Interpretacion(CCategoria_Interpretacion cate){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO categoria_interpretacion(ponderacion_max, ponderacion_min, interpretacion, idcategoria) VALUES (?,?,?,?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO categoria_interpretacion (ponderacion_max, ponderacion_min, interpretacion, idcategoria, titulo, size) VALUES (?, ?, ?, ?, ?, ?)");
 			stm.setInt(1,cate.getPonderacion_max());
 			stm.setInt(2,cate.getPonderacion_min());
 			stm.setString(3,cate.getInterpretacion());
 			stm.setInt(4,cate.getIdcategoria().getIdcategoria());
+			stm.setString(5,cate.getTitulo());
+			stm.setInt(6,cate.getSize());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1415,6 +1354,49 @@ public class CDataExam extends CDataBase {
 		
 		return temp;
 	}
+	public ArrayList<CTipo_Interpretacion> getListatipo_interpretacion(int asc,int min,int max,String valor,int orden){
+		ArrayList<CTipo_Interpretacion> ret=new ArrayList<CTipo_Interpretacion>();
+		try{
+			String sql="select * from  (SELECT pe.idtipo_interpretacion, pe.descripcion, @rownum:=@rownum+1 rownum "+
+					" FROM tipo_interpretacion pe, (SELECT @rownum:=0) ro " +
+					" where upper(pe.descripcion) like ? ) table1 "+
+					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setString(1, "%"+valor.trim().toUpperCase()+"%");
+			stm.setInt(2,min);
+			stm.setInt(3,max);
+			stm.setInt(4,orden);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CTipo_Interpretacion news =new CTipo_Interpretacion(rs.getInt("idtipo_interpretacion"),rs.getString("descripcion"));
+				ret.add(news);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public int gettipo_interpretacionTotal(){
+		int temp=0;
+		
+				try {
+					String sql="SELECT count(*) cant  "+
+						" FROM tipo_interpretacion ";
+					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+					ResultSet rs2=stm.executeQuery();
+					if(rs2.next())
+					temp=rs2.getInt("cant");
+				} catch (SQLException e) {
+		
+					e.printStackTrace();
+				}
+		
+		return temp;
+	}
 	public int getPreguntaTotal(int idcategoria){
 		int temp=0;
 		
@@ -1464,8 +1446,19 @@ public class CDataExam extends CDataBase {
 		ArrayList<CPregunta_Titulo_Respuesta> ret=new ArrayList<CPregunta_Titulo_Respuesta>();
 		try{
 			String sql="SELECT ptr.idtitulo_respuesta, ptr.ponderacion, tr.descripcion "+
-					" FROM pregunta_titulo_respuesta ptr inner join titulo_respuesta tr "+
-					" on tr.idtitulo_respuesta=ptr.idtitulo_respuesta where ptr.idpregunta=? ";
+			" 		 FROM pregunta p "+
+			"     left join tipo_pregunta tp on tp.idtipo_pregunta=p.idtipo_pregunta "+
+            "     left join grupo g on tp.idgrupo=g.idgrupo "+
+            "     left join grupo_titulo_respuesta gtr on gtr.idgrupo=g.idgrupo "+
+            "     left join pregunta_titulo_respuesta ptr on p.idpregunta=ptr.idpregunta "+
+            "     left join titulo_respuesta tr on tr.idtitulo_respuesta=ptr.idtitulo_respuesta "+
+            " where ptr.idpregunta=? "+
+            " and ( "+
+            " (tp.idgrupo is not null and gtr.idtitulo_respuesta=tr.idtitulo_respuesta) "+
+            " or "+
+            " (tp.idgrupo is null) "+
+            " ) "+
+            " order by gtr.orden ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,preg.getIdpregunta());
 
@@ -1486,14 +1479,14 @@ public class CDataExam extends CDataBase {
 	public CPaciente getEstudianteEspecifica(String usuario){
 		CPaciente news=null;
 		try{
-			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.titulo_secundaria,'') titulo_secundaria, ifnull(p.dependenciaiddependencia,0) iddependencia, p.usuario, sexo, "+
+			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.titulo_secundaria,'') titulo_secundaria,  p.usuario, sexo, "+
 		" apellido, "+			
 		" ifnull(crecio_en,'') crecio_en, ifnull(titulo_secundaria,'') titulo_secundaria, "+			
 		" ifnull(emer_nombre,'') emer_nombre, ifnull(emer_telefono,'') emer_telefono, ifnull(emer_movil,'') emer_movil,  "+
 		" ifnull(idemer_parentesco,'') idemer_parentesco, "+
 		" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
-		" ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(no_personal,0) no_personal, "+
-		" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, estado, examen_linea "+
+		" ifnull(p.estado_civilidestado_civil,0) idestado_civil, "+
+		" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, estado, examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
 		" FROM paciente p "+
 		" where  usuario=?  ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -1504,15 +1497,14 @@ public class CDataExam extends CDataBase {
 				
 				news=new CPaciente(rs.getInt("idpaciente"), rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
 						rs.getInt("carne"),  rs.getString("direccion"),rs.getString("telefono"),rs.getString("movil"),
-						rs.getInt("iddependencia"), rs.getInt("sexo"),
-						"", rs.getString("email"),
-						rs.getString("usuario"),  rs.getInt("no_personal"),
+						rs.getInt("sexo"), rs.getString("email"),
+						rs.getString("usuario"),
 						rs.getInt("idestado_civil"), rs.getString("emer_nombre"),
 						rs.getInt("idemer_parentesco"), rs.getString("emer_telefono"),
 						rs.getString("emer_movil"), rs.getInt("idtipo_sangre"),
 						rs.getString("titulo_secundaria"),
 						rs.getString("crecio_en"),rs.getString("apellido"),rs.getInt("idnacionalidad"),rs.getInt("iddepartamento"),
-						rs.getInt("estado"),rs.getInt("examen_linea")
+						rs.getInt("estado"),rs.getInt("examen_linea"),rs.getInt("idunidad_academica")
 						);
 			}
 			rs.close();
@@ -1827,14 +1819,16 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
-	public ArrayList<CMenu_Categoria> getListaMenu_Categoria(int auto,int multi){
+	public ArrayList<CMenu_Categoria> getListaMenu_Categoria(int auto,int multi,int idarea){
 		ArrayList<CMenu_Categoria> list=new ArrayList<CMenu_Categoria>();
 		try{
 
-			String sql="SELECT  distinct mc.idmenu_categoria, mc.nombre, mc.instruccion, mc.idarea_examen FROM menu_categoria mc inner join categoria c on mc.idmenu_categoria=c.idmenu_categoria where c.autoevaluacion=? or c.multifasico=? order by c.orden";
+			String sql="SELECT  distinct mc.idmenu_categoria, mc.nombre, mc.instruccion, mc.idarea_examen "+
+			" FROM menu_categoria mc inner join categoria c on mc.idmenu_categoria=c.idmenu_categoria where (c.autoevaluacion=? or c.multifasico=?) and mc.idarea_examen=? order by c.orden";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1, auto);
 			stm.setInt(2, multi);
+			stm.setInt(3, idarea);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CMenu_Categoria dep=new CMenu_Categoria(rs.getInt("idmenu_categoria"),rs.getString("nombre"),rs.getString("instruccion"),rs.getInt("idarea_examen"));
@@ -1923,6 +1917,40 @@ public class CDataExam extends CDataBase {
 				
 				if(temp==0){
 				stm = (PreparedStatement)conn.prepareStatement("INSERT INTO nacionalidad (nombre, codigo) VALUES ( ?, ?)");
+						stm.setString(1,nombre);
+						stm.setInt(2, nacionalidad);
+						stm.executeUpdate();
+						
+						sql=" select idnacionalidad cant from nacionalidad where codigo=? ";
+						stm=(PreparedStatement)conn.prepareStatement(sql);
+						stm.setInt(1, nacionalidad);
+						
+						rs2=stm.executeQuery();
+						if(rs2.next()) temp=rs2.getInt("cant");
+				}
+					return temp;
+				
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	public int SafeUnidadAcademica(int nacionalidad,String nombre){
+		PreparedStatement stm;
+		try {
+			
+			String sql=" SELECT idunidad_academica cant FROM unidad_academica where codigo = ? ";
+				stm=(PreparedStatement)conn.prepareStatement(sql);
+				stm.setInt(1, nacionalidad);
+				
+				ResultSet rs2=stm.executeQuery();
+				int temp=0;
+				if(rs2.next()) temp=rs2.getInt("cant");
+				
+				if(temp==0){
+				stm = (PreparedStatement)conn.prepareStatement("INSERT INTO unidad_academica (nombre,codigo) VALUES (?,?)");
 						stm.setString(1,nombre);
 						stm.setInt(2, nacionalidad);
 						stm.executeUpdate();
@@ -2391,11 +2419,11 @@ public class CDataExam extends CDataBase {
 			}
 			
 			String sql="select * from (SELECT p.idpaciente,p.carne, p.nombre, p.apellido, p.fecha_nac,  "+
-					"ifnull((select u.nombre from unidad_academica u inner join unidad_academica_paciente uap on "+
-					"uap.idunidad_academica=u.idunidad_academica where uap.idpaciente=p.idpaciente limit 1) ,'') unidad, "+
+					"u.nombre unidad, p.idunidad_academica "+
 					"cp.estado estado,  @rownum:=@rownum+1 rownum  "+
 					"FROM cita c inner join cita_paciente cp on c.idcita=cp.idcita "+
 					"inner join paciente p on p.idpaciente=cp.idpaciente "+
+					"left outer join unidad_academica u on u.idunidad_academica=p.idunidad_academica "+
 					" , (SELECT @rownum:=0) ro "+
 					"where c.idcita=? and upper("+busq+") like ?   ) table1 "+
 					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
@@ -2408,18 +2436,15 @@ public class CDataExam extends CDataBase {
 			stm.setInt(5,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CPaciente news=new CPaciente(rs.getInt("idpaciente"), rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
+				CPaciente news=new CPaciente(rs.getInt("idpaciente"),rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
 						rs.getInt("carne"), "","","",
-						0,0,
-						"","",
-						"", 0,
+						0,"", rs.getInt("carne")+"",
 						0, "",
-						0,"",
-						"",0,
-						"",
+						0, "",
+						"", 0,"",
 						rs.getString("unidad"),rs.getString("apellido"),0,0,
-						rs.getInt("estado"),0
-						);
+						rs.getInt("estado"),0,0);
+
 				ret.add(news);
 				
 			}
@@ -2658,6 +2683,154 @@ public class CDataExam extends CDataBase {
 			stm.setInt(2,idpaciente);
 			if(stm.executeUpdate()>0)
 				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public int getProximo(int area,int auto,int mult,int actual){
+		 try{    
+			 String sql="select distinct mc.idmenu_categoria id from menu_categoria mc inner join categoria c on mc.idmenu_categoria=c.idmenu_categoria and (c.multifasico=? or c.autoevaluacion=? ) and mc.idarea_examen=? order by c.orden ";
+			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			 	stm.setInt(1, mult);
+			 	stm.setInt(2, auto);
+			 	stm.setInt(3, area);
+	        	int result=0;
+	        	    ResultSet rs=stm.executeQuery();
+	                while(rs.next()){ 
+	                		 if(result==1) return rs.getInt("Id");
+	                         if(actual==rs.getInt("id")){result=1;}
+
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				e.printStackTrace();
+			} 
+		 
+		 return 0;
+	}
+	public boolean UpdateTipo_Interpretacion(CTipo_Interpretacion ctipo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE tipo_interpretacion SET descripcion = ? WHERE idtipo_interpretacion = ?");
+			
+			stm.setString(1, ctipo.getDescripcion());
+			stm.setInt(2, ctipo.getIdtipo_interpretacion());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean SafeTipo_Interpretacion(CTipo_Interpretacion ctipo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO tipo_interpretacion (descripcion) VALUES (?)");
+			
+			stm.setString(1,ctipo.getDescripcion());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean deleteTipo_Interpretacion(int ctipo){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM tipo_interpretacion WHERE idtipo_interpretacion = ?");
+			
+			stm.setInt(1,ctipo);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public ArrayList<CTipo_Interpretacion> getListaTipo_Interpretacion(){
+		ArrayList<CTipo_Interpretacion> lista=new  ArrayList<CTipo_Interpretacion>();
+		 try{    
+			 String sql="SELECT idtipo_interpretacion, descripcion FROM tipo_interpretacion";
+			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+	        	
+	        	    ResultSet rs=stm.executeQuery();
+	                while(rs.next()){                							
+	                                lista.add(
+	                                		new CTipo_Interpretacion(rs.getInt("idtipo_interpretacion"),rs.getString("descripcion"))
+	                                		); 
+
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				e.printStackTrace();
+				 //CLogger.write("1", this, e);
+			} 
+		 
+		 return lista;
+	}
+	
+	public boolean UpdateResultadoExamen(CResultado_Examen cate){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE resultado_examen SET titulo = ?, interpretacion = ?, idtipo_interpretacion = ?, size = ? WHERE idresultado_examen = ?");
+			
+			stm.setString(1,cate.getTitulo());
+			stm.setString(2,cate.getInterpretacion());
+			stm.setInt(3,cate.getIdtipo_interpretacion());
+			stm.setInt(4,cate.getSize());
+			stm.setInt(5,cate.getIdresultado_examen());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean SafeResultadoExamen(CResultado_Examen cate){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO resultado_examen(titulo,interpretacion,idtipo_interpretacion, size)VALUES (?,?,?,?)");
+			stm.setString(1,cate.getTitulo());
+			stm.setString(2,cate.getInterpretacion());
+			stm.setInt(3,cate.getIdtipo_interpretacion());
+			stm.setInt(4,cate.getSize());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean deleteResultadoExamen(int cate){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM resultado_examen WHERE idresultado_examen = ?");
+			
+			stm.setInt(1,cate);
+			if(stm.executeUpdate()>0) return true;
 			
 		} catch (SQLException e) {
 

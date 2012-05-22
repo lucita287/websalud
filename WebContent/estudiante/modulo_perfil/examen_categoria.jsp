@@ -9,6 +9,7 @@
 	<%@ page import="data.CTitulo_Respuesta" %>
 	<%@ page import="data.CPregunta_Paciente" %>
 	<%@ page import="data.CPaciente" %>
+	<%@ page import="data.CMenu_Categoria" %>
 	<%@ page import="java.util.Map" %>
     <script>
     
@@ -30,23 +31,29 @@ $(function() {
 </script>
 	<form id="MainForm" name="MainForm" action="../SRespuesta" method="post">
 	
-	<div style="float:left;">
+	
 	 <% 
     CValidation valid=new CValidation();
     int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
     int multi=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multi")));
     int menu=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmenu")));
-    String menu_desc=data.getMenuCategoria(menu);
+    CMenu_Categoria menu_desc=data.getMenuCategoriaEspecifico(menu);
+    if(menu_desc!=null){
+    
     String error=valid.ValidarRequest(request.getParameter("e"));
     %>
-	
-	<h2>PASO 2 / <%= menu_desc %> </h2>
-	
-	
+	<div style="float:right;">
+	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Regresar al menu"/>
+	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Continuar"/> 
+	 
 	</div>
-	<div class="button-sig">
-	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" value="Guardar/Continuar"/> 
-	
+	<div style="float:left;">
+	<h2>PASO 2 / <%= menu_desc.getNombre() %> </h2>
+	<input type="hidden" name="idarea" value="<%= menu_desc.getArea_examen()%>" id="idarea"/>
+	</div>
+		<div style="clear: both;"></div>
+	<div class="instruccion">
+	<%= menu_desc.getInstruccion() %>
 	</div>
 	<%
 	if(!error.isEmpty()){
@@ -115,9 +122,9 @@ $(function() {
 											} else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2 ){
 													
 													if(pregunta.getLargo()>=1 && pregunta.getLargo()<=2){%>
-													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"65")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="<%=(pregunta.getRequerida()==1)?" required":""%>"  value="<%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":"" %>">
+													<input type="text" size="<%=((pregunta.getLargo()==1)?"30":"60")%>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%> name="pregunta_<%= pregunta.getIdpregunta() %>" id="pregunta_<%= pregunta.getIdpregunta() %>" class="<%=(pregunta.getRequerida()==1)?" required":""%>"  value="<%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":"" %>">
 										  <%		}else{%>
-											  		<textarea id="pregunta_<%= pregunta.getIdpregunta() %>" rows="3" cols="50"  name="pregunta_<%= pregunta.getIdpregunta() %>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%>><%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":""%></textarea>
+											  		<textarea id="pregunta_<%= pregunta.getIdpregunta() %>" rows="3" cols="45"  name="pregunta_<%= pregunta.getIdpregunta() %>" <%=(pregunta.getRequerida()==1)?"class=\"required\"":""%>><%= ppaciente.containsKey(pregunta.getIdpregunta())?ppaciente.get(pregunta.getIdpregunta()).getRespuesta()+"":""%></textarea>
 										  			<%}
 													
 											}%>
@@ -139,9 +146,15 @@ $(function() {
 				<div style="clear: both;"></div>			
 	</div>
 	
-<%  } 
+<%  }
+	} 
         }
 data.Close(); }
 %>
+<div style="clear: both;"></div>
+	<div class="button-sig">
+	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" name="sig" value="Continuar"/> 
+	
+	</div>
 	</form>
     

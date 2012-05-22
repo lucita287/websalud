@@ -50,11 +50,13 @@ public class CReadXML {
             int cod_depto=valid.ConvertEntero(node.getChildText("DEPTO_RECIDENCIA"));
             int nacionalidad=dbo.SafeNacionalidad(cod_nac,node.getChildText("NACIONALIDAD"));
             int departamento=dbo.SafeDepartamento(cod_depto,node.getChildText("DEPARTAMENTO_RECIDENCIA"));
-            paciente =new CPaciente(0, node.getChildText("NOMBRES"), fecha,
+            int idunidad=dbo.SafeUnidadAcademica(8,"INGENIERÍA");
+            
+          
+            paciente =new CPaciente(0,node.getChildText("NOMBRES"), fecha,
         			carne, node.getChildText("DIRECCION")+", "+node.getChildText("MUNICIPIO_RECIDENCIA"), node.getChildText("TELEFONO"),node.getChildText("CELULAR"),
-        			 0,sexo,"", node.getChildText("CORREO"),
-        			carne+"",0,node.getChildText("APELLIDOS"),nacionalidad,departamento,
-        			1, 0);
+        			sexo, node.getChildText("CORREO"),carne+"",node.getChildText("APELLIDOS"),nacionalidad,departamento,
+        			1, 0, idunidad);
         	}
             return paciente;
 		} catch (JDOMException | IOException e) {

@@ -65,7 +65,7 @@ String error=valid.ValidarRequest(request.getParameter("e"));
 	}
 	 %>
 <div class="button-sig">
-<input type="submit" id="button_sig" class="ui-state-default ui-corner-all siguiente" value="Siguiente/Guardar"/> 
+<input type="submit" id="button_sig" class="ui-state-default ui-corner-all siguiente" value="Siguiente"/> 
 </div>
 <div style="clear: both;"></div>
 <input type="hidden" name="idestatus" value="1" id="idestatus"/>

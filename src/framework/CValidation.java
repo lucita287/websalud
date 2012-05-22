@@ -160,6 +160,24 @@ public class CValidation {
 			
 		return campo;
 	}
+	public String Limpiarvalor2(String campo,String codificacion){
+		//campo=JavascriptUtil.unescapeJavaScript(campo);
+		campo=campo.replaceAll("\"", "\'");
+		campo=campo.replaceAll("\t", " ");
+		campo=campo.replaceAll("\r", "\\\\r");
+		campo=campo.replaceAll("\f", " ");
+		campo=campo.replaceAll("\n", "\\\\n");
+		    campo=campo.trim();
+		    byte[] arrByte;
+			try {
+				arrByte = campo.getBytes(codificacion);
+				campo = new String(arrByte, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				
+			}
+			
+		return campo;
+	}
 
 
 	public int ConvertEntero(String num){

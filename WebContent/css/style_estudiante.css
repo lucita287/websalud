@@ -83,7 +83,7 @@
 		{
 			float: left;
 			padding: 5px;
-			width:250px;
+			width:280px;
 			color:#00688B;
 			background:#FFFFFF;
 			border-bottom-right-radius: 4px;
@@ -93,6 +93,7 @@
 			border: 1px solid #AAAAAA;
     		font-weight:bold;
 			text-transform:uppercase;
+			font-size: 80%;
 		}
 		.perfil .col
 		{
@@ -104,11 +105,19 @@
 		}
 		.perfil .col_examen
 		{
-			width:410px;
+			font-size: 80%;
+			width:380px;
 			float: left;
-			padding: 5px;
+			padding: 3px;
 			border-color: #00688B;
 			
+		}
+		.instruccion{
+			padding: 5px;
+		}
+		.area_examen{
+			font-size: 120%;
+			font-weight:bold;
 		}
 		/*******************MENU***********************************************/
 		ul#menu, ul#menu ul {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import data.CGrupo_Familiar;
 import data.CPaciente;
+import data.CPaciente_Menu_Categoria;
 import framework.CDataExam;
 import framework.CValidationMensaje;
 
@@ -45,6 +46,7 @@ public class SDatoPersonal extends HttpServlet {
 			data.Connect();
 			CValidationMensaje valid=new CValidationMensaje();
 			Integer idestatus=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idestatus")));
+			String action=valid.ValidarRequest(request.getParameter("a"));
 			String codificacion=request.getCharacterEncoding();
 			codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 			
@@ -83,17 +85,26 @@ public class SDatoPersonal extends HttpServlet {
 					}else{
 						response.sendRedirect("estudiante/index.jsp?e="+mensaje+"&portal=1");
 					}
-			}else if(idestatus==2){
+			}else if(action.equalsIgnoreCase("siguiente")){
+				
+				int area =valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
 				String descripcion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("descripcion")), codificacion);
 				if(descripcion.length()>=300)
 				descripcion=descripcion.substring(0,300);
-				boolean b=data.SafeAmbienteFamiliar(pac.getIdpaciente(), descripcion);
-				if(b){
-					response.sendRedirect("estudiante/index.jsp?portal=11");
-				}else{
-					response.sendRedirect("estudiante/index.jsp?e=Error al guardar&portal=11");
-				}
-			}else if(idestatus==3){
+				data.SafeAmbienteFamiliar(pac.getIdpaciente(), descripcion);
+				data.SafeMenu_Paciente(new CPaciente_Menu_Categoria(pac.getIdpaciente(),1,
+						0, 1));
+				int next=data.getProximo(area,0,1,1);
+				response.sendRedirect("estudiante/index.jsp?portal=10&idmenu="+next+"&auto=0&multi=1");
+				
+				
+			}else if(action.equalsIgnoreCase("Guardar")){
+				
+				String descripcion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("descripcion")), codificacion);
+				if(descripcion.length()>=300)
+				descripcion=descripcion.substring(0,300);
+				data.SafeAmbienteFamiliar(pac.getIdpaciente(), descripcion);
+				
 				int idparen=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("par_personal")));
 				int edad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("edad")));
 				int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
@@ -130,6 +141,15 @@ public class SDatoPersonal extends HttpServlet {
 				}else{
 					response.sendRedirect("estudiante/index.jsp?e=Error al eliminar&portal=11");
 				}
+			}else if(action.equalsIgnoreCase("Regresar al menu")){
+				String descripcion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("descripcion")), codificacion);
+				if(descripcion.length()>=300)
+				descripcion=descripcion.substring(0,300);
+				data.SafeAmbienteFamiliar(pac.getIdpaciente(), descripcion);
+				data.SafeMenu_Paciente(new CPaciente_Menu_Categoria(pac.getIdpaciente(),1,
+						0, 1));
+				response.sendRedirect("estudiante/index.jsp?portal=5");
+				
 			}else{
 				response.sendRedirect("index.jsp");
 			}

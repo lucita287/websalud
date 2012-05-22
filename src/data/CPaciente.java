@@ -12,12 +12,9 @@ public class CPaciente {
 	private String direccion;
 	private String telefono;
 	private String movil;
-	private int iddependencia;
 	private int sexo;
-	private String password;
 	private String email;
 	private String usuario;
-	private int no_personal;
 	private String apellido;
 	
 	private int estado_civilidestado_civil;
@@ -32,6 +29,8 @@ public class CPaciente {
 	private int examen_linea;
 	private int nacionalidad;
 	private int departamento;
+	private int idunidad_academica;
+	
 	/**
 	 * @param idpaciente
 	 * @param nombre
@@ -57,10 +56,8 @@ public class CPaciente {
 	 */
 	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
 			int carne, String direccion, String telefono, String movil,
-			 int iddependencia, int sexo,
-			String password, String email,
-			String usuario,  int no_personal,String apellido,int nacionalidad,int departamento,
-			int estado, int examen_linea) {
+			int sexo, String email, String usuario,String apellido,int nacionalidad,int departamento,
+			int estado, int examen_linea, int idunidad_academica) {
 		this.estado=estado;
 		this.departamento=departamento;
 		this.examen_linea=examen_linea;
@@ -73,14 +70,11 @@ public class CPaciente {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.movil = movil;
-		this.iddependencia = iddependencia;
 		this.sexo = sexo;
-		this.password = password;
 		this.email = email;
 		this.usuario = usuario;
-		this.no_personal= no_personal;
 		this.apellido=apellido;
-		
+		this.idunidad_academica=idunidad_academica;
 	}
 
 	
@@ -115,14 +109,12 @@ public class CPaciente {
 	 */
 	public CPaciente(int idpaciente, String nombre, Date fecha_nacimiento,
 			int carne, String direccion, String telefono, String movil,
-			int iddependencia, int sexo,
-			String password, String email, String usuario,
-			int no_personal,
+			 int sexo,String email, String usuario,
 			int estado_civilidestado_civil, String emer_nombre,
 			int idemer_parentesco, String emer_telefono,
 			String emer_movil, int idtipo_sangre, String titulo_secundaria,
 			String crecio_en,String apellido,int nacionalidad,int departamento,
-			int estado, int examen_linea) {
+			int estado, int examen_linea, int idunidad_academica) {
 		this.departamento=departamento;
 		this.examen_linea=examen_linea;
 		this.nacionalidad=nacionalidad;
@@ -136,9 +128,7 @@ public class CPaciente {
 		this.telefono = telefono;
 		this.movil = movil;
 		this.estado_civilidestado_civil=estado_civilidestado_civil;
-		this.iddependencia = iddependencia;
 		this.sexo = sexo;
-		this.password = password;
 		this.email = email;
 		this.usuario = usuario;
 		this.estado_civilidestado_civil = estado_civilidestado_civil;
@@ -149,12 +139,29 @@ public class CPaciente {
 		this.idtipo_sangre = idtipo_sangre;
 		this.titulo_secundaria = titulo_secundaria;
 		this.crecio_en = crecio_en;
-		this.no_personal= no_personal;
 		this.estado=estado;
-		
+		this.idunidad_academica=idunidad_academica;
 	}
 
 	
+
+	/**
+	 * @return the idunidad_academica
+	 */
+	public int getIdunidad_academica() {
+		return idunidad_academica;
+	}
+
+
+
+	/**
+	 * @param idunidad_academica the idunidad_academica to set
+	 */
+	public void setIdunidad_academica(int idunidad_academica) {
+		this.idunidad_academica = idunidad_academica;
+	}
+
+
 
 	/**
 	 * @return the estado
@@ -375,24 +382,6 @@ public class CPaciente {
 
 
 	/**
-	 * @return the iddependencia
-	 */
-	public int getIddependencia() {
-		return iddependencia;
-	}
-
-
-
-	/**
-	 * @param iddependencia the iddependencia to set
-	 */
-	public void setIddependencia(int iddependencia) {
-		this.iddependencia = iddependencia;
-	}
-
-
-
-	/**
 	 * @return the sexo
 	 */
 	public int getSexo() {
@@ -408,23 +397,6 @@ public class CPaciente {
 		this.sexo = sexo;
 	}
 
-
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 
 
@@ -464,23 +436,6 @@ public class CPaciente {
 
 
 
-
-
-	/**
-	 * @return the no_personal
-	 */
-	public int getNo_personal() {
-		return no_personal;
-	}
-
-
-
-	/**
-	 * @param no_personal the no_personal to set
-	 */
-	public void setNo_personal(int no_personal) {
-		this.no_personal = no_personal;
-	}
 
 
 

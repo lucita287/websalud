@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" %>
     <script>
 		function EditarCatePonderacion(id){
-			 $("#editor").cleditor()[0].clear();
+			 $("#editor").val("");
 			idcate_pond=id;
 			cadena = [ 'a=show_cate_pond',
 			            'idcate_pond='     + id,
@@ -12,13 +12,15 @@
 		        url: "../SCategoria",
 		        data: cadena,
 		  	    type: 'post',
+		  	    
 		        success: function(data){
-		        	var data_desc=Base64.decode( data );
-		        	result=eval("("+ data_desc+")");
-				        	$("#min_ponde").val(result.min);
+		        	
+		        	result=eval("("+data+")");
+		        	    	$("#min_ponde").val(result.min);
 				        	$("#max_ponde").val(result.max);
-				        	$("#editor").cleditor()[0].execCommand("inserthtml",result.interpretacion,null,null);
-							$("#editor").cleditor()[0].focus();
+				        	$("#editor").val(result.interpretacion);
+				        	$("#titulo_ponde").val(result.titulo);
+				        	$("#size_ponde").val(result.size);
 		        	}
 		    });
 			
@@ -44,35 +46,10 @@
 				    height: 200,
 				    params : [ {name: 'idcategoria', value: '0'},{name: 'a', value: 'ponderacion'} ]
 				});
-		      $("#editor").cleditor({
-				    width:        500,
-				    height:       300,
-				    controls:     // controls to add to the toolbar
-                    "bold italic underline strikethrough subscript superscript | font size " +
-                    "style | color highlight removeformat | bullets numbering | outdent " +
-                    "indent | alignleft center alignright justify | undo redo | " +
-                    "rule image link unlink | cut copy paste pastetext | print"
-				    });
-				$("#editor").cleditor()[0].focus();
+		      
 		  });  
 		  var idcate_pond=0;
-			$(function() {
-				$( ".check" ).button();
-				var cledit = $("#editor").cleditor()[0];
-				$(cledit.$frame[0]).attr("id","cleditCool");
-			
-				var cleditFrame;
-				if(!document.frames) cleditFrame = $("#cleditCool")[0].contentWindow.document;
-				else cleditFrame = document.frames["cleditCool"].document;
-				    
-			$(cleditFrame).contents().find('body').bind('paste', function(){
-				  
-			      setTimeout(function() {
-			          mensaje("Utilice el pegar, de la barra de herramientas \n pegar como texto");
-			      }, 100);
-			     return false;
-			});
-			} );  
+			  
 			function NewPonde(){
 				$("#min_ponde").val("0");
 	        	$("#max_ponde").val("0");
@@ -80,11 +57,11 @@
 				$("#id_ponde").text("NEW");
 				$('#categoria_ponderacion').flexOptions({ params : [{name: 'idcategoria', value: idcate},{name: 'a', value: 'ponderacion'}]});
 				$('#categoria_ponderacion').flexReload();
-				$("#editor").cleditor()[0].clear();
-				$("#editor").cleditor()[0].focus();
+				$("#editor").val("");
+				$("#size_ponde").val("");
+				$("#titulo_ponde").val("");
 			}
 			function GuardarPonde(){
-				var interpretacion=Base64.encode(convertirCaracter($.trim(($("#editor").val()))));
 				if(idcate_pond==0){
 					action="new_cate_pond";
 				}else{
@@ -92,10 +69,12 @@
 				}
 				cadena = [ 'a='+action,
 				            'idcate_pond='     + idcate_pond,
-				            'interpretacion='+interpretacion,
+				            'interpretacion='+$("#editor").val(),
 				            'min='+$("#min_ponde").val(),
 				            'max='+$("#max_ponde").val(),
 				            'idcategoria='   + idcate,
+				            'size='+$("#size_ponde").val(),
+				            'titulo='+$("#titulo_ponde").val()
 				        ].join('&');
 				 $.ajax({
 				        url: "../SCategoria",
@@ -147,11 +126,26 @@
 								<div class="col_titulo">*Maximo</div>
 								<div class="col"><input id='max_ponde' type="text" size="10"/></div>
 							</div>
+							
+							<div class="fila">
+								<div class="col_titulo">*Tama&ntilde;o</div>
+								<div class="col">
+											<select id="size_ponde" name="size_ponde">
+											  <option value="1">Pequeño</option>
+											  <option value="2">Mediano</option>
+											  <option value="3">Grande</option>
+											</select>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">*Titulo</div>
+								<div class="col"><input id='titulo_ponde' size="60px" type="text" size="10"/></div>
+							</div>
 							<div class="fila">
 								<div class="col_titulo">*Interpretaci&oacute;n</div>
 								<div class="col">
 									<div style="clear: both;"></div>
-									<textarea  id="editor" class="editor" ></textarea>
+									<textarea  id="editor" class="editor" rows="5" cols="60" ></textarea>
 									<div style="clear: both;"></div>
 								</div>
 							</div>
