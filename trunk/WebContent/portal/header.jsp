@@ -25,7 +25,7 @@ if(lista.size()>0){
 			hoverPause:true,
 			visible: <%=(lista.size()>5?"5":lista.size())%>,
 			auto:500,
-			speed:1000,
+			speed:3000,
 			scroll:1
 			});
 		});	

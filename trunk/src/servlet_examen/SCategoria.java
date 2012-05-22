@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-import data.CArea;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CMenu_Categoria;
@@ -89,7 +88,7 @@ public class SCategoria extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("newcate")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
+						String nombre=valid.Limpiarvalor2(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 						int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 						int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 						int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
@@ -131,27 +130,31 @@ public class SCategoria extends HttpServlet {
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
 						CCategoria_Interpretacion act=dbo.getCategoria_InterpretacionEspecifico(idcate_pond);
 						 if(act!=null){							 
-							 result= "{\"min\":\""+act.getPonderacion_min()+"\",\"max\":\""+act.getPonderacion_max()+"\",\"interpretacion\":\""+act.getInterpretacion()+"\"}";
+							 result= "{\"min\":\""+act.getPonderacion_min()+"\",\"max\":\""+act.getPonderacion_max()+"\",\"interpretacion\":\""+act.getInterpretacion()+"\",\"titulo\":\""+act.getTitulo()+"\",\"size\":\""+act.getSize()+"\"}";
 						 }
-						 out.println(base64.codificar(result));
+						 out.println(result);
 						//MODIFICAR CATEGORIA 
 					}else if(action.equalsIgnoreCase("safe_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
-						String interpretacion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("interpretacion"))),codificacion);
+						String interpretacion=valid.Limpiarvalor2(valid.ValidarRequest(request.getParameter("interpretacion")),codificacion);
+						String titulo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("titulo")),codificacion);
+						int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
 						
 						String validacion=valid.ValidarSiesMayor(idcate_pond, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(interpretacion, "Descripcion"):validacion;
-						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 100, "Titulo"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 5000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcategoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una categoria\"}"):validacion;
 						
 						if(validacion.compareTo("")==0){
 							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0,null);
-							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(idcate_pond,max, min, interpretacion,categoria) ;
+							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(idcate_pond,max, min, interpretacion,categoria,titulo,size) ;
 							boolean b=dbo.UpdateCategoria_Interpretacion(cate);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -163,18 +166,22 @@ public class SCategoria extends HttpServlet {
 						
 					}else if(action.equalsIgnoreCase("new_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
-						String interpretacion=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("interpretacion"))),codificacion);
+						String interpretacion=valid.Limpiarvalor2(valid.ValidarRequest(request.getParameter("interpretacion")),codificacion);
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
 						int max=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("max")));
 						int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
+						String titulo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("titulo")),codificacion);
+						int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 						
 						String validacion=valid.ValidarSiesMayor(idcategoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una categoria\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(interpretacion, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 4000, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.validarMinyMax(min, max, "Minimo","Maximo"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 100, "Titulo"):validacion;
 						if(validacion.compareTo("")==0){
 							CCategoria categoria=new CCategoria(idcategoria,"",0,0,0,0,null);
-							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(0,max, min, interpretacion,categoria) ;
+							CCategoria_Interpretacion cate=new CCategoria_Interpretacion(0,max, min, interpretacion,categoria,titulo,size) ;
 							boolean b=dbo.SafeCategoria_Interpretacion(cate);
 							if(!b){
 								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";

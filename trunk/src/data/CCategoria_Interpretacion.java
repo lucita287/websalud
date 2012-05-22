@@ -6,6 +6,9 @@ public class CCategoria_Interpretacion {
 	private int ponderacion_min;
 	private String interpretacion;
 	private CCategoria idcategoria;
+	private String titulo;
+	private int size;
+	
 	/**
 	 * @param idcategoria_interpretacion
 	 * @param ponderacion_max
@@ -15,13 +18,49 @@ public class CCategoria_Interpretacion {
 	 */
 	public CCategoria_Interpretacion(int idcategoria_interpretacion,
 			int ponderacion_max, int ponderacion_min, String interpretacion,
-			CCategoria idcategoria) {
+			CCategoria idcategoria,String titulo,int size) {
 		this.idcategoria_interpretacion = idcategoria_interpretacion;
 		this.ponderacion_max = ponderacion_max;
 		this.ponderacion_min = ponderacion_min;
 		this.interpretacion = interpretacion;
 		this.idcategoria = idcategoria;
+		this.titulo=titulo;
+		this.size=size;
 	}
+	
+	
+	/**
+	 * @return the titulo
+	 */
+	public String getTitulo() {
+		return titulo;
+	}
+
+
+	/**
+	 * @param titulo the titulo to set
+	 */
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+
 	/**
 	 * @return the idcategoria_interpretacion
 	 */

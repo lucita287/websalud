@@ -4,6 +4,7 @@
 <%@ page import="data.CParentesco" %>
 <%@ page import="data.CPaciente" %>
 <%@ page import="data.CGrupo_Familiar" %>
+<%@ page import="data.CMenu_Categoria" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="framework.CValidation" %>
@@ -26,6 +27,8 @@ if(dbo.Connect()){
 ArrayList<CParentesco> paren=dbo.getListaParentesco();
 String ambiente=dbo.getAmbienteFamiliar(pac.getIdpaciente());
 ArrayList<CGrupo_Familiar> grupo=dbo.getListaGrupoFamiliar(pac.getIdpaciente());
+CMenu_Categoria menu_desc=dbo.getMenuCategoriaEspecifico(1);
+if(menu_desc!=null){
 %>
 <script  type="text/javascript">
 			  $(document).ready(function () {
@@ -36,30 +39,38 @@ ArrayList<CGrupo_Familiar> grupo=dbo.getListaGrupoFamiliar(pac.getIdpaciente());
 		$("#button_sig").button();	
 	});
 	</script>
-<div class="button-sig">
-	<a id="button_sig" href="index.jsp?portal=5">Continuar</a> 
+<form id="MainPsico" name="MainPsico" action="../SDatoPersonal" method="post">	
+
+<div style="float:right">
+<input type="submit" class="siguiente" name="a" value="Regresar al menu" />
+<input type="submit" class="siguiente" name="a" value="siguiente" />
+
 </div>
+<div style="float:left;">
+	<h2>PASO 2 / <%= menu_desc.getNombre() %> </h2>
+	<input type="hidden" name="idarea" value="<%= menu_desc.getArea_examen()%>" id="idarea"/>
+	</div>
+		
+	<div class="instruccion">
+	<%= menu_desc.getInstruccion() %>
+	</div>
+<div style="clear: both;"></div>
+
 <%if(error.compareTo("")!=0){%>
 <div class="ui-state-error">
 	<%=error %>
 </div>
 <% } %>
-<h2>AMBIENTE FAMILIAR</h2>
 
 (Escriba los datos m&aacute;s importantes de su familia o de otras personas que vivan con usted, así
 como los problemas en su hogar: econ&oacute;micos, familiares, de salud o de otra índole, especialmente
 aquellos que incidan en su salud o su rendimiento estudiantil).
-<form id="MainForm" name="MainForm" action="../SDatoPersonal" method="post">
-			<input type="hidden" name="idestatus" value="2" id="idestatus" />
+
 			<textarea rows="4" name="descripcion" id="descripcion" cols="60"><%=ambiente %></textarea>
 			<div style="clear: both;"></div>
-			<div style="float:right">
-				<input type="submit" class="siguiente" value="Guardar"/>
-			</div>
-</form>
+
 <h2>GRUPO FAMILIAR (Miembros que est&aacute;n unidos)</h2>
-<form id="MainPsico" name="MainPsico" action="../SDatoPersonal" method="post">
-<input type="hidden" name="idestatus" value="3" id="idestatus"/>
+
 *Parentesco: <select id="par_personal"  class="required" name="par_personal">
 												<option value="0">SELECCIONE</option>	
 												<%	Iterator<CParentesco> it3=paren.iterator();
@@ -89,7 +100,7 @@ Lugar de residencia: <input type="text" id="lugar" name="lugar" size="20" value=
 <div style="clear: both;"></div>
 <% if(grupo.size()<9){ %>
 <div style="float:right">
-	<input type="submit" class="siguiente" value="Guardar" />
+	<input type="submit" name="a" class="siguiente" value="Guardar" />
 </div>
 <% } %>
 <div style="clear: both;"></div>
@@ -141,4 +152,4 @@ Lugar de residencia: <input type="text" id="lugar" name="lugar" size="20" value=
 	
 	
 </table>					
-<% } dbo.Close();	} %>
+<% 		}	} dbo.Close();	} %>

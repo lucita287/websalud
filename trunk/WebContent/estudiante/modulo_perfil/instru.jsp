@@ -22,7 +22,9 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	<a href="index.jsp?portal=1" class="siguiente">SIGUIENTE</a>
 	</div>
 	<h2>EXAMEN DE SALUD, PARA LOS CARNE <%=configu.getCiclo() %></h2>
+	<div class="instruccion">
 	<%= anuncio.getContenido() %>
+	</div>
 <% }
 	
 }%>

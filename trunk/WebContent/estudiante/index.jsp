@@ -38,8 +38,6 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 <div id="cont_dato_personal">
 <% if(portal==1){ %>
 <jsp:include page="modulo_perfil/dato_personal.jsp" />
-<% }else if(portal==3){ %>
-<jsp:include page="modulo_perfil/estatus_trabajador.jsp" />
 <% }else if(portal==5){ %>
 <jsp:include page="modulo_perfil/multi.jsp" />
 <% }else if(portal==6){ %>

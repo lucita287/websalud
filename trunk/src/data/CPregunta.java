@@ -219,7 +219,7 @@ public class CPregunta {
         else return "NO";
 	}
 	public String getEstadoMensaje(){
-	    if(this.estado==1) return "HABILITADO";
-	    else return "DESHABILITADO";
+	    if(this.estado==1) return "MOSTRAR EN DASH";
+	    else return "NO MOSTRAR EN DASH";
 	}
 }

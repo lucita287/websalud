@@ -56,8 +56,7 @@
      		  idcate=id;
      		 $('#categoria_ponderacion').flexOptions({ params : [{name: 'idcategoria', value: idcate},{name: 'a', value: 'ponderacion'}]});
 			  $('#categoria_ponderacion').flexReload();
-			  $('#editor').cleditor()[0].clear();
-			  $("#editor").cleditor()[0].focus();
+			  $('#editor').val("");
 			  $("#cate_catego_ponde").text(nombre);
 			  $("#menu_cate").val(menu);
 			  idcate_pond=0;
@@ -74,8 +73,7 @@
 			  $('#categoria').flexReload();
 			  $('#categoria_ponderacion').flexOptions({ params : [{name: 'idcategoria', value: 0},{name: 'a', value: 'ponderacion'}]});
 			  $('#categoria_ponderacion').flexReload();
-			  $('#editor').cleditor()[0].clear();
-			  $("#editor").cleditor()[0].focus();
+			  $('#editor').val("");
 			  $("#cate_catego_ponde").text("SELECCIONE LA CATEGORIA");
 			  idcate_pond=0;
 		  }

@@ -68,6 +68,8 @@ public class SCategoriaTable extends HttpServlet {
 							 int ordenar=1;					 
 							 if(order.equalsIgnoreCase("nombre")){
 							 	 ordenar=2;
+							 }else if(order.equalsIgnoreCase("orden")){
+								 ordenar=3;
 							 }
 							 
 							 int asc=0;
@@ -114,7 +116,7 @@ public class SCategoriaTable extends HttpServlet {
 									 String data="";
 									 for(int i=0; i<lista.size();i++){
 										 CCategoria_Interpretacion temp=lista.get(i);
-										 	data+="<row id='"+temp.getIdcategoria_interpretacion()+"'><cell><![CDATA[<input type='radio' class='menu_categoria' onclick='EditarCatePonderacion("+temp.getIdcategoria_interpretacion()+")' name='idcategoria_ponderacion' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria_interpretacion()+"]]></cell><cell><![CDATA["+temp.getPonderacion_max()+"]]></cell><cell><![CDATA["+temp.getPonderacion_min()+"]]></cell><cell><![CDATA["+temp.getIdcategoria().getDescripcion()+"]]></cell></row>";	 
+										 	data+="<row id='"+temp.getIdcategoria_interpretacion()+"'><cell><![CDATA[<input type='radio' class='menu_categoria' onclick='EditarCatePonderacion("+temp.getIdcategoria_interpretacion()+")' name='idcategoria_ponderacion' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria_interpretacion()+"]]></cell><cell><![CDATA["+temp.getPonderacion_max()+"]]></cell><cell><![CDATA["+temp.getPonderacion_min()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell></row>";	 
 									 }
 									 info+=data+"</rows>";
 									 out.println(info);

@@ -58,6 +58,8 @@ public class SRespuesta extends HttpServlet {
 				int action=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("a")));
 				int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 				int multi=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multi")));
+				int area =valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
+				String submit=valid.ValidarRequest(request.getParameter("sig"));
 				if(action>0 &&(auto==1 || multi==1)){
 					ArrayList<CPregunta> preg=data.getListaPreguntas(action ,auto, multi);
 					Iterator<CPregunta> it2=preg.iterator();
@@ -116,9 +118,24 @@ public class SRespuesta extends HttpServlet {
 								auto, multi));
 						
 						
-						if(auto==1) response.sendRedirect("estudiante/index.jsp?portal=6");
-						else response.sendRedirect("estudiante/index.jsp?portal=5");
-						
+						if(submit.compareTo("Continuar")==0){
+						int next=data.getProximo(area,auto,multi,action);
+							if(next==0){	
+								if(auto==1){ 
+									response.sendRedirect("estudiante/index.jsp?portal=6");
+								}else{ 
+									response.sendRedirect("estudiante/index.jsp?portal=5");
+								}
+							}else{
+								response.sendRedirect("estudiante/index.jsp?portal=10&idmenu="+next+"&auto="+auto+"&multi="+multi);
+							}
+						}else{
+							if(auto==1){ 
+								response.sendRedirect("estudiante/index.jsp?portal=6");
+							}else{ 
+								response.sendRedirect("estudiante/index.jsp?portal=5");
+							}
+						}	
 					}else{
 						response.sendRedirect("estudiante/index.jsp?portal=10&idmenu="+action+"&auto="+auto+"&multi="+multi+"&e="+validaciones);
 					}

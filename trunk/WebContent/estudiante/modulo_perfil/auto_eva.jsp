@@ -19,7 +19,7 @@
     CDataExam dbo=new CDataExam();
     dbo.Connect();
 	CAnuncio anuncio=dbo.getAnuncioEspecifico(2);
-    ArrayList<CMenu_Categoria> lista=dbo.getListaMenu_Categoria(1,0);
+    ArrayList<CMenu_Categoria> lista=null;//dbo.getListaMenu_Categoria(1,0);
     ArrayList<Integer> lista_menu=dbo.ListaMenu_Categoria_Auto(pac.getIdpaciente() );
     dbo.Close();
     Iterator<CMenu_Categoria> it=lista.iterator();
