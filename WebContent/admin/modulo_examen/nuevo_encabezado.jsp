@@ -10,13 +10,47 @@
     ArrayList<CTipo_Interpretacion> list=dbo.getListaTipo_Interpretacion();
     Iterator<CTipo_Interpretacion> it=list.iterator();
     %>
+ 
+
  Descripcion de la condici&oacute;n: <br>
-    <textarea rows="3" cols="70"></textarea>
- <select id="tipo_inter_result" name="tipo_inter_result" onchange="cambiarTipo()">
+ <textarea rows="3" cols="70" id="texto_nuevo_enca" name="texto_nuevo_enca"></textarea>
+ <select id="tipo_nuevo_enca" name="tipo_nuevo_enca">
 <% while(it.hasNext()){
 	CTipo_Interpretacion ctipo=it.next();
 	%>
   <option value="<%=ctipo.getIdtipo_interpretacion() %>"><%=ctipo.getDescripcion() %></option>
 <% } %>
 </select>  
-	<% } %> 
+	
+	<div class="center_button">
+										<input type="button" onclick="GuardarEncabeza()" class="ui-state-default ui-corner-all button-save" value="Guardar" />
+										<input type="button"   class="ui-state-default ui-corner-all button-save" onclick="cancelar()" value="Cancelar" />		
+					</div> 
+	<script>
+		function GuardarEncabeza(){
+
+	    	cadena = [ 	'a=NuevoEncabezado',
+			            'tipo='+$("#tipo_nuevo_enca").val(),
+			            'descripcion='+$("#texto_nuevo_enca").val(),
+			            
+			        ].join('&');
+	    	
+	 		  $.ajax({
+		        url: "../SInterpretacion",
+		        data: cadena,
+		  	    type: 'post',
+		        dataType: 'json',
+		        success: function(data){
+		        	mensaje(data.mensaje);
+		        	if(data.resultado=='OK'){
+		        		cambiarTipo();
+		        		cancelar();
+		        	}
+		        }
+		    });
+		}
+		function cancelar(){
+			$( "#dialog-form" ).dialog( "close" );
+		}
+	</script>
+<% } %>	
