@@ -129,4 +129,4 @@ SELECCIONE LA CATEGORIA:
 	
 	</div>
 
-<% } %>	
+<% dbo.Close(); } %>	
