@@ -11,7 +11,7 @@
     Iterator<CTipo_Interpretacion> it=list.iterator();
     %>
     
-Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo_inter_result">
+Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo_inter_result" onchange="cambiarTipo()">
 <% while(it.hasNext()){
 	CTipo_Interpretacion ctipo=it.next();
 	%>
@@ -28,7 +28,7 @@ Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo
      $("#interpretacion").flexigrid
 		({
 			method: 'POST',
-			 //url: '../SEdificioTable',
+			 url: '../SInterpretacionTable',
 			 dataType : 'xml',
 		    colModel: [
 			{display: 'Seleccionar', name : 'chkactividad', width : 30, sortable : false, align: 'left'},           
@@ -45,6 +45,7 @@ Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo
 		    showTableToggleBtn: true,
 		    width: 600,
 		    height: 200,
+		    params : [{name: 'a', value: 'interpre'},{name: 'idtipo', value:$("#tipo_inter_result").val()} ],
 		    searchitems : [
 			{display: 'Titulo', name : 'nombre'}
 			]
@@ -53,11 +54,36 @@ Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo
  $('.pSearch').click();
  var interpreta=0;
  function LimpiarInterPret(){
-	 $("#id_interpre").val("");
+	 $("#id_interpre").text("NEW");
 	 $("#titulo_interpre").val("");
 	 $("#size_interpre").val("1");
 	 $("#inter_interpre").val("");
 	 interpreta=0;	
+	 cambiarTipo();
+ }
+ function EditarInterpre(id){
+	 interpreta=id;
+	 $("#inter_interpre").val("");
+		cadena = [ 'a=show_interpetar',
+		            'id_interpre='     + id,
+		        ].join('&');
+		$("#id_interpre").text(id);
+		$.ajax({
+	        url: "../SInterpretacion",
+	        data: cadena,
+	  	    type: 'post',
+	  	    
+	        success: function(data){
+	        	
+	        	result=eval("("+data+")");
+	        	    
+			        $("#titulo_interpre").val(result.titulo);
+			       	$("#size_interpre").val(result.size);
+			       	$("#inter_interpre").val(result.interpretacion);
+			       	$("#tipo_interpre").val(result.tipo);
+	        	}
+	    });
+		
  }
  function GuardarInterPret(){
 	 if(interpreta==0){
@@ -89,7 +115,7 @@ Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo
  function cambiarTipo(){
 	 $('#interpretacion').flexOptions({params : [{name: 'a', value: 'interpre'},{name: 'idtipo', value:$("#tipo_inter_result").val()} ]});
 	  $('#interpretacion').flexReload();
-	 
+	 $("#tipo_interpre").val( $("#tipo_inter_result").val());
 }
  function EliminarInterPret(){
 	 var action="deleteinter";
