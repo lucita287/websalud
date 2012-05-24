@@ -43,9 +43,10 @@ $(function() {
     String error=valid.ValidarRequest(request.getParameter("e"));
     %>
 	<div style="float:right;">
+	<a class="button_sig" href="index.jsp?portal=<%=(auto==1)?"6":"5"%>">Salir sin guardar</a> 
 	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Regresar al menu"/>
 	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Continuar"/> 
-	 
+	
 	</div>
 	<div style="float:left;">
 	<h2>PASO 2 / <%= menu_desc.getNombre() %> </h2>
@@ -145,16 +146,24 @@ $(function() {
 				</div>
 				<div style="clear: both;"></div>			
 	</div>
-	
+
+
 <%  }
 	} 
-        }
-data.Close(); }
-%>
-<div style="clear: both;"></div>
+    %> 
+    <div style="clear: both;"></div>
 	<div class="button-sig">
-	<input type="submit" id="button_sig" class="ui-state-default ui-corner-all button_sig" name="sig" value="Continuar"/> 
+	<a class="button_sig" href="index.jsp?portal=<%=(auto==1)?"6":"5"%>">Salir sin guardar</a>
+	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Regresar al menu"/>
+	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Continuar"/> 
 	
 	</div>
-	</form>
+	</form>	
+     
+    <%   
+        }
+      
+data.Close(); }
+%>
+
     

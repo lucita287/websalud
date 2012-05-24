@@ -59,24 +59,42 @@ public class SDatoPersonal extends HttpServlet {
 					String emer_tel=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tel_personal")), codificacion);
 					String tit_secun=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("tit_secun_personal")), codificacion);
 					int tsange=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tsangre_personal")));
-					String mensaje=valid.ValidarECombo(civil_personal,"Estado Civil");
-					mensaje+=valid.ValidarECombo(emer_idpar,"parentesco en caso de emergencia");
-					mensaje+=valid.ValidarECombo(tsange,"tipo de sangre");
-					mensaje+=valid.ValidarENombre(crecio_en, 100, "Crecio en");
-					mensaje+=valid.ValidarENombreV2(tit_secun, 150, "Titulo de Secundaria");
-					mensaje+=valid.ValidarENombre(emer_tel, 50, "Telefono de emergencia");
-					mensaje+=valid.ValidarENombre(emer_movil, 50, "Telefono movil");
-					mensaje+=valid.ValidarENombre(nombre_emer, 50, "Nombre de emergencia");
+					String mensaje="";
+					
+					String mensaje2=valid.ValidarECombo(civil_personal,"Estado Civil");
+					if(mensaje2.compareTo("")==0) pac.setEstado_civilidestado_civil(civil_personal);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarECombo(emer_idpar,"parentesco en caso de emergencia");
+					if(mensaje2.compareTo("")==0) pac.setIdemer_parentesco(emer_idpar);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarECombo(tsange,"tipo de sangre");
+					if(mensaje2.compareTo("")==0) pac.setIdtipo_sangre(tsange);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarENombre(crecio_en, 100, "Crecio en");
+					if(mensaje2.compareTo("")==0) pac.setCrecio_en(crecio_en);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarENombreV2(tit_secun, 150, "Titulo de Secundaria");
+					if(mensaje2.compareTo("")==0) pac.setTitulo_secundaria(tit_secun);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarENombre(emer_tel, 50, "Telefono de emergencia");
+					if(mensaje2.compareTo("")==0) pac.setEmer_telefono(emer_tel);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarENombre(emer_movil, 50, "Telefono movil");
+					if(mensaje2.compareTo("")==0) pac.setEmer_movil(emer_movil);
+					mensaje+=mensaje2;
+					
+					mensaje2=valid.ValidarENombre(nombre_emer, 50, "Nombre de emergencia");
+					if(mensaje2.compareTo("")==0) pac.setEmer_nombre(nombre_emer);
+					mensaje+=mensaje2;
+					
 					if(mensaje.isEmpty()){
-						pac.setEstado_civilidestado_civil(civil_personal);
-						pac.setCrecio_en(crecio_en);
-						pac.setEmer_nombre(nombre_emer);
-						pac.setEmer_movil(emer_movil);
-						pac.setEmer_telefono(emer_tel);
-						pac.setTitulo_secundaria(tit_secun);
-						pac.setIdtipo_sangre(tsange);
-						pac.setIdemer_parentesco(emer_idpar);
-						boolean b=data.UpdatePaciente1(pac);
+						boolean b=data.UpdatePaciente1(pac);	
 						if(b){
 							response.sendRedirect("estudiante/index.jsp?portal=5");
 						}else{
