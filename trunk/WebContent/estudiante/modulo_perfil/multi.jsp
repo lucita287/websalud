@@ -60,7 +60,7 @@
 											    			<a class="menu" style="width:220px; text-align: left;" href="index.jsp?portal=10&idmenu=<%=menu.getIdmenu_categoria()%>&auto=0&multi=1">
 											    	<% } %>		
 											    	
-											    			<img src="<%= (lista_menu.indexOf(menu.getIdmenu_categoria())>-1)?"../images/check.png":"../images/uncheck.png" %>" />
+											    			<img src="<%= (lista_menu.indexOf(menu.getIdmenu_categoria())>-1)?"../images/check1.png":"../images/uncheck1.png" %>" />
 											    			<%= menu.getNombre() %>
 											    			</a>
 											   <% } %> 	

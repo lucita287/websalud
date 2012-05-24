@@ -68,52 +68,53 @@ public class SRespuesta extends HttpServlet {
 					while(it2.hasNext()){
 						CPregunta pregunta=it2.next();
 						if(pregunta.getGenero()==0 || pregunta.getGenero()==pac.getSexo()){
+							String validaciones2="";
 						if(pregunta.getRequerida()==1){
 							String resp=request.getParameter("pregunta_"+pregunta.getIdpregunta());
+							
 							if(resp==null){
-								validaciones+="Debe responder todas las preguntas obligatorias";
-								break;
+								validaciones2="Debe responder todas las preguntas obligatorias";
+								
 							}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2 && resp.isEmpty()){
-								validaciones+="Debe responder todas las preguntas obligatorias";
-								break;
+								validaciones2="Debe responder todas las preguntas obligatorias";
+								
 							}
-						}
+							validaciones=validaciones2;
+						}	
+							if(validaciones2.compareTo("")==0){
+								ArrayList<Integer> lista=new ArrayList<Integer>();
+								if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==1){
+									int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
+									CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),num,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
+									data.SafeRespuesta(preg_pac);
+								}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2){
+									String respuesta=valid.Limpiarvalor( valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())),codificacion);
+									if(respuesta.length()>150) respuesta=respuesta.substring(0,150);
+									CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,respuesta,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
+									data.SafeRespuesta(preg_pac);
+								}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()>=3){
+									if(request.getParameter("pregunta_"+pregunta.getIdpregunta())!=null){
+										if(pregunta.getMultiple()==1){
+											String[] param = request.getParameterValues("pregunta_"+pregunta.getIdpregunta());
+											 for(int i=0; i<param.length; i++){
+												 int num=valid.ConvertEntero(param[i]);
+												 if(num>0) lista.add(num);			 
+											 }
+										}else{
+											int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
+											if(num>0) lista.add(num);
+										}
+										
+										CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
+										data.SafeRespuesta(preg_pac);
+									}
+								}
+							}
+						
 						}
 					}
-					if(validaciones.isEmpty()){
-						it2=preg.iterator();
-						while(it2.hasNext()){
-							CPregunta pregunta=it2.next();
-							if(pregunta.getGenero()==0 || pregunta.getGenero()==pac.getSexo()){
-											ArrayList<Integer> lista=new ArrayList<Integer>();
-											if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==1){
-												int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
-												CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),num,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
-												data.SafeRespuesta(preg_pac);
-											}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()==2){
-												String respuesta=valid.Limpiarvalor( valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())),codificacion);
-												if(respuesta.length()>150) respuesta=respuesta.substring(0,150);
-												CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,respuesta,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
-												data.SafeRespuesta(preg_pac);
-											}else if(pregunta.getIdtipo_pregunta().getIdtipo_pregunta()>=3){
-												if(request.getParameter("pregunta_"+pregunta.getIdpregunta())!=null){
-													if(pregunta.getMultiple()==1){
-														String[] param = request.getParameterValues("pregunta_"+pregunta.getIdpregunta());
-														 for(int i=0; i<param.length; i++){
-															 int num=valid.ConvertEntero(param[i]);
-															 if(num>0) lista.add(num);			 
-														 }
-													}else{
-														int num=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("pregunta_"+pregunta.getIdpregunta())));
-														if(num>0) lista.add(num);
-													}
-													
-													CPregunta_Paciente preg_pac=new CPregunta_Paciente(pregunta.getIdpregunta(),pac.getIdpaciente(),null,null,lista, pregunta.getIdtipo_pregunta().getIdtipo_pregunta());
-													data.SafeRespuesta(preg_pac);
-												}
-											}
-							}				
-						}
+					if(validaciones.compareTo("")==0){
+						
 						data.SafeMenu_Paciente(new CPaciente_Menu_Categoria(pac.getIdpaciente(),action,
 								auto, multi));
 						
