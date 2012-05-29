@@ -66,9 +66,32 @@ function Nuevo(com, grid){
 	   $( "#dialog-form" ).dialog( "open" );
 }
 var encabezado=0;
+function limpiartabla_condi(){
+	$("#titulo_condicion").text("");
+	$("#descrip_and_or").text("");
+	encabezado=0;
+	cambiarTipo();
+	limpiarCondicion();
+
+}
 function ElimCondicion(id){
-	
-	alert(id);
+	var action="deletetabla_condi";
+	  
+	  cadena = [ 	'id_encabezado='   + id,
+	             	'a='+action
+	            ].join('&');
+	  $.ajax({
+	        url: "../SInterpretacion",
+	        data: cadena,
+	  	    type: 'post',
+	        dataType: 'json',
+	        success: function(data){
+	        	mensaje(data.mensaje);
+	        	if(data.resultado=='OK'){
+	        		limpiartabla_condi();
+	        	}
+	        }
+	    });	
 }
 function EditarEncabezado(id){
 	encabezado=id;
@@ -82,12 +105,21 @@ function EditarEncabezado(id){
   	    type: 'post',
   	    
         success: function(data){
-        	
+			        	
         	result=eval("("+data+")");
         	    $("#titulo_condicion").text(result.descripcion);
+        	    $("#descrip_and_or").text(result.descripcion);
+        	    $("#descrip_paren").text(result.descripcion);
+        	    $("#descrip_result").text(result.descripcion);
+        	    $("#descrip_inicio").text(result.descripcion);
         	}
     });
+	CargarParentesis();
+	CargarAnd_OrCondicion(id);
 	CargarCondicion();
+	cambiarCondiciones();
+	CargarInicio();
+	CargarResult();
 }
 $(function() {
 	

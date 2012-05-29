@@ -1,9 +1,9 @@
 		<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-    	<%@ page import="data.CArea_Examen" %>
-    	<%@ page import="framework.CDataExam" %>
-    	<%@ page import="java.util.ArrayList" %>
-    	<%@ page import="java.util.Iterator" %>
+    	<%@page import="data.CArea_Examen" %>
+    	<%@page import="framework.CDataExam" %>
+    	<%@page import="java.util.ArrayList" %>
+    	<%@page import="java.util.Iterator" %>
 <%
 CDataExam dbo=new CDataExam();
 if(dbo.Connect()){

@@ -14,13 +14,7 @@
 
  Descripcion de la condici&oacute;n: <br>
  <textarea rows="3" cols="70" id="texto_nuevo_enca" name="texto_nuevo_enca"></textarea>
- <select id="tipo_nuevo_enca" name="tipo_nuevo_enca">
-<% while(it.hasNext()){
-	CTipo_Interpretacion ctipo=it.next();
-	%>
-  <option value="<%=ctipo.getIdtipo_interpretacion() %>"><%=ctipo.getDescripcion() %></option>
-<% } %>
-</select>  
+
 	
 	<div class="center_button">
 										<input type="button" onclick="GuardarEncabeza()" class="ui-state-default ui-corner-all button-save" value="Guardar" />
