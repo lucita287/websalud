@@ -4,7 +4,7 @@ HttpSession sessiones = request.getSession(false);
 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
-		if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+		if (user_permiso.getIdpermiso().indexOf(256)>-1  || user_permiso.getIdusuario().getidusuario()==1){
 
 %>
 
