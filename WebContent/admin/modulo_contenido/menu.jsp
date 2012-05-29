@@ -82,36 +82,62 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			</ul>	
 	</li>
 	<% } %>
+		<%if (user_permiso.getIdpermiso().indexOf(239)>-1  
+		||user_permiso.getIdpermiso().indexOf(240)>-1
+		||user_permiso.getIdpermiso().indexOf(241)>-1
+		||user_permiso.getIdpermiso().indexOf(242)>-1
+		||user_permiso.getIdpermiso().indexOf(250)>-1
+		||user_permiso.getIdpermiso().indexOf(254)>-1
+		||user_permiso.getIdpermiso().indexOf(255)>-1
+		||user_permiso.getIdpermiso().indexOf(256)>-1
+		||user_permiso.getIdpermiso().indexOf(257)>-1
+		||user_permiso.getIdpermiso().indexOf(259)>-1
+			|| user_permiso.getIdusuario().getidusuario()==1){%>
+	
 	<li>
 		<a >Configurar Examen de Salud</a>
 			<ul id="exam">
+			<% if (	user_permiso.getIdpermiso().indexOf(239)>-1  
+					||user_permiso.getIdpermiso().indexOf(240)>-1
+					||user_permiso.getIdpermiso().indexOf(241)>-1
+					||user_permiso.getIdpermiso().indexOf(242)>-1
+					  || user_permiso.getIdusuario().getidusuario()==1){ %>	
 				<li>
 					<a href="index.jsp?portal=11" >Mantenimiento de Propiedades</a>
 				</li>
+			<% } if (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>	
 				<li>
 					<a href="index.jsp?portal=12" >Mantenimiento de Categorias</a>
 				</li>
 				<li>
 					<a href="index.jsp?portal=13" >Menu de Areas</a>
 				</li>
+			<% } if (user_permiso.getIdpermiso().indexOf(259)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>	
 				<li>
 					<a href="index.jsp?portal=14" >Gestionar Examen de Salud</a>
 				</li>
+			<% } if (user_permiso.getIdpermiso().indexOf(254)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
 				<li>
 					<a href="index.jsp?portal=15">Menu de Anuncios</a>
 				</li >
+			<% } if (user_permiso.getIdpermiso().indexOf(255)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
 				<li>
 					<a href="index.jsp?portal=16">Seleccionar Examen segun carne</a>
 				</li >
+			<% } if (user_permiso.getIdpermiso().indexOf(256)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 				<li>
 					<a href="index.jsp?portal=17">Resultados</a>
 				</li>
+			<% }if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
 				<li>
 					<a href="index.jsp?portal=18">Gestion de Resultados</a>
 				</li>
+			<% } %>
 			</ul>
 	
 	</li>
+		<% } %>
+	<%if (user_permiso.getIdpermiso().indexOf(260)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>	
 	<li>
 		<a >Estudiantes</a>
 			<ul id="estudiante">
@@ -120,8 +146,8 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				</li>
 				
 			</ul>
-	
 	</li>
+	<% } %>
 	<li>
 	<a  href="../SunLogin">Salir</a>
 			
