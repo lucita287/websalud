@@ -61,7 +61,7 @@ public class SConfiguracion extends HttpServlet {
 									int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 									int multifa=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multifa")));
 									int ciclo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("ciclo")));
-									String validacion=valid.ValidarRango(size, 1, 10, "{\"resultado\":\"ERROR\",\"mensaje\":\"El rango de tama&ntilde;o subir archivos debe ser entre [1-10]\"}");
+									String validacion=valid.ValidarRango(size, 1, 15, "{\"resultado\":\"ERROR\",\"mensaje\":\"El rango de tama&ntilde;o subir archivos debe ser entre [1-15]\"}");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(telefono, "Telefono"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(fax, "Fax"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(direccion, "Direccion"):validacion;
