@@ -7,9 +7,12 @@ public class CCondicion {
 	private Integer tipo;
 	private Integer idcondicion;
 	private Integer idencabezado_condicion;
-	private Integer condicion1;
-	private Integer condicion2;
+	private CCondicion condicion1;
+	private CCondicion condicion2;
 	private String  pregunta1;
+	private int orden_pregunta;
+	private Integer inicio;
+	private String descripcion;
 	/**
 	 * @param idpregunta1
 	 * @param signo
@@ -18,10 +21,12 @@ public class CCondicion {
 	 * @param idcondicion
 	 * @param idencabezado_condicion
 	 * @param rec_condicion
+	 * @param inicio
+	 * @param descripcion
 	 */
 	public CCondicion(Integer idpregunta1, Integer signo, Integer valor,
 			Integer tipo, Integer idcondicion, Integer idencabezado_condicion,
-			Integer condicion1,Integer condicion2) {
+			CCondicion condicion1,CCondicion condicion2,Integer inicio,String descripcion) {
 		this.idpregunta1 = idpregunta1;
 		this.signo = signo;
 		this.valor = valor;
@@ -30,9 +35,68 @@ public class CCondicion {
 		this.idencabezado_condicion = idencabezado_condicion;
 		this.condicion1 = condicion1;
 		this.condicion2= condicion2;
+		this.inicio=inicio;
+		this.descripcion=descripcion;
 		pregunta1="";
+		orden_pregunta=0;
 	}
 	
+	
+	
+	/**
+	 * @return the inicio
+	 */
+	public Integer getInicio() {
+		return inicio;
+	}
+
+
+
+	/**
+	 * @param inicio the inicio to set
+	 */
+	public void setInicio(Integer inicio) {
+		this.inicio = inicio;
+	}
+
+
+
+	/**
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+
+	/**
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
+
+	/**
+	 * @return the orden_pregunta
+	 */
+	public int getOrden_pregunta() {
+		return orden_pregunta;
+	}
+
+
+
+	/**
+	 * @param orden_pregunta the orden_pregunta to set
+	 */
+	public void setOrden_pregunta(int orden_pregunta) {
+		this.orden_pregunta = orden_pregunta;
+	}
+
+
+
 	/**
 	 * @return the pregunta1
 	 */
@@ -78,6 +142,18 @@ public class CCondicion {
 			
 	}
 	/**
+	 * @return the signo respuesta
+	 */
+	public String getSignoR2() {
+		if(signo==1) return ">";
+		else if(signo==2) return "<";
+		else if(signo==3) return ">=";
+		else if(signo==4) return "<=";
+		else if(signo==5) return "=";
+		else return "<>";
+			
+	}
+	/**
 	 * @param signo the signo to set
 	 */
 	public void setSigno(Integer signo) {
@@ -100,6 +176,18 @@ public class CCondicion {
 	 */
 	public Integer getTipo() {
 		return tipo;
+	}
+	
+	/**
+	 * @return the tipo respuesta
+	 */
+	public String getTipoR() {
+		if(tipo==0) return "CONDICION";
+		else if(tipo==1) return "AND";
+		else if(tipo==2) return "OR";
+		else if(tipo==3) return "PARENTESIS";
+		else  return "NOT";
+			
 	}
 	/**
 	 * @param tipo the tipo to set
@@ -134,25 +222,25 @@ public class CCondicion {
 	/**
 	 * @return the condicion1
 	 */
-	public Integer getCondicion1() {
+	public CCondicion getCondicion1() {
 		return condicion1;
 	}
 	/**
 	 * @param condicion1 the condicion1 to set
 	 */
-	public void setCondicion1(Integer condicion1) {
+	public void setCondicion1(CCondicion condicion1) {
 		this.condicion1 = condicion1;
 	}
 	/**
 	 * @return the condicion2
 	 */
-	public Integer getCondicion2() {
+	public CCondicion getCondicion2() {
 		return condicion2;
 	}
 	/**
 	 * @param condicion2 the condicion2 to set
 	 */
-	public void setCondicion2(Integer condicion2) {
+	public void setCondicion2(CCondicion condicion2) {
 		this.condicion2 = condicion2;
 	}
 	

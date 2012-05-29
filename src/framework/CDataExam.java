@@ -282,6 +282,7 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
+
 	public int getTitulo_SecundariaTotal(String busqueda){
 		int temp=0;
 		
@@ -2869,6 +2870,7 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
+	
 	public ArrayList<CResultado_Examen> getListaresultado_examen(int ordenar,int asc,int min,int max,String valor,int tipo){
 		ArrayList<CResultado_Examen> ret=new ArrayList<CResultado_Examen>();
 		try{
@@ -3023,10 +3025,25 @@ public class CDataExam extends CDataBase {
 		
 		return temp;
 	}
+	public boolean deleteEncabezado_Condicion(int cate){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM encabezado_condicion WHERE idencabezado_condicion = ?");
+			
+			stm.setInt(1,cate);
+			if(stm.executeUpdate()>0) return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 	public boolean SafeCondicion(CCondicion condicion){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO condicion (idpregunta1,signo,valor,tipo,idencabezado_condicion,condicion1,condicion2) VALUES (?,  ?, ?, ?, ?, ?,?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO condicion (idpregunta1,signo,valor,tipo,idencabezado_condicion,condicion1,condicion2,inicio,descripcion) VALUES (?,  ?, ?, ?, ?, ?,?,?,?)");
 			
 				if(condicion.getIdpregunta1()==null) stm.setNull(1, java.sql.Types.NULL);
 				else stm.setInt(1, condicion.getIdpregunta1());
@@ -3037,9 +3054,13 @@ public class CDataExam extends CDataBase {
 				stm.setInt(4, condicion.getTipo());
 				stm.setInt(5, condicion.getIdencabezado_condicion());
 				if(condicion.getCondicion1()==null) stm.setNull(6, java.sql.Types.NULL);
-				else stm.setInt(6, condicion.getCondicion1());
+				else stm.setInt(6, condicion.getCondicion1().getIdcondicion());
 				if(condicion.getCondicion2()==null) stm.setNull(7, java.sql.Types.NULL);
-				else stm.setInt(7, condicion.getCondicion2());
+				else stm.setInt(7, condicion.getCondicion2().getIdcondicion());
+				if(condicion.getInicio()==null) stm.setNull(8, java.sql.Types.NULL);
+				else stm.setInt(8, condicion.getInicio());
+				if(condicion.getDescripcion()==null) stm.setNull(9, java.sql.Types.NULL);
+				else stm.setString(9, condicion.getDescripcion());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -3050,19 +3071,38 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
+	public boolean deleteCondicion(int cate){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM condicion WHERE idcondicion = ?");
+			
+			stm.setInt(1,cate);
+			if(stm.executeUpdate()>0) return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public ArrayList<CCondicion> getListaCondicion1(int encabezado){
 		ArrayList<CCondicion> enc=new ArrayList<CCondicion>();
 		try{
-			String sql="SELECT idpregunta1, signo, valor, tipo, idcondicion, idencabezado_condicion, condicion1, condicion2, p.pregunta, p.orden "+
+			String sql="SELECT idpregunta1, signo, valor, tipo, idcondicion, idencabezado_condicion, condicion1, condicion2, p.pregunta, p.orden, inicio, c.descripcion "+
 					"  FROM condicion c inner join pregunta p on p.idpregunta=c.idpregunta1 where idencabezado_condicion=? and tipo=0 ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,encabezado);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
+				
+				
 				CCondicion cond=new CCondicion(rs.getInt("idpregunta1"),rs.getInt("signo"), rs.getInt("valor"),
 						rs.getInt("tipo"),rs.getInt("idcondicion"), rs.getInt("idencabezado_condicion"),
-						null,null);
-				cond.setPregunta1(rs.getString("orden")+")"+rs.getString("pregunta"));
+						null,null,null, rs.getString("descripcion") );
+				cond.setPregunta1(rs.getString("pregunta"));
+				cond.setOrden_pregunta(rs.getInt("orden"));
 				enc.add(cond);
 			}
 			rs.close();
@@ -3072,5 +3112,257 @@ public class CDataExam extends CDataBase {
 			e.printStackTrace();
 		}
 		return enc;
+	}
+	public ArrayList<CCondicion> getListaCondicion3(int encabezado){
+		ArrayList<CCondicion> enc=new ArrayList<CCondicion>();
+		try{
+			String sql="SELECT  idcondicion, idencabezado_condicion, c.descripcion "+
+					"  FROM condicion c where idencabezado_condicion=?  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,encabezado);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				
+				
+				CCondicion cond=new CCondicion(null,null,null,
+						null,rs.getInt("idcondicion"), rs.getInt("idencabezado_condicion"),
+						null,null,null, rs.getString("descripcion") );
+				enc.add(cond);
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return enc;
+	}
+	public ArrayList<CCondicion> getListaCondicion4(int encabezado){
+		ArrayList<CCondicion> enc=new ArrayList<CCondicion>();
+		try{
+			String sql="SELECT c.idcondicion, c.idencabezado_condicion,c.tipo, c.condicion1, c.inicio, c.descripcion, "+
+					" c1.descripcion cond1desc "+
+					"  FROM condicion c "+
+					"  inner join condicion c1 on c1.idcondicion=c.condicion1 "+
+					" where c.idencabezado_condicion=? and (c.tipo=3 or c.tipo=4) ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,encabezado);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				
+				CCondicion cond1=new CCondicion(null,null,null,
+						null,rs.getInt("condicion1"), rs.getInt("idencabezado_condicion"),
+						null,null,null, rs.getString("cond1desc") );
+				CCondicion cond=new CCondicion(null,null,null,
+						rs.getInt("tipo"),rs.getInt("idcondicion"), rs.getInt("idencabezado_condicion"),
+						cond1,null,null, rs.getString("descripcion") );
+				enc.add(cond);
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return enc;
+	}
+	public ArrayList<CCondicion> getListaCondicion5(int encabezado){
+		ArrayList<CCondicion> enc=new ArrayList<CCondicion>();
+		try{
+			String sql="SELECT c.idcondicion, c.idencabezado_condicion,c.tipo, ifnull( c.inicio,0) inicio, c.descripcion "+
+					"  FROM condicion c "+
+					" where c.idencabezado_condicion=?  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,encabezado);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				
+				CCondicion cond=new CCondicion(null,null,null,
+						rs.getInt("tipo"),rs.getInt("idcondicion"), rs.getInt("idencabezado_condicion"),
+						null,null,rs.getInt("inicio"), rs.getString("descripcion") );
+				enc.add(cond);
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return enc;
+	}
+	public ArrayList<CCondicion> getListaCondicion2(int encabezado){
+		ArrayList<CCondicion> enc=new ArrayList<CCondicion>();
+		try{
+			String sql="SELECT c.idcondicion, c.idencabezado_condicion,c.tipo, c.condicion1, c.condicion2, c.inicio, c.descripcion, "+
+					" c1.descripcion cond1desc, c2.descripcion cond2desc "+
+					"  FROM condicion c "+
+					"  inner join condicion c1 on c1.idcondicion=c.condicion1 "+
+					"  inner join condicion c2 on c2.idcondicion=c.condicion2 "+
+					" where c.idencabezado_condicion=? and (c.tipo=1 or c.tipo=2) ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,encabezado);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				
+				CCondicion cond1=new CCondicion(null,null,null,
+						null,rs.getInt("condicion1"), rs.getInt("idencabezado_condicion"),
+						null,null,null, rs.getString("cond1desc") );
+				CCondicion cond2=new CCondicion(null,null,null,
+						null,rs.getInt("condicion2"), rs.getInt("idencabezado_condicion"),
+						null,null,null, rs.getString("cond2desc") );
+				CCondicion cond=new CCondicion(null,null,null,
+						rs.getInt("tipo"),rs.getInt("idcondicion"), rs.getInt("idencabezado_condicion"),
+						cond1,cond2,null, rs.getString("descripcion") );
+				enc.add(cond);
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return enc;
+	}
+	public int getOrdenIdPregunta(int idpregunta){
+		int temp=0;
+		
+		try {
+			String sql="SELECT p.orden cant  "+
+				" FROM pregunta p where p.idpregunta = ? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			
+			stm.setInt(1, idpregunta);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getInt("cant");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return temp;
+	}
+	public String getDescripcionCondicion(int idcondicion){
+		String temp="";
+		
+		try {
+			String sql="SELECT p.descripcion  FROM condicion p where p.idcondicion = ? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			
+			stm.setInt(1, idcondicion);
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next())
+			temp=rs2.getString("descripcion");
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return temp;
+	}
+	public ArrayList<CResultado_Examen> getListaResultado_Examen(int idtipo){
+		ArrayList<CResultado_Examen> ret=new ArrayList<CResultado_Examen>();
+		try{
+			
+			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, ca.descripcion, @rownum:=@rownum+1 rownum "+
+					" FROM resultado_examen pe inner join tipo_interpretacion ca on ca.idtipo_interpretacion=pe.idtipo_interpretacion, (SELECT @rownum:=0) ro " +
+					" where  pe.idtipo_interpretacion=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idtipo);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CResultado_Examen news=new CResultado_Examen(rs.getInt("idresultado_examen"),rs.getString("titulo"),
+						rs.getString("descripcion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"));
+				ret.add(news);
+				
+			}
+			
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public ArrayList<CResultado_Examen> getListaResultado_Examen2(int idencabezado){
+		ArrayList<CResultado_Examen> ret=new ArrayList<CResultado_Examen>();
+		try{
+			
+			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size "+
+					" FROM resultado_examen pe inner join resultado_condicion rc on rc.idresultado_examen=pe.idresultado_examen, (SELECT @rownum:=0) ro " +
+					" where  rc.idencabezado_condicion=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idencabezado);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CResultado_Examen news=new CResultado_Examen(rs.getInt("idresultado_examen"),rs.getString("titulo"),
+						"",rs.getInt("idtipo_interpretacion"), rs.getInt("size"));
+				ret.add(news);
+				
+			}
+			
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	public boolean Saferesultado_condicion(int id_encabezado, int id_inter) {
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO resultado_condicion (idencabezado_condicion,idresultado_examen) VALUES(?, ?)");
+			
+			stm.setInt(1,id_encabezado);
+			stm.setInt(2,id_inter);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+		}
+		
+		return false;
+	}
+	public boolean deleteresultado_condicion(int id_encabezado, int id_inter){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM resultado_condicion WHERE idresultado_examen = ? AND idencabezado_condicion = ?");
+			stm.setInt(1,id_inter);
+			stm.setInt(2,id_encabezado);
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean update_condicion(int id_encabezado, int id_condicion){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE condicion SET inicio = NULL WHERE idencabezado_condicion = ?");
+			stm.setInt(1,id_encabezado);
+			
+			stm.executeUpdate();
+			
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE condicion SET inicio = 1 WHERE idcondicion = ? and idencabezado_condicion = ?");
+			stm.setInt(1,id_condicion);
+			stm.setInt(2,id_encabezado);
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

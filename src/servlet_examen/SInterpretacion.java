@@ -189,7 +189,7 @@ public class SInterpretacion extends HttpServlet {
 						int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo")));
 						
 						String validacion=valid.ValidarCampoVacio(descripcion, "Descripcion");
-						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descripcion, 150, "Descripcion"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descripcion, 250, "Descripcion"):validacion;
 						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idtipo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una tipo de interpretacion\"}"):validacion;
 						
 						if(validacion.compareTo("")==0){
@@ -232,12 +232,19 @@ public class SInterpretacion extends HttpServlet {
 						
 						String validacion=valid.ValidarSiesMayor(idencab, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}");
 						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idpregunta, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una pregunta\"}"):validacion;
-						
+						String dsigno="";
+						if(signo==1) dsigno=">";
+						else if(signo==2) dsigno="<";
+						else if(signo==3) dsigno=">=";
+						else if(signo==4) dsigno="<=";
+						else if(signo==5) dsigno="=";
+						else dsigno="!=";
 							
 							if(validacion.compareTo("")==0){
+								int orden=dbo.getOrdenIdPregunta(idpregunta);
 								CCondicion condi=new CCondicion(idpregunta,signo, valor,
 										0, 0, idencab,
-										null,null);
+										null,null,null,"P"+orden+" "+dsigno+" "+valor );
 								boolean b=dbo.SafeCondicion(condi);
 								if(!b){
 									result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -246,8 +253,179 @@ public class SInterpretacion extends HttpServlet {
 								}
 							}else result=validacion;
 							out.println(result);
+					}else if(action.compareTo("deletecondicion")==0){
+						String result="";
+						int id_condicion=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_condicion")));
+						String validacion=valid.ValidarSiesMayor(id_condicion, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.deleteCondicion(id_condicion);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
+					}else if(action.compareTo("deletetabla_condi")==0){
+						String result="";
+						int id_encabezado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
+						String validacion=valid.ValidarSiesMayor(id_encabezado, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.deleteEncabezado_Condicion(id_encabezado);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
+					}else if(action.equalsIgnoreCase("showcondiciones")){
+						int id_encabezado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idencabe")));
+						ArrayList<CCondicion> preg=dbo.getListaCondicion3(id_encabezado);
+						
+						String data="";
+						for(int i=0; i<preg.size(); i++){
+							CCondicion pregunta=preg.get(i);
+							data+=(data.equalsIgnoreCase("")?"":",");
+							data+="{\"idmenu\":\""+pregunta.getIdcondicion()+"\",\"descripcion\": \""+pregunta.getIdcondicion()+"/"+pregunta.getDescripcion()+"\"}";
+						}
+						
+							String result=	" {\"menus\": [  "+data+" ] }";
+							 out.println(result);
+					}else if(action.equalsIgnoreCase("guardar_and_or")){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int idencab=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
+						int idcondi1=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("condicion1")));
+						int idcondi2=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("condicion2")));
+						int tipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo")));
+						
+						String validacion=valid.ValidarSiesMayor(idencab, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcondi1, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una condicion 1\"}"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcondi2, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una condicion 2\"}"):validacion;
+						String dtipo="";
+						if(tipo==1) dtipo="AND";
+						else if(tipo==2) dtipo="OR";
+						
+							if(validacion.compareTo("")==0){
+								String descrip1=dbo.getDescripcionCondicion(idcondi1);
+								String descrip2=dbo.getDescripcionCondicion(idcondi2);
+								CCondicion condi1=new CCondicion(null,null,null,
+										null, idcondi1,null,
+										null,null,null,null);
+								CCondicion condi2=new CCondicion(null,null,null,
+										null, idcondi2,null,
+										null,null,null,null);
+								CCondicion condi=new CCondicion(null,null, null,
+										tipo, 0, idencab,
+										condi1,condi2,null,descrip1+" "+dtipo+" "+descrip2);
+								boolean b=dbo.SafeCondicion(condi);
+								if(!b){
+									result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+								}else{
+									result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+								}
+							}else result=validacion;
+							out.println(result);
+					}else if(action.equalsIgnoreCase("guardar_paren")){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int idencab=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
+						int idcondi1=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("condicion")));
+						int tipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo")));
+						
+						String validacion=valid.ValidarSiesMayor(idencab, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcondi1, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una condicion 1\"}"):validacion;
+						String dtipo="";
+						if(tipo==3) dtipo="";
+						else if(tipo==4) dtipo="NOT";
+						
+							if(validacion.compareTo("")==0){
+								String descrip1=dbo.getDescripcionCondicion(idcondi1);
+								CCondicion condi1=new CCondicion(null,null,null,
+										null, idcondi1,null,
+										null,null,null,null);
+								CCondicion condi=new CCondicion(null,null, null,
+										tipo, 0, idencab,
+										condi1,null,null,dtipo+"("+descrip1+")");
+								
+								boolean b=dbo.SafeCondicion(condi);
+								if(!b){
+									result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+								}else{
+									result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+								}
+							}else result=validacion;
+							out.println(result);
+					}else if(action.equalsIgnoreCase("showtipointer")){
+						int cate=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idtipo")));
+						ArrayList<CResultado_Examen> preg=dbo.getListaResultado_Examen (cate);
+
+						String data="";
+						for(int i=0; i<preg.size(); i++){
+							CResultado_Examen pregunta=preg.get(i);
+							data+=(data.equalsIgnoreCase("")?"":",");
+							data+="{\"idmenu\":\""+pregunta.getIdresultado_examen()+"\",\"descripcion\": \""+pregunta.getTitulo()+"\"}";
+						}
+						
+							String result=	" {\"menus\": [  "+data+" ] }";
+							 out.println(result);
+					}else if(action.equalsIgnoreCase("guardarresult")){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int id_encabezado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
+						int id_inter=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idinter")));
+						
+						
+						String validacion=valid.ValidarSiesMayor(id_encabezado, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(id_encabezado, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}"):validacion;
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(id_inter, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una interpretacion\"}"):validacion;
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.Saferesultado_condicion(id_encabezado,id_inter);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado, ya existe\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
+					}else if(action.equalsIgnoreCase("deleteencabe_result")){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int id_encabezado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
+						int id_inter=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_inter")));
+						String validacion=valid.ValidarSiesMayor(id_encabezado, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(id_inter, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una interpretacion\"}"):validacion;
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.deleteresultado_condicion(id_encabezado,id_inter);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha eliminado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
+					}else if(action.equalsIgnoreCase("updateInicio")){
+						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+						int id_encabezado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
+						int id_condicion=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_condicion")));
+						String validacion=valid.ValidarSiesMayor(id_encabezado, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item de encabezado\"}");
+						validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(id_condicion, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una condicion\"}"):validacion;
+						
+						if(validacion.compareTo("")==0){
+							boolean b=dbo.update_condicion(id_encabezado,id_condicion);
+							if(!b){
+								result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha actualizado\"}";
+							}else{
+								result="{\"resultado\":\"OK\",\"mensaje\":\"Actualizado\"}";
+							}
+						}else result=validacion;
+						out.println(result);
+						
 					}
-					
 					
 					dbo.Close();
 		 }						 
