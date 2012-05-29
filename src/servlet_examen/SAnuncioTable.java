@@ -41,9 +41,7 @@ public class SAnuncioTable extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
-		 PrintWriter out = response.getWriter(); 
-		 
-		 
+		 PrintWriter out = response.getWriter(); 		 
 		 HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");

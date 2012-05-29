@@ -37,8 +37,7 @@ public class SValidEstudiante extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		HttpSession sessiones = request.getSession(false);
-		 PrintWriter out = response.getWriter();  
-		 
+		 PrintWriter out = response.getWriter();  		 
 		 if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 			 out.print("0");
 		 }else{

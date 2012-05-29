@@ -90,7 +90,7 @@ public class SCategoriaTable extends HttpServlet {
 									 out.println(info);
 							 dbo.Close();
 						
-						}else if(action.equalsIgnoreCase("ponderacion") &&(user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						}else if(action.equalsIgnoreCase("ponderacion") &&(user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							CDataExam dbo=new CDataExam();
 							 dbo.Connect();
 							 int idcategoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcategoria")));
@@ -122,7 +122,7 @@ public class SCategoriaTable extends HttpServlet {
 									 out.println(info);
 							 dbo.Close();
 						
-						}else if(action.equalsIgnoreCase("menu_categoria") &&(user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+						}else if(action.equalsIgnoreCase("menu_categoria") &&(user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 							CDataExam dbo=new CDataExam();
 							 dbo.Connect();
 							 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));

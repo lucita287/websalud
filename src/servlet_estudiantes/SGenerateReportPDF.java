@@ -60,8 +60,7 @@ public class SGenerateReportPDF extends HttpServlet {
 		//HttpSession session=request.getSession(false);
 		HttpSession sessiones=request.getSession(false); 
 		if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
-			CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
-		
+			CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");		
 			response.setHeader( "Content-Disposition", "attachment; filename=\"ExamMultifasico.pdf" + "\"" );
 			response.setContentType("application/pdf");
 			try{

@@ -15,6 +15,7 @@ import data.CCondicion;
 import data.CEncabezado_Condicion;
 import data.CResultado_Examen;
 import data.CTipo_Interpretacion;
+import data.CUsuarioPermiso;
 import framework.CDataExam;
 import framework.CValidation;
 
@@ -51,6 +52,9 @@ public class SInterpretacionTable extends HttpServlet {
 		
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+			 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso"); 
+			 if((user_permiso.getIdpermiso().indexOf(256)>-1  || user_permiso.getIdpermiso().indexOf(257)>-1 || user_permiso.getIdusuario().getidusuario()==1)){
+			 
 				String action=valid.ValidarRequest(request.getParameter("a"));
 		
 					if(action.equalsIgnoreCase("tipo")){
@@ -260,7 +264,8 @@ public class SInterpretacionTable extends HttpServlet {
 						 out.println(info);
 						dbo.Close();
 					}
-		 }			
+		 }
+		 }	 
 	}
 
 }

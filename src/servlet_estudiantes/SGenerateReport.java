@@ -157,15 +157,5 @@ public class SGenerateReport extends HttpServlet {
 			}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }

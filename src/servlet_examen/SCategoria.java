@@ -125,7 +125,7 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 							
-					}else if(action.equalsIgnoreCase("show_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("show_cate_pond")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result=" ";
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
 						CCategoria_Interpretacion act=dbo.getCategoria_InterpretacionEspecifico(idcate_pond);
@@ -134,7 +134,7 @@ public class SCategoria extends HttpServlet {
 						 }
 						 out.println(result);
 						//MODIFICAR CATEGORIA 
-					}else if(action.equalsIgnoreCase("safe_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("safe_cate_pond")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
 						String interpretacion=valid.Limpiarvalor2(valid.ValidarRequest(request.getParameter("interpretacion")),codificacion);
@@ -164,7 +164,7 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 						
-					}else if(action.equalsIgnoreCase("new_cate_pond")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("new_cate_pond")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
 						String interpretacion=valid.Limpiarvalor2(valid.ValidarRequest(request.getParameter("interpretacion")),codificacion);
 						int min=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("min")));
@@ -191,7 +191,7 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 							
-					}else if(action.equalsIgnoreCase("deletecate_ponde")&& (user_permiso.getIdpermiso().indexOf(251)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("deletecate_ponde")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
 						int idcate=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
 						String validacion=valid.ValidarSiesMayor(idcate, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
@@ -206,7 +206,7 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 							
-					}else if(action.equalsIgnoreCase("guardarmenu_categoria")&& (user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("guardarmenu_categoria")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 						int idmenu_Categoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_menu_categoria")));
 						String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
@@ -231,7 +231,7 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 						
-					}else if(action.equalsIgnoreCase("newmenu_categoria")&& (user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("newmenu_categoria")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
 						String nombre=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("nombre"))),codificacion);
 						int idarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idarea")));
@@ -255,7 +255,7 @@ public class SCategoria extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 							
-					}else if(action.equalsIgnoreCase("deletemenu_categoria")&& (user_permiso.getIdpermiso().indexOf(252)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("deletemenu_categoria")&& (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
 						int id_menu_categoria=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_menu_categoria")));
 						String validacion=valid.ValidarSiesMayor(id_menu_categoria, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");

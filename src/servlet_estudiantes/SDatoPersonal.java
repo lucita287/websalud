@@ -48,8 +48,7 @@ public class SDatoPersonal extends HttpServlet {
 			Integer idestatus=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idestatus")));
 			String action=valid.ValidarRequest(request.getParameter("a"));
 			String codificacion=request.getCharacterEncoding();
-			codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
-			
+			codificacion=(codificacion==null)?"ISO-8859-1":codificacion;			
 			if(idestatus==1){
 					int civil_personal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("civil_personal")));
 					String crecio_en=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("crecio_en_personal")), codificacion);

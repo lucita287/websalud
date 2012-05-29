@@ -54,8 +54,7 @@ public class SAnuncio extends HttpServlet {
 				CDataExam dbo=new CDataExam();
 				dbo.Connect();
 				 String action=valid.ValidarRequest(request.getParameter("a"));
-				 
-				 
+				 		 
 				if(action.equalsIgnoreCase("show")&&  (user_permiso.getIdpermiso().indexOf(254)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 					 int idanuncio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idanuncio")));
 					 CAnuncio temp_area=dbo.getAnuncioEspecifico(idanuncio);
