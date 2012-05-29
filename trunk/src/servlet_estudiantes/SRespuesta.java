@@ -53,8 +53,7 @@ public class SRespuesta extends HttpServlet {
 		if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 			CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
 			CDataExam	data=new CDataExam();
-			if(data.Connect()){
-				
+			if(data.Connect()){				
 				int action=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("a")));
 				int auto=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("auto")));
 				int multi=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("multi")));

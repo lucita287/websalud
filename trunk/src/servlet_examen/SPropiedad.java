@@ -146,7 +146,7 @@ public class SPropiedad extends HttpServlet {
 						}else result=validacion;
 						out.println(result);
 							
-					}else if(action.equalsIgnoreCase("deletetsangre")&& (user_permiso.getIdpermiso().indexOf(239)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+					}else if(action.equalsIgnoreCase("deletetsangre")&& (user_permiso.getIdpermiso().indexOf(240)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 						String result="";
 						int idsangre=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tsangre")));
 						String validacion=valid.ValidarSiesMayor(idsangre, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
@@ -265,7 +265,6 @@ public class SPropiedad extends HttpServlet {
 						out.println(result);
 							
 					}
-					
 					
 					dbo.Close();
 		 }						 

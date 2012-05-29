@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import data.CPregunta;
 import data.CTitulo_Respuesta;
+import data.CUsuarioPermiso;
 import framework.CDataExam;
 import framework.CValidation;
 
@@ -50,6 +51,9 @@ public class SPreguntaTable extends HttpServlet {
 		
 		HttpSession sessiones = request.getSession(false);
 		 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+			 
+			 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso"); 
+			 if((user_permiso.getIdpermiso().indexOf(259)>-1 || user_permiso.getIdusuario().getidusuario()==1)){
 				String action=valid.ValidarRequest(request.getParameter("a"));
 				if(action.equalsIgnoreCase("preguntas")){
 					
@@ -125,7 +129,7 @@ public class SPreguntaTable extends HttpServlet {
 							 out.println(info);
 					 dbo.Close();
 				}
-				
+			 }	
 		 }
 	}
 

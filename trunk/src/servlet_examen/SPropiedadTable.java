@@ -30,8 +30,7 @@ public class SPropiedadTable extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public SPropiedadTable() {
-        super();
-        
+        super();        
     }
 
 	/**
@@ -87,7 +86,7 @@ public class SPropiedadTable extends HttpServlet {
 							 out.println(info);
 					 dbo.Close();
 				
-				}else if(action.equalsIgnoreCase("tsecundaria") &&(user_permiso.getIdpermiso().indexOf(240)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+				}else if(action.equalsIgnoreCase("tsecundaria") &&(user_permiso.getIdpermiso().indexOf(242)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 					CDataExam dbo=new CDataExam();
 					 dbo.Connect();
 					 int page=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("page")));
