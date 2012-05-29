@@ -152,9 +152,10 @@ Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo
 								<div class="col_titulo">*Tama&ntilde;o</div>
 								<div class="col">
 											<select id="size_interpre" name="size_interpre">
-											  <option value="1">Pequeño</option>
-											  <option value="2">Mediano</option>
-											  <option value="3">Grande</option>
+											  <option value="1">Sin texto</option>
+											  <option value="2">Pequeño</option>
+											  <option value="3">Mediano</option>
+											  
 											</select>
 								</div>
 							</div>

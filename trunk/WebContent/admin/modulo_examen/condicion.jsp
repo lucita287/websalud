@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="framework.CDataExam" %>
-<%@ page import="data.CCategoria" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Iterator" %>
+<%@page import="framework.CDataExam" %>
+<%@page import="data.CCategoria" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.Iterator" %>
 <%
 CDataExam dbo=new CDataExam();
 if(dbo.Connect()){
 ArrayList<CCategoria> lista=dbo.getListaCategoria();
 Iterator<CCategoria> it=lista.iterator();
 %>
+
 <label id="titulo_condicion"></label>
 <table id="condicion_table" style="display:none"></table>
 Pregunta:
@@ -44,10 +45,16 @@ Valor: <input type="text" size="10" id="valor_condicion" name="valor" />
 <a  class="ui-state-default ui-corner-all button-save" onclick="GuardarCondicional()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 </div>
 <script>
+
 function limpiarCondicion(){
 	$("#valor_condicion").val(0);
-	$("#categoria_condicion").val(0);
 	cambiarCategoria();
+	CargarCondicion();
+	CargarAnd_OrCondicion();
+	cambiarCondiciones();
+	CargarParentesis();	
+	CargarResult();
+	CargarInicio();
 }
 function GuardarCondicional(){
 	if(encabezado>0){
@@ -103,7 +110,23 @@ function cambiarCategoria(){
 	  
 }
 	function EliminarCond(id){
-		alert(id);
+		var action="deletecondicion";
+		  
+		  cadena = [ 	'id_condicion='   + id,
+		             	'a='+action
+		            ].join('&');
+		  $.ajax({
+		        url: "../SInterpretacion",
+		        data: cadena,
+		  	    type: 'post',
+		        dataType: 'json',
+		        success: function(data){
+		        	mensaje(data.mensaje);
+		        	if(data.resultado=='OK'){
+		        		limpiarCondicion();
+		        	}
+		        }
+		    });
 	}
 $(document).ready(function () {
 	  
@@ -131,7 +154,6 @@ $(document).ready(function () {
 			        ]
 			      
 		});
-    $('.pSearch').click();
  }); 
 function CargarCondicion(){
 	$('#condicion_table').flexOptions({params : [{name: 'a', value: 'mcondicion'},{name: 'id', value:encabezado} ]});
