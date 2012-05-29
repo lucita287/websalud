@@ -1,6 +1,14 @@
 		<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%@ page import="data.CUsuarioPermiso" %>
+<%
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
+		if (user_permiso.getIdpermiso().indexOf(241)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+%>
 		<script>
 		var idparen=0;
 		$(function() {
@@ -109,3 +117,4 @@
 										<a href="#" onclick="Guardarparen()" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 										<a href="#" onclick="Eliminarparen()" class="ui-state-default ui-corner-all button-delete" > <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
 					</div>
+<%	}	}	 %>

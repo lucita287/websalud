@@ -4,11 +4,18 @@
 <%@ page import="data.CCategoria" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
-CDataExam dbo=new CDataExam();
-if(dbo.Connect()){
-ArrayList<CCategoria> lista=dbo.getListaCategoria();
-Iterator<CCategoria> it=lista.iterator();
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(259)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+		CDataExam dbo=new CDataExam();
+		if(dbo.Connect()){
+		ArrayList<CCategoria> lista=dbo.getListaCategoria();
+		Iterator<CCategoria> it=lista.iterator();
 %>
 
 SELECCIONE LA CATEGORIA:
@@ -129,4 +136,5 @@ SELECCIONE LA CATEGORIA:
 	
 	</div>
 
-<% dbo.Close(); } %>	
+<% dbo.Close(); } 
+	}	} %>	

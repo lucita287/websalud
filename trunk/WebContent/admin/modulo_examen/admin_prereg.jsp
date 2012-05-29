@@ -2,6 +2,7 @@
 	.link_page {
 		font-size:85%
 	}
+	
 </style>
 <div id="tabs">
 			<ul>

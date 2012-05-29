@@ -1,3 +1,15 @@
+
+<%@ page import="data.CUsuarioPermiso" %>
+
+<%
+
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+%>
 <script>
 function GuardarPAREN(){
 	if(encabezado>0){
@@ -71,4 +83,5 @@ Condicion:
 </select>	
 <div class="center_button">
 <a  class="ui-state-default ui-corner-all button-save" onclick="GuardarPAREN()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
-</div>	
+</div>
+<% }	} %>	

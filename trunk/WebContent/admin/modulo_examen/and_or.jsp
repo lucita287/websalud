@@ -1,3 +1,13 @@
+<%@ page import="data.CUsuarioPermiso" %>
+<%
+
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+%>
 
 <label id="descrip_and_or" name="descrip_and_or"></label><br>
 <table id="and_or_table" style="display:none"></table>
@@ -131,3 +141,4 @@ function cambiarCondiciones(){
 	  
 }
 </script>
+<% }	} %>

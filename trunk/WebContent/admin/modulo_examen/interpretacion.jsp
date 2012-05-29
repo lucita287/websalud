@@ -1,3 +1,13 @@
+<%@ page import="data.CUsuarioPermiso" %>
+<%
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+%>
+
 		<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
     <%@ page import="framework.CDataExam" %>
@@ -191,4 +201,5 @@ Busqueda por tipo Interpretaci&oacute;n<select id="tipo_inter_result" name="tipo
 			</div>
  <%
     dbo.Close();
-    }%>
+    }
+    }	}%>
