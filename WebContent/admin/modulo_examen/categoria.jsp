@@ -1,9 +1,17 @@
-		<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
     	<%@page import="data.CMenu_Categoria" %>
     	<%@page import="framework.CDataExam" %>
     	<%@page import="java.util.ArrayList" %>
-    	<% 
+<%@ page import="data.CUsuarioPermiso" %>
+<%
+
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
     		CDataExam dbo=new CDataExam();
     		dbo.Connect();
     		ArrayList<CMenu_Categoria> lstmenu=dbo.getListaMenu_Categoria();
@@ -179,4 +187,4 @@
 										<a href="#" onclick="Guardarcate()" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 										<a href="#" onclick="Eliminarcate()" class="ui-state-default ui-corner-all button-delete" > <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
 					</div>
-    
+    <% }	} %>

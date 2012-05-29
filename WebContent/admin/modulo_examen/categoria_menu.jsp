@@ -4,10 +4,19 @@
     	<%@page import="framework.CDataExam" %>
     	<%@page import="java.util.ArrayList" %>
     	<%@page import="java.util.Iterator" %>
+    	<%@ page import="data.CUsuarioPermiso" %>
 <%
-CDataExam dbo=new CDataExam();
-if(dbo.Connect()){
-ArrayList<CArea_Examen> list= dbo.getListaArea_Examen();
+
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+
+			CDataExam dbo=new CDataExam();
+			if(dbo.Connect()){
+			ArrayList<CArea_Examen> list= dbo.getListaArea_Examen();
 	%>
 		<script>
 		
@@ -192,4 +201,4 @@ ArrayList<CArea_Examen> list= dbo.getListaArea_Examen();
 										<a href="#" onclick="Guardarmenu_categoria()" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 										<a href="#" onclick="Eliminarmenu_categoria()" class="ui-state-default ui-corner-all button-delete" > <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
 					</div>
-<% } %>
+<% } 	}	}%>

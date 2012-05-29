@@ -4,11 +4,21 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="data.CTipo_Interpretacion" %>
+<%@ page import="data.CUsuarioPermiso" %>
     <% 
     CDataExam dbo=new CDataExam();
+    
+    HttpSession sessiones = request.getSession(false);
+    if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+    	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+    		if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+    
     if(dbo.Connect()){
     ArrayList<CTipo_Interpretacion> list=dbo.getListaTipo_Interpretacion();
     Iterator<CTipo_Interpretacion> it=list.iterator();
+    
     %>
     <label id="descrip_result" name="descrip_result"></label><br>
     <table id="result_table" style="display:none"></table>
@@ -130,4 +140,7 @@
 	</script>
 	<%
     dbo.Close();
-    }%>
+    }
+    		}	}
+    
+    %>

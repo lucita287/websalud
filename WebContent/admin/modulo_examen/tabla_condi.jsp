@@ -4,7 +4,15 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="data.CTipo_Interpretacion" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <% 
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(257)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+
     CDataExam dbo=new CDataExam();
     if(dbo.Connect()){
     ArrayList<CTipo_Interpretacion> list=dbo.getListaTipo_Interpretacion();
@@ -137,4 +145,7 @@ $(function() {
 	<div id="dialog-form" title="FORMULARIO DE PREGUNTA">
 	</div>
 	 <div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
-<% dbo.Close(); } %>
+<% dbo.Close(); } 
+
+
+	}}%>

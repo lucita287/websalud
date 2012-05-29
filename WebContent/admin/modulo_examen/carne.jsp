@@ -1,7 +1,18 @@
-		<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
     <%@ page import="framework.CDataBase" %>
-    <%@ page import="framework.CDataBase" %>
+    <%@ page import="data.CUsuarioPermiso" %>
+<%
+
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(255)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+%>
+    
+    
 <h2>CATEGORIZACI&Oacute;N SEG&Uacute;N CARNE</h2>
 <h2>PARA EL CICLO</h2>
 <style>
@@ -122,4 +133,5 @@
 			    });
 			 
 		 }
-</script>			
+</script>	
+<%		}	} %>	

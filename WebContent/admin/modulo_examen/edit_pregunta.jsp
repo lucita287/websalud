@@ -8,19 +8,25 @@
 <%@ page import="data.CCategoria" %>
 <%@ page import="data.CPregunta" %>
 <%@ page import="data.CPregunta_Titulo_Respuesta" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
- 	CValidation valid=new CValidation();
- 	int idpregunta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpregunta")));
- 	
- 	if(idpregunta>0){
-	CDataExam data=new CDataExam();
-	data.Connect();
-	CPregunta preg=data.getPreguntaEspecifica(idpregunta);
-	 ArrayList<CPregunta_Titulo_Respuesta> lista_det=data.getListaPregunta_Titulo_Respuesta(preg);
-	if(preg!=null){
-	
-	ArrayList<CCategoria> lista_cate=data.getListaCategoria();
-	data.Close();
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(259)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+ 			CValidation valid=new CValidation();
+		 	int idpregunta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpregunta")));
+		 	
+		 	if(idpregunta>0){
+			CDataExam data=new CDataExam();
+			data.Connect();
+			CPregunta preg=data.getPreguntaEspecifica(idpregunta);
+			 ArrayList<CPregunta_Titulo_Respuesta> lista_det=data.getListaPregunta_Titulo_Respuesta(preg);
+			if(preg!=null){
+			
+			ArrayList<CCategoria> lista_cate=data.getListaCategoria();
+			data.Close();
 	
 %>
 <script>
@@ -199,4 +205,4 @@ function preguntaedit(){
 										<input type="button"   class="ui-state-default ui-corner-all button-save" onclick="cancelar()" value="Cancelar" />
 					</div>	    	
     	
- <%	} }%>   	
+ <%	} }	}	}%>   	

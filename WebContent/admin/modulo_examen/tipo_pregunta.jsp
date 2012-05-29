@@ -5,12 +5,23 @@
 <%@ page import="data.CTipo_Pregunta" %>
 <%@ page import="data.CTitulo_Respuesta" %>
 <%@ page import="java.util.Iterator"%>
+<%@ page import="data.CUsuarioPermiso" %>
+<%
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(259)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+%>
+
     <script>
     $(function() {
 		$( ".check_tipo" ).button();
 	});
         
     </script>
+
+
 <%
 		CValidation valid=new CValidation();
 		int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idtipo_pregunta")));
@@ -143,4 +154,5 @@
 		<% }
 		}
 		data.Close();
+		}	}
 %>		

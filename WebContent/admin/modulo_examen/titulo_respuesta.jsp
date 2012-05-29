@@ -2,9 +2,14 @@
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CDataExam" %>
 <%@ page import="data.CTitulo_Respuesta" %>
+<%@ page import="data.CUsuarioPermiso" %>
 <%
-		HttpSession sessiones = request.getSession(false);
-		if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){%>
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(259)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+%>
 
 		<script>
 		var idtitulo=0;
@@ -106,4 +111,4 @@
 										<a href="#" class="ui-state-default ui-corner-all button-save" onclick="GuardarEdificio()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 											
 			</div>
-<% }	 %>				
+<% }	}	 %>				

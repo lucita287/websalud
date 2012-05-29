@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
+<%@ page import="data.CUsuarioPermiso" %>
+<%
+HttpSession sessiones = request.getSession(false);
+if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
+	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
+
+		if (user_permiso.getIdpermiso().indexOf(254)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+
+%>
+
     <div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 <div class="centerd">
 			<h2>Editar Anuncios del Examen</h2>
@@ -105,3 +115,4 @@ $(document).ready(function () {
 		
 });
 </script>
+<%	}	} %>
