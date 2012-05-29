@@ -7,5 +7,4 @@
 		<li><a href="modulo_examen/parentesco.jsp">Parentesco</a></li>
 		<li><a href="modulo_examen/titulo_secundaria.jsp">Titulo de Secundaria</a></li>
 	</ul>
-
 </div>
