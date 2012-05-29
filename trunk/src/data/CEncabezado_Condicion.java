@@ -5,6 +5,7 @@ public class CEncabezado_Condicion {
 	private String descripcion; 
 	private int idtipo_interpretacion;
 	private String tipo;
+	private int idinicio;
 	/**
 	 * @param idencabezado_condicion
 	 * @param descripcion
@@ -16,8 +17,29 @@ public class CEncabezado_Condicion {
 		this.descripcion = descripcion;
 		this.idtipo_interpretacion = idtipo_interpretacion;
 		this.tipo="";
+		this.idinicio=0;
 	}
 	
+	
+	
+	/**
+	 * @return the idinicio
+	 */
+	public int getIdinicio() {
+		return idinicio;
+	}
+
+
+
+	/**
+	 * @param idinicio the idinicio to set
+	 */
+	public void setIdinicio(int idinicio) {
+		this.idinicio = idinicio;
+	}
+
+
+
 	/**
 	 * @return the tipo
 	 */

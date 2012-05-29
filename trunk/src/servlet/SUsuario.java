@@ -81,7 +81,6 @@ public class SUsuario extends HttpServlet {
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(new_pass, 100, "Password"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(no_personal, 20, "No de Personal"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(telefono, 50, "Telefono"):validacion;
-								if(email.compareTo("")!=0) validacion=(validacion.compareTo("")==0)?valid.ValidarEmail(email):validacion;
 								if(!new_pass.isEmpty()||!ant_pass.isEmpty() ||!conf_pass.isEmpty()){
 									CUsuario user=dbo.getUsuario(usuario_login.getnick());
 									validacion=	(validacion.compareTo("")==0)?valid.ValidarPasswordAnt(ant_pass,user.getpassword()):validacion;
@@ -162,8 +161,6 @@ public class SUsuario extends HttpServlet {
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(email, 100, "Correo Electronico"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(pass, 100, "Password"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(phone, 50, "Telefono"):validacion;
-								if(email.compareTo("")!=0)
-									validacion=(validacion.compareTo("")==0)?valid.ValidarEmail(email):validacion;
 								if(!pass.isEmpty())
 									validacion=	(validacion.compareTo("")==0)?valid.ValidarPassword(pass, pass2):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarNick(nick, iduser):validacion;
@@ -212,8 +209,8 @@ public class SUsuario extends HttpServlet {
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(email, 100, "Correo Electronico"):validacion;
 								validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(pass, 100, "Password"):validacion;
 								
-								if(email.compareTo("")!=0)
-									validacion=(validacion.compareTo("")==0)?valid.ValidarEmail(email):validacion;
+								//if(email.compareTo("")!=0)
+									//validacion=(validacion.compareTo("")==0)?valid.ValidarEmail(email):validacion;
 									validacion=	(validacion.compareTo("")==0)?valid.ValidarPassword(pass, pass2):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarNick(nick):validacion;
 									if(validacion.compareTo("")==0){

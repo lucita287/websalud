@@ -182,7 +182,79 @@ public class SInterpretacionTable extends HttpServlet {
 						 String data="";
 						 for(int i=0; i<lista.size();i++){
 							 CCondicion temp=lista.get(i);
-							 data+="<row  id='"+temp.getIdcondicion()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EliminarCond("+temp.getIdcondicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdcondicion()+"]]></cell><cell><![CDATA["+temp.getPregunta1()+"]]></cell><cell><![CDATA["+temp.getSignoR()+"]]></cell><cell><![CDATA["+temp.getValor()+"]]></cell></row>";	 
+							 data+="<row  id='"+temp.getIdcondicion()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EliminarCond("+temp.getIdcondicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdcondicion()+"]]></cell><cell><![CDATA["+temp.getOrden_pregunta()+")"+temp.getPregunta1()+"]]></cell><cell><![CDATA["+temp.getSignoR()+"]]></cell><cell><![CDATA["+temp.getValor()+"]]></cell></row>";	 
+						 }
+						 info+=data+"</rows>";
+						 out.println(info);
+						dbo.Close();
+					}else if(action.equalsIgnoreCase("m_and_or")){
+						CDataExam dbo=new CDataExam();
+						 dbo.Connect();
+						
+						int idencabe=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id")));
+						ArrayList<CCondicion> lista=dbo.getListaCondicion2(idencabe);
+						
+						String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+						 info+="<rows><total>"+lista.size()+"</total>";
+						 
+						 String data="";
+						 for(int i=0; i<lista.size();i++){
+							 CCondicion temp=lista.get(i);
+							 data+="<row  id='"+temp.getIdcondicion()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EliminarAndOr("+temp.getIdcondicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdcondicion()+"]]></cell><cell><![CDATA["+temp.getCondicion1().getDescripcion()+"]]></cell><cell><![CDATA["+temp.getTipoR()+"]]></cell><cell><![CDATA["+temp.getCondicion2().getDescripcion()+"]]></cell></row>";	 
+						 }
+						 info+=data+"</rows>";
+						 out.println(info);
+						dbo.Close();
+					}else if(action.equalsIgnoreCase("m_paren")){
+						CDataExam dbo=new CDataExam();
+						 dbo.Connect();
+						
+						int idencabe=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id")));
+						ArrayList<CCondicion> lista=dbo.getListaCondicion4(idencabe);
+						
+						String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+						 info+="<rows><total>"+lista.size()+"</total>";
+						 
+						 String data="";
+						 for(int i=0; i<lista.size();i++){
+							 CCondicion temp=lista.get(i);
+							 data+="<row  id='"+temp.getIdcondicion()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EliminarCond("+temp.getIdcondicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdcondicion()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getTipoR()+"]]></cell></row>";	 
+						 }
+						 info+=data+"</rows>";
+						 out.println(info);
+						dbo.Close();
+					}else if(action.equalsIgnoreCase("mresult_exam")){
+						CDataExam dbo=new CDataExam();
+						 dbo.Connect();
+						
+						int idencabe=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id")));
+						ArrayList<CResultado_Examen> lista=dbo.getListaResultado_Examen2(idencabe);
+						
+						String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+						 info+="<rows><total>"+lista.size()+"</total>";
+						 
+						 String data="";
+						 for(int i=0; i<lista.size();i++){
+							 CResultado_Examen temp=lista.get(i);
+							 data+="<row  id='"+temp.getIdtipo_interpretacion()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"EliminarResult("+temp.getIdresultado_examen()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdresultado_examen()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell></row>";	 
+						 }
+						 info+=data+"</rows>";
+						 out.println(info);
+						dbo.Close();
+					}else if(action.equalsIgnoreCase("m_inicio")){
+						CDataExam dbo=new CDataExam();
+						 dbo.Connect();
+						
+						int idencabe=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id")));
+						ArrayList<CCondicion> lista=dbo.getListaCondicion5(idencabe);
+						
+						String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+						 info+="<rows><total>"+lista.size()+"</total>";
+						 
+						 String data="";
+						 for(int i=0; i<lista.size();i++){
+							 CCondicion temp=lista.get(i);
+							 data+="<row  id='"+temp.getIdcondicion()+"'><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"InicioCondi("+temp.getIdcondicion()+")\"><img width=\"18px\" height=\"18px\" src="+((temp.getInicio()!=0)?"'../images/on.png'":"'../images/off.png'")+"/></a>]]></cell><cell><![CDATA["+temp.getIdcondicion()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getTipoR()+"]]></cell></row>";	 
 						 }
 						 info+=data+"</rows>";
 						 out.println(info);
