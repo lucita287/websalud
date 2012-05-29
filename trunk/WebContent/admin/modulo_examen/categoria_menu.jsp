@@ -12,8 +12,6 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
 		if (user_permiso.getIdpermiso().indexOf(250)>-1  || user_permiso.getIdusuario().getidusuario()==1){
-
-
 			CDataExam dbo=new CDataExam();
 			if(dbo.Connect()){
 			ArrayList<CArea_Examen> list= dbo.getListaArea_Examen();

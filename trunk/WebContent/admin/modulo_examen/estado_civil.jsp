@@ -9,9 +9,6 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 
 		if (user_permiso.getIdpermiso().indexOf(239)>-1  || user_permiso.getIdusuario().getidusuario()==1){
 %>
-
-
-
 		<script>
 		var idcivil=0;
 		  $(document).ready(function () {

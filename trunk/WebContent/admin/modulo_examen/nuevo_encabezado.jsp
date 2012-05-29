@@ -19,7 +19,6 @@
 					    Iterator<CTipo_Interpretacion> it=list.iterator();
 					    %>
 					 
-					
 					 Descripcion de la condici&oacute;n: <br>
 					 <textarea rows="3" cols="70" id="texto_nuevo_enca" name="texto_nuevo_enca"></textarea>
 					

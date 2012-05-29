@@ -3,7 +3,6 @@
 <div id="tabs">
 	<ul>
 		<li><a href="modulo_examen/preguntas.jsp">Preguntas</a></li>
-		<li><a href="modulo_examen/titulo_respuesta.jsp">Titulo Respuesta</a></li>
-		
+		<li><a href="modulo_examen/titulo_respuesta.jsp">Titulo Respuesta</a></li>	
 	</ul>
 </div>

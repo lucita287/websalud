@@ -5,9 +5,7 @@
 HttpSession sessiones = request.getSession(false);
 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 	CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
-
 		if (user_permiso.getIdpermiso().indexOf(254)>-1  || user_permiso.getIdusuario().getidusuario()==1){
-
 %>
 
     <div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>

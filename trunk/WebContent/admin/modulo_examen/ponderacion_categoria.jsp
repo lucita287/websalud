@@ -11,7 +11,6 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 
 %>
 
-
     <script>
 		function EditarCatePonderacion(id){
 			 $("#editor").val("");
