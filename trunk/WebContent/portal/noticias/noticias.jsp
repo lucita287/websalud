@@ -39,7 +39,7 @@ if(list_news.size()>0){ %>
 				String sub_descrip=temp_news.getDescripcion_corta();
 		%>
 										<li>
-										<div <%= (i==0?" style='background:#CCC;' ":"")%> class="ui-widget-content ui-corner-all news-inicio xlink noticia<%=temp_news.getIdnoticia()%>"  onclick="update_noti(<%=temp_news.getIdnoticia()%>)" >
+										<div <%= (i==0?" style='background:#E0E0E0;' ":"")%> class="ui-widget-content ui-corner-all news-inicio xlink noticia<%=temp_news.getIdnoticia()%>"  onclick="update_noti(<%=temp_news.getIdnoticia()%>)" >
 												
 												<div class="news-text"  >
 												<div class="titulo_noticias"><%=temp_news.getTitulo() %></div> 
@@ -82,7 +82,7 @@ $(function() {
 
 function update_noti(id){
 	$(".news-inicio").css("background","white");	
-	$(".noticia"+id).css("background","#CCC");
+	$(".noticia"+id).css("background","#E0E0E0");
 	$("#widget-info").load("portal/noticias/noticia_descripcion.jsp?idnoticia="+id);
 }
 <% }%>

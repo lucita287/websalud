@@ -19,23 +19,34 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 <div class="back_all">
 <div id="content">
 
-<div class="top">
-<jsp:include page="../admin/modulo_contenido/titulo.jsp">
-<jsp:param name="titulo" value="Examen de Salud" />
-<jsp:param name="usuario" value="<%=user %>" />	
-</jsp:include>
-</div>
+
 
 <div id="back"  class="ui-widget-content ui-corner-all">
+
+
 <!-- header begins -->
 
  <div id="main">
 <div style="clear: both;"></div>
-<div id="menu-principal" >
+
+
 <jsp:include page="modulo_perfil/menu.jsp" />
-</div>
+
+
 <div id="contenido">
+
 <div id="cont_dato_personal">
+<div class="unlogin">
+						<div style="float:left;">
+							<h1>UNIDAD DE SALUD/ EXAMEN DE SALUD</h1>
+						</div>
+						<div style="float:right;">
+						<img src="../images/icon_online.png" />
+						Bienvenido | <%=user %> |
+						<a Style="color:#0000CD;" href="../SunLogin">(Salir)</a>	
+						</div>
+						<div style="clear: both;"></div>
+</div>
 <% if(portal==1){ %>
 <jsp:include page="modulo_perfil/dato_personal.jsp" />
 <% }else if(portal==5){ %>

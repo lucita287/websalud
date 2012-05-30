@@ -180,7 +180,7 @@ public class SInterpretacion extends HttpServlet {
 											int id=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_interpre")));
 											CResultado_Examen exam=dbo.getresultado_examenEspecifico(id);
 											 if(exam!=null){							 
-												 result= "{\"titulo\":\""+exam.getTitulo()+"\",\"size\":\""+exam.getSize()+"\",\"interpretacion\":\""+exam.getInterpretacion()+"\",\"tipo\":\""+exam.getIdtipo_interpretacion()+"\"}";
+												 result= "{\"titulo\":\""+exam.getTitulo()+"\",\"size\":\""+exam.getSize()+"\",\"interpretacion\":\""+ valid.Limpiarvalor3(exam.getInterpretacion())+"\",\"tipo\":\""+exam.getIdtipo_interpretacion()+"\"}";
 											 }
 											 out.println(result); 
 										}else if(action.equalsIgnoreCase("NuevoEncabezado")){

@@ -15,7 +15,11 @@ portal=Integer.parseInt(request.getParameter("portal"));
 CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
 %>
-	
+<div id="menu-logo" >
+	<a href="index.jsp">
+	<img src="../images/logousalud.gif" width="250px" alt="bt_1" onmouseout="this.src='../images/logousalud.gif';" onmouseover="this.src='../images/logousac.png';" />
+	</a>
+<div id="menu-principal" class="ui-widget-content ui-corner-all">	
 <ul id="menu"  >
 	<li >
 	<a href="index.jsp?portal=1">Perfil</a>
@@ -153,6 +157,8 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 			
 	</li>
 </ul>
+</div>
+</div>
 	<script>
 	$('#menu').hover(function() {
 		

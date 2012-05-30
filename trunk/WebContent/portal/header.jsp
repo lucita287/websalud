@@ -23,7 +23,7 @@ if(lista.size()>0){
 	$(function() {
 		$(".menu_header").jCarouselLite({
 			hoverPause:true,
-			visible: <%=(lista.size()>5?"5":lista.size())%>,
+			visible: <%=(lista.size()>4?"4":lista.size())%>,
 			auto:500,
 			speed:3000,
 			scroll:1
@@ -59,6 +59,12 @@ if(lista.size()>0){
 	
 <h2><%=(area!=null)?area.getnombre().toUpperCase():""%></h2>
 
-    </div>	
+    </div>
+<div style="float:left;">
+	<a href="index.jsp">
+	
+	<img src="images/logousalud.gif" width="300px" alt="bt_1" onmouseout="this.src='images/logousalud.gif';" onmouseover="this.src='images/logousac.png';" />
+	</a>
+</div>    	
     <% } %>
     

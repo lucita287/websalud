@@ -162,11 +162,7 @@ public class CValidation {
 	}
 	public String Limpiarvalor2(String campo,String codificacion){
 		//campo=JavascriptUtil.unescapeJavaScript(campo);
-		campo=campo.replaceAll("\"", "\\\\'");
-		campo=campo.replaceAll("\t", " ");
-		campo=campo.replaceAll("\r", "\\\\r");
-		campo=campo.replaceAll("\f", " ");
-		campo=campo.replaceAll("\n", "\\\\n");
+		campo=campo.replaceAll("\"", "\'");
 		    campo=campo.trim();
 		    byte[] arrByte;
 			try {
@@ -176,6 +172,15 @@ public class CValidation {
 				
 			}
 			
+		return campo;
+	}
+	public String Limpiarvalor3(String campo){
+		campo=campo.replaceAll("\"", "\\\\'");
+		campo=campo.replaceAll("\t", "\\\\t");
+		campo=campo.replaceAll("\r", "\\\\r");
+		campo=campo.replaceAll("\f", "\\\\f");
+		campo=campo.replaceAll("\n", "\\\\n");
+		campo=campo.trim();
 		return campo;
 	}
 
