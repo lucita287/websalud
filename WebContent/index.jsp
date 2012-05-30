@@ -12,12 +12,6 @@
 <div class="back_all">
 <div id="content">
 
-<div class="top">
-<jsp:include page="portal/titulo.jsp">
-<jsp:param name="titulo" value="Portal" />	
-</jsp:include>
-</div>
-
 <div id="back" class="ui-widget-content ui-corner-all">
 <!-- header begins -->
 

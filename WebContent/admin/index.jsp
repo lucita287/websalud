@@ -8,8 +8,7 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 	try{
 	portal=Integer.parseInt(request.getParameter("portal"));
 	}catch (Exception e){}
-	String user=(String)sessiones.getAttribute("username");
-	
+	String user=(String)sessiones.getAttribute("username");	
 %>
 
 <head>
@@ -19,22 +18,29 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <div class="back_all">
 <div id="content">
 
-<div class="top">
-<jsp:include page="modulo_contenido/titulo.jsp">
-<jsp:param name="titulo" value="Administraci&oacute;n" />
-<jsp:param name="usuario" value="<%=user%>" />	
-</jsp:include>
-</div>
 
 <div id="back" class="ui-widget-content ui-corner-all">
 <!-- header begins -->
 
  <div id="main" >
 <div style="clear: both;"></div>
-<div id="menu-principal" class="ui-widget-content ui-corner-all">
+
 <jsp:include page="modulo_contenido/menu.jsp" />
-</div>
+
 <div id="contenido">
+
+<div class="unlogin">
+						<div style="float:left;">
+							<h1>UNIDAD DE SALUD/ ADMINISTRACI&Oacute;N</h1>
+						</div>
+						<div style="float:right;">
+						<img src="../images/icon_online.png" />
+						Bienvenido | <%=user %> |
+						<a Style="color:#0000CD;" href="../SunLogin">(Salir)</a>	
+						</div>
+						<div style="clear: both;"></div>
+</div>
+
 <% if(portal==1){ %>
 <jsp:include page="modulo_contenido/perfil.jsp" />
 <% }else if(portal==2){ %>

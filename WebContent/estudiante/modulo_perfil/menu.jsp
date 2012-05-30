@@ -11,7 +11,12 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	CValidation valid=new CValidation();
 	Integer portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal")));
 %>
-	
+
+<div id="menu-logo" >
+	<a href="index.jsp">
+	<img src="../images/logousalud.gif" width="250px" alt="bt_1" onmouseout="this.src='../images/logousalud.gif';" onmouseover="this.src='../images/logousac.png';" />
+	</a>
+<div id="menu-principal" class="ui-widget-content ui-corner-all">	
 <ul id="menu"  >
 	<li>
 		<a href="index.jsp" >INSTRUCCIONES</a>
@@ -32,14 +37,19 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				<li >
 					<a href="index.jsp?portal=5">EXAMEN MULTIF&Aacute;SICO</a>
 				</li>
-				
+				<li >
+					<a href="index.jsp?portal=6">EXAMEN AUTOEVALUACI&Oacute;N</a>
+				</li>
 			</ul>	
 	</li>
 	<li >
 		<a >PASO 3</a>
 			<ul id="cita">
 				<li>
-					<a href="index.jsp?portal=9">Dash</a>
+					<a href="index.jsp?portal=9">Dash Multif&aacute;sico</a>
+				</li>
+				<li>
+					<a href="index.jsp?portal=7">Dash AutoEvaluaci&oacute;n</a>
 				</li>
 				<li >
 					<a href="index.jsp?portal=8">Citas</a>
@@ -49,10 +59,13 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	</li>
 	
 	<li>
-	<a  href="../SunLogin">Salir</a>
+	<a  href="../SunLogin">SALIR</a>
 			
 	</li>
+	
 </ul>
+</div>
+</div>
 	<script>
 	$('#menu').hover(function() {
 		

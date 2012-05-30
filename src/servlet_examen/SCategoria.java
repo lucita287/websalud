@@ -130,7 +130,7 @@ public class SCategoria extends HttpServlet {
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
 						CCategoria_Interpretacion act=dbo.getCategoria_InterpretacionEspecifico(idcate_pond);
 						 if(act!=null){							 
-							 result= "{\"min\":\""+act.getPonderacion_min()+"\",\"max\":\""+act.getPonderacion_max()+"\",\"interpretacion\":\""+act.getInterpretacion()+"\",\"titulo\":\""+act.getTitulo()+"\",\"size\":\""+act.getSize()+"\"}";
+							 result= "{\"min\":\""+act.getPonderacion_min()+"\",\"max\":\""+act.getPonderacion_max()+"\",\"interpretacion\":\""+valid.Limpiarvalor3(act.getInterpretacion())+"\",\"titulo\":\""+act.getTitulo()+"\",\"size\":\""+act.getSize()+"\"}";
 						 }
 						 out.println(result);
 						//MODIFICAR CATEGORIA 

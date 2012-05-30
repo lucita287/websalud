@@ -22,7 +22,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     	if(it.hasNext()) sql+=",";
     }
 %>    
- <h2>DASH </h2>   
+ <h2>DASH MULTIF&Aacute;SICO </h2>   
  <%= anuncio.getContenido() %>
 <form id="form_report" name="form_report" action="../SGenerateReportPDF" method="post" target="_blank">
   	<center>
