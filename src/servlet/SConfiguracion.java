@@ -87,6 +87,8 @@ public class SConfiguracion extends HttpServlet {
 										result=validacion;
 									}
 									out.println(result);
+								}else if(action.equalsIgnoreCase("GuardarCarne")&& (user_permiso.getIdpermiso().indexOf(233)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+									
 								}
 		 						dbo.Close();
 		}					
