@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 public class CLogger {
 
-	static String file_path="C:\\Users\\lucita\\log.txt";
+	static String file_path="/log.txt";
 	static BufferedWriter bufferedWriter;
 	static int onlinehost=0;
 	

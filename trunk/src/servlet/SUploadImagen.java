@@ -76,9 +76,10 @@ public class SUploadImagen extends HttpServlet {
 								CUsuario usuario=user_permiso.getIdusuario(); 
 								
 								
-								
+								String realpath=getServletContext().getRealPath("/");
 								CConfiguracion config=dbo.getConfiguracion();
-								String repositorio=config.getdireccion_imagen();
+								String repositorio=realpath+config.getdireccion_imagen();
+								
 								String repositorio_relativo=config.getdir_rel_imagen();
 								repositorio_relativo=repositorio_relativo.replace("\\", "\\\\");
 								int tam_max=config.gettamanio_sub();

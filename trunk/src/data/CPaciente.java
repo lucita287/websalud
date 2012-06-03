@@ -582,12 +582,20 @@ public class CPaciente {
 	}
 
 	 public String getFormatoFechaDes(Date date){
+		 if(date!=null){
          SimpleDateFormat formatter = new SimpleDateFormat("E ',' dd 'de' MMMM 'de' yyyy", new Locale("es"));
-         return formatter.format(date);
+         	return formatter.format(date);
+		 }else{
+			 return "";
+		 }
 	 }
 	 public String getddmmyyFecha(){
-         SimpleDateFormat formatter = new SimpleDateFormat("dd'/'MM'/'yyyy", new Locale("es"));
-         return formatter.format(this.fecha_nacimiento);
+		 if(this.fecha_nacimiento!=null){
+			 SimpleDateFormat formatter = new SimpleDateFormat("dd'/'MM'/'yyyy", new Locale("es"));
+			 return formatter.format(this.fecha_nacimiento);
+		 }else{
+			 return "";
+		 }	 
 	 }
 	
 }

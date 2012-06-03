@@ -2,6 +2,7 @@ package framework;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CCita;
 import data.CCondicion;
+import data.CConfiguracion_Examen;
 import data.CDependencia;
 import data.CEstado_Civil;
 import data.CGrupo_Familiar;
@@ -32,6 +34,7 @@ import data.CTipo_Sangre;
 import data.CTitulo_Respuesta;
 import data.CTitulo_Secundaria;
 import data.CEncabezado_Condicion;
+import data.CUnidad_Academica;
 
 public class CDataExam extends CDataBase {
 
@@ -1482,7 +1485,7 @@ public class CDataExam extends CDataBase {
 	public CPaciente getEstudianteEspecifica(String usuario){
 		CPaciente news=null;
 		try{
-			String sql=" SELECT p.idpaciente, p.nombre, p.fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.titulo_secundaria,'') titulo_secundaria,  p.usuario, sexo, "+
+			String sql=" SELECT p.idpaciente, p.nombre, ifnull(p.fecha_nac,now()) fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.titulo_secundaria,'') titulo_secundaria,  p.usuario, sexo, "+
 		" apellido, "+			
 		" ifnull(crecio_en,'') crecio_en, ifnull(titulo_secundaria,'') titulo_secundaria, "+			
 		" ifnull(emer_nombre,'') emer_nombre, ifnull(emer_telefono,'') emer_telefono, ifnull(emer_movil,'') emer_movil,  "+
@@ -1986,7 +1989,7 @@ public class CDataExam extends CDataBase {
 						stm.setInt(2, nacionalidad);
 						stm.executeUpdate();
 						
-						sql=" select idnacionalidad cant from nacionalidad where codigo=? ";
+						sql=" select idunidad_academica cant from unidad_academica where codigo=? ";
 						stm=(PreparedStatement)conn.prepareStatement(sql);
 						stm.setInt(1, nacionalidad);
 						
@@ -2449,8 +2452,8 @@ public class CDataExam extends CDataBase {
 				busq="p.apellido";
 			}
 			
-			String sql="select * from (SELECT p.idpaciente,p.carne, p.nombre, p.apellido, p.fecha_nac,  "+
-					"u.nombre unidad, p.idunidad_academica "+
+			String sql="select * from (SELECT p.idpaciente,p.carne, p.nombre, p.apellido, ifnull(p.fecha_nac,now()) fecha_nac,  "+
+					"u.nombre unidad, p.idunidad_academica, "+
 					"cp.estado estado,  @rownum:=@rownum+1 rownum  "+
 					"FROM cita c inner join cita_paciente cp on c.idcita=cp.idcita "+
 					"inner join paciente p on p.idpaciente=cp.idpaciente "+
@@ -2458,7 +2461,6 @@ public class CDataExam extends CDataBase {
 					" , (SELECT @rownum:=0) ro "+
 					"where c.idcita=? and upper("+busq+") like ?   ) table1 "+
 					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
-			
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idcita);
 			stm.setString(2,"%"+busqueda.trim().toUpperCase()+"%");
@@ -3365,4 +3367,97 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
+	public ArrayList<CUnidad_Academica> getListaUnidadAcademicas(){
+		ArrayList<CUnidad_Academica> lista=new ArrayList<CUnidad_Academica>();
+		try{
+			
+			String sql="SELECT idunidad_academica, nombre, codigo FROM unidad_academica ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				CUnidad_Academica news=new CUnidad_Academica(rs.getInt("idunidad_academica"),rs.getString("nombre"),rs.getInt("codigo"));
+				lista.add(news);
+				
+			}
+			
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return lista;
+	}
+	public ArrayList<CCita> getListaCitasEstudiante(int tipo){
+		ArrayList<CCita> lista=new ArrayList<CCita>();
+try{
+			
+			String sql="select * from (select da.idcita, da.estado, da.tipo_examen, da.cupo, da.fecha, da.hora_inicio, "+
+					" da.hora_fin, cupo -(select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cupo_disp "+
+					"from cita da where fecha > now() and tipo_examen=? ) tab "+
+					" where cupo_disp>0 limit 4 ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,tipo);
+			ResultSet rs=stm.executeQuery();
+			
+			while(rs.next()){
+				CCita news=new CCita(rs.getInt("idcita"), rs.getDate("fecha"), new java.util.Date(rs.getTimestamp("hora_inicio").getTime()), 
+						new java.util.Date(rs.getTimestamp("hora_fin").getTime()), rs.getInt("estado"),
+						rs.getInt("tipo_examen"),rs.getInt("cupo"),rs.getInt("cupo_disp"));
+				lista.add(news);
+				
+			}
+
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	
+	public boolean UpdateConfiguracionExamen(CConfiguracion_Examen config_exam){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE configuracion_examen SET terminacion = ?, tipo_examen = ? WHERE idconfiguracion_examen = ?");
+			
+			stm.setInt(1, config_exam.getTerminacion());
+			stm.setInt(2,config_exam.getTipo_examen());
+			stm.setInt(3,config_exam.getIdconfiguracion_examen());
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public ArrayList<CConfiguracion_Examen> getListaConfiguracion_Examen(){
+		ArrayList<CConfiguracion_Examen> lista=new ArrayList<CConfiguracion_Examen>();
+try{
+			
+			String sql="SELECT idconfiguracion_examen, terminacion, tipo_examen FROM configuracion_examen  ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			
+			while(rs.next()){
+				CConfiguracion_Examen config=new	CConfiguracion_Examen(rs.getInt("idconfiguracion_examen"),rs.getInt("terminacion"),rs.getInt("tipo_examen")) ;
+				lista.add(rs.getInt("terminacion"), config);
+			}
+			
+
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
 }

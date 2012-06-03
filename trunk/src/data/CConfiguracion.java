@@ -1,5 +1,9 @@
 package data;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CConfiguracion {
 	private int idconfiguracion;
 	private String telefono;
@@ -13,8 +17,12 @@ public class CConfiguracion {
 	private String direccion;
 	private int ciclo;
 	private int multifa_reporte;
+	private int impresion_salud;
+	private int random_carne;
+	private String jefe_actual;
+	private Date fecha_examen;
 	public CConfiguracion(int idconfiguracion,String telefono, String correo_electronico, String fax, String direccion_imagen,
-			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte){
+			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte,int impresion_salud,int random_carne,String jefe_actual, Date fecha_examen){
 		
 		this.idconfiguracion=idconfiguracion;
 		this.telefono=telefono;
@@ -28,10 +36,93 @@ public class CConfiguracion {
 		this.direccion=direccion;
 		this.ciclo=ciclo;
 		this.multifa_reporte=multifa_reporte;
+		this.impresion_salud=impresion_salud;
+		this.random_carne=random_carne;
+		this.jefe_actual=jefe_actual;
+		this.fecha_examen=fecha_examen;
 	}
 	
 	
 	
+	/**
+	 * @return the fecha_examen
+	 */
+	public Date getFecha_examen() {
+		return fecha_examen;
+	}
+
+
+
+	/**
+	 * @param fecha_examen the fecha_examen to set
+	 */
+	public void setFecha_examen(Date fecha_examen) {
+		this.fecha_examen = fecha_examen;
+	}
+
+
+
+	/**
+	 * @return the impresion_salud
+	 */
+	public int getImpresion_salud() {
+		return impresion_salud;
+	}
+
+
+
+	/**
+	 * @param impresion_salud the impresion_salud to set
+	 */
+	public void setImpresion_salud(int impresion_salud) {
+		this.impresion_salud = impresion_salud;
+	}
+
+
+
+	/**
+	 * @return the random_carne
+	 */
+	public int getRandom_carne() {
+		return random_carne;
+	}
+
+public String getFormatoFechaddmmyy(Date date){
+		
+		if (date!=null){
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return formatter.format(date);
+		}else return "";
+	}
+
+	/**
+	 * @param random_carne the random_carne to set
+	 */
+	public void setRandom_carne(int random_carne) {
+		this.random_carne = random_carne;
+	}
+
+
+
+	/**
+	 * @return the jefe_actual
+	 */
+	public String getJefe_actual() {
+		return jefe_actual;
+	}
+
+
+
+	/**
+	 * @param jefe_actual the jefe_actual to set
+	 */
+	public void setJefe_actual(String jefe_actual) {
+		this.jefe_actual = jefe_actual;
+	}
+
+
+
 	/**
 	 * @return the ciclo
 	 */

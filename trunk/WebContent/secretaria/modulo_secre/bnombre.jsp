@@ -15,6 +15,8 @@ CValidation valid=new CValidation();
 String action=valid.ValidarRequest(request.getParameter("a"));
 if(action.equalsIgnoreCase("especifico_calendar")){
 	CDataExam dbo=new CDataExam();
+	
+	
 	if(dbo.Connect()){
 				Long start=valid.ConvertLong(valid.ValidarRequest(request.getParameter("start")));
 				Date fecha_inicio=valid.ConvertoDate(start);
@@ -34,7 +36,20 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 <H2>BUSQUEDA POR NOMBRE (LOCALMENTE)</H2>
 Nombre <input type="text" id="nombre" />
 Apellido <input type="text" id="apellido" />
+<button onclick="buscarNombre()" class="mybutton">BUSCAR</button>
 <script>
+function buscarNombre(){
+	cadena = [ 'a=buscar_nombre','nombre='+$("#nombre").val(),'apellido='+$("#apellido").val(),].join('&');
+	 
+	 $.ajax({
+	        url: "../SEstudiante",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	success: function(data){
+	     		$("#respuesta").html(data);   	
+	        }
+	    });
+}
 function Cancelar(){
 	$( "#dialog-form" ).dialog( "close" );
 	 document.location.href="index.jsp?portal=1&start="+<%=request.getParameter("start") %>+"&end="+<%=request.getParameter("end") %>;

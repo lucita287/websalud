@@ -19,7 +19,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	});
 	</script>
 	<div style="float:right;">
-	<a href="index.jsp?portal=1" class="siguiente">SIGUIENTE</a>
+	
+	<a href="index.jsp?portal=1" class="large button red" >SIGUIENTE</a>
 	</div>
 	<h2>PARA LOS CARNE <%=configu.getCiclo() %></h2>
 	<div class="instruccion">

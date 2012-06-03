@@ -6,6 +6,8 @@
 		<script  type="text/javascript">
 <%
 CDataExam dbo=new CDataExam();
+
+
 if(dbo.Connect()){
 ArrayList<Integer> lista=dbo.listaAniosCitas();
 java.util.GregorianCalendar calendar=new java.util.GregorianCalendar();	

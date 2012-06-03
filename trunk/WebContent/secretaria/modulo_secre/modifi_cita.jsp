@@ -8,6 +8,8 @@
 
 	int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
 	CDataExam dbo=new CDataExam();
+	
+	
 	if(dbo.Connect()){
 		
 		CCita cita=dbo.getCita(idcita);

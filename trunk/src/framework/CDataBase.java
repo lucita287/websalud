@@ -506,11 +506,11 @@ public class CDataBase {
 		CConfiguracion temp=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement(" SELECT idconfiguracion, telefono, correo_electronico, fax, direccion_imagen, direccion_pdf, tamanio_sub, dir_rel_imagen, dir_rel_pdf, direccion,ciclo, multifa_reporte FROM configuracion where idconfiguracion=? ");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idconfiguracion, telefono, correo_electronico, fax, direccion_imagen, direccion_pdf, tamanio_sub, dir_rel_imagen, dir_rel_pdf, direccion, ciclo, multifa_reporte, random_carne, impresion_salud, jefe_actual,fecha_examen  FROM configuracion where idconfiguracion=? ");
 			stm.setInt(1, 1);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
-				temp=new CConfiguracion( rs2.getInt("idconfiguracion"),rs2.getString("telefono"),rs2.getString("correo_electronico"),rs2.getString("fax"),rs2.getString("direccion_imagen"),rs2.getString("direccion_pdf"),rs2.getInt("tamanio_sub"),rs2.getString("dir_rel_imagen"),rs2.getString("dir_rel_pdf"),rs2.getString("direccion"),rs2.getInt("ciclo"),rs2.getInt("multifa_reporte") );
+				temp=new CConfiguracion( rs2.getInt("idconfiguracion"),rs2.getString("telefono"),rs2.getString("correo_electronico"),rs2.getString("fax"),rs2.getString("direccion_imagen"),rs2.getString("direccion_pdf"),rs2.getInt("tamanio_sub"),rs2.getString("dir_rel_imagen"),rs2.getString("dir_rel_pdf"),rs2.getString("direccion"),rs2.getInt("ciclo"),rs2.getInt("multifa_reporte"),rs2.getInt("impresion_salud"),rs2.getInt("random_carne"),rs2.getString("jefe_actual"),new java.util.Date(rs2.getDate("fecha_examen").getTime()));
 			}
 		}catch(Throwable e){
 			
@@ -2215,7 +2215,7 @@ public int getResponsableTotal(int type,String busqueda){
 	public boolean UpdateConfiguracion(CConfiguracion confi){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE configuracion SET telefono = ?, fax = ?,  tamanio_sub = ?,  direccion = ?, ciclo = ?, multifa_reporte = ? WHERE  idconfiguracion = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE configuracion SET telefono = ?,  fax = ?, tamanio_sub = ?, direccion = ?, ciclo = ?, multifa_reporte = ?, random_carne = ?,  impresion_salud = ?,  jefe_actual = ?,  fecha_examen = ? WHERE   idconfiguracion = ?");
 			
 			stm.setString(1, confi.gettelefono());
 			stm.setString(2, confi.getfax());
@@ -2223,7 +2223,11 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setString(4, confi.getdireccion());
 			stm.setInt(5, confi.getCiclo());
 			stm.setInt(6, confi.getMultifa_reporte());
-			stm.setInt(7, confi.getidconfiguracion());
+			stm.setInt(7, confi.getRandom_carne());
+			stm.setInt(8, confi.getImpresion_salud());
+			stm.setString(9, confi.getJefe_actual());
+			stm.setDate(10, new java.sql.Date(confi.getFecha_examen().getTime()));
+			stm.setInt(11, confi.getidconfiguracion());
 			
 			
 			if(stm.executeUpdate()>0)

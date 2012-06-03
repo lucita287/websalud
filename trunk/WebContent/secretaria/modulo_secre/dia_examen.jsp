@@ -19,6 +19,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 	
 	
 	CDataExam dbo=new CDataExam();
+	
 	if(dbo.Connect()){
 		
 		ArrayList<CCita> list=new ArrayList<CCita>();

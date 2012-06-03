@@ -126,7 +126,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				</li >
 			<% } if (user_permiso.getIdpermiso().indexOf(255)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
 				<li>
-					<a href="index.jsp?portal=16">Seleccionar Examen segun carne</a>
+					<a href="index.jsp?portal=16">Seleccionar Examen segun su terminaci&oacute;n</a>
 				</li >
 			<% } if (user_permiso.getIdpermiso().indexOf(256)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>
 				<li>

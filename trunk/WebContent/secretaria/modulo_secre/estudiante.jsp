@@ -1,13 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
     <%@ page import="data.CPaciente" %>
+    <%@ page import="framework.CDataExam" %>
+    <%@ page import="data.CUnidad_Academica"%>
+    <%@ page import="java.util.ArrayList"%>
+    <%@ page import="java.util.Iterator"%>
 <%
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null){
+	CDataExam dbo=new CDataExam();
+	if(dbo.Connect()){
 	String user=(String)sessiones.getAttribute("resultado");
 	user=(user==null)?"0":user;
 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+ArrayList<CUnidad_Academica>list=dbo.getListaUnidadAcademicas();
+Iterator<CUnidad_Academica> it=list.iterator();
 %>    
+
     <form id="MainForm" name="MainForm" action="../SEstudiante" method="post">
     		<input type="hidden" name="a" value="estudiante_ver" />
     
@@ -54,6 +63,20 @@ CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 								<div class="colc">
 								<textarea  rows="2" cols="35"><%=(pac==null)?"":pac.getDireccion() %></textarea>
 								</div>
+							</div>
+							<div class="fila">	
+								<div class="col_titulo">Unidad Academica</div>
+								<div class="colc">
+									<select >
+									<option value="0"  >SELECCIONAR UNIDAD ACADEMICA</option>
+										<% 
+											while(it.hasNext()){
+												CUnidad_Academica unidad=it.next();%>
+												<option value="<%= unidad.getIdunidad_academica() %>" <%=(pac!=null&&pac.getIdunidad_academica()==unidad.getIdunidad_academica())?"selected":""%>  ><%= unidad.getNombre() %></option>
+										<%	} %>
+									</select>
+								</div>
+								
 							</div>
 							
 				</div>
@@ -102,4 +125,4 @@ CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 			}
 			</script>
 	</form>			
-<% } %>			
+<% } } %>			

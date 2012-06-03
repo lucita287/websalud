@@ -42,6 +42,10 @@
 								<div class="col"><label id="tituloarea"></label></div>
 							</div>
 							<div class="fila">
+								<div class="col_titulo">Descripcion de buscadores</div>
+								<div class="col"><textarea rows="3" cols="50"></textarea></div>
+							</div>
+							<div class="fila">
 								<div class="col_titulo">Tama&ntilde;o:</div>
 								<div class="col">
 									<select id="edit-tam"> 
@@ -62,7 +66,10 @@
 									<label id="pathimagen_prin">NO SE HA SUBIDO IMAGEN</label><br/>
 								</div>
 							</div>
-									
+							<div class="fila">
+								<div class="col_titulo">Descripcion de imagen</div>
+								<div class="col"><input type="text" size="50px" /></div>
+							</div>		
 						</div>
 				</div>
 				<div style="clear: both;"></div>		

@@ -52,13 +52,40 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div class="col"><input type="text" size="10" value="<%= configurar.getCiclo() %>" id="ciclo"></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Impresi&oacute;n completa de multif&aacute;co</div>
+								<div class="col_titulo">Impresi&oacute;n completa de multif&aacute;sico</div>
 								<div class="col">
 									<input type="radio" name="multifa" class="multifa" id="simultifa" value="0" <%= (configurar.getMultifa_reporte()==0)?"checked":"" %> /><label for="simultifa">NO</label>
 									<input type="radio" name="multifa" class="multifa" id="nomultifa" value="1" <%= (configurar.getMultifa_reporte()==1)?"checked":"" %> /><label for="nomultifa">SI</label>
 								</div>
 							</div>
-							
+							<div class="fila">
+								<div class="col_titulo">Impresi&oacute;n completa en la Unidad de Salud</div>
+								<div class="col">
+									<input type="radio" name="salud" class="salud" id="sisalud" value="0" <%= (configurar.getImpresion_salud()==0)?"checked":"" %> /><label for="sisalud">NO</label>
+									<input type="radio" name="salud" class="salud" id="nosalud" value="1" <%= (configurar.getImpresion_salud()==1)?"checked":"" %> /><label for="nosalud">SI</label>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Jefe actual</div>
+								<div class="col">
+									<input type="text" name="jefe" class="jefe" id="jefe" size="30" value="<%= configurar.getJefe_actual()%>" />
+									
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Modalidad para escoger examen</div>
+								<div class="col">
+									<input type="radio" name="random_carne" class="random_carne" id="random" value="0" <%= (configurar.getRandom_carne()==0)?"checked":"" %> /><label for="random">RANDOM</label>
+									<input type="radio" name="random_carne" class="random_carne" id="carne" value="1" <%= (configurar.getRandom_carne()==1)?"checked":"" %> /><label for="carne">CARNE</label>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Fecha de cobro de examen de salud, extraordinario</div>
+								<div class="col">
+									<input type="text" id="fecha_examen"  class="datepicker" size="20px" value="<%= configurar.getFormatoFechaddmmyy(configurar.getFecha_examen()) %>" /> dd/mm/yyyy
+								</div>
+							</div>
+
 				</div>
 </div>							
 	
@@ -67,16 +94,31 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				</div>
 		<script>
 		 $(function() {
+			  $( ".datepicker" ).datepicker();
+				$(".time").mask("99:99");
+				$(".datepicker").mask("99/99/9999");
+				$( ".datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy");
+			});
+		 $(function() {
 				$( ".multifa" ).button();
+				$( ".salud" ).button();
+				$( ".random_carne" ).button();
 			});
 		function GuardarConfi(){
-			cadena = ['telefono='   + $("#tel_confi").val(),
+			cadena = [
+			          'fecha='+$('#fecha_examen').val(),
+					  'imp_salud='+$("input[@name='salud']:checked").val(),
+					  'jefe='+$("#jefe").val(),
+			          'random_carne='+$("input[@name='random_carne']:checked").val(),
+			          'fecha_examen='+$("#fecha_examen").val(),
+			          'telefono='   + $("#tel_confi").val(),
 			          'fax='+ $("#fax_confi").val(),
 			          'dir='+$("#dir_confi").val(),
 			          'size='+$("#size_confi").val(),
 			          'a=GuardarConfig',
 			          'ciclo='+$("#ciclo").val(),
 			          'multifa='+$("input[@name='multifa']:checked").val(),
+			          
 			        ].join('&');
 			$.ajax({
 		        url: "../SConfiguracion",
