@@ -15,6 +15,7 @@ CValidation valid=new CValidation();
 String action=valid.ValidarRequest(request.getParameter("a"));
 if(action.equalsIgnoreCase("especifico_calendar")){
 	CDataExam dbo=new CDataExam();
+	
 	if(dbo.Connect()){
 				Long start=valid.ConvertLong(valid.ValidarRequest(request.getParameter("start")));
 				Date fecha_inicio=valid.ConvertoDate(start);

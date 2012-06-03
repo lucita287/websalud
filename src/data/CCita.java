@@ -132,14 +132,19 @@ public class CCita {
 	}
 
 	public String getFormatoFechaddmmyy(Date date){
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		
+		if (date!=null){
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		
 		return formatter.format(date);
+		}else return "";
 	}
 	public String getFormatoFechahhmm(Date date){
+		if (date!=null){
 		DateFormat formatter = new SimpleDateFormat("HH:mm a");
 		
 		return formatter.format(date);
+		}else return "";
 	}
 	public String getFormatoFechahhmm2(Date date){
 		DateFormat formatter = new SimpleDateFormat("HH:mm");

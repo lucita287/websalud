@@ -115,6 +115,9 @@ public class SEstudiante extends HttpServlet {
 			
 			out.println(result);
 			
+		}else if(action.equalsIgnoreCase("estudiante_consulta")){
+			String nombre=valid.ValidarRequest(request.getParameter("nombre"));
+			String apellido=valid.ValidarRequest(request.getParameter("apellido"));
 		}
 		dbo.Close();
 	}

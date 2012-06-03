@@ -71,7 +71,8 @@ public class SUploadPDF extends HttpServlet {
 			
 			
 			CConfiguracion config=dbo.getConfiguracion();
-			String repositorio=config.getdireccion_pdf();
+			String realpath=getServletContext().getRealPath("/");
+			String repositorio=realpath+config.getdireccion_pdf();
 			String repositorio_relativo=config.getdir_rel_pdf();
 			repositorio_relativo=repositorio_relativo.replace("\\", "\\\\");
 			int tam_max=config.gettamanio_sub();

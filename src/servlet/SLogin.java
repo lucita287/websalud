@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CConfiguracion;
 import data.CPaciente;
 import data.CUsuario;
 import data.CUsuarioPermiso;
@@ -78,7 +79,13 @@ public class SLogin extends HttpServlet {
 		 }else{
 			 
 			 HttpSession session = request.getSession(true);
-			 CWebService servicio=new CWebService(2012);
+			 CConfiguracion config=dbo.getConfiguracion();
+			 CWebService servicio=new CWebService(config.getCiclo());
+			 int carnemin=config.getCiclo()*100000;
+			 int carnemax=(config.getCiclo()+1)*100000;
+			
+			 int validcarne=valid.ConvertEntero(user);
+			 if(validcarne>=carnemin && validcarne<carnemax){
 			 int status=servicio.VerificarPin(user, pass);
 			 
 			 
@@ -90,8 +97,13 @@ public class SLogin extends HttpServlet {
 				 
 				 if(paciente!=null){
 					 session.setAttribute("paciente",paciente);
+					 if(paciente.getEstado()<=1){
+						 
+					 }
+					 
 					 session.setAttribute("examen",1);
 					 response.sendRedirect("estudiante/index.jsp");
+					 
 				 }else{
 					 paciente=servicio.VerificarEstudiante(user,dbo);
 					 dbo.SafePaciente(paciente);
@@ -120,6 +132,11 @@ public class SLogin extends HttpServlet {
 				 response.sendRedirect("index.jsp?e=Error en la conexion con registro y estadistica");
 				 break;
 			 	 
+			 }
+			 
+			 }else{
+				 
+				 response.sendRedirect("index.jsp?e=Unicamente para estudiantes con carne "+config.getCiclo());
 			 }
 			 //CPaciente pac= dbo.getEstudianteEspecifica(user, pass);
 			 //if(pac!=null){

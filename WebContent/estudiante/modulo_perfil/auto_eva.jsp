@@ -16,7 +16,7 @@
     %>
 
     <div style="float:right;">
-	<a href="index.jsp?portal=9" class="siguiente">SIGUIENTE</a>
+	<a href="index.jsp?portal=9" class="large button red">SIGUIENTE</a>
 	</div>
 <h2>PASO 2 / EXAMEN AUTOEVALUACI&Oacute;N</h2>
     

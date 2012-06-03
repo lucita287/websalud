@@ -60,7 +60,7 @@ public class CWebService {
 	        int result=rxml.status_verificar_pin(xml);
 	        return result;
 		} catch (MalformedURLException | ServiceException | RemoteException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
            
 		return 0;
@@ -78,7 +78,7 @@ public class CWebService {
 	        
 	        return result;
 		} catch (MalformedURLException | ServiceException | RemoteException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
            
 		return null;
