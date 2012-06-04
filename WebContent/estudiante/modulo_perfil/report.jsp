@@ -14,6 +14,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     CAnuncio anuncio=dbo.getAnuncioEspecifico(5);
     CEvaluarExamen eva=new CEvaluarExamen();
     CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
+    if(pac.getExamen_linea()>=5 && pac.getEstado()==3){
+    
     String sql="";
     ArrayList<Integer> list=eva.Evaluar(pac.getIdpaciente());
     Iterator<Integer> it=list.iterator();
@@ -47,4 +49,9 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				$( "#enviar" ).button();
 			});
 </script>		 
-<% } %>
+<% }else{%>
+<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
+	<%}
+    
+
+} %>

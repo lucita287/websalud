@@ -79,7 +79,7 @@ public class SCita extends HttpServlet {
 			validacion=(validacion.compareTo("")==0)?valid.validarFechaMayoraOtra(fecha_inicio,fecha_fin,"Fecha de Inicio","Fecha de Fin"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_inicio,"Hora de Inicio"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_fin,"Hora de Fin"):validacion;
-			System.out.println("* "+hora_inicio+" "+hora_fin);
+			
 			validacion=(validacion.compareTo("")==0)?valid.validarHoraMayoraOtra(valid.CambiarFormatohhmm2(hora_inicio),valid.CambiarFormatohhmm2(hora_fin)):validacion;
 			if(validacion.compareTo("")==0){
 				
@@ -163,7 +163,7 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			if(sessiones!=null){
 				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				if(pac!=null && idcita>0){
-					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente());
+					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente(),"");
 					if(respuesta>0){
 						result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 					}else{

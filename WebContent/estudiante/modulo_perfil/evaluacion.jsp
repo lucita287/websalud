@@ -10,6 +10,7 @@
     HttpSession sessiones=request.getSession(false); 
     if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
+    	if(pac.getExamen_linea()>=6 && pac.getEstado()==2){
     	CDataExam dbo=new CDataExam();
     	CEvaluarExamen eva=new CEvaluarExamen();
         String sql="";
@@ -52,5 +53,11 @@
 				$( "#enviar" ).button();
 			});
 </script>
-<% }} %>
+<% }
+    	}else{%>
+    		<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
+    	<%}
+    	
+    
+    } %>
 	

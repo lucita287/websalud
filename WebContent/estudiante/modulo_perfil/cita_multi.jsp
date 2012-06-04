@@ -5,50 +5,101 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="data.CCita" %>    
 <%@ page import="data.CAnuncio" %>
+<%@ page import="data.CConfiguracion" %>
+<%@ page import="data.CPaciente" %> 
 <% 
 CDataExam dbo=new CDataExam();
+HttpSession sessiones=request.getSession(false); 
 if(dbo.Connect()){
-ArrayList<CCita> list=dbo. getListaCitasEstudiante(2);
-%>
-	<script>
-	$(function() {
-		
-		//$( ".check" ).button();	
-		$( ".button" ).button();
-	});
-	</script>
-
-<h2>SELECCIONA UNA CITA</h2>
-
-Deposito Monitario:
-<input type="text"  size="20"  /><br/>
-
-<h2>Examen Multf&aacute;sico</h2>
-
-
-<% 
-	
-Iterator<CCita> it=list.iterator();
-	while(it.hasNext()){
-		CCita cita=it.next();
-		out.print("<input type='radio' name='fecha_examen' class='check' >"+cita.getFormatoFechaddmmyy(cita.getFecha())+" "+cita.getFormatoFechahhmm(cita.getHora_inicio())+"<br>");
-	}
-
-	
-	list=dbo. getListaCitasEstudiante(1);	
-	if(list.size()==0){
-		CAnuncio anuncio=dbo.getAnuncioEspecifico(4);
-		 out.print( anuncio.getContenido()); 
-	}
+    if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
+    	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
+    	if(pac.getExamen_linea()>=7 && pac.getEstado()==3){
+				    	
+						int idcita=dbo.getCita(pac);
+						String error=request.getParameter("e");
+						String boleta=request.getParameter("noboleta");
+						
+						if(idcita==0){			
+															CConfiguracion config2=dbo.getConfiguracion();
+															ArrayList<CCita> list=dbo. getListaCitasEstudiante(2);
+														
+														if(list.size()>0){ %>
+														  <script  type="text/javascript">
+																	  $(document).ready(function () {
+																		  $("#MainForm").validate();
+																	  });
+																	  $(function() {
+																		  $(".cita").button();
+																	  });	  
+														</script>			
+														<%=  (error!=null)?"<div class='ui-state-error style'>"+error+"</div>":"" %>  
+														<form id="MainForm" name="MainForm" action="../SSiguiente" method="post">
+														
+														<div style="float:right;">
+															
+																<input type="hidden" name="a" value="cita_multi" />
+																<input type="submit" name="Asignar" class="large button red" value="Asignar Examen" />
+															
+															</div>
+														<h2>PASO 3/CITA MULTIF&Aacute;SICO</h2>
+														
+														
+														<% if( config2.getFecha_examen().compareTo(new java.util.Date()) <=0 ){ 
+														CAnuncio anuncio=dbo.getAnuncioEspecifico(9);
+														out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");
+														%>
+														<%= (error!=null)?"<div class='ui-state-highlight'>":"" %>
+														<div class='instruccion'> Ingresa tu boleta de pago:<input name="boleta" class="required number" type="text"  size="20" value="<%= boleta!=null?boleta:"" %>"  /></div>
+														<%= (error!=null)?"</div>":"" %>
+														<% } %>
+														
+														
+														
+														<h2>Seleccione una cita</h2>
+														
+														
+														<% 
+														CAnuncio anuncio=dbo.getAnuncioEspecifico(8);
+														out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");
+														Iterator<CCita> it=list.iterator();
+															out.println((error!=null)?"<div class='ui-state-highlight'>":"");
+															while(it.hasNext()){
+																CCita cita=it.next();
+																out.print("<input type='radio'  id='cita"+cita.getIdcita()+"' name='fecha_examen' class='cita required ' value='"+cita.getIdcita()+"' ><label for='cita"+cita.getIdcita()+"'>"+cita.getFormatoFechaddmmyy(cita.getFecha())+" a las  "+cita.getFormatoFechahhmm(cita.getHora_inicio())+"</label><br>");
+															}
+															out.println((error!=null)?"</div>":"");
+															
+																%>
+															
+															</form>	
+																<%	
+															}else{
+																CAnuncio anuncio=dbo.getAnuncioEspecifico(7);
+																out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");
+															}
+						}else{
+							out.println("<H2>PASO 3 / DESCARGAR CITA</H2>");
+							CAnuncio anuncio=dbo.getAnuncioEspecifico(10);
+							out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");		
+							%>
+							
+							<form id="MainForm" name="MainForm" action="../SGenerateCita" method="post">										
+								<input type="hidden" name="a" value="cita" />
+								<input type="hidden" name="idcita" value="<%=idcita %>" />
+								<center><input type="submit" id="SUcita" value="Descargar Cita" /></center>
+							</form>								
+							
+							<script>
+						 $(function() {
+								$( "#SUcita" ).button();
+							});
+				</script>		 
+							<% 
+						}							
+    	}else{%>
+		<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
+		<%}								
+    }
+}	
+dbo.Close();
 %>	
-<h2>Examen AutoEvaluaci&oacute;n</h2>
-<% 
-it=list.iterator();
-	while(it.hasNext()){
-		CCita cita=it.next();
-		out.print("<input type='radio' name='fecha_examen' class='check' >"+cita.getFormatoFechaddmmyy(cita.getFecha())+" "+cita.getFormatoFechahhmm(cita.getHora_inicio())+"<br>");
-	}
-	
-	
-} %>
-<input type="submit" name="Enviar" class="button" value="Enviar">

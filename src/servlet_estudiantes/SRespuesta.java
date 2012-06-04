@@ -122,18 +122,18 @@ public class SRespuesta extends HttpServlet {
 						int next=data.getProximo(area,auto,multi,action);
 							if(next==0){	
 								if(auto==1){ 
-									response.sendRedirect("estudiante/index.jsp?portal=6");
+									response.sendRedirect("estudiante/index.jsp?portal=4");
 								}else{ 
-									response.sendRedirect("estudiante/index.jsp?portal=5");
+									response.sendRedirect("estudiante/index.jsp?portal=3");
 								}
 							}else{
 								response.sendRedirect("estudiante/index.jsp?portal=10&idmenu="+next+"&auto="+auto+"&multi="+multi);
 							}
 						}else{
 							if(auto==1){ 
-								response.sendRedirect("estudiante/index.jsp?portal=6");
+								response.sendRedirect("estudiante/index.jsp?portal=4");
 							}else{ 
-								response.sendRedirect("estudiante/index.jsp?portal=5");
+								response.sendRedirect("estudiante/index.jsp?portal=3");
 							}
 						}	
 					}else{

@@ -43,7 +43,7 @@ $(function() {
     String error=valid.ValidarRequest(request.getParameter("e"));
     %>
 	<div style="float:right;">
-	<a class="button_sig" href="index.jsp?portal=<%=(auto==1)?"6":"5"%>">Salir sin guardar</a> 
+	<a class="button_sig" href="index.jsp?portal=<%=(auto==1)?"4":"3"%>">Salir sin guardar</a> 
 	<input type="submit" id="button_sig" name="sig"  class="ui-state-default ui-corner-all button_sig" value="Regresar al menu"/>
 	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Continuar"/> 
 	
@@ -153,7 +153,7 @@ $(function() {
     %> 
     <div style="clear: both;"></div>
 	<div class="button-sig">
-	<a class="button_sig" href="index.jsp?portal=<%=(auto==1)?"6":"5"%>">Salir sin guardar</a>
+	<a class="button_sig" href="index.jsp?portal=<%=(auto==1)?"4":"3"%>">Salir sin guardar</a>
 	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Regresar al menu"/>
 	<input type="submit" id="button_sig" name="sig" class="ui-state-default ui-corner-all button_sig" value="Continuar"/> 
 	

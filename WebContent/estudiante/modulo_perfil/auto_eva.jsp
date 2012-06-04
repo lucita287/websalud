@@ -97,7 +97,7 @@
 	
 	}else{
 		%>
-			<h2>DEBE COMPLETAR EL PASO 1, PARA CONTINUAR<%= pac.getExamen_linea() %></h2>
+			<h2>DEBE COMPLETAR EL PASO 1, PARA CONTINUAR</h2>
 		<%
 	}	
     	
