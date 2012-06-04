@@ -81,7 +81,7 @@ public class SCitaTable extends HttpServlet {
 												 }
 												 
 												 ArrayList<CCita> list=dbo.ListCitas(ordenar,asc,tipo_examen,mes,anio);
-												 int maximo=list.size();
+												 int maximo=dbo.ListTotalCitas(tipo_examen,mes,anio);
 												 
 												 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 												 info+="<rows><total>"+maximo+"</total>";
@@ -89,8 +89,11 @@ public class SCitaTable extends HttpServlet {
 												 String data="";
 												 for(int i=0; i<list.size();i++){
 													 CCita temp=list.get(i);
-													 
-												data+="<row id='"+temp.getIdcita()+"'><cell><![CDATA[<button onclick='Modificar("+temp.getIdcita()+")'><img  src='../images/modificar.png'/></button>]]></cell><cell><![CDATA["+temp.getIdcita()+"]]></cell><cell><![CDATA["+temp.getFormatoFechaddmmyy(temp.getFecha())+"]]></cell><cell><![CDATA["+temp.getFormatoFechaDes(temp.getFecha())+"]]></cell><cell><![CDATA["+temp.getFormatoFechahhmm(temp.getHora_inicio())+"]]></cell><cell><![CDATA["+temp.getTipo_examenD()+"]]></cell><cell><![CDATA["+temp.getCupo()+"]]></cell><cell><![CDATA["+temp.getCupo_disp()+"]]></cell></row>";	 
+												String estado="";
+													if(temp.getEstado()==0) estado="../images/close.png";
+													else if(temp.getEstado()==1) estado="../images/on.png";
+													else estado="../images/web.png";
+												data+="<row id='"+temp.getIdcita()+"'><cell><![CDATA[<button onclick='Modificar("+temp.getIdcita()+")'><img  src='../images/modificar.png'/></button>]]></cell><cell><![CDATA[<button onclick='Delete("+temp.getIdcita()+")'><img  width='18px' height='18px' src='../images/delete.png'></button>]]></cell><cell><![CDATA[<button onclick='Estado("+temp.getIdcita()+")'><img  width='18px' height='18px' src='"+estado+"'/></button>]]></cell><cell><![CDATA["+temp.getIdcita()+"]]></cell><cell><![CDATA["+temp.getFormatoFechaddmmyy(temp.getFecha())+"]]></cell><cell><![CDATA["+temp.getFormatoFechaDes(temp.getFecha())+"]]></cell><cell><![CDATA["+temp.getFormatoFechahhmm(temp.getHora_inicio())+"]]></cell><cell><![CDATA["+temp.getTipo_examenD()+"]]></cell><cell><![CDATA["+temp.getCupo()+"]]></cell><cell><![CDATA["+temp.getCupo_disp()+"]]></cell></row>";	 
 										
 												 }
 												 info+=data+"</rows>";

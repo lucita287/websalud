@@ -24,17 +24,18 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 							url: '../SCitaTable',
 							dataType : 'xml',
 						    colModel: [
-							{display: 'Seleccionar', name : 'chkactividad', width : 30, sortable : false, align: 'left'},           
-							{ display: 'ID', name: 'idcita', width: 40, sortable: true, align: 'left' },
-							{ display: 'Fecha', name: 'fecha', width: 80, sortable: true, align: 'left' },
-							{ display: 'Fecha Descripcion', name: 'fecha_descripcion', width: 140, align: 'left' },
-							{ display: 'Hora Inicio', name: 'hora_', width: 90, sortable: true, align: 'left' },
+							{display: 'Seleccionar', name : 'chkactividad', width : 35, sortable : false, align: 'left'},
+							{display: 'Eliminar', name : 'chkdelete', width : 35, sortable : false, align: 'left'},
+							{display: 'Estado', name : 'chkdelete', width : 35, sortable : false, align: 'left'},
+							{ display: 'ID', name: 'idcita', width: 30, sortable: true, align: 'left' },
+							{ display: 'Fecha', name: 'fecha', width: 60, sortable: true, align: 'left' },
+							{ display: 'Fecha Descripcion', name: 'fecha_descripcion', width: 120, align: 'left' },
+							{ display: 'Hora Inicio', name: 'hora_', width: 60, sortable: true, align: 'left' },
 							{ display: 'Tipo de Examen', name: 'tipo', width: 100, sortable: true, align: 'left' },
-							{ display: 'Cupo', name: 'cupo', width: 90, sortable: true, align: 'left' },
-							{ display: 'Cupo Disponible', name: 'cupod', width: 90, sortable: true, align: 'left' }
+							{ display: 'Cupo', name: 'cupo', width: 50, sortable: true, align: 'left' },
+							{ display: 'Asignados', name: 'cupod', width: 50, sortable: true, align: 'left' }
 							],
 							showTableToggleBtn: true,
-						    usepager: true,
 						    buttons : [
 								   		{name: 'Nuevo Semanal', bclass: 'add', onpress : Nuevo},
 								   		{name: 'Nuevo Especifico', bclass: 'add', onpress : Nuevo}
@@ -68,6 +69,7 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 		          $("#r_estado").val(1);
 				  $(".semana").attr('checked', false);
 				  $(".semana").button('refresh');
+				  BuscarFecha();
 			}
 			  function mensaje2(mensaje){
 				  $( "#dialog-message" ).html(mensaje);
@@ -78,7 +80,6 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 								$( this ).dialog( "close" );
 								limpiar_cita();
 				        		$( "#dialog-form" ).dialog( "close" );
-				        		document.location.href="index.jsp?portal=2";
 							}
 						}
 					});	
@@ -115,6 +116,39 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 					  $( "#dialog-form" ).load("modulo_secre/nueva_cita_e.jsp");
 					  $( "#dialog-form" ).dialog( "open" );
 				  }
+			  }
+			  function Delete(id){
+				  cadena = [ 'a=deleteespecifico',
+					            'idcita='+id
+					        ].join('&');
+				  $.ajax({
+				        url: "../SCita",
+				        data: cadena,
+				  	    type: 'post',
+				        dataType: 'json',
+				        success: function(data){
+				        	mensaje(data.mensaje);
+				        	if(data.resultado=='OK'){
+				        		limpiar_cita();
+				        		$( "#dialog-form" ).dialog( "close" );
+				        	}
+				        }
+				    });
+			  }
+			  function Estado(id){
+				  cadena = [ 'a=estadoespecifico',
+					            'idcita='+id
+					        ].join('&');
+				  $.ajax({
+				        url: "../SCita",
+				        data: cadena,
+				  	    type: 'post',
+				        dataType: 'json',
+				        success: function(data){
+				        		limpiar_cita();
+				        		
+				        }
+				    });
 			  }
 			  function Cancelar(){
 					$( "#dialog-form" ).dialog( "close" );

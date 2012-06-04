@@ -2311,6 +2311,22 @@ public class CDataExam extends CDataBase {
 		
 		return temp;
 	}
+	public boolean deleteCita(int idcita){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("DELETE FROM cita WHERE idcita = ?");
+			
+			stm.setInt(1,idcita);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 	public ArrayList<CCita> getListaCita(java.util.Date fecha_inicio, java.util.Date fecha_fin){
 		ArrayList<CCita> ret=new ArrayList<CCita>();
 		try{
@@ -2426,6 +2442,35 @@ public class CDataExam extends CDataBase {
 		 return lista;
 		 
 	}
+	public int ListTotalCitas(int tipo_examen,int mes, int anio){
+		 int total=0;
+		 try{    
+			 String sql="SELECT count(t.idcita) cant " 
+					 +" FROM cita t where month(t.fecha)=? and year(t.fecha)=? ";
+			 if(tipo_examen==1){
+				 sql+=" and tipo_examen=2 ";
+			 }else if(tipo_examen==2){
+				 sql+=" and tipo_examen=1 ";
+			 }else{
+				 sql+=" and (tipo_examen=1 or tipo_examen=2) ";
+			 }
+	        	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+	        	stm.setInt(1, mes);
+	        	stm.setInt(2, anio);
+	        	    ResultSet rs=stm.executeQuery();
+	                if(rs.next()){                							
+	                	total=rs.getInt("cant");
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				e.printStackTrace();
+				 //CLogger.write("1", this, e);
+			} 
+		 
+		 return total;
+		 
+	}
 	public int AsignarCita(int idcita,int idpaciente,String boleta){
 		int temp=0;
 		try {
@@ -2445,6 +2490,26 @@ public class CDataExam extends CDataBase {
 				}
 		
 		return temp;
+	}
+	public boolean update_cita(CCita idcita){
+		PreparedStatement stm;
+		try {
+			if(idcita.getEstado()==2) idcita.setEstado(0);
+			else if(idcita.getEstado()==0) idcita.setEstado(1);
+			else if(idcita.getEstado()==1) idcita.setEstado(2);
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE cita SET estado = ? WHERE idcita = ?");
+			stm.setInt(1,idcita.getEstado());
+			stm.setInt(2,idcita.getIdcita());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 	public ArrayList<CCita> ListCitasEstudiante(int idpaciente){
 		 ArrayList<CCita> lista=new  ArrayList<CCita>();
