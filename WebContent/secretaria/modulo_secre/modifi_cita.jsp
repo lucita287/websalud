@@ -12,7 +12,7 @@
 	
 	if(dbo.Connect()){
 		
-		CCita cita=dbo.getCita(idcita);
+		CCita cita= dbo.getCita(idcita);
 		if(cita!=null){%>
 							<table>	
 									<tr>

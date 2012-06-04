@@ -206,6 +206,27 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				
 			}else result="{\"resultado\":\"ERROR\"}";
 			out.print(result);
+		}else if(action.equalsIgnoreCase("deleteespecifico")){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			boolean respuesta=dbo.deleteCita(idcita);
+			String result="";
+			if(respuesta){
+				result="{\"resultado\":\"OK\",\"mensaje\":\"Eliminado\"}";
+			}else{
+				result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se puede borrar, tiene citas asignadas\"}";
+			}
+			out.print(result);
+		}else if(action.equalsIgnoreCase("estadoespecifico")){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			CCita cita=dbo.getCita(idcita);
+			boolean respuesta=dbo.update_cita(cita);
+			String result="";
+			if(respuesta){
+				result="{\"resultado\":\"OK\",\"mensaje\":\"Actualizado\"}";
+			}else{
+				result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha actualizado\"}";
+			}
+			out.print(result);
 		}
 		dbo.Close();
 		 }

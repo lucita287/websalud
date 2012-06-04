@@ -232,10 +232,6 @@ DROP FUNCTION IF EXISTS `InsertarCita`$$
 CREATE FUNCTION `InsertarCita`(pfecha datetime,phorai datetime,phoraf datetime,pcupo INT,pestado INT, pexamen INT ) RETURNS int(11)
     DETERMINISTIC
 BEGIN
-   DECLARE idday int DEFAULT 0;
-   select ifnull(max(idcita),0) into idday from cita where fecha=pfecha and hora_inicio=phorai and tipo_examen=pexamen ;
-
-if idday=0 then
 
     INSERT INTO cita
   (estado, 
@@ -252,7 +248,6 @@ VALUES
   phorai,
   phoraf);
 
-end if;
     RETURN 1;
 END
 $$
