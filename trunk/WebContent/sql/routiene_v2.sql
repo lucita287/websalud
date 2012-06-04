@@ -259,7 +259,7 @@ $$
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS `asignar_cita`$$
-CREATE FUNCTION asignar_cita(pidcita int,pidpaciente int) RETURNS int
+CREATE FUNCTION asignar_cita(pidcita int,pidpaciente int, boleta varchar(30)) RETURNS int
     DETERMINISTIC
 BEGIN
    DECLARE vcupo int DEFAULT 0;
@@ -281,11 +281,11 @@ BEGIN
                 INSERT INTO cita_paciente
                       (idcita, 
                       idpaciente, 
-                      estado) 
+                      estado,recibo_pago) 
                     VALUES 
                       (pidcita, 
                       pidpaciente, 
-                      1);
+                      1, boleta);
         else
                 UPDATE cita_paciente SET 
                   estado = 1 

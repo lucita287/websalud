@@ -144,7 +144,7 @@ public class CValidation {
 
 	public String Limpiarvalor(String campo,String codificacion){
 		//campo=JavascriptUtil.unescapeJavaScript(campo);
-		campo=campo.replaceAll("\"", "\\\\'");
+		campo=campo.replaceAll("\"", "\\'");
 		campo=campo.replaceAll("\t", " ");
 		campo=campo.replaceAll("\r", " ");
 		campo=campo.replaceAll("\f", " ");

@@ -63,6 +63,26 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
+	public ArrayList<CArea_Examen> getListaArea_Examen(){
+		ArrayList<CArea_Examen> ret=new ArrayList<CArea_Examen>();
+		try{
+			String sql=" select tr.idarea_examen, tr.descripcion from  area_examen tr ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			ResultSet rs=stm.executeQuery();
+			
+			while(rs.next()){
+				CArea_Examen cate=new CArea_Examen(rs.getInt("idarea_examen"),rs.getString("descripcion"));
+				ret.add(cate);
+				
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return ret;
+	}
 	public String getMenuCategoria(int id){
 		String ret="";
 		try{
@@ -2406,14 +2426,15 @@ public class CDataExam extends CDataBase {
 		 return lista;
 		 
 	}
-	public int AsignarCita(int idcita,int idpaciente){
+	public int AsignarCita(int idcita,int idpaciente,String boleta){
 		int temp=0;
 		try {
-					String sql="select asignar_cita(?,?) cant ";
+					String sql="select asignar_cita(?,?,?) cant ";
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 					
 					stm.setInt(1,idcita);
 					stm.setInt(2,idpaciente);
+					stm.setString(3, boleta);
 					
 					ResultSet rs2=stm.executeQuery();
 					if(rs2.next())
@@ -2589,6 +2610,27 @@ public class CDataExam extends CDataBase {
 			 //CLogger.write("86", this, e);
 		}
 		return ret;
+	}
+	public int getCita(CPaciente pac){
+		int idcita=0;
+		try{
+			String sql="SELECT max(da.idcita) idcita "+		
+			" FROM cita da inner join cita_paciente cp on cp.idcita=da.idcita "+
+			" where cp.idpaciente=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, pac.getIdpaciente());
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				idcita=rs.getInt("idcita");
+				
+			}
+			rs.close();
+			stm.close();
+		}catch(Throwable e){
+			e.printStackTrace();
+			 //CLogger.write("86", this, e);
+		}
+		return idcita;
 	}
 	public ArrayList<CAnuncio> getAnuncioLista(){
         ArrayList<CAnuncio> ret=new ArrayList<CAnuncio>();
@@ -3432,7 +3474,7 @@ try{
 			
 			String sql="select * from (select da.idcita, da.estado, da.tipo_examen, da.cupo, da.fecha, da.hora_inicio, "+
 					" da.hora_fin, cupo -(select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cupo_disp "+
-					"from cita da where fecha > now() and tipo_examen=? ) tab "+
+					"from cita da where fecha > DATE_ADD(now(), INTERVAL 2 DAY) and tipo_examen=? and estado=2 ) tab "+
 					" where cupo_disp>0 limit 4 ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,tipo);

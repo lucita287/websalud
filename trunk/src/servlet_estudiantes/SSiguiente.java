@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CConfiguracion;
 import data.CPaciente;
 import framework.CDataExam;
 import framework.CValidation;
@@ -82,6 +83,36 @@ public class SSiguiente extends HttpServlet {
 					
 				}
 				response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());
+			}else if(action.equalsIgnoreCase("cita_multi")||action.equalsIgnoreCase("cita_auto")){
+				CConfiguracion config2=data.getConfiguracion();
+				int cita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("fecha_examen") )); 
+				String param="";
+				if(cita<=0){
+					param+="Debe ingresar una cita";
+				}
+				if( config2.getFecha_examen().compareTo(new java.util.Date()) <=0 ){ 
+								
+								int noboleta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("boleta") ));
+									if(noboleta<=0){
+										param+="<br>Debe ingresar una boleta valida";
+									}
+														
+								if(param.compareTo("")==0){
+									data.AsignarCita(cita, pac.getIdpaciente(), noboleta+"");
+									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());
+								}else{
+									String e="&e="+param+"&noboleta="+noboleta+"&cita="+cita;
+									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea()+e);
+								}
+				 }else{
+							 	if(param.compareTo("")==0){
+									data.AsignarCita(cita, pac.getIdpaciente(),"");
+									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());
+								}else{
+									String e="&e="+param+"&cita="+cita;
+									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea()+e);
+								}
+				 }
 			}else{
 				response.sendRedirect("estudiante/index.jsp");
 			}
