@@ -94,8 +94,22 @@ public class SDatoPersonal extends HttpServlet {
 					
 					if(mensaje.isEmpty()){
 						boolean b=data.UpdatePaciente1(pac);	
+						
 						if(b){
-							response.sendRedirect("estudiante/index.jsp?portal=5");
+								if(pac.getExamen_linea()<=1){
+									if(pac.getEstado()==3){	
+										pac.setExamen_linea(3);
+										data.UpdatePacienteExamen(pac);	
+										response.sendRedirect("estudiante/index.jsp?portal=3");
+										
+									}else{
+										pac.setExamen_linea(4);
+										data.UpdatePacienteExamen(pac);	
+										response.sendRedirect("estudiante/index.jsp?portal=4");
+									}
+								}else{
+									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());
+								}
 						}else{
 							response.sendRedirect("estudiante/index.jsp?e=Error al guardar&portal=1");
 						}

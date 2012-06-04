@@ -18,6 +18,7 @@ import data.CUsuarioPermiso;
 
 
 import framework.CDataExam;
+import framework.CSeleccionExamen;
 import framework.CValidation;
 import framework.CWebService;
 /**
@@ -98,7 +99,9 @@ public class SLogin extends HttpServlet {
 				 if(paciente!=null){
 					 session.setAttribute("paciente",paciente);
 					 if(paciente.getEstado()<=1){
-						 
+						 CSeleccionExamen examen=new CSeleccionExamen(config.getRandom_carne(),validcarne,dbo.getListaConfiguracion_Examen());
+						 paciente.setEstado(examen.getExamen()+1);
+						 dbo.UpdatePacienteEstado(paciente);
 					 }
 					 
 					 session.setAttribute("examen",1);
@@ -106,8 +109,12 @@ public class SLogin extends HttpServlet {
 					 
 				 }else{
 					 paciente=servicio.VerificarEstudiante(user,dbo);
+					 
+					 CSeleccionExamen examen=new CSeleccionExamen(config.getRandom_carne(),validcarne,dbo.getListaConfiguracion_Examen());
+					 paciente.setEstado(examen.getExamen()+1);
 					 dbo.SafePaciente(paciente);
 					 int idusuario=dbo.getIdPaciente(paciente.getCarne()+"");
+					 
 					 paciente.setIdpaciente(idusuario);
 					 paciente.setCrecio_en("");
 					 paciente.setEstado_civilidestado_civil(0);

@@ -22,8 +22,16 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     	if(it.hasNext()) sql+=",";
     }
 %>    
+ <div style="float:right;">
+	<form id="MainForm" name="MainForm" action="../SSiguiente" method="post">
+		<input type="hidden" name="a" value="reportmulti" />
+		<input type="submit" name="siguiente" class="large button red" value="siguiente" />
+	</form>
+</div>
  <h2>DASH MULTIF&Aacute;SICO </h2>   
  <%= anuncio.getContenido() %>
+
+ 
 <form id="form_report" name="form_report" action="../SGenerateReportPDF" method="post" target="_blank">
   	<center>
   	<input type="submit" id="enviar" value="Descargar Dash" />

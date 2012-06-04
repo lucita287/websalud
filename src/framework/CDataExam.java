@@ -41,12 +41,15 @@ public class CDataExam extends CDataBase {
 	public CDataExam(){
 		super();
 	}
-	public ArrayList<CArea_Examen> getListaArea_Examen(){
+	public ArrayList<CArea_Examen> getListaArea_Examen(int auto,int multi){
 		ArrayList<CArea_Examen> ret=new ArrayList<CArea_Examen>();
 		try{
-			String sql=" select tr.idarea_examen, tr.descripcion from  area_examen tr ";
+			String sql=" select tr.idarea_examen, tr.descripcion from  area_examen tr where exists ( select idarea_examen from  menu_categoria mc inner join categoria cat on mc.idmenu_categoria=cat.idmenu_categoria where mc.idarea_examen=tr.idarea_examen and (cat.multifasico=? or cat.autoevaluacion=?) ) ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,multi);
+			stm.setInt(2,auto);
 			ResultSet rs=stm.executeQuery();
+			
 			while(rs.next()){
 				CArea_Examen cate=new CArea_Examen(rs.getInt("idarea_examen"),rs.getString("descripcion"));
 				ret.add(cate);
@@ -1598,6 +1601,40 @@ public class CDataExam extends CDataBase {
 			stm.setString(7, pac.getEmer_movil());
 			stm.setInt(8, pac.getIdemer_parentesco());
 			stm.setInt(9, pac.getIdpaciente());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean UpdatePacienteExamen(CPaciente pac){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET examen_linea=? WHERE idpaciente = ?");
+			stm.setInt(1, pac.getExamen_linea());
+			stm.setInt(2, pac.getIdpaciente());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean UpdatePacienteEstado(CPaciente pac){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET estado=? WHERE idpaciente = ?");
+			stm.setInt(1, pac.getEstado());
+			stm.setInt(2, pac.getIdpaciente());
 			
 			if(stm.executeUpdate()>0)
 				return true;

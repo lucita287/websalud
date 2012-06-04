@@ -12,13 +12,11 @@
  	
     if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
-    		
+    	if(pac.getExamen_linea()>=4 && pac.getEstado()==2){	
     %>
 
-    <div style="float:right;">
-	<a href="index.jsp?portal=9" class="large button red">SIGUIENTE</a>
-	</div>
-<h2>PASO 2 / EXAMEN AUTOEVALUACI&Oacute;N</h2>
+    
+
     
 	
     
@@ -28,45 +26,65 @@
     CAnuncio anuncio=dbo.getAnuncioEspecifico(2);
     
     ArrayList<Integer> lista_menu=dbo.ListaMenu_Categoria_Auto(pac.getIdpaciente() );
-    ArrayList<CArea_Examen> list_e=dbo.getListaArea_Examen();
+    ArrayList<CArea_Examen> list_e=dbo.getListaArea_Examen(1,0);
     Iterator<CArea_Examen> it2=list_e.iterator();
-    out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");
-    %>
-    				
-    <% while(it2.hasNext()){ 
+   
+    String html="";		
+    int check=0;
+    while(it2.hasNext()){ 
     	CArea_Examen area=it2.next();
-    		out.println("<div class='area_examen'>"+area.getNombre().toUpperCase()+"</div>");
-    	%>				
+    	html+="<div class='area_examen'>"+area.getNombre().toUpperCase()+"</div>";
     				
-			    <table>
-							    <%
-							    ArrayList<CMenu_Categoria> lista=dbo.getListaMenu_Categoria(1,0,area.getIdarea_examen());						    
-							    Iterator<CMenu_Categoria> it=lista.iterator();
-							    while(it.hasNext()){
+			   html+=" <table> \n";
+				ArrayList<CMenu_Categoria> lista=dbo.getListaMenu_Categoria(1,0,area.getIdarea_examen());						    
+				Iterator<CMenu_Categoria> it=lista.iterator();
+					    while(it.hasNext()){
 							    	
-							    %>
-							    	<tr>
-							    	
-							    	<%for(int i=0; i<3; i++){ %>
-								    	<td>
-								    		<%
-								    		
+			   	 html+="			    	<tr>\n";
+							   for(int i=0; i<3; i++){ 
+				 html+="			    	<td>\n";				   
+							       		
 								    			if(it.hasNext()){
 										    		CMenu_Categoria menu=null;
-										    		menu=it.next();%>
-										    				<a class="menu" style="width:220px; text-align: left;" href="index.jsp?portal=10&idmenu=<%=menu.getIdmenu_categoria()%>&auto=1&multi=0">
-											    			<img src="<%= (lista_menu.indexOf(menu.getIdmenu_categoria())>-1)?"../images/check1.png":"../images/uncheck1.png" %>" />
-											    			<%= menu.getNombre() %>
-											    			</a>
-											   <% } %> 	
+										    		menu=it.next();
+										    		String etiqueta="";
+										    			if((lista_menu.indexOf(menu.getIdmenu_categoria())>-1)){
+										    					etiqueta="../images/check1.png";
+										    			}else{
+										    				check++;
+										    				etiqueta="../images/uncheck1.png";
+										    			}
+										    		
+				
+				html+="				    				<a class=\"menu\" style=\"width:220px; text-align: left;\" href=\"index.jsp?portal=10&idmenu="+menu.getIdmenu_categoria()+"&auto=1&multi=0\">\n";
+				html+="							    			<img src=\""+ etiqueta+"\" />"+menu.getNombre()+"</a>\n";
+											    			
+											    } 
 									    	
 									    	
-								    	</td>
-								    <%} %>	
-							    	</tr>   
-							    <%} %>
-			    </table>
-	<% } %>		    
+				html+="				    	</td>\n";
+								    } 	
+				html+="				</tr>\n";   
+							    }
+				html+="</table>\n";
+	 } 
+	 %>
+	<div style="float:right;">
+	<% if(check==0){ %>
+	
+	<form id="MainForm" name="MainForm" action="../SSiguiente" method="post">
+		<input type="hidden" name="a" value="auto" />
+		<input type="submit" name="siguiente" class="large button red" value="siguiente" />
+	</form>
+	
+	<% } %>
+	</div>		    
+	<h2>PASO 2 / EXAMEN AUTOEVALUACI&Oacute;N</h2>
+	
+    <% 
+    	out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");
+    	out.println(html); 
+    %>
     <script>
 	$(function() {
 		$( "a.menu").button();
@@ -75,4 +93,12 @@
 	</script>
 	<% 
 	dbo.Close();
-}	} %>
+    	}
+	
+	}else{
+		%>
+			<h2>DEBE COMPLETAR EL PASO 1, PARA CONTINUAR<%= pac.getExamen_linea() %></h2>
+		<%
+	}	
+    	
+    } %>
