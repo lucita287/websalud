@@ -49,17 +49,19 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 </div>
 <% if(portal==1){ %>
 <jsp:include page="modulo_perfil/dato_personal.jsp" />
-<% }else if(portal==5){ %>
+<% }else if(portal==3){ %>
 <jsp:include page="modulo_perfil/multi.jsp" />
-<% }else if(portal==6){ %>
+<% }else if(portal==4){ %>
 <jsp:include page="modulo_perfil/auto_eva.jsp" />
-<% }else if(portal==9){ %>
+<% }else if(portal==5){ %>
 <jsp:include page="modulo_perfil/report.jsp" />
-<% }else if(portal==7){ %>
+<% }else if(portal==6){ %>
 <jsp:include page="modulo_perfil/evaluacion.jsp" />
+<% }else if(portal==7){ %>
+<jsp:include page="modulo_perfil/cita_multi.jsp" />
 <% }else if(portal==8){ %>
-<jsp:include page="modulo_perfil/citas.jsp" />
-<% }else if(portal==10){ %>
+<jsp:include page="modulo_perfil/cita_auto.jsp" />
+<% } else if(portal==10){ %>
 <jsp:include page="modulo_perfil/examen_categoria.jsp" />
 <% }else if(portal==11){ %>
 <jsp:include page="modulo_perfil/psico.jsp" />

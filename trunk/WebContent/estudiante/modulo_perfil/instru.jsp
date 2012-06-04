@@ -19,8 +19,10 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	});
 	</script>
 	<div style="float:right;">
-	
-	<a href="index.jsp?portal=1" class="large button red" >SIGUIENTE</a>
+	<form id="MainForm" name="MainForm" action="../SSiguiente" method="post">
+		<input type="hidden" name="a" value="instru" />
+		<input type="submit" name="siguiente" class="large button red" value="siguiente" />
+	</form>	
 	</div>
 	<h2>PARA LOS CARNE <%=configu.getCiclo() %></h2>
 	<div class="instruccion">

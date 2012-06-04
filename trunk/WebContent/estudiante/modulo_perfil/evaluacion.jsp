@@ -23,12 +23,23 @@
     	if(dbo.Connect()){	
     		CAnuncio anuncio=dbo.getAnuncioEspecifico(4);
     %>	    
-<BR/><h2>    DASH DE AUTOEVALUACI&Oacute;N</h2>
+<BR/>
+
+ <div style="float:right;">
+	<form id="MainForm" name="MainForm" action="../SSiguiente" method="post">
+		<input type="hidden" name="a" value="reportauto" />
+		<input type="submit" name="siguiente" class="large button red" value="siguiente" />
+	</form>
+</div>
+<h2>    CUESTIONARIO DE AUTOEVALUACI&Oacute;N</h2>
+
+
 
 <% out.println(anuncio.getContenido()+"<BR/>"); %>
+
 <form id="form_report" name="form_report" action="../SGenerateReportAutoPDF" method="post" target="_blank">
   	<center>
-  	<input type="submit" id="enviar" value="Descargar Dash" />
+  	<input type="submit" id="enviar" value="Descargar Resultados" />
   	</center>
   	<input type="hidden" name="report" id="report" value="Primera_parte" />
   	<input type="hidden" name="report_name" id="report_name" value="Primera_parte" />

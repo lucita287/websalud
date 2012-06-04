@@ -54,15 +54,20 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 							<div class="fila">
 								<div class="col_titulo">Impresi&oacute;n completa de multif&aacute;sico</div>
 								<div class="col">
-									<input type="radio" name="multifa" class="multifa" id="simultifa" value="0" <%= (configurar.getMultifa_reporte()==0)?"checked":"" %> /><label for="simultifa">NO</label>
-									<input type="radio" name="multifa" class="multifa" id="nomultifa" value="1" <%= (configurar.getMultifa_reporte()==1)?"checked":"" %> /><label for="nomultifa">SI</label>
+									<select name="multifa" class="multifa" id="multifa">	
+										<option value="0" <%= (configurar.getMultifa_reporte()==0)?"selected":"" %>>NO</option>
+										<option value="1" <%= (configurar.getMultifa_reporte()==1)?"selected":"" %> >SI</option>
+									</select>
 								</div>
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Impresi&oacute;n completa en la Unidad de Salud</div>
 								<div class="col">
-									<input type="radio" name="salud" class="salud" id="sisalud" value="0" <%= (configurar.getImpresion_salud()==0)?"checked":"" %> /><label for="sisalud">NO</label>
-									<input type="radio" name="salud" class="salud" id="nosalud" value="1" <%= (configurar.getImpresion_salud()==1)?"checked":"" %> /><label for="nosalud">SI</label>
+									
+									<select name="salud" class="salud" id="salud">	
+										<option value="0" <%= (configurar.getImpresion_salud()==0)?"selected":"" %>>NO</option>
+										<option value="1" <%= (configurar.getImpresion_salud()==1)?"selected":"" %> >SI</option>
+									</select>
 								</div>
 							</div>
 							<div class="fila">
@@ -75,8 +80,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 							<div class="fila">
 								<div class="col_titulo">Modalidad para escoger examen</div>
 								<div class="col">
-									<input type="radio" name="random_carne" class="random_carne" id="random" value="0" <%= (configurar.getRandom_carne()==0)?"checked":"" %> /><label for="random">RANDOM</label>
-									<input type="radio" name="random_carne" class="random_carne" id="carne" value="1" <%= (configurar.getRandom_carne()==1)?"checked":"" %> /><label for="carne">CARNE</label>
+									<select name="random_carne" class="random_carne" id="random_carne">	
+										<option value="0" <%= (configurar.getRandom_carne()==0)?"selected":"" %>>RANDOM</option>
+										<option value="1" <%= (configurar.getRandom_carne()==1)?"selected":"" %>>CARNE</option>
+									</select>
+
 								</div>
 							</div>
 							<div class="fila">
@@ -99,17 +107,13 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				$(".datepicker").mask("99/99/9999");
 				$( ".datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy");
 			});
-		 $(function() {
-				$( ".multifa" ).button();
-				$( ".salud" ).button();
-				$( ".random_carne" ).button();
-			});
+
 		function GuardarConfi(){
 			cadena = [
 			          'fecha='+$('#fecha_examen').val(),
-					  'imp_salud='+$("input[@name='salud']:checked").val(),
+					  'imp_salud='+$("#salud").val(),
 					  'jefe='+$("#jefe").val(),
-			          'random_carne='+$("input[@name='random_carne']:checked").val(),
+			          'random_carne='+$("#random_carne").val(),
 			          'fecha_examen='+$("#fecha_examen").val(),
 			          'telefono='   + $("#tel_confi").val(),
 			          'fax='+ $("#fax_confi").val(),
@@ -117,7 +121,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			          'size='+$("#size_confi").val(),
 			          'a=GuardarConfig',
 			          'ciclo='+$("#ciclo").val(),
-			          'multifa='+$("input[@name='multifa']:checked").val(),
+			          'multifa='+$("#multifa").val(),
 			          
 			        ].join('&');
 			$.ajax({
