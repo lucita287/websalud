@@ -78,7 +78,13 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							<td><%=cc.getFormatoFechaddmmyy(cc.getFecha()) %></td> 
 							<td><%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %></td>
 							<td><%=cc.getTipo_examenD()%></td>  
-							<td><%=citaact%> <% if(citaact>0){%><a class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a><% } %></td>
+								<td><%=citaact%> 
+									<% if(citaact>0){%>
+											<a class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a>
+											<br/>Boleta<input type="text" id="boleta" name="boleta" size="20"/>
+									<% } %>
+									
+								</td>
 							<td>
 							<a class="mybutton" onclick="asignados('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')"> VER <%=cc.getCupo_disp() %></a><br/>
 							<a class="mybutton" onclick="r_dia_examen_<%=cc.getIdcita()%>()">(VER PDF)</a><br/>
@@ -113,7 +119,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						$( "#dialog-form" ).dialog( "open" );
 					}
 					function asignar(id,init,end){
-						cadena = [ 'a=asignar_cita','idcita='+id,].join('&');
+						cadena = [ 'a=asignar_cita','idcita='+id,'boleta='+$("#boleta").val()].join('&');
 						 
 						 $.ajax({
 						        url: "../SCita",
