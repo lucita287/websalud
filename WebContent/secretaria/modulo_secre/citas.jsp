@@ -1,18 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@page import="framework.CDataExam" %>
+<%@page import="framework.CValidation" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 		<script  type="text/javascript">
 <%
 CDataExam dbo=new CDataExam();
-
-
+//mes="+$("mes").val()+"&exam="+$("input[@name='exam']:checked").val()+"&anio="+$("#anio").val();
+CValidation valid=new CValidation();
+int mes=valid.ConvertEntero(valid.ValidarRequest( request.getParameter("mes")))-1;
+int exam=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("exam")));
+int anio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("anio")));
+int examv=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("exam")));
 if(dbo.Connect()){
 ArrayList<Integer> lista=dbo.listaAniosCitas();
 java.util.GregorianCalendar calendar=new java.util.GregorianCalendar();	
-int month=calendar.get(java.util.GregorianCalendar.MONTH);
-int year=calendar.get(java.util.GregorianCalendar.YEAR);
+int month=0;
+if(mes==-1) month=calendar.get(java.util.GregorianCalendar.MONTH);
+else month=mes;
+int year=0;
+if(anio==0) year=calendar.get(java.util.GregorianCalendar.YEAR);
+else year=anio;
 %>			
 		  $(function() {
 				$( ".buscar" ).button();
@@ -70,6 +79,7 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 				  $(".semana").attr('checked', false);
 				  $(".semana").button('refresh');
 				  BuscarFecha();
+				  
 			}
 			  function mensaje2(mensaje){
 				  $( "#dialog-message" ).html(mensaje);
@@ -80,6 +90,7 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 								$( this ).dialog( "close" );
 								limpiar_cita();
 				        		$( "#dialog-form" ).dialog( "close" );
+				        		document.location.href="index.jsp?portal=2&mes="+$("#mes").val()+"&exam="+$("input[@name='exam']:checked").val()+"&anio="+$("#anio").val();
 							}
 						}
 					});	
@@ -152,8 +163,9 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 			  }
 			  function Cancelar(){
 					$( "#dialog-form" ).dialog( "close" );
-					document.location.href="index.jsp?portal=2";
+					document.location.href="index.jsp?portal=2&mes="+$("#mes").val()+"&exam="+$("input[@name='exam']:checked").val()+"&anio="+$("#anio").val();
 				}
+			  
 			</script>
 			<div id="dialog-form" title="Citas">
 			</div>
@@ -185,9 +197,9 @@ int year=calendar.get(java.util.GregorianCalendar.YEAR);
 					
 				</select>
 				
-				<input onclick="BuscarFecha()" type="radio" name="exam" id="multi_exam" class="buscar" value="1" /><label for="multi_exam">MULTIF&Aacute;SICO</label>
-				<input onclick="BuscarFecha()" type="radio" name="exam" id="auto_exam" class="buscar" value="2" /><label for="auto_exam">AUTOEVALUACI&Oacute;N</label>
-				<input onclick="BuscarFecha()" type="radio" name="exam" id="ambos_exam" class="buscar" value="3" checked/><label for="ambos_exam">AMBOS</label>
+				<input onclick="BuscarFecha()" type="radio" name="exam" id="multi_exam" class="buscar" value="1" <%=(examv==1)?"checked":""%> /><label for="multi_exam">MULTIF&Aacute;SICO</label>
+				<input onclick="BuscarFecha()" type="radio" name="exam" id="auto_exam" class="buscar" value="2" <%=(examv==2)?"checked":""%> /><label for="auto_exam">AUTOEVALUACI&Oacute;N</label>
+				<input onclick="BuscarFecha()" type="radio" name="exam" id="ambos_exam" class="buscar" value="3" <%=(examv==3||examv==0)?"checked":""%> /><label for="ambos_exam">AMBOS</label>
 				<hr/>
 			</center>
 			

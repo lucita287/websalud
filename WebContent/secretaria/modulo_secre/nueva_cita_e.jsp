@@ -29,7 +29,7 @@
 		        		mensaje2(data.mensaje);
 		        		limpiar_cita();
 		        		$( "#dialog-form" ).dialog( "close" );
-		        		
+		        		document.location.href="index.jsp?portal=2&mes="+$("#mes").val()+"&exam="+$("input[@name='exam']:checked").val()+"&anio="+$("#anio").val();
 		        	}else{
 		        		mensaje(data.mensaje);
 		        	}

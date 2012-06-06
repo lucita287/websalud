@@ -13,6 +13,12 @@
 .ui-dialog-titlebar-close{
     display: none;
 }
+.wc-time{
+	font-size:60%;
+}
+.wc-title{
+	font-size:80%;
+}
 </style>
 <script>
 
@@ -52,7 +58,7 @@
 	        switchDisplay: {'1 day': 1, '3 next days': 3, 'full week': 7},
 	        readonly: true,
 	        businessHours: { start: 7.00,end: 19.00,limitDisplay:true},
-			timeslotsPerHour: 2,
+			timeslotsPerHour: 3,
 			allowCalEventOverlap: true,
 			overlapEventsSeparate: true,
 			totalEventsWidthPercentInOneColumn : 95,
@@ -71,13 +77,21 @@
 				return $(window).height() - $("h1").outerHeight(true);
 			}
 			,eventRender : function(calEvent, $event) {
-		        if (calEvent.estado ==0) {
-		          $event.css('backgroundColor', '#aaa');
-		          $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
-		        }else if(calEvent.estado==3){
-		        	$event.css('backgroundColor', '#F62217');
-			        $event.find('.time').css({'backgroundColor': '#F62217', 'border':'1px solid #888'});
+		        
+		        if(calEvent.tipo==1){
+		        	$event.css('backgroundColor', '#7E2217');
+			        $event.find('.time').css({'backgroundColor': '#7E2217', 'border':'1px solid #888'});
+		        }else{
+		        	$event.css('backgroundColor', '#AF7817');
+			        $event.find('.time').css({'backgroundColor': '#AF7817', 'border':'1px solid #888'});
 		        }
+		        if(calEvent.estado==0){
+			        	$event.css('backgroundColor', '#FF0000');
+				        $event.find('.time').css({'backgroundColor': '#FF0000', 'border':'1px solid #888'});
+			        }else if(calEvent.estado==2){
+			        	$event.css('backgroundColor', '#000000');
+				        $event.find('.time').css({'backgroundColor': '#000000', 'border':'1px solid #888'});
+			        }
 		      },
 	        data: function(start, end, callback) {
 	        	  

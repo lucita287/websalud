@@ -14,6 +14,8 @@
 		
 		CCita cita= dbo.getCita(idcita);
 		if(cita!=null){%>
+		
+			<H2>CITA No. <%= cita.getIdcita() %></H2>
 							<table>	
 									<tr>
 										<td>Fecha</td>
@@ -51,6 +53,43 @@
 										</td>
 									</tr>
 								</table>
+								
+					<div style="float:right; margin-top:20px; margin-bottom:20px;">
+								<a  class="ui-state-default ui-corner-all button-save" onclick="ModificarCita()"> <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
+								</div>
+<script>
+$(function() {
+		$( ".button-save" ).button();
+	  
+	});
+function ModificarCita(){
+	cadena = [ 'a=updateespecifico',
+	           'idcita=<%=cita.getIdcita()%>',
+	            'hora_inicio='+$("#r_hora_inicio1").val(),
+	            'hora_fin='+$("#r_hora_fin1").val(),
+	            'tipo_examen='+$("#r_tipo_examen1").val(),
+	            'cupo='+$("#r_cupo1").val(),
+	            'estado='+$("#r_estado1").val(),
+	        ].join('&');
+ $.ajax({
+       url: "../SCita",
+       data: cadena,
+ 	    type: 'post',
+       dataType: 'json',
+       success: function(data){
+       	
+       	if(data.resultado=='OK'){
+       		mensaje2(data.mensaje);
+       		limpiar_cita();
+       		$( "#dialog-form" ).dialog( "close" );
+       		document.location.href="index.jsp?portal=2&mes="+$("#mes").val()+"&exam="+$("input[@name='exam']:checked").val()+"&anio="+$("#anio").val();
+       	}else{
+       		mensaje(data.mensaje);
+       	}
+       }
+   });
+}	
+</script>
 		<%}
 	}
 %>    
