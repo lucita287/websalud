@@ -2281,6 +2281,26 @@ public class CDataExam extends CDataBase {
 		
 		return temp;
 	}
+	public boolean UpdateCita(int idcita, java.util.Date hora_inicio, java.util.Date hora_fin, int cupo, int examen,int estado){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE cita SET estado = ?, tipo_examen = ?, cupo = ?, hora_inicio = ?, hora_fin = ? WHERE  idcita = ?");
+			stm.setInt(1, estado);
+			stm.setInt(2, examen);
+			stm.setInt(3, cupo);
+			stm.setTimestamp(4,new java.sql.Timestamp(hora_inicio.getTime()));
+			stm.setTimestamp(5,new java.sql.Timestamp(hora_fin.getTime()));
+			stm.setInt(6, idcita);
+			
+			if(stm.executeUpdate()>0 ) return true;
+		}catch(Throwable e){
+			e.printStackTrace();
+			//CLogger.write("76", this, e);
+		}
+		
+		return false;
+	}
 	public int SafeCitasDetalle(java.util.Date fechaInicio,java.util.Date fechaFin, java.util.Date horaInicio, java.util.Date horaFin, int cupo, int examen,int estado, int lunes,int martes,int miercoles,int jueves,int viernes, int sabado, int domingo){
 		int temp=0;
 		PreparedStatement stm;

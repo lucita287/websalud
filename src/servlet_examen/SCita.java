@@ -151,7 +151,7 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				 lista_data+=(lista_data.compareTo("")==0)?"":",";
 				// lista_data+="{\"id\":"+da.getIddetalleactividad()+", \"start\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorainicio())+"\", \"end\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorafin())+"\", \"title\":\""+da.getActividadidactividad().getTitulo()+"\"}";
 				 
-				 lista_data+="{\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"\"}";
+				 lista_data+="{\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
 			 }
 			 data+=lista_data+"]";
 			 out.print(data);
@@ -227,6 +227,32 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha actualizado\"}";
 			}
 			out.print(result);
+		}else if(action.compareTo("updateespecifico")==0){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			int cupo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("cupo")));
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";	
+			String hora_inicio=(valid.ValidarRequest(request.getParameter("hora_inicio")));
+			String hora_fin=(valid.ValidarRequest(request.getParameter("hora_fin")));
+			hora_inicio=valid.Limpiarvalor(hora_inicio,codificacion);
+			hora_fin=valid.Limpiarvalor(hora_fin,codificacion);
+			int tipo_examen=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo_examen")));
+			int estado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("estado")));
+			String validacion=valid.ValidarSiesMayor(cupo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe ingresar una cupo\"}");
+			validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idcita, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe seleccionar una cita\"}"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_inicio,"Hora de Inicio"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarFormatoHora2(hora_fin,"Hora de Fin"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.validarHoraMayoraOtra(valid.CambiarFormatohhmm2(hora_inicio),valid.CambiarFormatohhmm2(hora_fin)):validacion;
+			if(validacion.compareTo("")==0){
+				
+					boolean r=dbo.UpdateCita(idcita, valid.CambiarFormatohhmm2(hora_inicio), valid.CambiarFormatohhmm2(hora_fin), cupo, tipo_examen,estado);
+					if(r) result="{\"resultado\":\"OK\",\"mensaje\":\"Actualizado\"}";
+					else result="{\"resultado\":\"ERROR\",\"mensaje\":\" Error al guardar  \"}";
+					
+			}else{
+				result=validacion;
+			}
+			out.println(result);
+			
 		}
 		dbo.Close();
 		 }
