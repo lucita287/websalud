@@ -161,7 +161,7 @@ public class SCitaTable extends HttpServlet {
 									 for(int i=0; i<lista.size();i++){
 										 CPaciente temp=lista.get(i);
 										 
-									data+="<row id='"+temp.getIdpaciente()+"'><cell><![CDATA["+temp.getIdpaciente()+"]]></cell><cell><![CDATA["+temp.getCarne()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getApellido()+"]]></cell><cell><![CDATA["+temp.getCrecio_en()+"]]></cell><cell><![CDATA[<button onclick='Modificar(\""+temp.getIdpaciente()+"\",\""+idcita+"\")' ><img width='32px' height='32px' src="+((temp.getEstado()==1)?"'../images/on.png'":"'../images/off.png'")+" /></button>]]></cell></row>";	 
+									data+="<row id='"+temp.getIdpaciente()+"'><cell><![CDATA["+temp.getIdpaciente()+"]]></cell><cell><![CDATA["+temp.getCarne()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getApellido()+"]]></cell><cell><![CDATA["+temp.getCrecio_en()+"]]></cell><cell><![CDATA[<button onclick='Modificar(\""+temp.getIdpaciente()+"\",\""+idcita+"\")' ><img width='24px' height='24px' src="+((temp.getEstado()==1)?"'../images/on.png'":(temp.getEstado()==0)?"'../images/off.png'":"'../images/close.png'")+" /></button>]]></cell><cell><![CDATA[<input type='text' value='"+temp.getDireccion()+"' size='15' id='boleta"+temp.getIdpaciente()+"' name='boleta"+temp.getIdpaciente()+"' /><button onclick='GuardarBoleta(\""+temp.getIdpaciente()+"\",\""+temp.getIdunidad_academica()+"\")'><img width='24px' height='24px' src='../images/guardar.png' /></button>]]></cell></row>";	 
 							
 									 }
 									 info+=data+"</rows>";

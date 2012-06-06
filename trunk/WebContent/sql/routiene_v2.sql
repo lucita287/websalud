@@ -296,3 +296,41 @@ BEGIN
    return 0;
 END
 $$
+DELIMITER $$
+DROP FUNCTION IF EXISTS `estado_cita_paciente`$$
+CREATE FUNCTION estado_cita_paciente(pidcita int,pidpaciente int) RETURNS int
+    DETERMINISTIC
+BEGIN
+   DECLARE vestado int DEFAULT -1;
+   DECLARE vcupo int DEFAULT 0;
+   select ifnull(estado,-1) into vestado from cita_paciente where idcita=pidcita and idpaciente = pidpaciente;
+   
+    if vestado = -1 then
+        return 0;
+    end if;
+    if vestado = 0 then
+        update cita_paciente set estado = 2 where idcita=pidcita and idpaciente=pidpaciente;
+        return 1;
+    end if;
+    if vestado = 2 then
+            
+            
+                        select (c.cupo-( select count(*) from cita_paciente pc where pc.idcita=pidcita
+                        and pc.estado=1
+                        )) as cupo_d into vcupo
+                        from cita c
+                        where c.idcita=pidcita;    
+                if vcupo>0 then
+                        update cita_paciente set estado = 1 where idcita=pidcita and idpaciente=pidpaciente;
+                        return 1;
+                else
+                        update cita_paciente set estado = 0 where idcita=pidcita and idpaciente=pidpaciente;
+                        return 0;
+                end if;
+    end if;
+    if vestado = 1 then
+        update cita_paciente set estado = 0 where idcita=pidcita and idpaciente=pidpaciente;
+        return 1;
+    end if;
+END
+$$

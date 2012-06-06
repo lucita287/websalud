@@ -86,7 +86,6 @@ public class CWebService {
         CPaciente pac=service.DatosGenerales(200711433+"",null);
         CDataExam exam=new CDataExam();
         exam.Connect();
-        System.out.println(pac.getDireccion()+" *"+pac.getIdunidad_academica()+" ");
     }
 	
 	public int VerificarPin(String user, String pin){

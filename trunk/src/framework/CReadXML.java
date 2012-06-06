@@ -76,24 +76,25 @@ public class CReadXML {
 			Document document = (Document) builder.build(input);
 			CPacienteWebService pac=new CPacienteWebService(valid.ConvertEntero(carne), 0,"", 0, "",0);
         	Element node1=getNode("DETALLE_ACADEMICO",document);
-        	List lista=node1.getChildren();
-        	Iterator<Element> it=lista.iterator();
-        	while(it.hasNext()){
-        		Element node=it.next();
-        		if(node.getName().compareTo("UNIDAD")==0){
-        			pac.setCodigo_unidad(valid.ConvertEntero(node.getText()));
-        		}else if(node.getName().compareTo("EXTENSION")==0){
-        			pac.setExtension(valid.ConvertEntero(node.getText()));
-        		}else if(node.getName().compareTo("CARRERA")==0){
-        			pac.setCodigo_carrera(valid.ConvertEntero(node.getText()));
-        		}else if(node.getName().compareTo("NOMBRE_UNIDAD")==0){
-        			pac.setUnidad_academica(node.getText());
-        		}else if(node.getName().compareTo("NOMBRE_CARRERA")==0){
-        			pac.setCarrera(node.getText());
-        		}
-        		
-        		
-        	}
+        	List lista=(node1!=null)?node1.getChildren():null;
+		    if(lista!=null){    	
+        		Iterator<Element> it=lista.iterator();
+		        	while(it.hasNext()){
+		        		Element node=it.next();
+		        		if(node.getName().compareTo("UNIDAD")==0){
+		        			pac.setCodigo_unidad(valid.ConvertEntero(node.getText()));
+		        		}else if(node.getName().compareTo("EXTENSION")==0){
+		        			pac.setExtension(valid.ConvertEntero(node.getText()));
+		        		}else if(node.getName().compareTo("CARRERA")==0){
+		        			pac.setCodigo_carrera(valid.ConvertEntero(node.getText()));
+		        		}else if(node.getName().compareTo("NOMBRE_UNIDAD")==0){
+		        			pac.setUnidad_academica(node.getText());
+		        		}else if(node.getName().compareTo("NOMBRE_CARRERA")==0){
+		        			pac.setCarrera(node.getText());
+		        		}
+		        	}		
+		        		
+		        	}
         	return pac;
 		} catch (JDOMException | IOException e) {
 			

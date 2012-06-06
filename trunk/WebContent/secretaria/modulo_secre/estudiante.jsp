@@ -125,4 +125,4 @@ Iterator<CUnidad_Academica> it=list.iterator();
 			}
 			</script>
 	</form>			
-<% } } %>			
+<% dbo.Close();} } %>			

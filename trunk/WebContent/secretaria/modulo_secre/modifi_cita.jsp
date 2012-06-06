@@ -91,5 +91,6 @@ function ModificarCita(){
 }	
 </script>
 		<%}
+		dbo.Close();
 	}
 %>    

@@ -41,7 +41,11 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		  </div>
 		<div style="clear: both;"></div>  
 		<div class="ui-widget-content ui-corner-all">
+		
+		
+		
 			<div style="float:left; width:400px;">
+			Carne<input type="text" id="carne" name="carne"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
 			<%=(pac==null)?"":pac.getCarne()%><br/>
 			<%=(pac==null)?"":pac.getIdpaciente()+ ")"+(pac.getNombre()+" "+pac.getApellido()) %><br/>
 			<%=(pac==null)?"":(pac.getddmmyyFecha()) %>
@@ -86,7 +90,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 									
 								</td>
 							<td>
-							<a class="mybutton" onclick="asignados('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')"> VER <%=cc.getCupo_disp() %></a><br/>
+							<a class="mybutton"  target="_blank" href="index.jsp?portal=10&idcita=<%=cc.getIdcita()%>&a=especifico_calendar"> VER <%=cc.getCupo_disp() %></a><br/>
 							<a class="mybutton" onclick="r_dia_examen_<%=cc.getIdcita()%>()">(VER PDF)</a><br/>
 							<a class="mybutton" onclick="Er_dia_examen_<%=cc.getIdcita()%>()">(VER EXCEL)</a><br/>
 							</td>
@@ -98,6 +102,21 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						}
 				%></table>
 				<script>
+				function buscar(init,end){
+
+					cadena = [ 'a=estudiante_consulta','carne='+$("#carne").val(),].join('&');
+					 
+					 $.ajax({
+					        url: "../SEstudiante",
+					        data: cadena,
+					  	    type: 'post',
+					  	  	success: function(data){
+							  	  	$( "#dialog-form" ).dialog( "close" );
+							  		$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
+							  		$( "#dialog-form" ).dialog( "open" );   	
+					        }
+					    });
+				}
 				function Cancelar(){
 					$( "#dialog-form" ).dialog( "close" );
 					$('#calendar').weekCalendar("gotoWeek", new Date(<%=request.getParameter("start")%>));
