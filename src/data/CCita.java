@@ -101,6 +101,14 @@ public class CCita {
 		return estado;
 	}
 	/**
+	 * @return the estado
+	 */
+	public String getEstadoD() {
+		if(estado==1) return "UNIDAD SALUD";
+		else if(estado==2) return "ENLINE";
+		else return "CERRADO";
+	}
+	/**
 	 * @param estado the estado to set
 	 */
 	public void setEstado(int estado) {
