@@ -34,7 +34,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 <div style="clear: both;"></div>
 <H2>BUSQUEDA POR CARNE</H2>
 Carne<input type="text" id="carne" name="carne"  size="20px"/><button onclick="buscar()" class="mybutton">BUSCAR</button>
-<div id="respuesta"></div>
+<div id="respuesta" ></div>
 <script>
 function Cancelar(){
 	$( "#dialog-form" ).dialog( "close" );

@@ -2,6 +2,8 @@ package servlet_examen;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -103,11 +105,11 @@ public class SEstudiante extends HttpServlet {
 			}
 			if(pac!=null){
 				session.setAttribute("paci_consulta",pac);
-				result="<table>";
-				result+="<tr><td>Nombre</td><td>"+pac.getNombre()+"</td><td>Apellido</td><td>"+pac.getApellido()+"</td></tr>";
-				result+="<tr><td>Telefono</td><td>"+pac.getTelefono()+"</td><td>Movil</td><td>"+pac.getMovil()+"</td></tr>";
-				result+="<tr><td>Email</td><td>"+pac.getEmail()+"</td><td>Facultad</td><td></td></tr>";
-				result+="</table>";
+				result="<div  style='border: 1px solid blue'><table>";
+				result+="<tr><td><b>Nombre</b></td><td>"+pac.getNombre()+"</td><td><b>Apellido</b></td><td>"+pac.getApellido()+"</td></tr>";
+				result+="<tr><td><b>Telefono</b></td><td>"+pac.getTelefono()+"</td><td><b>Movil</b></td><td>"+pac.getMovil()+"</td></tr>";
+				result+="<tr><td><b>Email</b></td><td>"+pac.getEmail()+"</td><td><b>Facultad</b></td><td>"+dbo.getUnidadAcademica(pac.getIdunidad_academica())+"</td></tr>";
+				result+="</table></div>";
 			}else{
 				result="ERROR CARNE NO ENCONTRADO";
 				session.setAttribute("paci_consulta",null);
@@ -115,9 +117,23 @@ public class SEstudiante extends HttpServlet {
 			
 			out.println(result);
 			
-		}else if(action.equalsIgnoreCase("estudiante_consulta")){
+		}else if(action.equalsIgnoreCase("buscar_nombre")){
 			String nombre=valid.ValidarRequest(request.getParameter("nombre"));
 			String apellido=valid.ValidarRequest(request.getParameter("apellido"));
+			ArrayList<CPaciente> listpaciente=dbo.getListaPacientes(nombre, apellido);
+			String result="";
+			Iterator<CPaciente> it=listpaciente.iterator();
+			while(it.hasNext()){
+				CPaciente pac=it.next();
+				result+="<div  style='border: 1px solid blue'>";
+				result+="<table  >";
+				result+="<tr><td><b>Nombre</b></td><td>"+pac.getNombre()+"</td><td><b>Apellido</b></td><td>"+pac.getApellido()+"</td></tr>";
+				result+="<tr><td><b>Telefono</b></td><td>"+pac.getTelefono()+"</td><td><b>Movil</b></td><td>"+pac.getMovil()+"</td></tr>";
+				result+="<tr><td><b>Email</b></td><td>"+pac.getEmail()+"</td><td><b>Facultad</b></td><td>"+dbo.getUnidadAcademica(pac.getIdunidad_academica())+"</td></tr>";
+				result+="</table>";
+				result+="</div>";
+			}
+			out.println(result);
 		}
 		dbo.Close();
 	}

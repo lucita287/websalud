@@ -28,6 +28,8 @@ int portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal
 <jsp:include page="modulo_secre/citas.jsp" />
 <% } else if(portal==3){ %>
 <jsp:include page="modulo_secre/estudiante.jsp" />
+<% } else if(portal==10){ %>
+<jsp:include page="modulo_secre/lista_paciente.jsp" />
 <% } %>
 </div>
 </div>

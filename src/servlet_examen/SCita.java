@@ -163,7 +163,7 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			if(sessiones!=null){
 				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				if(pac!=null && idcita>0){
-					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente(),"");
+					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente(),request.getParameter("boleta"));
 					if(respuesta>0){
 						result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 					}else{
@@ -181,8 +181,8 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			if(sessiones!=null){
 				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				if(pac!=null && idcita>0){
-					boolean respuesta=dbo.UpdatePacienteCita(idcita, pac.getIdpaciente());
-					if(respuesta){
+					int respuesta=dbo.UpdatePacienteCita(idcita, pac.getIdpaciente());
+					if(respuesta==1){
 						result="{\"resultado\":\"OK\"}";
 					}else{
 						result="{\"resultado\":\"ERROR\"}";
@@ -197,8 +197,8 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			int idpaciente=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpaciente")));
 			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				if(idpaciente>0 && idcita>0){
-					boolean respuesta=dbo.UpdatePacienteCita(idcita, idpaciente);
-					if(respuesta){
+					int respuesta=dbo.UpdatePacienteCita(idcita, idpaciente);
+					if(respuesta==1){
 						result="{\"resultado\":\"OK\"}";
 					}else{
 						result="{\"resultado\":\"ERROR\"}";
@@ -253,6 +253,21 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			}
 			out.println(result);
 			
+		}else if(action.compareTo("updatecita_paciente")==0){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			int idpaciente=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpaciente")));
+			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+			String boleta=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("boleta")), codificacion);
+				if(idpaciente>0 && idcita>0){
+					boolean respuesta=dbo.UpdatePacienteCita(idcita, idpaciente,boleta);
+					if(respuesta){
+						result="{\"resultado\":\"OK\"}";
+					}else{
+						result="{\"resultado\":\"ERROR\"}";
+					}
+				
+			}else result="{\"resultado\":\"ERROR\"}";
+			out.print(result);
 		}
 		dbo.Close();
 		 }

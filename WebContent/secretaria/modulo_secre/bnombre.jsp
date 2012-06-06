@@ -33,10 +33,12 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 	<a  class="ui-state-default ui-corner-all button-save" onclick="Cancelar()"> <img  width="24px"  height="24px" src="../images/delete.png" />Cerrar</a>
 </div>
 		<div style="clear: both;"></div>
-<H2>BUSQUEDA POR NOMBRE (LOCALMENTE)</H2>
+<H2>BUSQUEDA POR NOMBRE (LOCALMENTE)/Maximo 30</H2>
+
 Nombre <input type="text" id="nombre" />
 Apellido <input type="text" id="apellido" />
 <button onclick="buscarNombre()" class="mybutton">BUSCAR</button>
+<div id="respuesta"></div>
 <script>
 function buscarNombre(){
 	cadena = [ 'a=buscar_nombre','nombre='+$("#nombre").val(),'apellido='+$("#apellido").val(),].join('&');
@@ -69,6 +71,8 @@ function BuscarCarne(init,end){
 	$( "#dialog-form" ).load("modulo_secre/bcarne.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
 	$( "#dialog-form" ).dialog( "open" );
 }
+
+
 </script>
 <%  dbo.Close(); }
 } 
