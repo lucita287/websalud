@@ -102,14 +102,15 @@ public class SLogin extends HttpServlet {
 						 CSeleccionExamen examen=new CSeleccionExamen(config.getRandom_carne(),validcarne,dbo.getListaConfiguracion_Examen());
 						 paciente.setEstado(examen.getExamen()+1);
 						 dbo.UpdatePacienteEstado(paciente);
+						 
 					 }
 					 
 					 session.setAttribute("examen",1);
 					 response.sendRedirect("estudiante/index.jsp");
 					 
 				 }else{
-					 paciente=servicio.VerificarEstudiante(user,dbo);
-					 
+					 paciente=servicio.DatosGenerales(user, dbo);//.VerificarEstudiante(user,dbo);
+					 if(paciente!=null){
 					 CSeleccionExamen examen=new CSeleccionExamen(config.getRandom_carne(),validcarne,dbo.getListaConfiguracion_Examen());
 					 paciente.setEstado(examen.getExamen()+1);
 					 dbo.SafePaciente(paciente);
@@ -127,6 +128,9 @@ public class SLogin extends HttpServlet {
 					 session.setAttribute("paciente",paciente);
 					 session.setAttribute("examen",1);
 					 response.sendRedirect("estudiante/index.jsp");
+					 }else{
+						 response.sendRedirect("index.jsp?e=Estudiante no inscrito");
+					 }
 				 }
 				 break;	
 			 case 2:

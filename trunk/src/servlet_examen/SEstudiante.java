@@ -55,7 +55,7 @@ public class SEstudiante extends HttpServlet {
 					int idpaciente=0;
 					if(pac==null){
 					 CWebService servicio=new CWebService(2012);
-					 pac=servicio.VerificarEstudiante(user, dbo);
+					 pac=servicio.DatosGenerales(user, dbo);//.VerificarEstudiante(user, dbo);
 							 if(pac!=null){
 								 dbo.SafePaciente(pac);
 								 idpaciente=dbo.getIdPaciente(pac.getUsuario());
@@ -90,7 +90,7 @@ public class SEstudiante extends HttpServlet {
 				pac= dbo.getEstudianteEspecifica(carne);
 				if(pac==null){
 					CWebService servicio=new CWebService(2012);
-					 pac=servicio.VerificarEstudiante(carne, dbo);
+					 pac=servicio.DatosGenerales(carne, dbo);//VerificarEstudiante(carne, dbo);
 							 if(pac!=null){
 								 dbo.SafePaciente(pac);
 								 int idpaciente=dbo.getIdPaciente(pac.getUsuario());
