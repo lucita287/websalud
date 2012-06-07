@@ -22,9 +22,31 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				
 		<div style="clear: both;"></div>
 		<h2>Cita <%=cc.getIdcita() %> /<%=cc.getTipo_examenD()%> -> Fecha: <%=cc.getFormatoFechaddmmyy(cc.getFecha()) %>  <%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %> a <%=cc.getFormatoFechahhmm(cc.getHora_fin()) %> </h2>
-		
+
+<div style="float:left;">
+<form id="form_report" name="form_report" action="../SGen_PDF" method="post" target="_blank">
+  	<input type="hidden" name="report" id="report" value="Estudiantes_cita" />
+  	<input type="hidden" name="report_name" id="report_name" value="Estudiantes_cita" />
+  	<input type="hidden" name="parameters" id="parameters" value="idcita" />
+  	<input type="hidden" name="values" id="values" value="<%=cc.getIdcita()%>" />
+  	<input type="submit" id="pdf" value="PDF">
+  </form>
+ </div> 
+ <div style="float:left;">
+  <form id="form_report1" name="form_report1" action="../SGen_EXCEL" method="post" target="_blank">
+  	<input type="hidden" name="report" id="report1" value="Estudiantes_cita" />
+  	<input type="hidden" name="report_name" id="report_name1" value="Estudiantes_cita" />
+  	<input type="hidden" name="parameters" id="parameters1" value="idcita" />
+  	<input type="hidden" name="values" id="values1" value="<%=cc.getIdcita()%>" />
+  	<input type="submit" id="excel" value="EXCEL">
+  </form>	
+</div>		
 <table id="estudiantes" style="display:none"></table>
 <script>
+$(function() {
+	$( "#pdf" ).button();
+	$( "#excel" ).button();
+});
 $(document).ready(function () {
     $("#estudiantes").flexigrid
 		({
@@ -104,4 +126,4 @@ function GuardarBoleta(idpaciente,idcita){
 <%  	}
 	dbo.Close(); }
 
-}%>		
+}%>	

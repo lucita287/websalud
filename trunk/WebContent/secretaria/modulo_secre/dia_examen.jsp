@@ -34,10 +34,14 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		<link rel='stylesheet' type='text/css' href="../css/system_secre.css" />		
 		<div style="float:left;">
 		<button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR NOMBRE</button>
-		<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR CARNE</button>		
+		<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR CARNE</button>
+		<button class="mybutton" onclick="CrearCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">CREAR NUEVO</button>		
 		</div>
 		  <div style="float:right;">			
 			<a  class="ui-state-default ui-corner-all button-save" onclick="Cancelar()"> <img  width="24px"  height="24px" src="../images/delete.png" />Cerrar</a>
+		  </div>
+		  <div style="float:right;">			
+			<a  class="ui-state-default ui-corner-all button-save" onclick="Actualizar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')"> <img  width="24px"  height="24px" src="../images/actualizar.png" />Actualizar</a>
 		  </div>
 		<div style="clear: both;"></div>  
 		<div class="ui-widget-content ui-corner-all">
@@ -117,10 +121,20 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 					        }
 					    });
 				}
+				function Actualizar(init,end){
+					$( "#dialog-form" ).dialog( "close" );
+			  		$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
+			  		$( "#dialog-form" ).dialog( "open" ); 
+				}
 				function Cancelar(){
 					$( "#dialog-form" ).dialog( "close" );
 					$('#calendar').weekCalendar("gotoWeek", new Date(<%=request.getParameter("start")%>));
 					 
+				}
+				function CrearCarne(init,end){
+					$( "#dialog-form" ).dialog( "close" );
+			  		$( "#dialog-form" ).load("modulo_secre/crear_estudiante.jsp?start="+init+"&end="+end);
+			  		$( "#dialog-form" ).dialog( "open" );
 				}
 				$(function() {
 					$( ".mybutton" ).button();
