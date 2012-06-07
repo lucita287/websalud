@@ -27,6 +27,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 <div style="float:left;">
 <button class="mybutton" onclick="NuevaCita('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">REGRESAR A CITA</button>
 <button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR NOMBRE</button>
+<button class="mybutton" onclick="CrearCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">CREAR NUEVO</button>
 </div>
  <div style="float:right;">			
 	<a  class="ui-state-default ui-corner-all button-save" onclick="Cancelar()"> <img  width="24px"  height="24px" src="../images/delete.png" />Cerrar</a>
@@ -53,7 +54,11 @@ function buscar(){
 	        }
 	    });
 }
-
+function CrearCarne(init,end){
+	$( "#dialog-form" ).dialog( "close" );
+		$( "#dialog-form" ).load("modulo_secre/crear_estudiante.jsp?start="+init+"&end="+end);
+		$( "#dialog-form" ).dialog( "open" );
+}
 $(function() {
 	$( ".mybutton" ).button();
 	$( ".button-save" ).button();

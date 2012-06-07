@@ -16,7 +16,18 @@ CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 ArrayList<CUnidad_Academica>list=dbo.getListaUnidadAcademicas();
 Iterator<CUnidad_Academica> it=list.iterator();
 %>    
+<style>
+.ui-dialog-titlebar-close{
+    display: none;
+}
+</style>
+<div id="dialog-form" title="Buscar"></div>
+<div style="float:right">
+<button class="mybutton" onclick="Limpiar()">LIMPIAR</button>
+<button class="mybutton" onclick="BuscarNombre()">BUSCAR NOMBRE</button>
+<button class="mybutton" onclick="CrearCarne()">CREAR NUEVO</button>	
 
+</div>
     <form id="MainForm" name="MainForm" action="../SEstudiante" method="post">
     		<input type="hidden" name="a" value="estudiante_ver" />
     
@@ -27,10 +38,18 @@ Iterator<CUnidad_Academica> it=list.iterator();
 				<div class="tabla">
 							<div class="fila">
 								<div class="col_titulo">Carnet</div>
-								<div class="colc"><input type="text" name="user" size="20px" id="carne" value="<%=(pac==null)?"":pac.getUsuario() %>" /> <input type="submit" id="button_login" class="ui-state-default ui-corner-all" value="Buscar"/> </div>
+								<div class="colc"><input type="text" name="user" size="20px" id="carne" value="<%=(pac==null||pac.getCarne()==0)?"":pac.getCarne() %>" /> <input type="submit" id="button_login" class="ui-state-default ui-corner-all" value="Buscar"/> </div>
 							</div>
 							<div class="fila">
 							<hr/>
+							
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Usuario</div>
+								<div class="colc"><%=(pac==null)?"":pac.getUsuario() %></div>
+							
+								<div class="col_titulo">Carne</div>
+								<div class="colc"><%=(pac==null||pac.getCarne()==0)?"":pac.getCarne() %></div>
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Nombre</div>
@@ -93,16 +112,21 @@ Iterator<CUnidad_Academica> it=list.iterator();
 						    colModel: [
 							{ display: 'ID', name: 'idfecha_actividad', width: 40, sortable: false, align: 'left' },
 							{ display: 'Fecha', name: 'fecha', width: 80, sortable: false, align: 'left' },
-							{ display: 'Descripcion', name: 'fecha', width: 130, sortable: false, align: 'left' },
-							{ display: 'Hora', name: 'fecha', width: 80, sortable: false, align: 'left' },
-							{ display: 'Tipo Examen', name: 'fecha', width: 80, sortable: false, align: 'left' },
-							{ display: 'Estado', name: 'hora_inicio', width: 70, sortable: false, align: 'left' }
+							{ display: 'Descripcion', name: 'descripcion', width: 130, sortable: false, align: 'left' },
+							{ display: 'Hora Inicio', name: 'hora_inicio', width: 80, sortable: false, align: 'left' },
+							{ display: 'Hora Fin', name: 'hora_fin', width: 80, sortable: false, align: 'left' },
+							
+							{ display: 'Tipo Examen', name: 'tipo_examen', width: 90, sortable: false, align: 'left' },
+							
+							{ display: 'Estado', name: 'estado', width: 70, sortable: false, align: 'left' },
+							{ display: 'Boleta', name: 'boleta', width: 120, sortable: false, align: 'left' },
+							{ display: 'Estado Cita', name: 'estado_cita', width: 90, sortable: false, align: 'left' }
 							],
 							showTableToggleBtn: true,
 						    sortname: "idfecha_actividad",
 							sortorder: "desc",
 						    title: 'FECHAS DE CITAS',
-						    width: 600,
+						    width: 900,
 						    height: 300,
 							params : [ 
 							          {name: 'a', value: 'est_cita'} 
@@ -121,6 +145,44 @@ Iterator<CUnidad_Academica> it=list.iterator();
 				  	  	document.location.href="index.jsp?portal=3";
 				        }
 				    });
+				
+			}
+			$(function() {
+					$( "#dialog-form" ).dialog({
+						autoOpen: false,
+						height: 450,
+						width: 800,
+						modal: true
+					});
+					$( "#dialog:ui-dialog" ).dialog( "destroy" );
+					
+			  });
+			$(function() {
+				$( ".mybutton" ).button();
+			});
+			function BuscarNombre(){
+				$( "#dialog-form" ).dialog( "close" );
+				$( "#dialog-form" ).load("modulo_secre/bnombre.jsp?a=especifico_calendar&");
+				$( "#dialog-form" ).dialog( "open" );
+			}
+			
+			function CrearCarne(){
+				$( "#dialog-form" ).dialog( "close" );
+		  		$( "#dialog-form" ).load("modulo_secre/crear_estudiante.jsp");
+		  		$( "#dialog-form" ).dialog( "open" );
+			}
+			function Limpiar(){
+					//alert(id);
+					cadena = [ 'a=limpiar'].join('&');
+					 
+					 $.ajax({
+					        url: "../SEstudiante",
+					        data: cadena,
+					  	    type: 'post',
+					  	  	success: function(data){	
+					  	  	document.location.href="index.jsp?portal=3";
+					        }
+					    });
 				
 			}
 			</script>
