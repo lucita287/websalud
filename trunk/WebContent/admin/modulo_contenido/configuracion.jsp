@@ -61,7 +61,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								</div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Impresi&oacute;n completa en la Unidad de Salud</div>
+								<div class="col_titulo">Los estudiantes imprimen</div>
 								<div class="col">
 									
 									<select name="salud" class="salud" id="salud">	

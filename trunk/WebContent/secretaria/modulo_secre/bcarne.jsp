@@ -54,6 +54,13 @@ function buscar(){
 	        }
 	    });
 }
+$('#carne').keypress(function(e){
+	if(e.keyCode == 13)
+	{ 
+		buscar();
+	}
+});
+
 function CrearCarne(init,end){
 	$( "#dialog-form" ).dialog( "close" );
 		$( "#dialog-form" ).load("modulo_secre/crear_estudiante.jsp?start="+init+"&end="+end);

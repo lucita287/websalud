@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="framework.CDataBase" %>
+<%@ page import="framework.CDataExam" %>
 <%@ page import="data.CMenu" %>
 <%@ page import="data.CUsuarioPermiso" %>
 <%@ page import="data.CPaciente" %>
+<%@ page import="data.CConfiguracion" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="framework.CValidation" %>
 <% 
@@ -12,6 +13,10 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 	CValidation valid=new CValidation();
 	Integer portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal")));
 	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
+	CDataExam dbo=new CDataExam();
+	dbo.Connect();
+	CConfiguracion config2=dbo.getConfiguracion();
+	dbo.Close();
 %>
 
 <div id="menu-logo" >
@@ -58,7 +63,9 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				<li>
 					<a href="index.jsp?portal=6">Cuestionario AutoEvaluaci&oacute;n</a>
 				</li>
-				<% } if(pac.getEstado()==3){ %>
+				<% } 
+				if(config2.getImpresion_salud()==1){
+				if(pac.getEstado()==3){ %>
 				<li >
 					<a href="index.jsp?portal=7">Citas Multif&aacute;sico</a>
 				</li>
@@ -66,7 +73,9 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				<li>
 					<a href="index.jsp?portal=8">Citas AutoEvaluaci&oacute;n</a>
 				</li>
-				<% } %>
+				<% }
+				}
+				%>
 			</ul>	
 	</li>
 	

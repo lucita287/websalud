@@ -5,6 +5,7 @@
     <%@ page import="data.CUnidad_Academica"%>
     <%@ page import="java.util.ArrayList"%>
     <%@ page import="java.util.Iterator"%>
+    <%@ page import="framework.CEvaluarExamen"%>
 <%
 HttpSession sessiones=request.getSession(false); 
 if(sessiones!=null){
@@ -28,6 +29,11 @@ Iterator<CUnidad_Academica> it=list.iterator();
 <button class="mybutton" onclick="CrearCarne()">CREAR NUEVO</button>	
 
 </div>
+<% if(request.getParameter("e")!=null){ %>
+<div class="ui-state-error">
+	<h3><%=request.getParameter("e") %></h3>
+</div>
+<% } %>
     <form id="MainForm" name="MainForm" action="../SEstudiante" method="post">
     		<input type="hidden" name="a" value="estudiante_ver" />
     
@@ -38,7 +44,7 @@ Iterator<CUnidad_Academica> it=list.iterator();
 				<div class="tabla">
 							<div class="fila">
 								<div class="col_titulo">Carnet</div>
-								<div class="colc"><input type="text" name="user" size="20px" id="carne" value="<%=(pac==null||pac.getCarne()==0)?"":pac.getCarne() %>" /> <input type="submit" id="button_login" class="ui-state-default ui-corner-all" value="Buscar"/> </div>
+								<div class="colc"><input type="text" name="user" size="20px" id="carne" value="<%=(pac==null||pac.getCarne()==0)?"":pac.getCarne() %>" /> <input type="submit" name="enviar" id="button_login" class="ui-state-default ui-corner-all" value="Buscar"/> </div>
 							</div>
 							<div class="fila">
 							<hr/>
@@ -53,16 +59,16 @@ Iterator<CUnidad_Academica> it=list.iterator();
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Nombre</div>
-								<div class="colc"><input type="text"  size="40px" value="<%=(pac==null)?"":pac.getNombre() %>" /></div>
+								<div class="colc"><input type="text" name="nombre" size="40px" value="<%=(pac==null)?"":pac.getNombre() %>" /></div>
 							
 								<div class="col_titulo">Apellido</div>
-								<div class="colc"><input type="text" size="40px" value="<%=(pac==null)?"":pac.getApellido() %>" /></div>
+								<div class="colc"><input type="text" name="apellido" size="40px" value="<%=(pac==null)?"":pac.getApellido() %>" /></div>
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Fecha de Nacimiento</div>
-								<div class="colc"><input type="text" size="20px" value="<%= (pac==null)?"":pac.getddmmyyFecha()%>" /></div>
+								<div class="colc"><input  type="text" name="fecha" size="20px" class="datepicker" value="<%= (pac==null)?"":pac.getddmmyyFecha()%>" /></div>
 								<div class="col_titulo">Genero</div>
-								<div class="colc"> <select id="fecha_nacimiento">
+								<div class="colc"> <select id="fecha_nacimiento" name="sexo">
 														<option value="1" <%=(pac!=null&&pac.getSexo()==2)?"selected":""%> >FEMENINO</option>
 														<option value="2" <%=(pac!=null&&pac.getSexo()==1)?"selected":""%> >MASCULINO</option>
 													</select> 
@@ -71,22 +77,22 @@ Iterator<CUnidad_Academica> it=list.iterator();
 							<div class="fila">
 								
 								<div class="col_titulo">Telefono</div>
-								<div class="colc"><input type="text" size="25px" value="<%=(pac==null)?"":pac.getTelefono() %>"  /> </div>
+								<div class="colc"><input type="text" name="telefono" size="25px" value="<%=(pac==null)?"":pac.getTelefono() %>"  /> </div>
 								<div class="col_titulo">Celular</div>
-								<div class="colc"><input type="text"  size="25px" value="<%=(pac==null)?"":pac.getMovil() %>"  size="20px" /></div>
+								<div class="colc"><input type="text"  name="celular" size="25px" value="<%=(pac==null)?"":pac.getMovil() %>"  size="20px" /></div>
 							</div>
 							<div class="fila">	
 								<div class="col_titulo">Correo Electronico</div>
-								<div class="colc"><input type="text" size="40px" size="30px" value="<%=(pac==null)?"":pac.getEmail() %>" /></div>
+								<div class="colc"><input type="text" name="correo" size="40px" size="30px" value="<%=(pac==null)?"":pac.getEmail() %>" /></div>
 								<div class="col_titulo">Direccion</div>
 								<div class="colc">
-								<textarea  rows="2" cols="35"><%=(pac==null)?"":pac.getDireccion() %></textarea>
+								<textarea  rows="2" name="direccion" cols="35"><%=(pac==null)?"":pac.getDireccion() %></textarea>
 								</div>
 							</div>
 							<div class="fila">	
 								<div class="col_titulo">Unidad Academica</div>
 								<div class="colc">
-									<select >
+									<select name="unidad">
 									<option value="0"  >SELECCIONAR UNIDAD ACADEMICA</option>
 										<% 
 											while(it.hasNext()){
@@ -101,6 +107,63 @@ Iterator<CUnidad_Academica> it=list.iterator();
 				</div>
 				</div>
 				<div style="clear: both;"></div>
+				<center>
+				<input type="submit" id="button_login" name="enviar" class="ui-state-default ui-corner-all" value="Modificar"/>
+				
+				</center>
+				
+	</form>		
+	
+			<% 
+				if(pac!=null&&pac.getExamen_linea()>=5 && pac.getEstado()==3){
+					CEvaluarExamen eva=new CEvaluarExamen();
+					String sql="";
+				    ArrayList<Integer> list1=eva.Evaluar(pac.getIdpaciente());
+				    Iterator<Integer> it1=list1.iterator();
+				    while(it1.hasNext()){
+				    	sql+=it1.next();
+				    	if(it1.hasNext()) sql+=",";
+				    }
+				    %>
+				    	<form id="form_report" name="form_report" action="../SGenerateReportPDF" method="post" target="_blank">
+						  	<center>
+						  	<input type="submit" id="enviar" value="DESCARGAR MULTIFASICO" />
+						  	</center>
+						  	<input type="hidden" name="report" id="report" value="Primera_parte" />
+						  	<input type="hidden" name="report_name" id="report_name" value="Primera_parte" />
+						  	<input type="hidden" name="parameters" id="parameters" value="idpaciente" />
+						  	<input type="hidden" name="resultado" id="resultado" value="<%= sql %>" />
+						  	
+						  </form>
+				    <% 
+				} else if(pac!=null &&pac.getExamen_linea()>=6 && pac.getEstado()==2){
+					CEvaluarExamen eva=new CEvaluarExamen();
+			        String sql="";
+			        ArrayList<Integer> list1=eva.Evaluar(pac.getIdpaciente());
+			        Iterator<Integer> it1=list1.iterator();
+			        while(it1.hasNext()){
+			        	sql+=it1.next();
+			        	if(it1.hasNext()) sql+=",";
+			        }
+			        %>
+			        	<form id="form_report" name="form_report" action="../SGenerateReportAutoPDF" method="post" target="_blank">
+					  	<center>
+					  	<input type="submit" id="enviar" value="DESCARGAR AUTOEVALUACION" />
+					  	</center>
+					  	<input type="hidden" name="report" id="report" value="Primera_parte" />
+					  	<input type="hidden" name="report_name" id="report_name" value="Primera_parte" />
+					  	<input type="hidden" name="parameters" id="parameters" value="idpaciente" />
+					  	<input type="hidden" name="resultado" id="resultado" value="<%= sql %>" />
+					  	
+					  </form>
+			        <%
+				}else{
+					
+					
+				}
+				%>
+		
+				<div style="clear: both;"></div>
 							<table id="fecha_citas" style="display:none"></table>
 			<script>	
 			 $(document).ready(function () {
@@ -113,20 +176,20 @@ Iterator<CUnidad_Academica> it=list.iterator();
 							{ display: 'ID', name: 'idfecha_actividad', width: 40, sortable: false, align: 'left' },
 							{ display: 'Fecha', name: 'fecha', width: 80, sortable: false, align: 'left' },
 							{ display: 'Descripcion', name: 'descripcion', width: 130, sortable: false, align: 'left' },
-							{ display: 'Hora Inicio', name: 'hora_inicio', width: 80, sortable: false, align: 'left' },
-							{ display: 'Hora Fin', name: 'hora_fin', width: 80, sortable: false, align: 'left' },
+							{ display: 'Hora Inicio', name: 'hora_inicio', width: 60, sortable: false, align: 'left' },
+							{ display: 'Hora Fin', name: 'hora_fin', width: 60, sortable: false, align: 'left' },
 							
-							{ display: 'Tipo Examen', name: 'tipo_examen', width: 90, sortable: false, align: 'left' },
+							{ display: 'Tipo Examen', name: 'tipo_examen', width: 100, sortable: false, align: 'left' },
 							
 							{ display: 'Estado', name: 'estado', width: 70, sortable: false, align: 'left' },
-							{ display: 'Boleta', name: 'boleta', width: 120, sortable: false, align: 'left' },
+							{ display: 'Boleta', name: 'boleta', width: 170, sortable: false, align: 'left' },
 							{ display: 'Estado Cita', name: 'estado_cita', width: 90, sortable: false, align: 'left' }
 							],
 							showTableToggleBtn: true,
 						    sortname: "idfecha_actividad",
 							sortorder: "desc",
 						    title: 'FECHAS DE CITAS',
-						    width: 900,
+						    width: 930,
 						    height: 300,
 							params : [ 
 							          {name: 'a', value: 'est_cita'} 
@@ -155,7 +218,7 @@ Iterator<CUnidad_Academica> it=list.iterator();
 						modal: true
 					});
 					$( "#dialog:ui-dialog" ).dialog( "destroy" );
-					
+					$(".datepicker").mask("99/99/9999");
 			  });
 			$(function() {
 				$( ".mybutton" ).button();
@@ -185,6 +248,27 @@ Iterator<CUnidad_Academica> it=list.iterator();
 					    });
 				
 			}
+			function ModificarBoleta(id){
+				cadena = [ 'a=updatecita_paciente','idcita='+id,
+				           'idpaciente=<%=(pac!=null)? pac.getIdpaciente():"0" %>',
+					'boleta='+$("#boleta"+id).val()].join('&');
+				 
+				 $.ajax({
+				        url: "../SCita",
+				        data: cadena,
+				  	    type: 'post',
+				  	  	dataType: 'json',
+				  	  	success: function(data){
+				  	  		if(data.resultado=='OK'){
+				  	  			alert("Almacenado");
+				  	  		}else{
+				  	  			alert("No se ha cambiado");
+				  	  		}
+				        }
+				    });
+				
+			}
+			
 			</script>
-	</form>			
+				
 <% dbo.Close();} } %>			

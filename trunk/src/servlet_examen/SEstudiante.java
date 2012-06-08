@@ -55,6 +55,8 @@ public class SEstudiante extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		if(action.equalsIgnoreCase("estudiante_ver")){
 				
+			
+			if(request.getParameter("enviar").toString().compareTo("Buscar")==0){
 				if(!user.isEmpty()){	 
 					CPaciente pac= dbo.getEstudianteEspecifica(user);
 					int idpaciente=0;
@@ -86,6 +88,59 @@ public class SEstudiante extends HttpServlet {
 					 
 				 }
 				response.sendRedirect("secretaria/index.jsp?portal=3");
+			}else{
+				CPaciente pac=(CPaciente)session.getAttribute("paci_consulta");
+				if(pac!=null){
+					String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")), codificacion);
+					String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")), codificacion);
+					String celular=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("celular")), codificacion);
+					String correo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("celular")), codificacion);
+					String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("fecha")), codificacion);
+					String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")), codificacion);
+					int sexo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("sexo")));
+					String telefono=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("telefono")), codificacion);
+					int unidad=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("unidad")));
+					
+					String error="";
+					if(apellido.compareTo("")==0){
+						error+="<br>El apellido no puede ir vacio";
+					}else{
+						pac.setApellido(apellido);
+					}
+					
+					if(nombre.compareTo("")==0){
+						error+="<br>El nombre no puede ir vacio";
+					}else{
+						pac.setNombre(nombre);
+					}
+					if(valid.isFechaValida(fecha,  "Fecha Nacimiento").compareTo("")!=0){
+						error+="<br>No es fecha valida de nacimiento";
+					}else{
+						pac.setFecha_nacimiento(valid.CambiarFormatoddmmyy(fecha));
+					}
+					
+					celular=(celular.length()>=50)?celular.substring(0,50):celular;
+					pac.setMovil(celular);
+					correo=(correo.length()>=80)?correo.substring(0,80):correo;
+					direccion=(direccion.length()>=300)?direccion.substring(0,300):direccion;
+					pac.setDireccion(direccion);
+					pac.setEmail(correo);
+					
+					pac.setSexo(sexo);
+					telefono=(telefono.length()>=80)?telefono.substring(0,50):telefono;
+					pac.setTelefono(telefono);
+					pac.setIdunidad_academica(unidad);
+					
+					if(error.compareTo("")==0){
+						boolean b=dbo.UpdatePaciente2(pac);
+						if(b) response.sendRedirect("secretaria/index.jsp?portal=3&e=Almacenado con Exito");
+						else response.sendRedirect("secretaria/index.jsp?portal=3&e=Error al guardar");
+					}else{
+						response.sendRedirect("secretaria/index.jsp?portal=3&e="+error);
+					}
+					
+				}else response.sendRedirect("secretaria/index.jsp?portal=3");
+			}
 		}else if(action.equalsIgnoreCase("estudiante_consulta")){
 			String carne=valid.ValidarRequest(request.getParameter("carne"));
 			String result="ERROR<br/>Debe ingrese el carne";

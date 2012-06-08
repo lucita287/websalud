@@ -118,9 +118,6 @@ function GuardarBoleta(idpaciente,idcita){
 	        }
 	    });
 	 
-	 
-	 
-	 
 }
 </script>
 <%  	}

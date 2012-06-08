@@ -15,12 +15,15 @@ if(dbo.Connect()){
     	
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
     	if(pac.getExamen_linea()>=8 && pac.getEstado()==2){
-						    	int idcita=dbo.getCita(pac);
+		
+    		CConfiguracion config2=dbo.getConfiguracion();
+    		if(config2.getImpresion_salud()==1){
+    		
+    							int idcita=dbo.getCita(pac);
 								String error=request.getParameter("e");
 								String boleta=request.getParameter("noboleta");
 								
 								if(idcita==0){			
-																	CConfiguracion config2=dbo.getConfiguracion();
 																	ArrayList<CCita> list=dbo. getListaCitasEstudiante(1);
 																
 																if(list.size()>0){ %>
@@ -96,6 +99,11 @@ if(dbo.Connect()){
 						</script>		 
 									<% 
 								}							
+    		}else{
+    			CAnuncio anuncio=dbo.getAnuncioEspecifico(11);
+    			 out.println("<div class='instruccion'>"+anuncio.getContenido()+"<div/>");
+    		}
+    		
     	}else{%>
 		<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
 		<%}								
