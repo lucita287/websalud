@@ -94,7 +94,7 @@ public class SEstudiante extends HttpServlet {
 					String apellido=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("apellido")), codificacion);
 					String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")), codificacion);
 					String celular=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("celular")), codificacion);
-					String correo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("celular")), codificacion);
+					String correo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo")), codificacion);
 					String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("fecha")), codificacion);
 					String direccion=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("direccion")), codificacion);
 					int sexo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("sexo")));
@@ -266,6 +266,40 @@ public class SEstudiante extends HttpServlet {
 		}else if(action.equalsIgnoreCase("limpiar")){
 			session.setAttribute("paci_consulta",null);
 			session.setAttribute("resultado","1");
+		}else if(action.equalsIgnoreCase("estudiante_info")){
+			
+			if(!user.isEmpty()){	 
+				CPaciente pac= dbo.getEstudianteEspecifica(user);
+				int idpaciente=0;
+				if(pac==null){
+				 CWebService servicio=new CWebService(2012);
+				 pac=servicio.DatosGenerales(user, dbo);
+						 if(pac!=null){
+							 dbo.SafePaciente(pac);
+							 idpaciente=dbo.getIdPaciente(pac.getUsuario());
+							 pac.setIdpaciente(idpaciente);
+							 session.setAttribute("resultado","1");
+							 session.setAttribute("paci_consulta",pac);
+							 
+						 }else{
+							 session.setAttribute("resultado","0");
+							 session.setAttribute("paci_consulta",null);
+							 
+						 }
+						 
+				}else{
+					idpaciente=pac.getIdpaciente();
+					session.setAttribute("paci_consulta",pac);
+					session.setAttribute("resultado","1");
+				
+				}
+			 }else {
+				 session.setAttribute("resultado","0");
+				 session.setAttribute("paci_consulta",null);
+				 
+			 }
+			response.sendRedirect("admin/index.jsp?portal=19");
+			
 		}
 		dbo.Close();
 	}

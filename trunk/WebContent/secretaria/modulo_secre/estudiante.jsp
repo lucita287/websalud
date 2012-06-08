@@ -158,7 +158,16 @@ Iterator<CUnidad_Academica> it=list.iterator();
 					  </form>
 			        <%
 				}else{
-					
+					 %>
+			        	<form id="form_report" name="form_report" action="../SGenerateReportInfoPDF" method="post" target="_blank">
+					  	<center>
+					  	<input type="submit" id="enviar" value="INFORMACION GENERAL" />
+					  	</center>
+					  	<input type="hidden" name="report" id="report" value="InfoEstudiante" />
+					  	<input type="hidden" name="report_name" id="report_name" value="InfoEstudiante" />
+					  	<input type="hidden" name="parameters" id="parameters" value="idpaciente" />
+					  </form>
+			        <%
 					
 				}
 				%>
