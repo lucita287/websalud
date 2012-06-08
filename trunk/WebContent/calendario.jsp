@@ -34,13 +34,15 @@ dbo.Close();
 <div class="back_all">
 <div id="content">
 
-<div class="top">
-<jsp:include page="portal/titulo.jsp">
-<jsp:param name="titulo" value="Calendario de Actividades" />	
-</jsp:include>
-</div>
 
 <div id="back"  class="ui-widget-content ui-corner-all">
+
+<div style="float:left;">
+	<a href="index.jsp">
+	
+	<img src="images/logousalud1.gif" width="250px" height="180px" alt="bt_1" onmouseout="this.src='images/logousalud1.gif';" onmouseover="this.src='images/logousac.png';" />
+	</a>
+</div>
 <!-- header begins -->
 
  <div id="main">
