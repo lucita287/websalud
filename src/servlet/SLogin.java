@@ -77,7 +77,7 @@ public class SLogin extends HttpServlet {
 			 }else{
 				 response.sendRedirect("index.jsp?e=Error en el usuario y/o password");
 			 }
-		 }else{
+		 }else if(perfil.equalsIgnoreCase("1")){
 			 
 			 HttpSession session = request.getSession(true);
 			 CConfiguracion config=dbo.getConfiguracion();
@@ -158,6 +158,28 @@ public class SLogin extends HttpServlet {
 				 
 			 // }else
 			 //response.sendRedirect("index.jsp?e=1");
+		 }else{
+			 
+			 CUsuario usuario=dbo.getUsuario(user);
+			 if( usuario!=null && usuario.getpassword().compareTo(pass)==0&& usuario.getEstado()==1){
+				 HttpSession session = request.getSession(true);
+					session.setAttribute("username", user);
+					session.setAttribute("user", user);
+					session.setAttribute("portal",1);
+					usuario.setPassword("");
+					ArrayList<Integer> lista_permisos=dbo.getListaPermisoInt(usuario.getidusuario());
+					ArrayList<Integer> area=null;
+					if(usuario.getidusuario()==1) area=dbo.getAreaListaInt();
+					else area=dbo.getAreaListaInt(usuario.getidusuario());
+					
+					CUsuarioPermiso user_permiso=new CUsuarioPermiso(usuario,lista_permisos,area);
+					if( (user_permiso.getIdpermiso().indexOf(253)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
+								session.setAttribute("user_secretaria",user_permiso);
+								response.sendRedirect("secretaria/index.jsp");
+					}
+			 }else{
+				 response.sendRedirect("index.jsp?e=Error en el usuario y/o password");
+			 }
 		 }
 		 dbo.Close();
 		 }else response.sendRedirect("index.jsp?e=Campos vacios");

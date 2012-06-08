@@ -4,6 +4,8 @@
 <%@page import="framework.CDataExam" %>
 <%@page import="data.CCita" %>
 <%
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 	CValidation valid=new CValidation();
 
 	int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
@@ -93,4 +95,5 @@ function ModificarCita(){
 		<%}
 		dbo.Close();
 	}
+		}
 %>    

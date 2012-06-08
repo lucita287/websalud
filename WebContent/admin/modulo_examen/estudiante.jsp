@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="data.CUsuarioPermiso" %>
 <%@ page import="data.CPaciente" %>
 <%@ page import="framework.CDataExam" %>
-    <%@ page import="java.util.ArrayList"%>
-    <%@ page import="java.util.Iterator"%>
-    <%@ page import="framework.CEvaluarExamen"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="framework.CEvaluarExamen"%>
 <%
 HttpSession sessiones = request.getSession(false);
 if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
@@ -116,5 +115,4 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 		<%
 	}
 	dbo.Close();
-%>
-<% } 	}%>
+ } 	}%>

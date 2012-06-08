@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ page import="framework.CValidation" %>      
+<% 
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
+
+%>
+
 <script>
 	$(function() {
 		$( "a.menu" ).button();
@@ -26,3 +32,4 @@ int portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal
 </div>
 <div style="clear: both;"></div>
 <HR/>
+<%	} %>

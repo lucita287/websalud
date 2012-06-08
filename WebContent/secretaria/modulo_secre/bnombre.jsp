@@ -8,8 +8,8 @@
     <%@page import="framework.CDataExam" %>
       <%@ page import="data.CPaciente" %>
 <%
-HttpSession sessiones=request.getSession(false); 
-if(sessiones!=null){
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 CValidation valid=new CValidation();
 String action=valid.ValidarRequest(request.getParameter("a"));

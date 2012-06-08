@@ -6,8 +6,8 @@ String titulo=(request.getParameter("titulo")==null)?"":request.getParameter("ti
 
 %>    
 <div style="float:left">
-<a href="http://www.usac.edu.gt/"><img src="images/logousac.png" width="200px" height="180px" /></a>
-<a href="index.jsp"><img src="images/logousalud1.gif" width="250px" height="180px"  /></a>
+<a href="http://www.usac.edu.gt/"><img src="images/logousac.png" width="200px"  /></a>
+<a href="index.jsp"><img src="images/logousalud.gif" width="200px"   /></a>
 
 </div>
 

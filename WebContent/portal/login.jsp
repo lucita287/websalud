@@ -28,6 +28,7 @@
 													<td> <select id="perfil" name="perfil">
 														  <option value="1">Estudiante</option>
 														  <option value="2">Trabajador</option>
+														  <option value="3">Secretaria</option>
 														</select> 
 													</td>
 												</tr>	
