@@ -1,6 +1,10 @@
 <%@page import="framework.CDataExam" %>
 <%@ page import="data.CConfiguracion" %>
+<%
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 
+%>
 <style>
 .reporte{
 border-style:solid;
@@ -109,4 +113,4 @@ function excel_estudiantes(){
   </form>
 <% 
 	dbo.Close();
-} %>
+}	} %>

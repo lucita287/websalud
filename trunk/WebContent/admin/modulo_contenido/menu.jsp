@@ -17,7 +17,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 %>
 <div id="menu-logo" >
 	<a href="index.jsp">
-	<img src="../images/logousalud1.gif" width="250px" height="180" alt="bt_1" onmouseout="this.src='../images/logousalud1.gif';" onmouseover="this.src='../images/logousac.png';" />
+	<img src="../images/logousalud.gif" width="250px"  alt="bt_1" onmouseout="this.src='../images/logousalud.gif';" onmouseover="this.src='../images/logousac.png';" />
 	</a>
 <div id="menu-principal" class="ui-widget-content ui-corner-all">	
 <ul id="menu"  >

@@ -8,6 +8,8 @@
     <%@page import="framework.CDataExam" %>
     
 <%
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 CValidation valid=new CValidation();
 String action=valid.ValidarRequest(request.getParameter("a"));
 if(action.equalsIgnoreCase("especifico_calendar")){
@@ -123,4 +125,4 @@ function GuardarBoleta(idpaciente,idcita){
 <%  	}
 	dbo.Close(); }
 
-}%>	
+}	}%>	

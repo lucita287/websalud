@@ -6,6 +6,8 @@
 <%@page import="java.util.Iterator"%>
 		<script  type="text/javascript">
 <%
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 CDataExam dbo=new CDataExam();
 //mes="+$("mes").val()+"&exam="+$("input[@name='exam']:checked").val()+"&anio="+$("#anio").val();
 CValidation valid=new CValidation();
@@ -205,4 +207,4 @@ else year=anio;
 			
 			<table id="fecha_citas" style="display:none"></table>
 					
-<% dbo.Close(); } %>			
+<% dbo.Close(); } } %>			

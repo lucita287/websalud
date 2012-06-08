@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
   <script>
+  <%
+  HttpSession sessiones=request.getSession(false); 		 	
+  if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
+  %>
+  
   $(function() {
 		$( ".semana" ).button();
 		$( ".button-save" ).button();
@@ -124,4 +129,4 @@
 								<div style="clear: both;"></div>
 						</div>
 						
-			
+		<% } %>	

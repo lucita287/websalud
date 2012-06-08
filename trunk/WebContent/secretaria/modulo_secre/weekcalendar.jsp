@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
+
+%>    
+    
 <div style="float:right">
 
 </div>
@@ -125,3 +131,4 @@
 
 	
 </script>
+<%	} %>

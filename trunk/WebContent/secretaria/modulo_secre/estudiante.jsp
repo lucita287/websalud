@@ -7,8 +7,8 @@
     <%@ page import="java.util.Iterator"%>
     <%@ page import="framework.CEvaluarExamen"%>
 <%
-HttpSession sessiones=request.getSession(false); 
-if(sessiones!=null){
+HttpSession sessiones=request.getSession(false); 		 	
+if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 	CDataExam dbo=new CDataExam();
 	if(dbo.Connect()){
 	String user=(String)sessiones.getAttribute("resultado");
