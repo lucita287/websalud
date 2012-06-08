@@ -61,8 +61,10 @@ public class SArea extends HttpServlet {
 		 CArea temp_area=dbo.getCAreaEspecifico(idarea);
 		 String result="";
 		 if(temp_area!=null){
-			 result= "{nombre:\""+temp_area.getnombre()+" \",size:\""+temp_area.getsize()+"\",idimagen:"+temp_area.getidmultimedia().getidimagen()+",direccion_relativa:\""+
-				 temp_area.getidmultimedia().getdireccion_relativa()+"\", contenido:\""+temp_area.getdescripcion()+"\"}";
+			 
+			 result= "{subarea:\""+temp_area.getareaidarea().getidarea()+"\",nombre:\""+valid.Limpiarvalor3(temp_area.getnombre())+" \",size:\""+temp_area.getsize()+"\",idimagen:"+temp_area.getidmultimedia().getidimagen()+",direccion_relativa:\""+
+				 temp_area.getidmultimedia().getdireccion_relativa()+"\", contenido:\""+valid.Limpiarvalor3(temp_area.getdescripcion())+"\",descr_imagen:\""+valid.Limpiarvalor3(temp_area.getDescripcion_imagen())+"\", palabras_buscador:\""+valid.Limpiarvalor3(temp_area.getPalabras_buscador())+"\", descripcion_buscador:\""+valid.Limpiarvalor3(temp_area.getDescripcion_buscador())+"\"}";
+			// System.out.println(result);
 		 }
 		 response.setContentType("text/html;charset="+codificacion);
 		 out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
@@ -74,9 +76,18 @@ public class SArea extends HttpServlet {
 			contenido=valid.Limpiarvalor(contenido,codificacion);
 			int idmultimedia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idmultimedia")));
 			int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
+			int subarea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("subarea")));
+			String descripcion_buscador=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("descripcion_buscador"))),codificacion);
+			String palabras_buscador=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("palabras_buscador"))),codificacion);;
+			String descr_imagen=valid.Limpiarvalor(base64.decodificar(valid.ValidarRequest(request.getParameter("descr_imagen"))),codificacion);;
+			
 			String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(contenido, 4990, "Contenido"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarRango(size, 0, 4, "{\"resultado\":\"ERROR\",\"mensaje\":\"No ha seleccionado un tama&ntilde;o\"}"):validacion;
+			validacion=(validacion.compareTo("")==0)?((subarea==idarea)?"{\"resultado\":\"ERROR\",\"mensaje\":\"El subarea no puede ser igual al area\"}":""):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descripcion_buscador, 400, "Descripcion Buscador"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(palabras_buscador, 300, "Palabras Buscador"):validacion;
+			validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descr_imagen, 100, "Descripcion Imagen"):validacion;
 			
 			if(validacion.compareTo("")==0){
 				CMultimedia multi=dbo.getMultimediaEspecifica(idmultimedia);
@@ -84,6 +95,10 @@ public class SArea extends HttpServlet {
 				area.setdescripcion(contenido);
 				area.setidmultimedia(multi);
 				area.setsize(size);
+				area.setDescripcion_buscador(descripcion_buscador);
+				area.setDescripcion_imagen(descr_imagen);
+				area.setPalabras_buscador(palabras_buscador);
+				area.setareaidarea(new CArea(subarea,"","",0,null,null,""));
 				boolean b=dbo.UpdateArea(area);
 				if(!b){
 					result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";

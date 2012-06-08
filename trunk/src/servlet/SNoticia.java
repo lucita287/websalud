@@ -117,9 +117,9 @@ public class SNoticia extends HttpServlet {
 									int idnoticia=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idnoticia")));
 									CNoticia noti=dbo.getNoticiaEspecifica(idnoticia);
 									 if(noti!=null){
-										 result= "{descripcion:\""+noti.getDescripcion()+"\",idarea:\""+noti.getAreaidarea().getidarea()+"\",areanombre:\""+
-												 noti.getAreaidarea().getnombre()+"\",idimagen:"+noti.getMultimediaidmultimedia().getidimagen()+",idimagendir:\""+noti.getMultimediaidmultimedia().getdireccion_relativa()+"\","
-											 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+noti.getTitulo()+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+noti.getDescripcion_corta()+"\",estado:"+noti.getEstado()+",idpdf:"+noti.getMultimediaidmultimedia_pdf().getidimagen()+",idpdfdir:\""+noti.getMultimediaidmultimedia_pdf().getdireccion_relativa()+"\"}";
+										 result= "{descripcion:\""+valid.Limpiarvalor3(noti.getDescripcion())+"\",idarea:\""+noti.getAreaidarea().getidarea()+"\",areanombre:\""+
+												 valid.Limpiarvalor3(noti.getAreaidarea().getnombre())+"\",idimagen:"+noti.getMultimediaidmultimedia().getidimagen()+",idimagendir:\""+noti.getMultimediaidmultimedia().getdireccion_relativa()+"\","
+											 +"prioridad:\""+noti.getPrioridad()+"\",titulo:\""+valid.Limpiarvalor3(noti.getTitulo())+"\",fecha_inicio:\""+noti.getFormatoFechaddmmyy(noti.getFecha_inicio())+"\",fecha_fin:\""+noti.getFormatoFechaddmmyy(noti.getFecha_fin())+"\",descripcion_corta:\""+valid.Limpiarvalor3(noti.getDescripcion_corta())+"\",estado:"+noti.getEstado()+",idpdf:"+noti.getMultimediaidmultimedia_pdf().getidimagen()+",idpdfdir:\""+noti.getMultimediaidmultimedia_pdf().getdireccion_relativa()+"\"}";
 									 }
 									 response.setContentType("text/html;charset="+codificacion);
 									 out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));

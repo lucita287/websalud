@@ -6,7 +6,7 @@
 
 <meta name=ROBOTS content="INDEX,FOLLOW">
 <meta name=abstract content="Unidad de Salud">
-<meta name=keywords content="USAC, Salud, Unidad, unidad de salud, medicina, deportes, Voluntariado, examen, examen salud">
+
 <meta name=author content="USAC 2012">
 <meta name=publisher content="">
 <meta name=copyright content="Unidad de Salud USAC 2012">

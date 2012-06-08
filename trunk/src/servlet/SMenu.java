@@ -64,9 +64,10 @@ public class SMenu extends HttpServlet {
 								 CMenu temp_menu=dbo.getMenuEspecifico(idmenu);
 								 String result="";
 								 if(temp_menu!=null){
-									 result= "{descripcion:\""+temp_menu.getdescripcion()+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\",idarea:\""+temp_menu.getareaidarea().getidarea()+"\",areanombre:\""+
+									 result= "{descripcion:\""+valid.Limpiarvalor3(temp_menu.getdescripcion())+" \",area:\""+temp_menu.getareaidarea().getidarea()+"\",idarea:\""+temp_menu.getareaidarea().getidarea()+"\",areanombre:\""+
 										 temp_menu.getareaidarea().getnombre()+"\",\"submenu\":\""+((temp_menu.getidmenu_rec()==null)?"":temp_menu.getidmenu_rec().getdescripcion())+"\","
-										 +"size:\""+temp_menu.getsize()+"\",contenido:\""+temp_menu.getcontenido()+" \",estado:\""+temp_menu.getEstado()+" \"}";
+										 +"size:\""+temp_menu.getsize()+"\",contenido:\""+valid.Limpiarvalor3(temp_menu.getcontenido())+" \",estado:\""+temp_menu.getEstado()+" \"}";
+									 System.out.println(result);
 								 }
 								 response.setContentType("text/html;charset="+codificacion);
 									out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));
