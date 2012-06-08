@@ -190,7 +190,7 @@ public class CDataBase {
 		try {
 			
 			String sql="SELECT a.idarea,a.nombre, ifnull(a.descripcion,' ') descripcion,a.size , ifnull(a.areaidarea,0) areaidarea , ifnull(m.idmultimedia,0) idmultimedia , "
-					+" ifnull(m.direccion,'') direccion, ifnull(m.direccion_relativa,'No se ha seleccionado Imagen') direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre, ifnull(a.html_adicional,'') html_adicional "
+					+" ifnull(m.direccion,'') direccion, ifnull(m.direccion_relativa,'No se ha seleccionado Imagen') direccion_relativa, ifnull (a.areaidarea,0 ) areaidarea, ifnull ((select ar.nombre rec_nomb from area ar where ar.idarea=a.areaidarea),'') rec_nombre, ifnull(a.html_adicional,'') html_adicional, palabras_buscador, descripcion_imagen, descripcion_buscador "
 					+" FROM area a left outer join multimedia m on a.multimediaidmultimedia=m.idmultimedia " 
 					+" where  a.idarea=? ";
 			stm = (PreparedStatement)conn.prepareStatement(sql);
@@ -200,7 +200,10 @@ public class CDataBase {
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion"),rs.getString("direccion_relativa"),0L,1,null);
             	CArea sarea=new CArea( rs.getInt("areaidarea"),rs.getString("rec_nombre"),"",0,null,null,"");
             	temp=new CArea( rs.getInt("idarea"),rs.getString("nombre"),rs.getString("descripcion"),rs.getInt("size"),multi,sarea,rs.getString("html_adicional"));
-            	
+            	//palabras_buscador, descripcion_imagen, descripcion_buscador
+            	temp.setPalabras_buscador(rs.getString("palabras_buscador"));
+            	temp.setDescripcion_imagen(rs.getString("descripcion_imagen"));
+            	temp.setDescripcion_buscador(rs.getString("descripcion_buscador"));
 			}
 		}catch(Throwable e){
 			
@@ -729,20 +732,25 @@ public CContenido getContenido(int idcontenido){
 	public boolean UpdateArea(CArea area){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE area SET descripcion = ?, size = ?, multimediaidmultimedia = ? WHERE idarea=?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE area SET descripcion = ?, size = ?, multimediaidmultimedia = ?, descripcion_imagen = ?, palabras_buscador = ?,  descripcion_buscador = ?, areaidarea = ? WHERE idarea=?");
 			
 			stm.setString(1, area.getdescripcion());
 			stm.setInt(2, area.getsize());
 			if(area.getidmultimedia()!=null)
 				stm.setInt(3, area.getidmultimedia().getidimagen());
 			else stm.setNull(3, java.sql.Types.INTEGER);
-			stm.setInt(4, area.getidarea());
 			
+			stm.setString(4, area.getDescripcion_imagen());
+			stm.setString(5, area.getPalabras_buscador());
+			stm.setString(6, area.getDescripcion_buscador());
+			if(area.getareaidarea().getidarea()==0) stm.setNull(7,java.sql.Types.INTEGER);
+			else stm.setInt(7, area.getareaidarea().getidarea());
+			stm.setInt(8, area.getidarea());
 			if(stm.executeUpdate()>0)
 				return true;
 			
 		}catch(Throwable e){
-			
+			e.printStackTrace();
 			 CLogger.write("30", this, e);
 		}
 		

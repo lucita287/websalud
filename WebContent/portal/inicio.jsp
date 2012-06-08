@@ -32,6 +32,7 @@ if(area!=null){
 			<a target="_blank" href="<%=area.getidmultimedia().getdireccion_relativa()%>">
 			<img src="<%=area.getidmultimedia().getdireccion_relativa()%>" width="550" heigth="440">
 			</a>
+			<br><b><%= area.getDescripcion_imagen() %></b>
 			</center>
 		<%} %>
 	<div style="clear: both;"></div>						

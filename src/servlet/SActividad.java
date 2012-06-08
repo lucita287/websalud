@@ -116,7 +116,7 @@ public class SActividad extends HttpServlet {
 													data+="{idresponsable:"+responsable+"}";
 										 }
 										 data="responsables:["+data+"]";
-										 result= "{titulo:\""+act.getTitulo()+"\",descripcion:\""+act.getDescripcion()+"\",salon:\""+act.getSalon()+"\",idedificio:\""+act.getEdificioidedificio().getIdedificio()+"\","+
+										 result= "{titulo:\""+valid.Limpiarvalor3(act.getTitulo())+"\",descripcion:\""+valid.Limpiarvalor3(act.getDescripcion())+"\",salon:\""+valid.Limpiarvalor3(act.getSalon())+"\",idedificio:\""+act.getEdificioidedificio().getIdedificio()+"\","+
 										 		"idarea:\""+act.getAreaidarea().getidarea()+"\","+data+"}";
 									 }
 									 response.setContentType("text/html;charset="+codificacion);

@@ -8,6 +8,9 @@ public class CArea {
 	private int size;
 	private CMultimedia idmultimedia;
 	private String html_adicional;
+	private String descripcion_imagen;
+	private String palabras_buscador;
+	private String descripcion_buscador;
 	
 	public CArea(int idarea,String nombre,String descripcion, int size, CMultimedia idmultimedia,CArea areaidarea,String html_adicional){
 		this.idarea=idarea;
@@ -17,9 +20,67 @@ public class CArea {
 		this.idmultimedia=idmultimedia;
 		this.size=size;
 		this.html_adicional=html_adicional;
+		this.descripcion_buscador="";
+		this.descripcion_imagen="";
+		this.palabras_buscador="";
 	}
 	
 	
+	
+	/**
+	 * @return the descripcion_imagen
+	 */
+	public String getDescripcion_imagen() {
+		return descripcion_imagen;
+	}
+
+
+
+	/**
+	 * @param descripcion_imagen the descripcion_imagen to set
+	 */
+	public void setDescripcion_imagen(String descripcion_imagen) {
+		this.descripcion_imagen = descripcion_imagen;
+	}
+
+
+
+	/**
+	 * @return the palabras_buscador
+	 */
+	public String getPalabras_buscador() {
+		return palabras_buscador;
+	}
+
+
+
+	/**
+	 * @param palabras_buscador the palabras_buscador to set
+	 */
+	public void setPalabras_buscador(String palabras_buscador) {
+		this.palabras_buscador = palabras_buscador;
+	}
+
+
+
+	/**
+	 * @return the descripcion_buscador
+	 */
+	public String getDescripcion_buscador() {
+		return descripcion_buscador;
+	}
+
+
+
+	/**
+	 * @param descripcion_buscador the descripcion_buscador to set
+	 */
+	public void setDescripcion_buscador(String descripcion_buscador) {
+		this.descripcion_buscador = descripcion_buscador;
+	}
+
+
+
 	/**
 	 * @return the html_adicional
 	 */

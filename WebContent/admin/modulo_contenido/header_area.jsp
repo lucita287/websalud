@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
     <%@ page import="java.util.ArrayList" %>
+    <%@ page import="java.util.Iterator" %>
     <%@ page import="data.CUsuarioPermiso" %>
-    
+    <%@ page import="data.CArea" %>
+    <%@ page import="framework.CDataBase" %>
     <%
 
 	HttpSession sessiones = request.getSession(false);
@@ -10,8 +12,13 @@
 		
 		CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 
-		if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){%>		
-
+		if (user_permiso.getIdpermiso().indexOf(231)>-1  || user_permiso.getIdusuario().getidusuario()==1){
+			CDataBase dbo=new CDataBase();
+			dbo.Connect();
+			ArrayList<CArea> list_area=dbo.getAreaListaMenu();
+			dbo.Close();
+		%>		
+			
 			<div id="dialog-message" title="Mensaje de Informaci&oacute;n"></div>
 			<div class="centerd">
 			<h2>Editar Areas Profesionales</h2>
@@ -41,10 +48,7 @@
 								<div class="col_titulo">Nombre</div>
 								<div class="col"><label id="tituloarea"></label></div>
 							</div>
-							<div class="fila">
-								<div class="col_titulo">Descripcion de buscadores</div>
-								<div class="col"><textarea rows="3" cols="50"></textarea></div>
-							</div>
+							
 							<div class="fila">
 								<div class="col_titulo">Tama&ntilde;o:</div>
 								<div class="col">
@@ -68,9 +72,36 @@
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Descripcion de imagen</div>
-								<div class="col"><input type="text" size="50px" /></div>
+								<div class="col"><input id="descr_imagen" type="text" size="50px" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Area donde Pertence</div>
+								<div class="col">
+										<select id="subarea">
+											<option value="0">AREA PROFESIONAL</option>
+										<% Iterator<CArea> it=list_area.iterator();
+											while(it.hasNext()){
+											CArea area=it.next();
+										%>
+											<option value="<%= area.getidarea() %>"><%= area.getnombre() %></option>
+										<% } %>
+										</select>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Etiqueta en buscadores</div>
+								<div class="col">
+										<textarea rows="2" cols="50" id="palabras_buscador"></textarea>
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Descripcion en buscadores</div>
+								<div class="col">
+										<textarea rows="2" cols="50" id="descripcion_buscador"></textarea>
+								</div>
 							</div>		
 						</div>
+						
 				</div>
 				<div style="clear: both;"></div>		
 							<textarea id="cont-text" class="editor"></textarea>
@@ -206,6 +237,10 @@
 				        	$('#pathimagen_prin').text(result.direccion_relativa);
 				        	$("#cont-text").cleditor()[0].execCommand("inserthtml",result.contenido,null,null);
 							$("#cont-text").cleditor()[0].focus();
+							$("#subarea").val(result.subarea);
+							$("#descr_imagen").val(result.descr_imagen);
+							$("#palabras_buscador").val(result.palabras_buscador);
+							$("#descripcion_buscador").val(result.descripcion_buscador);
 							limpiar();
 							
 				        }});
@@ -223,6 +258,10 @@
 						         'contenido='+data_cont,
 						         'idmultimedia='+idmultimedia,
 						         'size='+$('#edit-tam').val(),
+						         'descr_imagen='+Base64.encode( convertirCaracter($("#descr_imagen").val())),
+						         'palabras_buscador='+Base64.encode( convertirCaracter($("#palabras_buscador").val())),
+						         'descripcion_buscador='+Base64.encode( convertirCaracter($("#descripcion_buscador").val())),
+						         'subarea='+$("#subarea").val()
 						        ].join('&');
 					  
 					  $.ajax({
