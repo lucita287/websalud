@@ -70,7 +70,7 @@ public class SGen_PDF extends HttpServlet {
 					for(int i=0; i<params.length;i++){
 						String param=params[i];
 						parameters.put(param, values[i]);
-						
+						System.out.println(param+" , "+values[i]);
 					}
 				}
 				parameters.put(JRParameter.REPORT_FILE_RESOLVER, new SimpleFileResolver(new File(realpath+"/secretaria/report_view/")));

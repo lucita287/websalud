@@ -106,6 +106,13 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						}
 				%></table>
 				<script>
+				
+				$('#carne').keypress(function(e){
+					if(e.keyCode == 13)
+					{ 
+						buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>');
+					}
+				});
 				function buscar(init,end){
 
 					cadena = [ 'a=estudiante_consulta','carne='+$("#carne").val(),].join('&');
@@ -185,8 +192,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 								$('#values').val('<%=cc.getIdcita()%>');
 								$('#report').val('Estudiantes_cita');
 								$('#report_name').val('Estudiantes_cita');
-								$("#form_report").submit();
-								
+								$("#form_report").submit();								
 							}
 							function Er_dia_examen_<%=cc.getIdcita()%>(){
 								$('#parameters1').val('idcita');
@@ -197,9 +203,10 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 								
 							}
 				
+				
+				<%	} %>
 				</script>
-				<%
-				}
+				<%		
 				dbo.Close();
 				
 	}

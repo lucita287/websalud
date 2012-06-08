@@ -5,13 +5,16 @@
     <%@ page import="java.util.ArrayList" %> 
     <%@ page import="java.util.Iterator" %>
     <%@ page import="data.CAnuncio" %>
+    <%@ page import="data.CConfiguracion" %>
     <%@ page import="framework.CEvaluarExamen" %>    
       <% 
     HttpSession sessiones=request.getSession(false); 
     if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
+    	
     	CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
     	if(pac.getExamen_linea()>=6 && pac.getEstado()==2){
     	CDataExam dbo=new CDataExam();
+    	
     	CEvaluarExamen eva=new CEvaluarExamen();
         String sql="";
         ArrayList<Integer> list=eva.Evaluar(pac.getIdpaciente());
@@ -22,6 +25,10 @@
         }
     	
     	if(dbo.Connect()){	
+    	
+    		CConfiguracion config2=dbo.getConfiguracion();
+    		if(config2.getImpresion_salud()==1){
+    		
     		CAnuncio anuncio=dbo.getAnuncioEspecifico(4);
     %>	    
 <BR/>
@@ -53,7 +60,12 @@
 				$( "#enviar" ).button();
 			});
 </script>
-<% }
+<% }else{
+	CAnuncio anuncio=dbo.getAnuncioEspecifico(11);
+	 out.println("<div class='instruccion'>"+anuncio.getContenido()+"<div/>"); 
+}
+    dbo.Close();			
+    	}
     	}else{%>
     		<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
     	<%}

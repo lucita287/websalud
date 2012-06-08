@@ -263,7 +263,7 @@ BEGIN
    select (c.cupo-
    (
     select count(*) from cita_paciente pc where pc.idcita=pidcita
-    and pc.estado=1
+    and (pc.estado=1 or pc.estado=3)
     )) as cupo_d into vcupo
     from cita c
     where c.idcita=pidcita;
@@ -324,11 +324,15 @@ BEGIN
                         update cita_paciente set estado = 1 where idcita=pidcita and idpaciente=pidpaciente;
                         return 1;
                 else
-                        update cita_paciente set estado = 0 where idcita=pidcita and idpaciente=pidpaciente;
+                        update cita_paciente set estado = 3 where idcita=pidcita and idpaciente=pidpaciente;
                         return 0;
                 end if;
     end if;
     if vestado = 1 then
+        update cita_paciente set estado = 3 where idcita=pidcita and idpaciente=pidpaciente;
+        return 1;
+    end if;
+    if vestado = 3 then
         update cita_paciente set estado = 0 where idcita=pidcita and idpaciente=pidpaciente;
         return 1;
     end if;

@@ -4,6 +4,7 @@
 <%@ page import="data.CPaciente" %>
 <%@ page import="framework.CEvaluarExamen" %>    
 <%@ page import="data.CAnuncio" %>
+<%@ page import="data.CConfiguracion" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
 <% 
@@ -11,11 +12,18 @@ HttpSession sessiones=request.getSession(false);
 if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
     CDataPreg dbo=new CDataPreg();
     dbo.Connect();
-    CAnuncio anuncio=dbo.getAnuncioEspecifico(5);
+    
+    
+   
+    
+    
     CEvaluarExamen eva=new CEvaluarExamen();
     CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");
     if(pac.getExamen_linea()>=5 && pac.getEstado()==3){
-    
+    	
+    	 CConfiguracion config2=dbo.getConfiguracion();
+    		if(config2.getImpresion_salud()==1){
+    			CAnuncio anuncio=dbo.getAnuncioEspecifico(5);    	
     String sql="";
     ArrayList<Integer> list=eva.Evaluar(pac.getIdpaciente());
     Iterator<Integer> it=list.iterator();
@@ -49,9 +57,16 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 				$( "#enviar" ).button();
 			});
 </script>		 
-<% }else{%>
+<%	}else{
+	
+	CAnuncio anuncio=dbo.getAnuncioEspecifico(11);
+	 out.println("<div class='instruccion'>"+anuncio.getContenido()+"<div/>"); 
+	
+	}
+
+    }else{%>
 <h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
-	<%}
+	<%} 
     
 
 } %>

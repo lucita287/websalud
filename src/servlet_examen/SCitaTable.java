@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.CCita;
+import data.CCita_Paciente;
 import data.CPaciente;
 import framework.CDataExam;
 import framework.CValidation;
@@ -101,17 +102,17 @@ public class SCitaTable extends HttpServlet {
 						 
 						 }else if(a.compareTo("est_cita")==0){
 							 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
-							 ArrayList<CCita> list=new ArrayList<CCita>();
-							 if(pac!=null) list=dbo.ListCitasEstudiante(pac.getIdpaciente());
+							 ArrayList<CCita_Paciente> list=new ArrayList<CCita_Paciente>();
+							 if(pac!=null) list=dbo.ListCitasEstudiante(pac);
 							 
 							 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 							 info+="<rows><total>"+list.size()+"</total>";
 							 
 							 String data="";
 							 for(int i=0; i<list.size();i++){
-								 CCita temp=list.get(i);
+								 CCita_Paciente temp=list.get(i);
 								 
-							data+="<row id='"+temp.getIdcita()+"'><cell><![CDATA["+temp.getIdcita()+"]]></cell><cell><![CDATA["+temp.getFormatoFechaddmmyy(temp.getFecha())+"]]></cell><cell><![CDATA["+temp.getFormatoFechaDes(temp.getFecha())+"]]></cell><cell><![CDATA["+temp.getFormatoFechahhmm(temp.getHora_inicio())+"]]></cell><cell><![CDATA["+temp.getTipo_examenD()+"]]></cell><cell><![CDATA[<button onclick='Modificar(\""+temp.getIdcita()+"\")' ><img width='32px' height='32px' src="+((temp.getCupo_disp()==1)?"'../images/on.png'":"'../images/off.png'")+" /></button>]]></cell></row>";	 
+							data+="<row id='"+temp.getIdcita().getIdcita()+"'><cell><![CDATA["+temp.getIdcita().getIdcita()+"]]></cell><cell><![CDATA["+temp.getIdcita().getFormatoFechaddmmyy(temp.getIdcita().getFecha())+"]]></cell><cell><![CDATA["+temp.getIdcita().getFormatoFechaDes(temp.getIdcita().getFecha())+"]]></cell><cell><![CDATA["+temp.getIdcita().getFormatoFechahhmm(temp.getIdcita().getHora_inicio())+"]]></cell><cell><![CDATA["+temp.getIdcita().getFormatoFechahhmm(temp.getIdcita().getHora_fin())+"]]></cell><cell><![CDATA["+temp.getIdcita().getTipo_examenD()+"]]></cell><cell><![CDATA[<button onclick='Modificar(\""+temp.getIdcita().getIdcita()+"\")' ><img width='32px' height='32px' src="+((temp.getEstado()==1)?"'../images/exclamation.png'":(temp.getEstado()==2)?"'../images/off.png'":(temp.getEstado()==3)?"'../images/on.png'":"'../images/close.png'")+" /></button>]]></cell><cell><![CDATA[<input type='text' value='"+temp.getRecibo_pago()+"' size='15' id='boleta"+temp.getIdcita().getIdcita()+"' name='boleta"+temp.getIdcita().getIdcita()+"' /><button onclick='ModificarBoleta("+temp.getIdcita().getIdcita()+")'><img width='24px' height='24px' src='../images/guardar.png' /></button>]]></cell><cell><![CDATA["+temp.getIdcita().getEstadoD()+"]]></cell></row>";	 
 					
 							 }
 							 info+=data+"</rows>";
@@ -161,7 +162,7 @@ public class SCitaTable extends HttpServlet {
 									 for(int i=0; i<lista.size();i++){
 										 CPaciente temp=lista.get(i);
 										 
-									data+="<row id='"+temp.getIdpaciente()+"'><cell><![CDATA["+temp.getIdpaciente()+"]]></cell><cell><![CDATA["+temp.getCarne()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getApellido()+"]]></cell><cell><![CDATA["+temp.getCrecio_en()+"]]></cell><cell><![CDATA[<button onclick='Modificar(\""+temp.getIdpaciente()+"\",\""+idcita+"\")' ><img width='24px' height='24px' src="+((temp.getEstado()==1)?"'../images/on.png'":(temp.getEstado()==0)?"'../images/off.png'":"'../images/close.png'")+" /></button>]]></cell><cell><![CDATA[<input type='text' value='"+temp.getDireccion()+"' size='15' id='boleta"+temp.getIdpaciente()+"' name='boleta"+temp.getIdpaciente()+"' /><button onclick='GuardarBoleta(\""+temp.getIdpaciente()+"\",\""+temp.getIdunidad_academica()+"\")'><img width='24px' height='24px' src='../images/guardar.png' /></button>]]></cell></row>";	 
+									data+="<row id='"+temp.getIdpaciente()+"'><cell><![CDATA["+temp.getIdpaciente()+"]]></cell><cell><![CDATA["+temp.getCarne()+"]]></cell><cell><![CDATA["+temp.getNombre()+"]]></cell><cell><![CDATA["+temp.getApellido()+"]]></cell><cell><![CDATA["+temp.getCrecio_en()+"]]></cell><cell><![CDATA[<button onclick='Modificar(\""+temp.getIdpaciente()+"\",\""+idcita+"\")' ><img width='24px' height='24px' src="+((temp.getEstado()==1)?"'../images/exclamation.png'":(temp.getEstado()==0)?"'../images/off.png'":(temp.getEstado()==3)?"'../images/on.png'":"'../images/close.png'")+" /></button>]]></cell><cell><![CDATA[<input type='text' value='"+temp.getDireccion()+"' size='15' id='boleta"+temp.getIdpaciente()+"' name='boleta"+temp.getIdpaciente()+"' /><button onclick='GuardarBoleta(\""+temp.getIdpaciente()+"\",\""+temp.getIdunidad_academica()+"\")'><img width='24px' height='24px' src='../images/guardar.png' /></button>]]></cell></row>";	 
 							
 									 }
 									 info+=data+"</rows>";

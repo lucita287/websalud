@@ -15,6 +15,7 @@ import data.CArea_Examen;
 import data.CCategoria;
 import data.CCategoria_Interpretacion;
 import data.CCita;
+import data.CCita_Paciente;
 import data.CCondicion;
 import data.CConfiguracion_Examen;
 import data.CDependencia;
@@ -1516,7 +1517,7 @@ public class CDataExam extends CDataBase {
 		" ifnull(idemer_parentesco,'') idemer_parentesco, "+
 		" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
 		" ifnull(p.estado_civilidestado_civil,0) idestado_civil, "+
-		" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, estado, examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
+		" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, ifnull(estado,0) estado, ifnull(examen_linea,0) examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
 		" FROM paciente p "+
 		" where  usuario=?  ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -1555,7 +1556,7 @@ public class CDataExam extends CDataBase {
 		" ifnull(idemer_parentesco,'') idemer_parentesco, "+
 		" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
 		" ifnull(p.estado_civilidestado_civil,0) idestado_civil, "+
-		" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, estado, examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
+		" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, ifnull(estado,0) estado, ifnull(examen_linea,0) examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
 		" FROM paciente p "+
 		" where  idpaciente=?  ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -1594,7 +1595,7 @@ public class CDataExam extends CDataBase {
 					" ifnull(idemer_parentesco,'') idemer_parentesco, "+
 					" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
 					" ifnull(p.estado_civilidestado_civil,0) idestado_civil, "+
-					" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, estado, examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
+					" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, ifnull(estado,0) estado, ifnull(examen_linea,0) examen_linea, ifnull(idunidad_academica,0) idunidad_academica "+
 					" FROM paciente p where ( upper(p.nombre) like ? and upper(p.apellido) like ? ) limit 30 ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setString(1,"%"+nombre.trim().toUpperCase()+"%");
@@ -1701,6 +1702,31 @@ public class CDataExam extends CDataBase {
 			stm.setInt(8, pac.getIdemer_parentesco());
 			stm.setInt(9, pac.getIdpaciente());
 			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	public boolean UpdatePaciente2(CPaciente  pac){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET nombre = ?, apellido = ?, fecha_nac = ?, direccion = ?, telefono = ?, movil = ?, email = ?, sexo = ?, idunidad_academica = ?  WHERE   idpaciente = ?");
+			stm.setString(1,pac.getNombre());
+			stm.setString(2, pac.getApellido());
+			stm.setDate(3, new java.sql.Date(pac.getFecha_nacimiento().getTime()));
+			stm.setString(4, pac.getDireccion());
+			stm.setString(5, pac.getTelefono());
+			stm.setString(6, pac.getMovil());
+			stm.setString(7, pac.getEmail());
+			stm.setInt(8, pac.getSexo());
+			if(pac.getIdunidad_academica()==0) stm.setNull(9, java.sql.Types.NULL);
+			else stm.setInt(9,pac.getIdunidad_academica());
+			stm.setInt(10,pac.getIdpaciente());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -2430,7 +2456,7 @@ public class CDataExam extends CDataBase {
 		ArrayList<CCita> ret=new ArrayList<CCita>();
 		try{
 			String sql="SELECT da.idcita, da.fecha, da.hora_inicio, da.hora_fin, da.tipo_examen , da.cupo, da.estado, "+
-			" (select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cant "+ 		
+			" (select count(*) from  cita_paciente cp where (cp.estado = 1 or cp.estado=3) and cp.idcita= da.idcita) cant "+ 		
 			" FROM cita da "+
 			" where (da.fecha>=? and da.fecha<=?) ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -2466,7 +2492,7 @@ public class CDataExam extends CDataBase {
 			GregorianCalendar  calendar2=new GregorianCalendar();
 			calendar2.setTime(fecha_fin);
 			 String sql="SELECT da.idcita, estado, tipo_examen, cupo, fecha, hora_inicio, hora_fin, "+
-					 " (select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cant " 
+					 " (select count(*) from  cita_paciente cp where (cp.estado = 1 or cp.estado=3) and cp.idcita= da.idcita) cant " 
 					 +" FROM cita da where da.fecha=? and hour(hora_inicio)=? and minute(hora_inicio)=? "+
             " and hour(hora_fin)=? and minute(hora_fin)=? ";
 			
@@ -2502,7 +2528,7 @@ public class CDataExam extends CDataBase {
 		 ArrayList<CCita> lista=new  ArrayList<CCita>();
 		 try{    
 			 String sql="SELECT t.idcita, t.estado, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, "+
-					 " (select count(*) from cita_paciente cp where cp.estado = 1 and t.idcita=cp.idcita) cant " 
+					 " (select count(*) from cita_paciente cp where (cp.estado = 1 or cp.estado=3) and t.idcita=cp.idcita) cant " 
 					 +" FROM cita t where month(t.fecha)=? and year(t.fecha)=? ";
 			 if(tipo_examen==1){
 				 sql+=" and tipo_examen=2 ";
@@ -2610,18 +2636,18 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
-	public ArrayList<CCita> ListCitasEstudiante(int idpaciente){
-		 ArrayList<CCita> lista=new  ArrayList<CCita>();
+	public ArrayList<CCita_Paciente> ListCitasEstudiante(CPaciente idpaciente){
+		 ArrayList<CCita_Paciente> lista=new  ArrayList<CCita_Paciente>();
 		 try{    
-			 String sql="SELECT t.idcita, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, cp.estado "
+			 String sql="SELECT t.idcita, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, t.estado, "+
+					 " cp.estado estado_paciente, cp.recibo_pago "
 					 +" FROM cita t inner join cita_paciente cp on cp.idcita=t.idcita  where cp.idpaciente=? ";
 			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-	        	stm.setInt(1, idpaciente);
+	        	stm.setInt(1, idpaciente.getIdpaciente());
 	        	
 	        	    ResultSet rs=stm.executeQuery();
 	                while(rs.next()){                							
-	                                lista.add(
-	                                		new CCita(
+	                         CCita cita=	new CCita(
 	                                				rs.getInt("idcita"),
 	                                				new java.util.Date(rs.getDate("fecha").getTime()),
 	                                				new java.util.Date(rs.getTimestamp("hora_inicio").getTime()),
@@ -2629,9 +2655,9 @@ public class CDataExam extends CDataBase {
 	                                				rs.getInt("estado"),
 	                                				rs.getInt("tipo_examen"),
 	                                				rs.getInt("cupo"),
-	                                				rs.getInt("estado"))
-	                                		); 
-
+	                                				rs.getInt("estado"));
+	                         CCita_Paciente cita_pac=new CCita_Paciente(idpaciente,cita,rs.getString("recibo_pago"),rs.getInt("estado_paciente"));
+	                        lista.add(cita_pac);
 	                }
 	                rs.close();
 	                stm.close();
@@ -2643,7 +2669,38 @@ public class CDataExam extends CDataBase {
 		 return lista;
 		 
 	}
-	
+	public ArrayList<CCita> ListCitasEstudiante(int idpaciente){
+		 ArrayList<CCita> lista=new  ArrayList<CCita>();
+		 try{    
+			 String sql="SELECT t.idcita, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, t.estado, "+
+					 " cp.estado estado_paciente, cp.recibo_pago "
+					 +" FROM cita t inner join cita_paciente cp on cp.idcita=t.idcita  where cp.idpaciente=? ";
+			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+	        	stm.setInt(1, idpaciente);
+	        	
+	        	    ResultSet rs=stm.executeQuery();
+	                while(rs.next()){                							
+	                         CCita cita=	new CCita(
+	                                				rs.getInt("idcita"),
+	                                				new java.util.Date(rs.getDate("fecha").getTime()),
+	                                				new java.util.Date(rs.getTimestamp("hora_inicio").getTime()),
+	                                				new java.util.Date(rs.getTimestamp("hora_fin").getTime()),
+	                                				rs.getInt("estado"),
+	                                				rs.getInt("tipo_examen"),
+	                                				rs.getInt("cupo"),
+	                                				rs.getInt("estado"));
+	                        lista.add(cita);
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				e.printStackTrace();
+				 //CLogger.write("1", this, e);
+			} 
+		 
+		 return lista;
+		 
+	}
 	
 	
 	public int UpdatePacienteCita(int idcita,int idpaciente){
@@ -2694,7 +2751,7 @@ public class CDataExam extends CDataBase {
 			}
 			
 			String sql="select * from (SELECT p.idpaciente,p.carne, p.nombre, p.apellido, ifnull(p.fecha_nac,now()) fecha_nac,  "+
-					"u.nombre unidad, p.idunidad_academica, cp.recibo_pago, c.idcita, "+
+					"ifnull(u.nombre,'') unidad, p.idunidad_academica, cp.recibo_pago, c.idcita, ifnull(p.examen_linea,0) examen_linea, "+
 					"cp.estado estado,  @rownum:=@rownum+1 rownum  "+
 					"FROM cita c inner join cita_paciente cp on c.idcita=cp.idcita "+
 					"inner join paciente p on p.idpaciente=cp.idpaciente "+
@@ -2717,7 +2774,7 @@ public class CDataExam extends CDataBase {
 						0, "",
 						"", 0,"",
 						rs.getString("unidad"),rs.getString("apellido"),0,0,
-						rs.getInt("estado"),0,rs.getInt("idcita"));
+						rs.getInt("estado"),rs.getInt("examen_linea"),rs.getInt("idcita"));
 
 				ret.add(news);
 				
@@ -2768,7 +2825,7 @@ public class CDataExam extends CDataBase {
 		CCita ret=null;
 		try{
 			String sql="SELECT da.idcita, da.fecha, da.hora_inicio, da.hora_fin, da.tipo_examen , da.cupo, da.estado, "+
-			" (select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cant "+ 		
+			" (select count(*) from  cita_paciente cp where (cp.estado = 1 or cp.estado=3 ) and cp.idcita= da.idcita) cant "+ 		
 			" FROM cita da "+
 			" where da.idcita=? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -2799,7 +2856,7 @@ public class CDataExam extends CDataBase {
 		try{
 			String sql="SELECT max(da.idcita) idcita "+		
 			" FROM cita da inner join cita_paciente cp on cp.idcita=da.idcita "+
-			" where cp.idpaciente=? ";
+			" where cp.idpaciente=? and cp.estado!=2 ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1, pac.getIdpaciente());
 			ResultSet rs=stm.executeQuery();
@@ -3678,7 +3735,7 @@ public class CDataExam extends CDataBase {
 try{
 			
 			String sql="select * from (select da.idcita, da.estado, da.tipo_examen, da.cupo, da.fecha, da.hora_inicio, "+
-					" da.hora_fin, cupo -(select count(*) from  cita_paciente cp where cp.estado = 1 and cp.idcita= da.idcita) cupo_disp "+
+					" da.hora_fin, cupo -(select count(*) from  cita_paciente cp where (cp.estado = 1 or cp.estado=3) and cp.idcita= da.idcita) cupo_disp "+
 					"from cita da where fecha > DATE_ADD(now(), INTERVAL 2 DAY) and tipo_examen=? and estado=2 ) tab "+
 					" where cupo_disp>0 limit 4 ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);

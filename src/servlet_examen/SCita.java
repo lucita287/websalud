@@ -160,10 +160,12 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
 			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			HttpSession sessiones=request.getSession(false); 
+			String boleta=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("boleta")), codificacion);
+			boleta=(boleta.length()>=30)?boleta.substring(0, 30):boleta;
 			if(sessiones!=null){
 				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				if(pac!=null && idcita>0){
-					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente(),request.getParameter("boleta"));
+					int respuesta=dbo.AsignarCita(idcita, pac.getIdpaciente(),boleta);
 					if(respuesta>0){
 						result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 					}else{
@@ -258,6 +260,8 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			int idpaciente=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idpaciente")));
 			String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			String boleta=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("boleta")), codificacion);
+			
+			boleta=(boleta.length()>=30)?boleta.substring(0, 30):boleta;
 				if(idpaciente>0 && idcita>0){
 					boolean respuesta=dbo.UpdatePacienteCita(idcita, idpaciente,boleta);
 					if(respuesta){

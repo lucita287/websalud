@@ -44,6 +44,18 @@ Apellido <input type="text" id="apellido" />
 <button onclick="buscarNombre()" class="mybutton">BUSCAR</button>
 <div id="respuesta"></div>
 <script>
+$('#nombre').keypress(function(e){
+	if(e.keyCode == 13)
+	{ 
+		buscarNombre();
+	}
+});
+$('#apellido').keypress(function(e){
+	if(e.keyCode == 13)
+	{ 
+		buscarNombre();
+	}
+});
 function buscarNombre(){
 	cadena = [ 'a=buscar_nombre','nombre='+$("#nombre").val(),'apellido='+$("#apellido").val(),].join('&');
 	 

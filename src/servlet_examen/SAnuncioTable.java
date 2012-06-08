@@ -52,7 +52,6 @@ public class SAnuncioTable extends HttpServlet {
 					 ArrayList<CAnuncio> lista=dbo.getAnuncioLista();
 					 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 					 info+="<rows><page>1</page><total>"+lista.size()+"</total>";
-					 
 					 String data="";
 					 for(int i=0; i<lista.size();i++){
 						 CAnuncio temp=lista.get(i);
