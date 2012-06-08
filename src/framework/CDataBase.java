@@ -97,7 +97,7 @@ public class CDataBase {
                 stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("1", this, e);
+			 e.printStackTrace(); CLogger.write("1", this, e);
 		}
 		return temp;
 	}
@@ -114,7 +114,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("2", this, e);
+			 e.printStackTrace(); CLogger.write("2", this, e);
 		}
 		return lista;
 	}
@@ -131,7 +131,7 @@ public class CDataBase {
 			temp=rs2.getInt("cant");
 		}catch(Throwable e){
 			
-			 CLogger.write("3", this, e);
+			 e.printStackTrace(); CLogger.write("3", this, e);
 		}
 		
 		return temp;
@@ -139,8 +139,8 @@ public class CDataBase {
 	public ArrayList<CNoticia> getNoticias(){
 		ArrayList<CNoticia> ret=new ArrayList<CNoticia>();
 		try{
-			String sql="SELECT noti.idnoticia, noti.titulo noti_titulo, noti.descripcion noti_descripcion,descripcion_corta, noti.areaidarea idarea, noti.fecha_inicio fecha_inicio, "+
-"noti.fecha_fin fecha_fin, noti.prioridad prioridad, a.nombre nombre_area, m.idmultimedia idmultimedia, m.direccion direccion_m, m.direccion_relativa direccion_rel, m2.idmultimedia idmultimedia2, m2.direccion direccion_m2, m2.direccion_relativa direccion_rel2, noti.estado  "+
+			String sql="SELECT noti.idnoticia, noti.titulo noti_titulo, noti.descripcion noti_descripcion,descripcion_corta, noti.areaidarea idarea, ifnull(noti.fecha_inicio,now())  fecha_inicio, "+
+" ifnull(noti.fecha_fin,now()) fecha_fin, noti.prioridad prioridad, a.nombre nombre_area, m.idmultimedia idmultimedia, m.direccion direccion_m, m.direccion_relativa direccion_rel, m2.idmultimedia idmultimedia2, m2.direccion direccion_m2, m2.direccion_relativa direccion_rel2, noti.estado  "+
   "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
   "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia "+
   "left outer join multimedia m2 on noti.multimediaidmultimedia_pdf=m2.idmultimedia "+
@@ -151,8 +151,13 @@ public class CDataBase {
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
 				CMultimedia multi2=new CMultimedia(rs.getInt("idmultimedia2"),rs.getString("direccion_m2"),rs.getString("direccion_rel2"),0L,0,null);
-				CNoticia news=new CNoticia(rs.getString("noti_titulo"),rs.getString("noti_descripcion"),rs.getString("descripcion_corta"),multi,
-						new java.util.Date(rs.getDate("fecha_inicio").getTime()),new java.util.Date(rs.getDate("fecha_fin").getTime()),rs.getInt("prioridad"),rs.getInt("idnoticia"), rs.getInt("estado"),area,multi2);
+				CNoticia news=new CNoticia(rs.getString("noti_titulo"),
+						rs.getString("noti_descripcion"),
+						rs.getString("descripcion_corta"),multi,
+						new java.util.Date(rs.getDate("fecha_inicio").getTime()),
+						new java.util.Date(rs.getDate("fecha_fin").getTime()),
+						rs.getInt("prioridad"),rs.getInt("idnoticia"),
+						rs.getInt("estado"),area,multi2);
 				ret.add(news);
 				
 			}
@@ -160,7 +165,7 @@ public class CDataBase {
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("4", this, e);
+			 e.printStackTrace(); CLogger.write("4", this, e);
 		}
 		return ret;
 	}
@@ -179,7 +184,7 @@ public class CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 CLogger.write("5", this, e);
+			 e.printStackTrace(); CLogger.write("5", this, e);
 		}
 		
 		return temp_menu;
@@ -207,7 +212,7 @@ public class CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 CLogger.write("6", this, e);
+			 e.printStackTrace(); CLogger.write("6", this, e);
 		}
 		return temp;
 	}
@@ -244,7 +249,7 @@ public class CDataBase {
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("7", this, e);
+			 e.printStackTrace(); CLogger.write("7", this, e);
 		}
 		return ret;
 	}
@@ -270,7 +275,7 @@ public class CDataBase {
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("8", this, e);
+			 e.printStackTrace(); CLogger.write("8", this, e);
 		}
 		
 		return false;
@@ -296,7 +301,7 @@ public class CDataBase {
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("9", this, e);
+			 e.printStackTrace(); CLogger.write("9", this, e);
 		}
 		
 		return false;
@@ -339,7 +344,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("10", this, e);
+			 e.printStackTrace(); CLogger.write("10", this, e);
 		}
 		}
         return ret;
@@ -366,7 +371,7 @@ public class CDataBase {
 			temp=rs2.getInt("cant");
 		}catch(Throwable e){
 			
-			 CLogger.write("11", this, e);
+			 e.printStackTrace(); CLogger.write("11", this, e);
 		}
 		}
 		return temp;
@@ -393,7 +398,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("12", this, e);
+			 e.printStackTrace(); CLogger.write("12", this, e);
 		}
         return ret;
 	}
@@ -424,7 +429,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("13", this, e);
+			 e.printStackTrace(); CLogger.write("13", this, e);
 		}
         }
         return ret;
@@ -444,7 +449,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("14", this, e);
+			 e.printStackTrace(); CLogger.write("14", this, e);
 		}
         return ret;
 	}
@@ -462,7 +467,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("15", this, e);
+			 e.printStackTrace(); CLogger.write("15", this, e);
 		}
         return ret;
 	}
@@ -481,7 +486,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("16", this, e);
+			 e.printStackTrace(); CLogger.write("16", this, e);
 		}
         return ret;
 	}
@@ -501,7 +506,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("17", this, e);
+			 e.printStackTrace(); CLogger.write("17", this, e);
 		}
         return ret;
 	}
@@ -517,7 +522,7 @@ public class CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 CLogger.write("18", this, e);
+			 e.printStackTrace(); CLogger.write("18", this, e);
 		}
 		
 		return temp;
@@ -532,7 +537,7 @@ public class CDataBase {
 			temp=rs2.getInt("cant");
 		}catch(Throwable e){
 			
-			 CLogger.write("19", this, e);
+			 e.printStackTrace(); CLogger.write("19", this, e);
 		}
 		
 		return temp;
@@ -552,7 +557,7 @@ public class CDataBase {
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("20", this, e);
+			 e.printStackTrace(); CLogger.write("20", this, e);
 		}
 		
 		return false;
@@ -569,7 +574,7 @@ public class CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 CLogger.write("21", this, e);
+			 e.printStackTrace(); CLogger.write("21", this, e);
 		}
 		
 		return temp;
@@ -586,7 +591,7 @@ public class CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 CLogger.write("22", this, e);
+			 e.printStackTrace(); CLogger.write("22", this, e);
 		}
 		return temp;
 	}
@@ -604,7 +609,7 @@ public class CDataBase {
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("23", this, e);
+			 e.printStackTrace(); CLogger.write("23", this, e);
 		}
 		
 		return false;
@@ -621,7 +626,7 @@ public class CDataBase {
 			temp=rs2.getInt("cant");
 		} catch(Throwable e){
 			
-			 CLogger.write("24", this, e);
+			 e.printStackTrace(); CLogger.write("24", this, e);
 		}
 		
 		return temp;
@@ -645,7 +650,7 @@ public class CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("25", this, e);
+			 e.printStackTrace(); CLogger.write("25", this, e);
 		}
         return ret;
 	}
@@ -666,7 +671,7 @@ public CContenido getContenido(int idcontenido){
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("26", this, e);
+			 e.printStackTrace(); CLogger.write("26", this, e);
 		}
         return temp;
 	}
@@ -692,7 +697,7 @@ public CContenido getContenido(int idcontenido){
 			
 		} catch(Throwable e){
 			
-			 CLogger.write("27", this, e);
+			 e.printStackTrace(); CLogger.write("27", this, e);
 		}
 		
 		return false;
@@ -708,7 +713,7 @@ public CContenido getContenido(int idcontenido){
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
 			
-			 CLogger.write("28", this, e);
+			 e.printStackTrace(); CLogger.write("28", this, e);
 		}
 		
 		return temp;
@@ -724,7 +729,7 @@ public CContenido getContenido(int idcontenido){
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
 			
-			 CLogger.write("29", this, e);
+			 e.printStackTrace(); CLogger.write("29", this, e);
 		}
 		
 		return temp;
@@ -751,7 +756,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			e.printStackTrace();
-			 CLogger.write("30", this, e);
+			 e.printStackTrace(); CLogger.write("30", this, e);
 		}
 		
 		return false;
@@ -780,7 +785,7 @@ public CContenido getContenido(int idcontenido){
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("31", this, e);
+			 e.printStackTrace(); CLogger.write("31", this, e);
 		}
         return ret;
 	}
@@ -796,7 +801,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("32", this, e);
+			 e.printStackTrace(); CLogger.write("32", this, e);
 		}
 		
 		return false;
@@ -818,7 +823,7 @@ public CContenido getContenido(int idcontenido){
 				return true;
 		}catch(Throwable e){
 			
-			 CLogger.write("33", this, e);
+			 e.printStackTrace(); CLogger.write("33", this, e);
 		}
 		}
 		return false;
@@ -860,7 +865,7 @@ public CContenido getContenido(int idcontenido){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("34", this, e);
+			 e.printStackTrace(); CLogger.write("34", this, e);
 		}
 		}
 		return ret;
@@ -884,7 +889,7 @@ public CContenido getContenido(int idcontenido){
 					temp=rs2.getInt("cant");
 				}catch(Throwable e){
 					
-					 CLogger.write("35", this, e);
+					 e.printStackTrace(); CLogger.write("35", this, e);
 				}
 		}
 		return temp;
@@ -913,7 +918,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("36", this, e);
+			 e.printStackTrace(); CLogger.write("36", this, e);
 		}
 		
 		return false;
@@ -942,7 +947,7 @@ public CContenido getContenido(int idcontenido){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("37", this, e);
+			 e.printStackTrace(); CLogger.write("37", this, e);
 		}
 		return news;
 	}
@@ -970,7 +975,7 @@ public CContenido getContenido(int idcontenido){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("38", this, e);
+			 e.printStackTrace(); CLogger.write("38", this, e);
 		}
 		return news;
 	}
@@ -1001,7 +1006,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("39", this, e);
+			 e.printStackTrace(); CLogger.write("39", this, e);
 		}
 		
 		return false;
@@ -1041,7 +1046,7 @@ public CContenido getContenido(int idcontenido){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("40", this, e);
+			 e.printStackTrace(); CLogger.write("40", this, e);
 		}
 		return ret;
 	}
@@ -1069,7 +1074,7 @@ public CContenido getContenido(int idcontenido){
 			temp=rs2.getInt("cant");
 		}catch(Throwable e){
 			
-			 CLogger.write("41", this, e);
+			 e.printStackTrace(); CLogger.write("41", this, e);
 		}
 		
 		return temp;
@@ -1088,7 +1093,7 @@ public CContenido getContenido(int idcontenido){
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("42", this, e);
+			 e.printStackTrace(); CLogger.write("42", this, e);
 		}
 		return temp;
 	}
@@ -1124,7 +1129,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("43", this, e);
+			 e.printStackTrace(); CLogger.write("43", this, e);
 		}
 		
 		return false;
@@ -1166,7 +1171,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("44", this, e);
+			 e.printStackTrace(); CLogger.write("44", this, e);
 		}
 		
 		return false;
@@ -1190,7 +1195,7 @@ public CContenido getContenido(int idcontenido){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("45", this, e);
+			 e.printStackTrace(); CLogger.write("45", this, e);
 		}
 		
 		return false;
@@ -1210,7 +1215,7 @@ public ArrayList<CCategoria_permiso> getListaCategoriaPermisos(){
             stm.close();
     }catch(Throwable e){
 		
-		 CLogger.write("46", this, e);
+		 e.printStackTrace(); CLogger.write("46", this, e);
 	}
     return list;
     
@@ -1233,7 +1238,7 @@ public ArrayList<CPermiso> getListaPermiso(){
                 stm.close();
         }catch(Throwable e){
 			
-			 CLogger.write("47", this, e);
+			 e.printStackTrace(); CLogger.write("47", this, e);
 		}
         return ret;
 	}
@@ -1256,7 +1261,7 @@ public ArrayList<CPermiso> getListaPermisoCate(int idcategoria){
             stm.close();
     }catch(Throwable e){
 		
-		 CLogger.write("48", this, e);
+		 e.printStackTrace(); CLogger.write("48", this, e);
 	}
     return ret;
 }
@@ -1279,7 +1284,7 @@ public ArrayList<CPermiso> getListaPermiso(int idusuario){
             stm.close();
     }catch(Throwable e){
 		
-		 CLogger.write("49", this, e);
+		 e.printStackTrace(); CLogger.write("49", this, e);
 	}
     return ret;
 }
@@ -1300,7 +1305,7 @@ public ArrayList<Integer> getListaPermisoInt(int idusuario){
             stm.close();
     }catch(Throwable e){
 		
-		 CLogger.write("50", this, e);
+		 e.printStackTrace(); CLogger.write("50", this, e);
 	}
     return ret;
 }
@@ -1337,7 +1342,7 @@ public boolean safePermisoUsuario(int idusuario,ArrayList<Integer> list,ArrayLis
 		 }
 	}catch(Throwable e){
 		
-		 CLogger.write("51", this, e);
+		 e.printStackTrace(); CLogger.write("51", this, e);
 	}
 	
 	return b;
@@ -1353,7 +1358,7 @@ public int deleteNoticia(int idnoticia){
 		temp=rs2.getInt("result");
 	}catch(Throwable e){
 		
-		 CLogger.write("52", this, e);
+		 e.printStackTrace(); CLogger.write("52", this, e);
 	}
 	
 	return temp;
@@ -1388,7 +1393,7 @@ public ArrayList<CResponsable> getListaResponsables(int ordenar,int asc,int min,
 		stm.close();
 	}catch(Throwable e){
 		
-		 CLogger.write("53", this, e);
+		 e.printStackTrace(); CLogger.write("53", this, e);
 	}
 	return ret;
 }
@@ -1410,7 +1415,7 @@ public int getResponsableTotal(int type,String busqueda){
 		temp=rs2.getInt("cant");
 	}catch(Throwable e){
 		
-		 CLogger.write("54", this, e);
+		 e.printStackTrace(); CLogger.write("54", this, e);
 	}
 	
 	return temp;
@@ -1434,7 +1439,7 @@ public int getResponsableTotal(int type,String busqueda){
 		
 	}catch(Throwable e){
 		
-		 CLogger.write("55", this, e);
+		 e.printStackTrace(); CLogger.write("55", this, e);
 	}
 	
 	return false;
@@ -1461,7 +1466,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("56", this, e);
+			 e.printStackTrace(); CLogger.write("56", this, e);
 		}
 		return ret;
 	}
@@ -1485,7 +1490,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("57", this, e);
+			 e.printStackTrace(); CLogger.write("57", this, e);
 		}
 		
 		return false;
@@ -1500,7 +1505,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("58", this, e);
+			 e.printStackTrace(); CLogger.write("58", this, e);
 		}
 		
 		return false;
@@ -1522,7 +1527,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("59", this, e);
+			 e.printStackTrace(); CLogger.write("59", this, e);
 		}
 		return ret;
 	}
@@ -1545,7 +1550,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("60", this, e);
+			 e.printStackTrace(); CLogger.write("60", this, e);
 		}
 		return ret;
 	}
@@ -1576,7 +1581,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("61", this, e);
+			 e.printStackTrace(); CLogger.write("61", this, e);
 		}
 		return ret;
 	}
@@ -1597,7 +1602,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("62", this, e);
+			 e.printStackTrace(); CLogger.write("62", this, e);
 		}
 		return ret;
 	}
@@ -1617,7 +1622,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("cant");
 		}catch(Throwable e){
 			
-			 CLogger.write("63", this, e);
+			 e.printStackTrace(); CLogger.write("63", this, e);
 		}
 		
 		return temp;
@@ -1635,7 +1640,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("64", this, e);
+			 e.printStackTrace(); CLogger.write("64", this, e);
 		}
 		
 		return false;
@@ -1654,7 +1659,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("65", this, e);
+			 e.printStackTrace(); CLogger.write("65", this, e);
 		}
 		
 		return false;
@@ -1675,7 +1680,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("66", this, e);
+			 e.printStackTrace(); CLogger.write("66", this, e);
 		}
 		return ret;
 	}
@@ -1689,7 +1694,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("67", this, e);
+			 e.printStackTrace(); CLogger.write("67", this, e);
 		}
 		
 		return false;
@@ -1735,7 +1740,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("68", this, e);
+			 e.printStackTrace(); CLogger.write("68", this, e);
 		}
 		}
 		return ret;
@@ -1763,7 +1768,7 @@ public int getResponsableTotal(int type,String busqueda){
 					temp=rs2.getInt("cant");
 				}catch(Throwable e){
 					
-					 CLogger.write("69", this, e);
+					 e.printStackTrace(); CLogger.write("69", this, e);
 				}
 		}
 		return temp;
@@ -1789,7 +1794,7 @@ public int getResponsableTotal(int type,String busqueda){
 			 }
 		}catch(Throwable e){
 			
-			 CLogger.write("70", this, e);
+			 e.printStackTrace(); CLogger.write("70", this, e);
 		}
 		
 		return b;
@@ -1809,7 +1814,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("71", this, e);
+			 e.printStackTrace(); CLogger.write("71", this, e);
 		}
 		
 		return false;
@@ -1828,7 +1833,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("cant");
 		} catch(Throwable e){
 			
-			 CLogger.write("72", this, e);
+			 e.printStackTrace(); CLogger.write("72", this, e);
 		}
 		
 		return temp;
@@ -1853,7 +1858,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("73", this, e);
+			 e.printStackTrace(); CLogger.write("73", this, e);
 		}
 		return news;
 	}
@@ -1871,7 +1876,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("74", this, e);
+			 e.printStackTrace(); CLogger.write("74", this, e);
 		}
 		return ret;
 	}
@@ -1891,7 +1896,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("75", this, e);
+			 e.printStackTrace(); CLogger.write("75", this, e);
 		}
 		
 		return false;
@@ -1919,7 +1924,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
 			
-			 CLogger.write("76", this, e);
+			 e.printStackTrace(); CLogger.write("76", this, e);
 		}
 		
 		return temp;
@@ -1945,7 +1950,7 @@ public int getResponsableTotal(int type,String busqueda){
 			rs.close();
 			stm.close();
 		}catch(Throwable e){
-			 CLogger.write("77", this, e);
+			 e.printStackTrace(); CLogger.write("77", this, e);
 		}
 		return ret;
 	}
@@ -1966,7 +1971,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("78", this, e);
+			 e.printStackTrace(); CLogger.write("78", this, e);
 		}
 		return ret;
 	}
@@ -1981,7 +1986,7 @@ public int getResponsableTotal(int type,String busqueda){
                 rs.close();
                 stm.close();
 		}catch(Throwable e){
-			CLogger.write("78a", this, e);
+			e.printStackTrace(); CLogger.write("78a", this, e);
 		}
 		return list;
 	}
@@ -2002,7 +2007,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
 			
-			 CLogger.write("82", this, e);
+			 e.printStackTrace(); CLogger.write("82", this, e);
 		}
 		
 		return temp;
@@ -2021,7 +2026,7 @@ public int getResponsableTotal(int type,String busqueda){
 		 }
 		}catch(Throwable e){
 			
-			 CLogger.write("83", this, e);
+			 e.printStackTrace(); CLogger.write("83", this, e);
 		}
 		
 		return cant;
@@ -2037,7 +2042,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
 			
-			 CLogger.write("84", this, e);
+			 e.printStackTrace(); CLogger.write("84", this, e);
 		}
 		
 		return temp;
@@ -2053,7 +2058,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
 			
-			 CLogger.write("85", this, e);
+			 e.printStackTrace(); CLogger.write("85", this, e);
 		}
 		
 		return temp;
@@ -2080,7 +2085,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("86", this, e);
+			 e.printStackTrace(); CLogger.write("86", this, e);
 		}
 		return ret;
 	}
@@ -2115,7 +2120,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("87", this, e);
+			 e.printStackTrace(); CLogger.write("87", this, e);
 		}
 		return ret;
 	}
@@ -2137,7 +2142,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("88", this, e);
+			 e.printStackTrace(); CLogger.write("88", this, e);
 		}
 		return ret;
 	}
@@ -2163,7 +2168,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("89", this, e);
+			 e.printStackTrace(); CLogger.write("89", this, e);
 		}
 		return ret;
 	}
@@ -2187,7 +2192,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("90", this, e);
+			 e.printStackTrace(); CLogger.write("90", this, e);
 		}
 		return ret;
 	}
@@ -2216,7 +2221,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("91", this, e);
+			 e.printStackTrace(); CLogger.write("91", this, e);
 		}
 		return ret;
 	}
@@ -2243,7 +2248,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("92", this, e);
+			 e.printStackTrace(); CLogger.write("92", this, e);
 		}
 		
 		return false;
@@ -2285,7 +2290,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("93", this, e);
+			 e.printStackTrace(); CLogger.write("93", this, e);
 		}
 		return list;
 	}
@@ -2316,7 +2321,7 @@ public int getResponsableTotal(int type,String busqueda){
 			temp=rs2.getInt("cant");
 		}catch(Throwable e){
 			
-			 CLogger.write("94", this, e);
+			 e.printStackTrace(); CLogger.write("94", this, e);
 		}
 		
 		return temp;
@@ -2343,7 +2348,7 @@ public int getResponsableTotal(int type,String busqueda){
 				stm.close();
 			}catch(Throwable e){
 				
-				 CLogger.write("95", this, e);
+				 e.printStackTrace(); CLogger.write("95", this, e);
 			}
 		}
 		return list;
@@ -2358,7 +2363,7 @@ public int getResponsableTotal(int type,String busqueda){
 			
 		}catch(Throwable e){
 			
-			 CLogger.write("96", this, e);
+			 e.printStackTrace(); CLogger.write("96", this, e);
 		}
 		
 		return false;
@@ -2393,7 +2398,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.close();
 		}catch(Throwable e){
 			
-			 CLogger.write("96", this, e);
+			 e.printStackTrace(); CLogger.write("96", this, e);
 		}
 		return list;
 		
