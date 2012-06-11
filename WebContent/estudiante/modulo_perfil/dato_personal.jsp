@@ -61,7 +61,7 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 String error=valid.ValidarRequest(request.getParameter("e"));
     
 	if(!error.isEmpty()){
-		out.println("<div class='ui-state-default ui-corner-all  ui-state-error'>"+error+"</div>");
+		out.println("<div class='ui-state-default ui-corner-all  ui-state-error'><h3>"+error+"</h3></div>");
 	}
 	 %>
 <div class="button-sig">

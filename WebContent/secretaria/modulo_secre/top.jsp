@@ -13,3 +13,36 @@
 <script type="text/javascript" src="../lib/flexigrid.js" charset="utf-8"></script>
 <script type="text/javascript" src="../lib/jquery.maskedinput-1.2.2.js"></script>
 <script type="text/javascript" src="../lib/system_admin.js"></script>
+<link rel="shortcut icon" href="../favi.ico" type="image/x-icon" />
+
+<script type="text/javascript">
+     
+
+function onBlur() {
+	document.body.className = 'blurred';
+};
+function onFocus(){
+	document.body.className = 'focused';
+	$.ajax({
+        url: "../SValidSecre",
+  	    type: 'post',
+        success: function(data){
+        	    	if (data==1){	
+		                document.location='../index.jsp';
+		            }
+        }
+    });
+};
+
+if (/*@cc_on!@*/false) { 
+	document.onfocusin = onFocus;
+	document.onfocusout = onBlur;
+} else {
+	window.onfocus = onFocus;
+	window.onblur = onBlur;
+}
+
+     
+
+
+    </script>

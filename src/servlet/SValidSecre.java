@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class SValidLogin
+ * Servlet implementation class SValidSecre
  */
-@WebServlet("/SValidLogin")
-public class SValidLogin extends HttpServlet {
+@WebServlet("/SValidSecre")
+public class SValidSecre extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SValidLogin() {
+    public SValidSecre() {
         super();
     }
 
@@ -39,7 +39,7 @@ public class SValidLogin extends HttpServlet {
 		HttpSession sessiones = request.getSession(false);
 		 PrintWriter out = response.getWriter();  
 		 
-		if(sessiones!=null &&  (sessiones.getAttribute("user_permiso")!=null ) ){
+		if(sessiones!=null &&  (sessiones.getAttribute("user_secretaria")!=null ) ){
 			 out.print("0");
 		 }else{
 			 out.print("1");

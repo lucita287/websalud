@@ -175,7 +175,7 @@ public class SLogin extends HttpServlet {
 					CUsuarioPermiso user_permiso=new CUsuarioPermiso(usuario,lista_permisos,area);
 					if( (user_permiso.getIdpermiso().indexOf(253)>-1  || user_permiso.getIdusuario().getidusuario()==1)){
 								session.setAttribute("user_secretaria",user_permiso);
-								response.sendRedirect("secretaria/index.jsp");
+								response.sendRedirect("secretaria/index.jsp?portal=1");
 					}
 			 }else{
 				 response.sendRedirect("index.jsp?e=Error en el usuario y/o password");

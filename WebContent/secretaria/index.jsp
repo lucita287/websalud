@@ -40,7 +40,10 @@
 			</div>
 			</div>
 			</div>
-	<%	} %>		
+	<%	}else{
+		response.sendRedirect("../index.jsp");
+		
+	} %>		
 			
 </body>
 </html>

@@ -67,12 +67,14 @@ public class SGenerateReportPDF extends HttpServlet {
 				String realpath=getServletContext().getRealPath("/");
 				File reportFile = new File(realpath+"/estudiante/report_view/RTitulo.jasper");
 				File r1 = new File(realpath+"/estudiante/report_view/RPregunta.jasper");
-				
+				File r3 = new File(realpath+"/estudiante/report_view/RPsicologia2.jasper");
 				
 				@SuppressWarnings("deprecation")
 				JasperReport jasperReport = (JasperReport)JRLoader.loadObject(reportFile.getPath());
 				@SuppressWarnings("deprecation")
 				JasperReport jasperR2= (JasperReport)JRLoader.loadObject(r1.getPath());
+				@SuppressWarnings("deprecation")
+				JasperReport jasperR3= (JasperReport)JRLoader.loadObject(r3.getPath());
 				
 				Map<String,Object> parameters = new HashMap<String,Object>();
 					parameters.put("idpaciente",pac.getIdpaciente() );
@@ -86,7 +88,13 @@ public class SGenerateReportPDF extends HttpServlet {
 				if(db.Connect()){
 					JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters,db.getconnection());
 					JasperPrint jp1 = JasperFillManager.fillReport(jasperR2,parameters,db.getconnection());
+					JasperPrint jp3 = JasperFillManager.fillReport(jasperR3,parameters,db.getconnection());
 					List<JRPrintPage> pages = jp1 .getPages();
+					for (int j = 0; j < pages.size(); j++) {
+			            JRPrintPage object = (JRPrintPage)pages.get(j);
+			            jasperPrint.addPage(object);
+					}
+					pages = jp3 .getPages();
 					for (int j = 0; j < pages.size(); j++) {
 			            JRPrintPage object = (JRPrintPage)pages.get(j);
 			            jasperPrint.addPage(object);

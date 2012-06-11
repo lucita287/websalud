@@ -52,6 +52,6 @@
     <location>/perror.jsp</location>
   </error-page>
   <session-config>
-    <session-timeout>40</session-timeout>
+    <session-timeout>180</session-timeout>
   </session-config>
 </web-app>
