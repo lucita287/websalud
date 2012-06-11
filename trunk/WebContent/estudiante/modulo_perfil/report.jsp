@@ -66,7 +66,9 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 
     }else{%>
 <h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
-	<%} 
-    
+	<%
+	
+    } 
+    dbo.Close();
 
 } %>

@@ -24,6 +24,7 @@ public class CSeleccionExamen {
 	public int getExamen(){
 		int result=1;
 		Iterator<CConfiguracion_Examen> it=list.iterator();
+		
 		while(it.hasNext()){
 			CConfiguracion_Examen config=it.next();
 			if(config.getTerminacion()==this.numero){
@@ -39,7 +40,7 @@ public class CSeleccionExamen {
 		data.Connect();
 		CConfiguracion config=data.getConfiguracion();
 		CSeleccionExamen selec=new CSeleccionExamen(config.getRandom_carne(),200614790,data.getListaConfiguracion_Examen());
-		System.out.println(selec.getExamen());
+
 	}
 	
 	

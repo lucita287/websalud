@@ -55,8 +55,12 @@
 										    				etiqueta="../images/uncheck1.png";
 										    			}
 										    		
+										    			if(menu.getIdmenu_categoria()==1){	
+				html+="				    				<a href=\"index.jsp?portal=11\"  style=\"width:220px; text-align: left;\" class=\"siguiente\">\n";
+										    			}else{
+				html+="				    				<a class=\"menu\" style=\"width:220px; text-align: left;\" href=\"index.jsp?portal=10&idmenu="+menu.getIdmenu_categoria()+"&auto=0&multi=1\">";						    				
+										    			}
 				
-				html+="				    				<a class=\"menu\" style=\"width:220px; text-align: left;\" href=\"index.jsp?portal=10&idmenu="+menu.getIdmenu_categoria()+"&auto=0&multi=1\">\n";
 				html+="							    			<img src=\""+ etiqueta+"\" />"+menu.getNombre()+"</a>\n";
 											    			
 											    } 

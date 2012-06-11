@@ -65,8 +65,8 @@ public class CDataPreg extends CDataBase {
 			
 			String respuesta=this.SqlRespuesta(idpaciente, idpregunta).trim();
 			if(respuesta.compareTo("")==0){
-				sql+=" false ";
-			}else {
+				sql+=" -101 ";
+			}
 				if(cond1.getSigno()==5) sql+=" "+valor+" in ("+respuesta+")";
 				else if(cond1.getSigno()==6) sql+=" "+ valor+" not in ("+respuesta+") ";
 				else if(cond1.getSigno()==1 && respuesta.contains(",")) sql+=" "+valor+" > GREATEST("+respuesta+") ";
@@ -77,8 +77,8 @@ public class CDataPreg extends CDataBase {
 				else if(cond1.getSigno()==2 ) sql+=" "+valor+" > "+respuesta+" ";
 				else if(cond1.getSigno()==3 ) sql+=" "+valor+" >= "+respuesta+" ";
 				else if(cond1.getSigno()==4 ) sql+=" "+valor+" <= "+respuesta+" ";
-				else sql+=" false ";
-			}
+				else sql+="  "+valor+" in ( "+respuesta+" ) ";
+			
 		}else if(cond1.getTipo()==1){
 			String condicion1= recursivo(idpaciente,init,cond1.getCondicion1());
 			String condicion2= recursivo(idpaciente,init,cond1.getCondicion2());
