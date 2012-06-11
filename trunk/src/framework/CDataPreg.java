@@ -65,7 +65,7 @@ public class CDataPreg extends CDataBase {
 			
 			String respuesta=this.SqlRespuesta(idpaciente, idpregunta).trim();
 			if(respuesta.compareTo("")==0){
-				sql+=" -101 ";
+				respuesta+=" -101 ";
 			}
 				if(cond1.getSigno()==5) sql+=" "+valor+" in ("+respuesta+")";
 				else if(cond1.getSigno()==6) sql+=" "+ valor+" not in ("+respuesta+") ";
@@ -137,10 +137,10 @@ public class CDataPreg extends CDataBase {
 	public ArrayList<Integer> getResultadoCondicion(ArrayList<String> sql ){
 		ArrayList<Integer> list=new ArrayList<Integer>();
 		Iterator<String> it=sql.iterator();
-		
+		String query="";
 		while(it.hasNext()){
 				try{
-					String query=it.next();
+					query=it.next();
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(query);
 					ResultSet rs=stm.executeQuery();
 					while(rs.next()){
@@ -149,7 +149,7 @@ public class CDataPreg extends CDataBase {
 					rs.close();
 					stm.close();
 				} catch (SQLException e) {
-		
+					System.out.println(query);
 					e.printStackTrace();
 				}
 		}
