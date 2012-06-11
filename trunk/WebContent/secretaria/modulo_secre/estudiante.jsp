@@ -43,7 +43,7 @@ Iterator<CUnidad_Academica> it=list.iterator();
     			<div class="perfil">
 				<div class="tabla">
 							<div class="fila">
-								<div class="col_titulo">Carnet</div>
+								<div class="col_titulo">Carne</div>
 								<div class="colc"><input type="text" name="user" size="20px" id="carne" value="<%=(pac==null||pac.getCarne()==0)?"":pac.getCarne() %>" /> <input type="submit" name="enviar" id="button_login" class="ui-state-default ui-corner-all" value="Buscar"/> </div>
 							</div>
 							<div class="fila">
