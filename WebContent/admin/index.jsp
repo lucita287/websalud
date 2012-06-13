@@ -79,8 +79,10 @@ if(sessiones!=null && sessiones.getAttribute("username")!=null&& sessiones.getAt
 <% }else if(portal==18){ %>
 <jsp:include page="modulo_examen/admin_prereg.jsp" />
 <% }else if(portal==19){ %>
+<jsp:include page="modulo_examen/report_exam.jsp" />
+<% }else if(portal==20){ %>
 <jsp:include page="modulo_examen/estudiante.jsp" />
-<% } %> 
+<% } %>  
 </div>
 <div style="clear: both;"></div>
 
