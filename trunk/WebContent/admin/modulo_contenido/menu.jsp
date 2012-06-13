@@ -136,6 +136,10 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 				<li>
 					<a href="index.jsp?portal=18">Gestion de Resultados</a>
 				</li>
+			<% } if (user_permiso.getIdpermiso().indexOf(261)>-1  || user_permiso.getIdusuario().getidusuario()==1){ %>
+			<li>
+			<a href="index.jsp?portal=19">Reportes</a>
+			</li>
 			<% } %>
 			</ul>
 	
@@ -146,7 +150,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 		<a >Estudiantes</a>
 			<ul id="estudiante">
 				<li>
-					<a href="index.jsp?portal=19" >Perfil de estudiantes</a>
+					<a href="report_exam.jsp?portal=20" >Perfil de estudiantes</a>
 				</li>
 				
 			</ul>
@@ -178,9 +182,9 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 	  $('#admin_conte').show();
 	  <% }else if(portal>6 && portal<11){ %>
 	  $('#admin').show();
-	  <% }else if(portal>10 && portal<19){ %>
+	  <% }else if(portal>10 && portal<20){ %>
 	  $('#exam').show();
-	  <% }else if(portal>18 && portal<20){ %>
+	  <% }else if(portal>19 && portal<21){ %>
 	  $('#estudiante').show();
 	  <% } %>
 	  
