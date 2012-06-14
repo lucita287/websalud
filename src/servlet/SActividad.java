@@ -73,6 +73,7 @@ public class SActividad extends HttpServlet {
 									String contenido=(valid.ValidarRequest(request.getParameter("descripcion")));		
 									contenido=base64.decodificar(contenido);
 									contenido=valid.Limpiarvalor(contenido,codificacion);
+									int color=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("color")));
 									
 									ArrayList<Integer>lista= valid.ValidarListaNumeros(responsable);
 									String validacion=valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un area\"}");
@@ -85,7 +86,7 @@ public class SActividad extends HttpServlet {
 									if(validacion.compareTo("")==0){
 										CArea area=dbo.getCAreaEspecifico(idarea);
 										CEdificio edi=dbo.getEdificioEspecifica(idedificio);
-										CActividad act=new CActividad(0,titulo,area,contenido,edi,salon);
+										CActividad act=new CActividad(0,titulo,area,contenido,edi,salon,color);
 										boolean b=dbo.SafeActividad(act);
 										if(b){ 
 											int actividad=dbo.BuscarActividad(act);
@@ -116,7 +117,7 @@ public class SActividad extends HttpServlet {
 													data+="{idresponsable:"+responsable+"}";
 										 }
 										 data="responsables:["+data+"]";
-										 result= "{titulo:\""+valid.Limpiarvalor3(act.getTitulo())+"\",descripcion:\""+valid.Limpiarvalor3(act.getDescripcion())+"\",salon:\""+valid.Limpiarvalor3(act.getSalon())+"\",idedificio:\""+act.getEdificioidedificio().getIdedificio()+"\","+
+										 result= "{color:\""+act.getColor()+"\",titulo:\""+valid.Limpiarvalor3(act.getTitulo())+"\",descripcion:\""+valid.Limpiarvalor3(act.getDescripcion())+"\",salon:\""+valid.Limpiarvalor3(act.getSalon())+"\",idedificio:\""+act.getEdificioidedificio().getIdedificio()+"\","+
 										 		"idarea:\""+act.getAreaidarea().getidarea()+"\","+data+"}";
 									 }
 									 response.setContentType("text/html;charset="+codificacion);
@@ -135,7 +136,7 @@ public class SActividad extends HttpServlet {
 									String contenido=(valid.ValidarRequest(request.getParameter("descripcion")));		
 									contenido=base64.decodificar(contenido);
 									contenido=valid.Limpiarvalor(contenido,codificacion);
-									
+									int color=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("color")));
 									ArrayList<Integer>lista= valid.ValidarListaNumeros(responsable);
 									String validacion=valid.ValidarSiesMayor(idactividad, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una actividad\"}");
 									validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idarea, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un area\"}"):validacion;
@@ -148,7 +149,7 @@ public class SActividad extends HttpServlet {
 									if(validacion.compareTo("")==0){
 										CArea area=dbo.getCAreaEspecifico(idarea);
 										CEdificio edi=dbo.getEdificioEspecifica(idedificio);
-										CActividad act=new CActividad(idactividad,titulo,area,contenido,edi,salon);
+										CActividad act=new CActividad(idactividad,titulo,area,contenido,edi,salon,color);
 										boolean b=dbo.UpdateActividad(act);
 										if(b){ 
 											dbo.saferesponsable_actividad(idactividad,lista);

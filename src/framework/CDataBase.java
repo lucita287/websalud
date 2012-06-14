@@ -1716,7 +1716,7 @@ public int getResponsableTotal(int type,String busqueda){
 			}
 			cantidad=cantidad+1;
 			String sql="select * from (SELECT act.idactividad, act.titulo act_titulo, act.descripcion act_descripcion, act.areaidarea idarea,act.salon , "+
-						" a.nombre nombre_area, edi.idedificio, edi.nombre edificio_nombre,  @rownum:=@rownum+1 rownum "+
+						" a.nombre nombre_area,act.color ,edi.idedificio, edi.nombre edificio_nombre,  @rownum:=@rownum+1 rownum "+
 						"FROM actividad act inner join area a on a.idarea=act.areaidarea "+
 						"inner join edificio edi on edi.idedificio=act.edificioidedificio,(SELECT @rownum:=0) ro "+
 						"where  upper("+pqtype+") like ? and "+
@@ -1736,7 +1736,7 @@ public int getResponsableTotal(int type,String busqueda){
 			while(rs.next()){
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("edificio_nombre"),"","");
-				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"));
+				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"),rs.getInt("color"));
 				//CActividad(int idactividad, String titulo, CArea areaidarea,String descripcion, CResponsable responsableidresponsable,CEdificio edificioidedificio)
 				ret.add(act);
 				
@@ -1808,12 +1808,13 @@ public int getResponsableTotal(int type,String busqueda){
 		PreparedStatement stm;
 		try {
 
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO actividad ( titulo, areaidarea, descripcion, edificioidedificio, salon) VALUES ( ?, ?, ?, ?, ?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO actividad ( titulo, areaidarea, descripcion, edificioidedificio, salon,color) VALUES ( ?, ?, ?, ?, ?,?)");
 			stm.setString(1, act.getTitulo());
 			stm.setInt(2,act.getAreaidarea().getidarea());
 			stm.setString(3,act.getDescripcion());
 			stm.setInt(4,act.getEdificioidedificio().getIdedificio());
 			stm.setString(5,act.getSalon());
+			stm.setInt(6,act.getColor());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1847,7 +1848,7 @@ public int getResponsableTotal(int type,String busqueda){
 		CActividad news=null;
 		try{
 			String sql="SELECT act.idactividad, act.titulo act_titulo, act.descripcion act_descripcion, act.areaidarea idarea, act.salon, "+
-  " a.nombre nombre_area, edi.idedificio, edi.nombre edi_nombre  "+
+  " a.nombre nombre_area, edi.idedificio, edi.nombre edi_nombre, act.color  "+
   "FROM actividad act inner join area a on a.idarea=act.areaidarea "+
   " inner join edificio edi on edi.idedificio=act.edificioidedificio where idactividad=?  ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -1856,7 +1857,7 @@ public int getResponsableTotal(int type,String busqueda){
 			if(rs.next()){
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("edi_nombre"),"","");
-				news=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"));
+				news=new CActividad(rs.getInt("idactividad"),rs.getString("act_titulo"),area,rs.getString("act_descripcion"),edi,rs.getString("salon"),rs.getInt("color"));
 				
 			}
 			rs.close();
@@ -1889,13 +1890,15 @@ public int getResponsableTotal(int type,String busqueda){
 		PreparedStatement stm;
 		try {
 
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE actividad SET titulo = ?, areaidarea = ?, descripcion = ?, edificioidedificio = ?, salon = ? WHERE idactividad = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE actividad SET titulo = ?, areaidarea = ?, descripcion = ?, edificioidedificio = ?, salon = ?, color=? WHERE idactividad = ?");
 			stm.setString(1, act.getTitulo());
 			stm.setInt(2,act.getAreaidarea().getidarea());
 			stm.setString(3,act.getDescripcion());
 			stm.setInt(4,act.getEdificioidedificio().getIdedificio());
 			stm.setString(5,act.getSalon());
-			stm.setInt(6, act.getIdactividad());
+			
+			stm.setInt(6, act.getColor());
+			stm.setInt(7, act.getIdactividad());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -1937,7 +1940,7 @@ public int getResponsableTotal(int type,String busqueda){
 	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idactividad,int ordenar,int asc,int mes,int anio){
 		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
 		try{
-			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, @rownum:=@rownum+1 rownum "+
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, act.color, @rownum:=@rownum+1 rownum "+
 			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad,(SELECT @rownum:=0) ro "+
 			" where idactividad=? and month(fecha)=? and year(fecha)=? order by ? "+((asc==1)?"ASC":"DESC") ;
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -1947,7 +1950,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(4,ordenar);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"");
+				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"", rs.getInt("color"));
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);
 				
@@ -1967,7 +1970,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(1,idactividad);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"");
+				CActividad act=new CActividad(idactividad,rs.getString("titulo"),null,"",null,"",0);
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);
 				
@@ -2072,7 +2075,7 @@ public int getResponsableTotal(int type,String busqueda){
 	public ArrayList<CDetalleActividad> getListaDetalleActividad(int idarea,java.util.Date fecha_inicio, java.util.Date fecha_fin){
 		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
 		try{
-			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo "+
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, act.color "+
 			 " FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad "+
 			" where act.areaidarea=? and (da.fecha>=? and da.fecha<=?) ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -2081,7 +2084,7 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setDate(3, new java.sql.Date(fecha_fin.getTime()));
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,"",null,"");
+				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,"",null,"",rs.getInt("color"));
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);
 				
@@ -2102,7 +2105,7 @@ public int getResponsableTotal(int type,String busqueda){
 			calendar.setTime(fecha_inicio);
 			GregorianCalendar  calendar2=new GregorianCalendar();
 			calendar2.setTime(fecha_fin);
-			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre nombre_edificio, edi.direccion " +
+			String sql="SELECT da.iddetalleactividad, da.fecha, da.horainicio, da.horafin, da.actividadidactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre nombre_edificio, edi.direccion, act.color " +
 			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad inner join edificio edi on edi.idedificio=act.edificioidedificio "+
 			" where act.areaidarea=? and da.fecha=? and hour(horainicio)=? and minute(horainicio)=? "+
             " and hour(horafin)=? and minute(horafin)=? ";
@@ -2116,7 +2119,7 @@ public int getResponsableTotal(int type,String busqueda){
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
-				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,rs.getString("descripcion"),edi,rs.getString("salon"));
+				CActividad act=new CActividad(rs.getInt("actividadidactividad"),rs.getString("titulo"),null,rs.getString("descripcion"),edi,rs.getString("salon"),rs.getInt("color"));
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),new java.util.Date(rs.getDate("fecha").getTime()),new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);
 				
@@ -2156,7 +2159,7 @@ public int getResponsableTotal(int type,String busqueda){
 		ArrayList<CActividad> ret=new ArrayList<CActividad>();
 		try{
 			
-			String sql="SELECT act.idactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre nombre_edificio, edi.direccion, a.idarea, a.nombre area_nombre, min(da.fecha) " +
+			String sql="SELECT act.idactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre nombre_edificio, edi.direccion, a.idarea, a.nombre area_nombre, min(da.fecha), act.color " +
 			"  FROM detalleactividad da inner join actividad act on act.idactividad=da.actividadidactividad inner join edificio edi on edi.idedificio=act.edificioidedificio inner join area a on a.idarea=act.areaidarea "+
 			" where  da.fecha>=? group by act.idactividad , act.titulo, act.descripcion, act.salon,edi.idedificio,edi.nombre, edi.direccion, a.idarea, a.nombre order by a.idarea, min(da.fecha)";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -2165,7 +2168,7 @@ public int getResponsableTotal(int type,String busqueda){
 			while(rs.next()){
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("area_nombre"),"",0,null,null,"");
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
-				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"));
+				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"),rs.getInt("color"));
 				ret.add(act);
 				
 			}
@@ -2205,7 +2208,7 @@ public int getResponsableTotal(int type,String busqueda){
 		ArrayList<CDetalleActividad> ret=new ArrayList<CDetalleActividad>();
 		try{
 
-			String sql="select act.idactividad,act.titulo,a.idarea, a.nombre nombre_area, act.descripcion, edi.idedificio, edi.nombre nombre_edificio,edi.direccion, act.salon,dc.iddetalleactividad,dc.horainicio,dc.horafin from actividad act "+
+			String sql="select act.idactividad,act.titulo,a.idarea, a.nombre nombre_area, act.descripcion, edi.idedificio, edi.nombre nombre_edificio,edi.direccion, act.salon,dc.iddetalleactividad,dc.horainicio,dc.horafin, act.color from actividad act "+
 					"inner join detalleactividad dc on dc.actividadidactividad=act.idactividad "+
 					"inner join area a on a.idarea=act.areaidarea "+
 					"inner join edificio edi on  edi.idedificio=act.edificioidedificio "+
@@ -2217,7 +2220,7 @@ public int getResponsableTotal(int type,String busqueda){
 			while(rs.next()){
 				CEdificio edi=new CEdificio(rs.getInt("idedificio"),rs.getString("nombre_edificio"),rs.getString("direccion"),"");
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"", 0,null,null,"");
-				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"));
+				CActividad act=new CActividad(rs.getInt("idactividad"),rs.getString("titulo"),area,rs.getString("descripcion"),edi,rs.getString("salon"),rs.getInt("color"));
 				CDetalleActividad dacti=new CDetalleActividad(rs.getInt("iddetalleactividad"),fecha_inicio,new java.util.Date(rs.getTimestamp("horainicio").getTime()),new java.util.Date(rs.getTimestamp("horafin").getTime()),act);
 				ret.add(dacti);
 				

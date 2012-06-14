@@ -7,7 +7,7 @@ public class CActividad {
 	private String descripcion;
 	private CEdificio edificioidedificio;
 	private String salon;
-	
+	private int color;
 	
 	/**
 	 * @param idactividad
@@ -18,14 +18,33 @@ public class CActividad {
 	 * @param salon
 	 */
 	public CActividad(int idactividad, String titulo, CArea areaidarea,
-			String descripcion, CEdificio edificioidedificio, String salon) {
+			String descripcion, CEdificio edificioidedificio, String salon, int color) {
 		this.idactividad = idactividad;
 		this.titulo = titulo;
 		this.areaidarea = areaidarea;
 		this.descripcion = descripcion;
 		this.edificioidedificio = edificioidedificio;
 		this.salon = salon;
+		this.color=color;
 	}
+	
+	
+	/**
+	 * @return the color
+	 */
+	public int getColor() {
+		return color;
+	}
+
+
+	/**
+	 * @param color the color to set
+	 */
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+
 	/**
 	 * @return the salon
 	 */

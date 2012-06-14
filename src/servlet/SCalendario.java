@@ -74,7 +74,7 @@ public class SCalendario extends HttpServlet {
 				 CDetalleActividad da=lista.get(j);
 				 lista_data+=(lista_data.compareTo("")==0)?"":",";
 				// lista_data+="{\"id\":"+da.getIddetalleactividad()+", \"start\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorainicio())+"\", \"end\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorafin())+"\", \"title\":\""+da.getActividadidactividad().getTitulo()+"\"}";
-				 lista_data+="{\"id\":"+da.getIddetalleactividad()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHorainicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHorafin())+", \"title\":\""+da.getActividadidactividad().getTitulo()+"\"}";
+				 lista_data+="{\"color\":"+da.getActividadidactividad().getColor()+",\"id\":"+da.getIddetalleactividad()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHorainicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHorafin())+", \"title\":\""+da.getActividadidactividad().getTitulo()+"\"}";
 			 }
 			 data+=lista_data+"]";
 			 out.print(data);
