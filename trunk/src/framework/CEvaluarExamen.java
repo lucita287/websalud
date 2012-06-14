@@ -28,6 +28,7 @@ public class CEvaluarExamen {
 			}
 			list_result=dbo.getResultadoCondicion(listsql);
 		}
+		dbo.Close();
 		return list_result;
 	}
 	

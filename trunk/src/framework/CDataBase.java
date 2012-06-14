@@ -843,7 +843,7 @@ public CContenido getContenido(int idcontenido){
 						"left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia "+
 						"left outer join multimedia m2 on noti.multimediaidmultimedia_pdf=m2.idmultimedia "+
 						" , (SELECT @rownum:=0) ro "+
-						"where  upper("+(type==1?"noti.titulo":"a.nombre")+") like ? "+
+						"where  upper("+(type==1?"noti.titulo":"a.nombre")+") like ? and fecha_inicio>0 and fecha_fin>0 "+
 						" and noti.areaidarea in ("+this.ConvertString(lista)+") "+
 						" ) table1 "+
 						" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";

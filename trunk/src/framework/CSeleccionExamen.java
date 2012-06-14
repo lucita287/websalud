@@ -40,7 +40,7 @@ public class CSeleccionExamen {
 		data.Connect();
 		CConfiguracion config=data.getConfiguracion();
 		CSeleccionExamen selec=new CSeleccionExamen(config.getRandom_carne(),200614790,data.getListaConfiguracion_Examen());
-
+		data.Close();
 	}
 	
 	
