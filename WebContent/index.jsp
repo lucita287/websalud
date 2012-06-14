@@ -21,6 +21,7 @@
 			out.println("<meta name=keywords content='"+earea.getPalabras_buscador()+"'>");
 		}	
 	}
+	dbo.Close();
 %>
 
 </head>

@@ -199,4 +199,4 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 										<a href="#" onclick="Guardarmenu_categoria()" class="ui-state-default ui-corner-all button-save" > <img  width="24px"  height="24px" src="../images/guardar.png" /> Guardar</a>
 										<a href="#" onclick="Eliminarmenu_categoria()" class="ui-state-default ui-corner-all button-delete" > <img  width="24px"  height="24px" src="../images/delete.png" /> Eliminar</a>
 					</div>
-<% } 	}	}%>
+<% } dbo.Close();	} 	}%>

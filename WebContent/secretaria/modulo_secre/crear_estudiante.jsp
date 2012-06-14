@@ -117,4 +117,5 @@ Sexo:  <select  id="sexo">
 <a  class="ui-state-default ui-corner-all button-save" onclick="GuardarPaciente()"> <img  width="24px"  height="24px" src="../images/guardar.png" />Guardar</a>
 </center>
 <% 		}	
-		} %>
+	dbo.Close();	
+	} %>

@@ -54,5 +54,5 @@
 								$( "#dialog-form" ).dialog( "close" );
 							}
 						</script>
-	<% }	}		} %>	
+	<% } dbo.Close();	} 		} %>	
 					
