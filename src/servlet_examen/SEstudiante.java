@@ -229,7 +229,6 @@ public class SEstudiante extends HttpServlet {
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Nombre"):validacion;
 			validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(apellido, "Apellido"):validacion;
 			String result="{\"resultado\":\"OK\",\"mensaje\":\"ALMACENADO\"}";
-			System.out.println(unidad_academica);
 			if(validacion.compareTo("")==0){
 				if(carne>0&&unidad_academica>0){
 					CPaciente pac=new CPaciente(0,nombre, valid.CambiarFormatoddmmyy(fecha),

@@ -105,7 +105,7 @@ public class CCita {
 	 */
 	public String getEstadoD() {
 		if(estado==1) return "UNIDAD SALUD";
-		else if(estado==2) return "ENLINE";
+		else if(estado==2) return "EN LINEA";
 		else return "CERRADO";
 	}
 	/**

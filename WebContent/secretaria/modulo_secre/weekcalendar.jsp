@@ -84,20 +84,57 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 			}
 			,eventRender : function(calEvent, $event) {
 		        
-		        if(calEvent.tipo==1){
-		        	$event.css('backgroundColor', '#7E2217');
-			        $event.find('.time').css({'backgroundColor': '#7E2217', 'border':'1px solid #888'});
-		        }else{
-		        	$event.css('backgroundColor', '#AF7817');
-			        $event.find('.time').css({'backgroundColor': '#AF7817', 'border':'1px solid #888'});
-		        }
-		        if(calEvent.estado==0){
-			        	$event.css('backgroundColor', '#FF0000');
-				        $event.find('.time').css({'backgroundColor': '#FF0000', 'border':'1px solid #888'});
-			        }else if(calEvent.estado==2){
-			        	$event.css('backgroundColor', '#000000');
-				        $event.find('.time').css({'backgroundColor': '#000000', 'border':'1px solid #888'});
-			        }
+				
+				if(calEvent.cupo>=0){
+						
+					if(calEvent.estado==2){
+						if(calEvent.tipo==1){
+							$event.css('backgroundColor', '#717D7D');
+					        $event.find('.time').css({'backgroundColor': '#717D7D', 'border':'1px solid #888'});
+						}else{
+							$event.css('backgroundColor', '#000000');
+					        $event.find('.time').css({'backgroundColor': '#000000', 'border':'1px solid #888'});
+						}
+						
+					}else if(calEvent.estado==1){
+						if(calEvent.tipo==1){
+							$event.css('backgroundColor', '#2554C7');
+					        $event.find('.time').css({'backgroundColor': '#2554C7', 'border':'1px solid #888'});
+						}else{
+							$event.css('backgroundColor', '#347C17');
+					        $event.find('.time').css({'backgroundColor': '#347C17', 'border':'1px solid #888'});
+						}
+					}else if(calEvent.estado==0){
+						$event.css('backgroundColor', '#FF0000');
+				        $event.find('.time').css({'backgroundColor': '#FF0000', 'border':'1px solid #888'});	
+					}
+					
+				}else{
+					if(calEvent.estado==2){
+						if(calEvent.tipo==1){
+							$event.css('backgroundColor', '#717D7D');
+					        $event.find('.time').css({'backgroundColor': '#717D7D', 'border':'1px solid #888'});
+						}else{
+							$event.css('backgroundColor', '#000000');
+					        $event.find('.time').css({'backgroundColor': '#000000', 'border':'1px solid #888'});
+						}
+						
+					}else if(calEvent.estado==1){
+						if(calEvent.tipo==1){
+							$event.css('backgroundColor', '#6698FF');
+					        $event.find('.time').css({'backgroundColor': '#6698FF', 'border':'1px solid #888'});
+						}else{
+							$event.css('backgroundColor', '#667C26');
+					        $event.find('.time').css({'backgroundColor': '#667C26', 'border':'1px solid #888'});
+						}
+					}else if(calEvent.estado==0){
+						$event.css('backgroundColor', '#FF0000');
+				        $event.find('.time').css({'backgroundColor': '#FF0000', 'border':'1px solid #888'});	
+					}
+				}
+				
+				 
+		        
 		      },
 	        data: function(start, end, callback) {
 	        	  

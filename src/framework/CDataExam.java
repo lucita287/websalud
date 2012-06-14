@@ -2684,7 +2684,7 @@ public class CDataExam extends CDataBase {
 	                                				new java.util.Date(rs.getDate("fecha").getTime()),
 	                                				new java.util.Date(rs.getTimestamp("hora_inicio").getTime()),
 	                                				new java.util.Date(rs.getTimestamp("hora_fin").getTime()),
-	                                				rs.getInt("estado"),
+	                                				rs.getInt("estado_paciente"),
 	                                				rs.getInt("tipo_examen"),
 	                                				rs.getInt("cupo"),
 	                                				rs.getInt("estado"));
