@@ -63,6 +63,7 @@ public class SInterpretacion extends HttpServlet {
 										if(action.equalsIgnoreCase("guardartipo")){
 											String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 											int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tipo")));
+											int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 											String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 											String validacion=valid.ValidarSiesMayor(idtipo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 											validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(nombre, "Descripcion"):validacion;
@@ -70,7 +71,7 @@ public class SInterpretacion extends HttpServlet {
 											
 											
 											if(validacion.compareTo("")==0){
-												CTipo_Interpretacion tipo=new CTipo_Interpretacion(idtipo,nombre);
+												CTipo_Interpretacion tipo=new CTipo_Interpretacion(idtipo,nombre,orden);
 												boolean b=dbo.UpdateTipo_Interpretacion(tipo);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -84,10 +85,11 @@ public class SInterpretacion extends HttpServlet {
 											String result="";
 											String nombre=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("nombre")),codificacion);
 											String validacion=valid.ValidarCampoVacio(nombre, "Descripcion");
+											int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 											validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(nombre, 100, "Descripcion"):validacion;
 											
 											if(validacion.compareTo("")==0){
-												CTipo_Interpretacion tipo=new CTipo_Interpretacion(0,nombre);
+												CTipo_Interpretacion tipo=new CTipo_Interpretacion(0,nombre,orden);
 												boolean b=dbo.SafeTipo_Interpretacion(tipo);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -119,6 +121,7 @@ public class SInterpretacion extends HttpServlet {
 											String titulo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("titulo")),codificacion);
 											int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 											int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo")));
+											int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 											
 											String validacion=valid.ValidarSiesMayor(id_interpre, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar un item\"}");
 											validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(titulo, "Titulo"):validacion;
@@ -127,7 +130,7 @@ public class SInterpretacion extends HttpServlet {
 											validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idtipo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una tipo de interpretacion\"}"):validacion;
 											
 											if(validacion.compareTo("")==0){
-												CResultado_Examen exam=new CResultado_Examen(id_interpre,titulo,interpretacion,idtipo,size);
+												CResultado_Examen exam=new CResultado_Examen(id_interpre,titulo,interpretacion,idtipo,size,orden);
 												boolean b=dbo.UpdateResultadoExamen(exam);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -144,14 +147,14 @@ public class SInterpretacion extends HttpServlet {
 											String titulo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("titulo")),codificacion);
 											int size=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("size")));
 											int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo")));
-											
+											int orden=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("orden")));
 											String validacion=valid.ValidarCampoVacio(titulo, "Titulo");
 											validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(titulo, 100, "Titulo"):validacion;
 											validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(interpretacion, 5000, "Descripcion"):validacion;
 											validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idtipo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una tipo de interpretacion\"}"):validacion;
 											
 											if(validacion.compareTo("")==0){
-												CResultado_Examen exam=new CResultado_Examen(0,titulo,interpretacion,idtipo,size);
+												CResultado_Examen exam=new CResultado_Examen(0,titulo,interpretacion,idtipo,size,orden);
 												boolean b=dbo.SafeResultadoExamen(exam);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
@@ -180,7 +183,7 @@ public class SInterpretacion extends HttpServlet {
 											int id=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_interpre")));
 											CResultado_Examen exam=dbo.getresultado_examenEspecifico(id);
 											 if(exam!=null){							 
-												 result= "{\"titulo\":\""+exam.getTitulo()+"\",\"size\":\""+exam.getSize()+"\",\"interpretacion\":\""+ valid.Limpiarvalor3(exam.getInterpretacion())+"\",\"tipo\":\""+exam.getIdtipo_interpretacion()+"\"}";
+												 result= "{\"titulo\":\""+exam.getTitulo()+"\",\"size\":\""+exam.getSize()+"\",\"interpretacion\":\""+ valid.Limpiarvalor3(exam.getInterpretacion())+"\",\"tipo\":\""+exam.getIdtipo_interpretacion()+"\",\"orden\":\""+exam.getOrden()+"\"}";
 											 }
 											 out.println(result); 
 										}else if(action.equalsIgnoreCase("NuevoEncabezado")){

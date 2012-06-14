@@ -27,8 +27,8 @@ public class CDataBase {
 
 	Connection conn = null;
 	private String schema="websalud";
-	private String user="root"; 
-	private String pass="123456";
+	private String user="saludweb"; 
+	private String pass="w@bs4lud";
 	private String host="localhost";
 	private static String webhost="http://usalud.usac.edu.gt/";
 
@@ -144,13 +144,17 @@ public class CDataBase {
   "FROM noticia noti inner join area a on a.idarea=noti.areaidarea "+
   "left outer join multimedia m on noti.multimediaidmultimedia=m.idmultimedia "+
   "left outer join multimedia m2 on noti.multimediaidmultimedia_pdf=m2.idmultimedia "+
-  "  where estado = 1 and fecha_inicio<=now() and adddate(fecha_fin,1)>=now()  order by prioridad desc ";
+  "  where estado = 1 and fecha_inicio<=now() and adddate(fecha_fin,1)>=now()  and fecha_inicio>0 and fecha_fin>0 order by prioridad desc ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CArea area=new CArea(rs.getInt("idarea"),rs.getString("nombre_area"),"",0,null,null,"");
 				CMultimedia multi=new CMultimedia(rs.getInt("idmultimedia"),rs.getString("direccion_m"),rs.getString("direccion_rel"),0L,0,null);
 				CMultimedia multi2=new CMultimedia(rs.getInt("idmultimedia2"),rs.getString("direccion_m2"),rs.getString("direccion_rel2"),0L,0,null);
+				
+				
+				
+				
 				CNoticia news=new CNoticia(rs.getString("noti_titulo"),
 						rs.getString("noti_descripcion"),
 						rs.getString("descripcion_corta"),multi,
@@ -164,11 +168,12 @@ public class CDataBase {
 			rs.close();
 			stm.close();
 		}catch(Throwable e){
-			
-			  CLogger.write("4", this, e);
+			//e.printStackTrace();
+			 CLogger.write("4", this, e);
 		}
 		return ret;
 	}
+
 	public CMenu getMenuEspecifico(int idmenu){
 		CMenu temp_menu=null;
 		PreparedStatement stm;
@@ -514,11 +519,11 @@ public class CDataBase {
 		CConfiguracion temp=null;
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("SELECT idconfiguracion, telefono, correo_electronico, fax, direccion_imagen, direccion_pdf, tamanio_sub, dir_rel_imagen, dir_rel_pdf, direccion, ciclo, multifa_reporte, random_carne, impresion_salud, jefe_actual,fecha_examen  FROM configuracion where idconfiguracion=? ");
+			stm = (PreparedStatement)conn.prepareStatement("SELECT idconfiguracion, telefono, correo_electronico, fax, direccion_imagen, direccion_pdf, tamanio_sub, dir_rel_imagen, dir_rel_pdf, direccion, ciclo, multifa_reporte, random_carne, impresion_salud, jefe_actual,fecha_examen,dependencia,no_personal,password  FROM configuracion where idconfiguracion=? ");
 			stm.setInt(1, 1);
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next()){
-				temp=new CConfiguracion( rs2.getInt("idconfiguracion"),rs2.getString("telefono"),rs2.getString("correo_electronico"),rs2.getString("fax"),rs2.getString("direccion_imagen"),rs2.getString("direccion_pdf"),rs2.getInt("tamanio_sub"),rs2.getString("dir_rel_imagen"),rs2.getString("dir_rel_pdf"),rs2.getString("direccion"),rs2.getInt("ciclo"),rs2.getInt("multifa_reporte"),rs2.getInt("impresion_salud"),rs2.getInt("random_carne"),rs2.getString("jefe_actual"),new java.util.Date(rs2.getDate("fecha_examen").getTime()));
+				temp=new CConfiguracion( rs2.getInt("idconfiguracion"),rs2.getString("telefono"),rs2.getString("correo_electronico"),rs2.getString("fax"),rs2.getString("direccion_imagen"),rs2.getString("direccion_pdf"),rs2.getInt("tamanio_sub"),rs2.getString("dir_rel_imagen"),rs2.getString("dir_rel_pdf"),rs2.getString("direccion"),rs2.getInt("ciclo"),rs2.getInt("multifa_reporte"),rs2.getInt("impresion_salud"),rs2.getInt("random_carne"),rs2.getString("jefe_actual"),new java.util.Date(rs2.getDate("fecha_examen").getTime()),rs2.getString("dependencia"),rs2.getString("no_personal"),rs2.getString("password"));
 			}
 		}catch(Throwable e){
 			
@@ -2228,7 +2233,7 @@ public int getResponsableTotal(int type,String busqueda){
 	public boolean UpdateConfiguracion(CConfiguracion confi){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE configuracion SET telefono = ?,  fax = ?, tamanio_sub = ?, direccion = ?, ciclo = ?, multifa_reporte = ?, random_carne = ?,  impresion_salud = ?,  jefe_actual = ?,  fecha_examen = ? WHERE   idconfiguracion = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE configuracion SET telefono = ?,  fax = ?, tamanio_sub = ?, direccion = ?, ciclo = ?, multifa_reporte = ?, random_carne = ?,  impresion_salud = ?,  jefe_actual = ?,  fecha_examen = ?, dependencia=?, no_personal=?, password=? WHERE   idconfiguracion = ?");
 			
 			stm.setString(1, confi.gettelefono());
 			stm.setString(2, confi.getfax());
@@ -2240,7 +2245,10 @@ public int getResponsableTotal(int type,String busqueda){
 			stm.setInt(8, confi.getImpresion_salud());
 			stm.setString(9, confi.getJefe_actual());
 			stm.setDate(10, new java.sql.Date(confi.getFecha_examen().getTime()));
-			stm.setInt(11, confi.getidconfiguracion());
+			stm.setString(11, confi.getDependencia());
+			stm.setString(12, confi.getNo_personal());
+			stm.setString(13, confi.getPassword());
+			stm.setInt(14, confi.getidconfiguracion());
 			
 			
 			if(stm.executeUpdate()>0)

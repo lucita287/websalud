@@ -150,7 +150,7 @@ CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permi
 		<a >Estudiantes</a>
 			<ul id="estudiante">
 				<li>
-					<a href="report_exam.jsp?portal=20" >Perfil de estudiantes</a>
+					<a href="index.jsp?portal=20" >Perfil de estudiantes</a>
 				</li>
 				
 			</ul>

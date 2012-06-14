@@ -81,7 +81,7 @@ public class SLogin extends HttpServlet {
 			 
 			 HttpSession session = request.getSession(true);
 			 CConfiguracion config=dbo.getConfiguracion();
-			 CWebService servicio=new CWebService(config.getCiclo());
+			 CWebService servicio=new CWebService(config.getCiclo(), config.getDependencia(),config.getNo_personal(),config.getPassword());
 			 int carnemin=config.getCiclo()*100000;
 			 int carnemax=(config.getCiclo()+1)*100000;
 			

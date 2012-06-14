@@ -72,6 +72,8 @@ public class SInterpretacionTable extends HttpServlet {
 						 int ordenar=1;					 
 						 if(order.equalsIgnoreCase("nombre")){
 						 	 ordenar=2;
+						 }else if(order.equalsIgnoreCase("orden")){
+							 ordenar=3;
 						 }
 						 int asc=0;
 						 if(typeorder.equalsIgnoreCase("asc")){
@@ -86,7 +88,7 @@ public class SInterpretacionTable extends HttpServlet {
 								 String data="";
 								 for(int i=0; i<lista.size();i++){
 									 CTipo_Interpretacion temp=lista.get(i);
-									 	data+="<row  id='"+temp.getIdtipo_interpretacion()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarInter_tipo("+temp.getIdtipo_interpretacion()+",\""+temp.getDescripcion()+"\")' name='idcentro_radio' value='"+temp.getIdtipo_interpretacion()+"' />]]></cell><cell><![CDATA["+temp.getIdtipo_interpretacion()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell></row>";	 
+									 	data+="<row  id='"+temp.getIdtipo_interpretacion()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarInter_tipo("+temp.getIdtipo_interpretacion()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+")' name='idcentro_radio' value='"+temp.getIdtipo_interpretacion()+"' />]]></cell><cell><![CDATA["+temp.getIdtipo_interpretacion()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell></row>";	 
 								 }
 								 info+=data+"</rows>";
 								 out.println(info);
@@ -111,6 +113,10 @@ public class SInterpretacionTable extends HttpServlet {
 						 	 ordenar=2;
 						 }else if(order.equalsIgnoreCase("tipo")){
 							 ordenar=5;
+						 }else if(order.equalsIgnoreCase("orden")){
+							 ordenar=8;
+						 }else if(order.equalsIgnoreCase("idresultado")){
+							 ordenar=1;
 						 }
 						 
 						 int asc=0;
@@ -125,7 +131,7 @@ public class SInterpretacionTable extends HttpServlet {
 								 String data="";
 								 for(int i=0; i<lista.size();i++){
 									 CResultado_Examen temp=lista.get(i);
-									 data+="<row  id='"+temp.getIdresultado_examen()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarInterpre("+temp.getIdresultado_examen()+")' name='idcentro_radio' value='"+temp.getIdresultado_examen()+"' />]]></cell><cell><![CDATA["+temp.getIdresultado_examen()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell><cell><![CDATA["+temp.getInterpretacion()+"]]></cell></row>";	 
+									 data+="<row  id='"+temp.getIdresultado_examen()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarInterpre("+temp.getIdresultado_examen()+")' name='idcentro_radio' value='"+temp.getIdresultado_examen()+"' />]]></cell><cell><![CDATA["+temp.getIdresultado_examen()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getTitulo()+"]]></cell><cell><![CDATA["+temp.getInterpretacion()+"]]></cell></row>";	 
 								 }
 								 info+=data+"</rows>";
 								 out.println(info);

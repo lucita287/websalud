@@ -21,9 +21,16 @@ public class CConfiguracion {
 	private int random_carne;
 	private String jefe_actual;
 	private Date fecha_examen;
+	private String dependencia;
+	private String no_personal;
+	private String password;
+	
 	public CConfiguracion(int idconfiguracion,String telefono, String correo_electronico, String fax, String direccion_imagen,
-			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte,int impresion_salud,int random_carne,String jefe_actual, Date fecha_examen){
-		
+			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte,int impresion_salud,int random_carne,String jefe_actual, Date fecha_examen,
+			String dependencia,String no_personal,String password){
+		this.dependencia=dependencia;
+		this.no_personal=no_personal;
+		this.password=password;
 		this.idconfiguracion=idconfiguracion;
 		this.telefono=telefono;
 		this.correo_electronico=correo_electronico;
@@ -44,6 +51,60 @@ public class CConfiguracion {
 	
 	
 	
+	/**
+	 * @return the dependencia
+	 */
+	public String getDependencia() {
+		return dependencia;
+	}
+
+
+
+	/**
+	 * @param dependencia the dependencia to set
+	 */
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+
+
+
+	/**
+	 * @return the no_personal
+	 */
+	public String getNo_personal() {
+		return no_personal;
+	}
+
+
+
+	/**
+	 * @param no_personal the no_personal to set
+	 */
+	public void setNo_personal(String no_personal) {
+		this.no_personal = no_personal;
+	}
+
+
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
 	/**
 	 * @return the fecha_examen
 	 */
