@@ -65,6 +65,10 @@ public class SConfiguracion extends HttpServlet {
 									String jefe=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("jefe")),codificacion);
 									int random_carne=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("random_carne")));
 									int imp_salud=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("imp_salud")));
+									
+									String dependencia=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("dependencia")),codificacion);
+									String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")),codificacion);
+									String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
 									String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("fecha")),codificacion);
 									String validacion=valid.ValidarRango(size, 1, 15, "{\"resultado\":\"ERROR\",\"mensaje\":\"El rango de tama&ntilde;o subir archivos debe ser entre [1-15]\"}");
 									validacion=(validacion.compareTo("")==0)?valid.isFechaValida(fecha,  "Fecha inicio"):validacion;
@@ -90,6 +94,9 @@ public class SConfiguracion extends HttpServlet {
 										configurar.setRandom_carne(random_carne);
 										configurar.setImpresion_salud(imp_salud);
 										configurar.setFecha_examen(valid.CambiarFormatoddmmyy(fecha));
+										configurar.setPassword(password);
+										configurar.setNo_personal(no_personal);
+										configurar.setDependencia(dependencia);
 										boolean b=dbo.UpdateConfiguracion(configurar);
 										if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 										else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";

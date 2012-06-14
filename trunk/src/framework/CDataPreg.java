@@ -31,7 +31,7 @@ public class CDataPreg extends CDataBase {
 				stm.close();
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				CLogger.write("d1", this, e);
 			}
 			return list;
 		
@@ -50,7 +50,7 @@ public class CDataPreg extends CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 e.printStackTrace();
+			CLogger.write("d2", this, e);
 		}
 		return temp;
 	}
@@ -119,7 +119,7 @@ public class CDataPreg extends CDataBase {
 			result=rs2.getString("pond");
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("d3", this, e);
 		}
 
 		return result;
@@ -149,8 +149,7 @@ public class CDataPreg extends CDataBase {
 					rs.close();
 					stm.close();
 				} catch (SQLException e) {
-					System.out.println(query);
-					e.printStackTrace();
+					CLogger.write("d4", this, e);
 				}
 		}
 		return list;
@@ -184,8 +183,8 @@ public class CDataPreg extends CDataBase {
 			rs.close();
 			stm.close();
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+		
+			CLogger.write("d5", this, e);
 		}
 		return cond;
 	}

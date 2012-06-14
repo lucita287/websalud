@@ -50,3 +50,9 @@
 								</div>
 		</div>
 		</form>
+		<div class="ui-widget-content ui-corner-all">
+		<div><b>Visitas</b> <a href="http://usalud.usac.edu.gt/index.jsp">
+		<img src="http://www.easycounter.com/counter.php?lucita287"
+			border="0" alt="Counter"></a></div>
+		</div>
+		<br>

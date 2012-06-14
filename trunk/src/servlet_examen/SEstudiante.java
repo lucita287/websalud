@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CConfiguracion;
 import data.CPaciente;
 import framework.CDataExam;
 import framework.CValidation;
@@ -53,6 +54,7 @@ public class SEstudiante extends HttpServlet {
 		String user=valid.ValidarRequest(request.getParameter("user")).trim().toLowerCase(); 
 		String action=valid.ValidarRequest(request.getParameter("a"));
 		HttpSession session = request.getSession(true);
+		CConfiguracion config=dbo.getConfiguracion();
 		if(action.equalsIgnoreCase("estudiante_ver")){
 				
 			
@@ -61,7 +63,7 @@ public class SEstudiante extends HttpServlet {
 					CPaciente pac= dbo.getEstudianteEspecifica(user);
 					int idpaciente=0;
 					if(pac==null){
-					 CWebService servicio=new CWebService(2012);
+					 CWebService servicio=new CWebService(config.getCiclo(),config.getDependencia(),config.getNo_personal(),config.getPassword());
 					 pac=servicio.DatosGenerales(user, dbo);//.VerificarEstudiante(user, dbo);
 							 if(pac!=null){
 								 dbo.SafePaciente(pac);
@@ -149,7 +151,7 @@ public class SEstudiante extends HttpServlet {
 				
 				pac= dbo.getEstudianteEspecifica(carne);
 				if(pac==null){
-					CWebService servicio=new CWebService(2012);
+					CWebService servicio=new CWebService(config.getCiclo(),config.getDependencia(),config.getNo_personal(),config.getPassword());
 					 pac=servicio.DatosGenerales(carne, dbo);//VerificarEstudiante(carne, dbo);
 							 if(pac!=null){
 								 dbo.SafePaciente(pac);
@@ -272,7 +274,7 @@ public class SEstudiante extends HttpServlet {
 				CPaciente pac= dbo.getEstudianteEspecifica(user);
 				int idpaciente=0;
 				if(pac==null){
-				 CWebService servicio=new CWebService(2012);
+				 CWebService servicio=new CWebService(config.getCiclo(),config.getDependencia(),config.getNo_personal(),config.getPassword());
 				 pac=servicio.DatosGenerales(user, dbo);
 						 if(pac!=null){
 							 dbo.SafePaciente(pac);
@@ -298,7 +300,7 @@ public class SEstudiante extends HttpServlet {
 				 session.setAttribute("paci_consulta",null);
 				 
 			 }
-			response.sendRedirect("admin/index.jsp?portal=19");
+			response.sendRedirect("admin/index.jsp?portal=20");
 			
 		}
 		dbo.Close();

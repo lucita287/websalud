@@ -60,7 +60,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e1", this, e);
 		}
 		return ret;
 	}
@@ -80,7 +80,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e2", this, e);
 		}
 		return ret;
 	}
@@ -98,7 +98,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e3", this, e);
 		}
 		return ret;
 	}
@@ -116,7 +116,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e4", this, e);
 		}
 		return ret;
 	}
@@ -134,7 +134,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e5", this, e);
 		}
 		return ret;
 	}
@@ -155,7 +155,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}
 		catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e6", this, e);
 		}
 		
 		return list;
@@ -172,7 +172,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e7", this, e);
 		}
 		
 		return false;
@@ -188,7 +188,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e8", this, e);
 		}
 		
 		return false;
@@ -205,7 +205,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e9", this, e);
 		}
 		
 		return false;
@@ -227,7 +227,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}
 		catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e10", this, e);
 		}
 		
 		return list;
@@ -244,7 +244,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e11", this, e);
 		}
 		
 		return false;
@@ -260,7 +260,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e12", this, e);
 		}
 		
 		return false;
@@ -276,7 +276,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e13", this, e);
 		}
 		
 		return false;
@@ -305,7 +305,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e14", this, e);
 		}
 		return ret;
 	}
@@ -324,7 +324,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e15", this, e);
 				}
 		
 		return temp;
@@ -341,7 +341,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e16", this, e);
 		}
 		
 		return false;
@@ -357,7 +357,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e17", this, e);
 		}
 		
 		return false;
@@ -373,7 +373,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e18", this, e);
 		}
 		
 		return false;
@@ -391,7 +391,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e19", this, e);
 		}
 		
 		return false;
@@ -414,7 +414,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e20", this, e);
 				}
 		
 		return temp;
@@ -446,7 +446,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e21", this, e);
 		}
 		return ret;
 	}
@@ -464,7 +464,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e22", this, e);
 				}
 		
 		return temp;
@@ -481,7 +481,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e23", this, e);
 		}
 		
 		return false;
@@ -497,7 +497,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e24", this, e);
 		}
 		
 		return false;
@@ -513,7 +513,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e25", this, e);
 		}
 		
 		return false;
@@ -533,7 +533,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e26", this, e);
 		}
 		return lista;
 	}
@@ -551,7 +551,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e27", this, e);
 				}
 		
 		return temp;
@@ -570,7 +570,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e28", this, e);
 				}
 		
 		return temp;
@@ -591,7 +591,7 @@ public class CDataExam extends CDataBase {
                 stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e29", this, e);
 		}
         return temp;
 	}
@@ -627,7 +627,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e30", this, e);
 		}
 		
 		return false;
@@ -647,7 +647,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e31", this, e);
 				}
 		
 		return temp;
@@ -664,7 +664,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e32", this, e);
 		}
 		
 		return false;
@@ -681,7 +681,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e33", this, e);
 		}
 		
 		return false;
@@ -697,7 +697,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e34", this, e);
 		}
 		
 		return false;
@@ -726,7 +726,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e35", this, e);
 		}
 		return ret;
 	}
@@ -747,7 +747,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e36", this, e);
 		}
 		return ret;
 	}
@@ -765,7 +765,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e37", this, e);
 				}
 		
 		return temp;
@@ -787,7 +787,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e38", this, e);
 		}
 		
 		return false;
@@ -807,7 +807,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e39", this, e);
 		}
 		
 		return false;
@@ -824,7 +824,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e40", this, e);
 		}
 		
 		return false;
@@ -853,7 +853,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e41", this, e);
 		}
 		return ret;
 	}
@@ -874,7 +874,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e42", this, e);
 		}
 		return ret;
 	}
@@ -892,7 +892,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e43", this, e);
 				}
 		
 		return temp;
@@ -915,7 +915,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e44", this, e);
 		}
 		return ret;
 	}
@@ -933,7 +933,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e45", this, e);
 		}
 		return ret;
 	}
@@ -953,7 +953,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e46", this, e);
 		}
 		
 		return false;
@@ -973,7 +973,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e47", this, e);
 		}
 		
 		return false;
@@ -989,7 +989,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e48", this, e);
 		}
 		
 		return false;
@@ -1014,7 +1014,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e49", this, e);
 		}
 		return ret;
 	}
@@ -1033,7 +1033,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e50", this, e);
 		}
 		return ret;
 	}
@@ -1048,7 +1048,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e51", this, e);
 		}
 		
 		return false;
@@ -1068,7 +1068,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e52", this, e);
 		}
 		return ret;
 	}
@@ -1088,7 +1088,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e53", this, e);
 		}
 		return ret;
 	}
@@ -1114,7 +1114,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e54", this, e);
 		}
 		
 		return false;
@@ -1129,7 +1129,7 @@ public class CDataExam extends CDataBase {
 				return true;
 			
 		} catch (SQLException e) {
-
+			CLogger.write("e55", this, e);
 		}
 		
 		return false;
@@ -1159,7 +1159,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e56", this, e);
 		}
 		
 		return false;
@@ -1178,7 +1178,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e57", this, e);
 		}
 		return ret;
 	}
@@ -1196,7 +1196,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e58", this, e);
 		}
 		return ret;
 	}
@@ -1224,7 +1224,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e59", this, e);
 		}
 		return ret;
 	}
@@ -1249,7 +1249,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e60", this, e);
 		}
 		
 		return 0;
@@ -1278,7 +1278,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e61", this, e);
 		}
 		
 		return true;
@@ -1306,7 +1306,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e62", this, e);
 		}
 		
 		return true;
@@ -1339,7 +1339,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e63", this, e);
 		}
 		return ret;
 	}
@@ -1364,7 +1364,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e64", this, e);
 		}
 		return ret;
 	}
@@ -1380,7 +1380,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e65", this, e);
 				}
 		
 		return temp;
@@ -1388,7 +1388,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CTipo_Interpretacion> getListatipo_interpretacion(int asc,int min,int max,String valor,int orden){
 		ArrayList<CTipo_Interpretacion> ret=new ArrayList<CTipo_Interpretacion>();
 		try{
-			String sql="select * from  (SELECT pe.idtipo_interpretacion, pe.descripcion, @rownum:=@rownum+1 rownum "+
+			String sql="select * from  (SELECT pe.idtipo_interpretacion, pe.descripcion, pe.orden, @rownum:=@rownum+1 rownum "+
 					" FROM tipo_interpretacion pe, (SELECT @rownum:=0) ro " +
 					" where upper(pe.descripcion) like ? ) table1 "+
 					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
@@ -1399,7 +1399,7 @@ public class CDataExam extends CDataBase {
 			stm.setInt(4,orden);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
-				CTipo_Interpretacion news =new CTipo_Interpretacion(rs.getInt("idtipo_interpretacion"),rs.getString("descripcion"));
+				CTipo_Interpretacion news =new CTipo_Interpretacion(rs.getInt("idtipo_interpretacion"),rs.getString("descripcion"),rs.getInt("orden"));
 				ret.add(news);
 				
 			}
@@ -1407,7 +1407,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e66", this, e);
 		}
 		return ret;
 	}
@@ -1423,7 +1423,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e67", this, e);
 				}
 		
 		return temp;
@@ -1441,7 +1441,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e68", this, e);
 				}
 		
 		return temp;
@@ -1469,7 +1469,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e69", this, e);
 		}
 		return news;
 	}
@@ -1503,7 +1503,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e70", this, e);
 		}
 		return ret;
 	}
@@ -1542,7 +1542,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e71", this, e);
 		}
 		return news;
 	}
@@ -1581,7 +1581,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e72", this, e);
 		}
 		return news;
 	}
@@ -1619,7 +1619,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e73", this, e);
 		}
 		return ret;
 	}
@@ -1644,7 +1644,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e74", this, e);
 		}
 		return ret;
 	}
@@ -1665,7 +1665,7 @@ public class CDataExam extends CDataBase {
 				stm.close();
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				CLogger.write("e75", this, e);
 			}
 		}
 	}
@@ -1684,7 +1684,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e76", this, e);
 		}
 		return ret;
 	}
@@ -1707,7 +1707,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e77", this, e);
 		}
 		
 		return false;
@@ -1732,7 +1732,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e78", this, e);
 		}
 		
 		return false;
@@ -1749,7 +1749,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e79", this, e);
 		}
 		
 		return false;
@@ -1766,7 +1766,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e80", this, e);
 		}
 		
 		return false;
@@ -1785,7 +1785,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e81", this, e);
 		}
 		
 		return false;
@@ -1804,7 +1804,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e82", this, e);
 		}
 		
 		return false;
@@ -1822,7 +1822,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e83", this, e);
 		}
 		
 		return false;
@@ -1851,7 +1851,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e84", this, e);
 		}
 		return ret;
 	}
@@ -1869,7 +1869,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e1", this, e);
 				}
 		
 		return temp;
@@ -1885,7 +1885,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e85", this, e);
 		}
 		
 		return false;
@@ -1907,7 +1907,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}
 		catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e86", this, e);
 		}
 		
 		return list;
@@ -1943,7 +1943,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e87", this, e);
 		}
 		return ret;
 	}
@@ -1971,7 +1971,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e88", this, e);
 		}
 		return ret;
 	}
@@ -2011,7 +2011,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e89", this, e);
 		}
 		return ret;
 	}
@@ -2035,7 +2035,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}
 		catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e90", this, e);
 		}
 		
 		return list;
@@ -2094,7 +2094,7 @@ public class CDataExam extends CDataBase {
 				
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e91", this, e);
 		}
 		
 		return false;
@@ -2128,7 +2128,7 @@ public class CDataExam extends CDataBase {
 				
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e92", this, e);
 		}
 		
 		return 0;
@@ -2162,7 +2162,7 @@ public class CDataExam extends CDataBase {
 				
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e93", this, e);
 		}
 		
 		return 0;
@@ -2196,7 +2196,7 @@ public class CDataExam extends CDataBase {
 				
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e94", this, e);
 		}
 		
 		return 0;
@@ -2236,7 +2236,7 @@ public class CDataExam extends CDataBase {
 			
 			
 		}catch(Throwable e){
-				e.printStackTrace();	
+				CLogger.write("e95", this, e);	
 		}
 		
 		return ret;
@@ -2280,7 +2280,7 @@ public class CDataExam extends CDataBase {
 				
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e96", this, e);
 		}
 		
 		return false;
@@ -2297,7 +2297,7 @@ public class CDataExam extends CDataBase {
 					list.add(rs.getInt("idmenu_categoria"));
 				}
 		}catch(SQLException e){
-			e.printStackTrace();
+			CLogger.write("e97", this, e);
 		}
 		return list;
 	}
@@ -2313,7 +2313,7 @@ public class CDataExam extends CDataBase {
 					list.add(rs.getInt("idmenu_categoria"));
 				}
 		}catch(SQLException e){
-			e.printStackTrace();
+			CLogger.write("e98", this, e);
 		}
 		return list;
 	}
@@ -2343,7 +2343,7 @@ public class CDataExam extends CDataBase {
 					lista.add(html);
 				}
 		}catch(SQLException e){
-			e.printStackTrace();
+			CLogger.write("e99", this, e);
 		}
 		return lista;
 	}
@@ -2359,7 +2359,7 @@ public class CDataExam extends CDataBase {
                 rs.close();
                 stm.close();
 		}catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e100", this, e);
 			 //CLogger.write("1", this, e);
 		}
 		return list;
@@ -2380,7 +2380,7 @@ public class CDataExam extends CDataBase {
 			if(rs2.next())
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e101", this, e);
 			//CLogger.write("76", this, e);
 		}
 		
@@ -2400,7 +2400,7 @@ public class CDataExam extends CDataBase {
 			
 			if(stm.executeUpdate()>0 ) return true;
 		}catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e102", this, e);
 			//CLogger.write("76", this, e);
 		}
 		
@@ -2430,7 +2430,7 @@ public class CDataExam extends CDataBase {
 			if(rs2.next())
 			temp=rs2.getInt("result");
 		}catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e103", this, e);
 			//CLogger.write("76", this, e);
 		}
 		
@@ -2447,7 +2447,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e104", this, e);
 		}
 		
 		return false;
@@ -2480,7 +2480,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}catch(Throwable e){
 			
-			 //CLogger.write("86", this, e);
+			 CLogger.write("e105", this, e);
 		}
 		return ret;
 	}
@@ -2520,7 +2520,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}catch(Throwable e){
 			
-			 e.printStackTrace();
+			 CLogger.write("e106", this, e);
 		}
 		return ret;
 	}
@@ -2560,8 +2560,7 @@ public class CDataExam extends CDataBase {
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
-				 //CLogger.write("1", this, e);
+				CLogger.write("e107", this, e);
 			} 
 		 
 		 return lista;
@@ -2589,7 +2588,7 @@ public class CDataExam extends CDataBase {
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
+				CLogger.write("e108", this, e);
 				 //CLogger.write("1", this, e);
 			} 
 		 
@@ -2611,7 +2610,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e109", this, e);
 				}
 		
 		return temp;
@@ -2631,7 +2630,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e110", this, e);
 		}
 		
 		return false;
@@ -2662,7 +2661,7 @@ public class CDataExam extends CDataBase {
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
+				CLogger.write("e111", this, e);
 				 //CLogger.write("1", this, e);
 			} 
 		 
@@ -2694,7 +2693,7 @@ public class CDataExam extends CDataBase {
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
+				CLogger.write("e112", this, e);
 				 //CLogger.write("1", this, e);
 			} 
 		 
@@ -2717,7 +2716,7 @@ public class CDataExam extends CDataBase {
 			temp=rs2.getInt("cant");
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e113", this, e);
 		}
 
 		return temp;
@@ -2734,7 +2733,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e114", this, e);
 		}
 		
 		return false;
@@ -2783,7 +2782,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}catch(Throwable e){
 			
-			 e.printStackTrace();
+			 CLogger.write("e115", this, e);
 		}
 		
 		return ret;
@@ -2816,7 +2815,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		}catch(Throwable e){
 			
-			 e.printStackTrace();
+			 CLogger.write("e116", this, e);
 		}
 		
 		return cant;
@@ -2846,7 +2845,7 @@ public class CDataExam extends CDataBase {
 			rs.close();
 			stm.close();
 		}catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e117", this, e);
 			 //CLogger.write("86", this, e);
 		}
 		return ret;
@@ -2867,7 +2866,7 @@ public class CDataExam extends CDataBase {
 			rs.close();
 			stm.close();
 		}catch(Throwable e){
-			e.printStackTrace();
+			CLogger.write("e118", this, e);
 			 //CLogger.write("86", this, e);
 		}
 		return idcita;
@@ -2886,7 +2885,7 @@ public class CDataExam extends CDataBase {
                 stm.close();
         }catch(Throwable e){
 			
-			e.printStackTrace();
+			CLogger.write("e119", this, e);
 		}
         return ret;
 	}
@@ -2904,7 +2903,7 @@ public class CDataExam extends CDataBase {
 			}
 		}catch(Throwable e){
 			
-			 e.printStackTrace();
+			 CLogger.write("e120", this, e);
 		}
 		return temp;
 	}
@@ -2921,7 +2920,7 @@ public class CDataExam extends CDataBase {
 			
 		}catch(Throwable e){
 			
-			e.printStackTrace();
+			CLogger.write("e121", this, e);
 		}
 		
 		return false;
@@ -2956,7 +2955,7 @@ public class CDataExam extends CDataBase {
 				
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e122", this, e);
 		}
 		
 		return false;
@@ -2978,7 +2977,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e123", this, e);
 		}
 		
 		return false;
@@ -2997,7 +2996,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e124", this, e);
 		}
 		return ret;
 	}
@@ -3020,7 +3019,7 @@ public class CDataExam extends CDataBase {
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
+				CLogger.write("e125", this, e);
 				 //CLogger.write("1", this, e);
 			} 
 		 
@@ -3038,7 +3037,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e126", this, e);
 		}
 		
 		return false;
@@ -3060,7 +3059,7 @@ public class CDataExam extends CDataBase {
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
+				CLogger.write("e127", this, e);
 			} 
 		 
 		 return 0;
@@ -3068,16 +3067,17 @@ public class CDataExam extends CDataBase {
 	public boolean UpdateTipo_Interpretacion(CTipo_Interpretacion ctipo){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE tipo_interpretacion SET descripcion = ? WHERE idtipo_interpretacion = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE tipo_interpretacion SET descripcion = ?, orden=? WHERE idtipo_interpretacion = ?");
 			
 			stm.setString(1, ctipo.getDescripcion());
-			stm.setInt(2, ctipo.getIdtipo_interpretacion());
+			stm.setInt(2, ctipo.getOrden());
+			stm.setInt(3, ctipo.getIdtipo_interpretacion());
 			if(stm.executeUpdate()>0)
 				return true;
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e128", this, e);
 		}
 		
 		return false;
@@ -3085,7 +3085,7 @@ public class CDataExam extends CDataBase {
 	public boolean SafeTipo_Interpretacion(CTipo_Interpretacion ctipo){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO tipo_interpretacion (descripcion) VALUES (?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO tipo_interpretacion (descripcion,orden) VALUES (?,?)");
 			
 			stm.setString(1,ctipo.getDescripcion());
 			if(stm.executeUpdate()>0)
@@ -3093,7 +3093,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e129", this, e);
 		}
 		
 		return false;
@@ -3109,7 +3109,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e130", this, e);
 		}
 		
 		return false;
@@ -3117,20 +3117,20 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CTipo_Interpretacion> getListaTipo_Interpretacion(){
 		ArrayList<CTipo_Interpretacion> lista=new  ArrayList<CTipo_Interpretacion>();
 		 try{    
-			 String sql="SELECT idtipo_interpretacion, descripcion FROM tipo_interpretacion";
+			 String sql="SELECT idtipo_interpretacion, descripcion, orden FROM tipo_interpretacion";
 			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 	        	
 	        	    ResultSet rs=stm.executeQuery();
 	                while(rs.next()){                							
 	                                lista.add(
-	                                		new CTipo_Interpretacion(rs.getInt("idtipo_interpretacion"),rs.getString("descripcion"))
+	                                		new CTipo_Interpretacion(rs.getInt("idtipo_interpretacion"),rs.getString("descripcion"),rs.getInt("orden"))
 	                                		); 
 
 	                }
 	                rs.close();
 	                stm.close();
 			}catch(Throwable e){
-				e.printStackTrace();
+				CLogger.write("e131", this, e);
 				 //CLogger.write("1", this, e);
 			} 
 		 
@@ -3140,19 +3140,20 @@ public class CDataExam extends CDataBase {
 	public boolean UpdateResultadoExamen(CResultado_Examen cate){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("UPDATE resultado_examen SET titulo = ?, interpretacion = ?, idtipo_interpretacion = ?, size = ? WHERE idresultado_examen = ?");
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE resultado_examen SET titulo = ?, interpretacion = ?, idtipo_interpretacion = ?, size = ?,orden=? WHERE idresultado_examen = ?");
 			
 			stm.setString(1,cate.getTitulo());
 			stm.setString(2,cate.getInterpretacion());
 			stm.setInt(3,cate.getIdtipo_interpretacion());
 			stm.setInt(4,cate.getSize());
-			stm.setInt(5,cate.getIdresultado_examen());
+			stm.setInt(5,cate.getOrden());
+			stm.setInt(6,cate.getIdresultado_examen());
 			if(stm.executeUpdate()>0)
 				return true;
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e132", this, e);
 		}
 		
 		return false;
@@ -3160,18 +3161,18 @@ public class CDataExam extends CDataBase {
 	public boolean SafeResultadoExamen(CResultado_Examen cate){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO resultado_examen(titulo,interpretacion,idtipo_interpretacion, size)VALUES (?,?,?,?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO resultado_examen(titulo,interpretacion,idtipo_interpretacion, size, orden)VALUES (?,?,?,?,?)");
 			stm.setString(1,cate.getTitulo());
 			stm.setString(2,cate.getInterpretacion());
 			stm.setInt(3,cate.getIdtipo_interpretacion());
 			stm.setInt(4,cate.getSize());
-			
+			stm.setInt(5,cate.getOrden());
 			if(stm.executeUpdate()>0)
 				return true;
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e133", this, e);
 		}
 		
 		return false;
@@ -3186,7 +3187,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e134", this, e);
 		}
 		
 		return false;
@@ -3195,7 +3196,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CResultado_Examen> getListaresultado_examen(int ordenar,int asc,int min,int max,String valor,int tipo){
 		ArrayList<CResultado_Examen> ret=new ArrayList<CResultado_Examen>();
 		try{
-			String sql="select * from  (SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, ca.descripcion, @rownum:=@rownum+1 rownum "+
+			String sql="select * from  (SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, ca.descripcion, pe.orden orden1, @rownum:=@rownum+1 rownum "+
 					" FROM resultado_examen pe inner join tipo_interpretacion ca on ca.idtipo_interpretacion=pe.idtipo_interpretacion, (SELECT @rownum:=0) ro " +
 					" where upper(pe.titulo) like ? and pe.idtipo_interpretacion=? ) table1 "+
 					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
@@ -3208,7 +3209,7 @@ public class CDataExam extends CDataBase {
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CResultado_Examen news=new CResultado_Examen(rs.getInt("idresultado_examen"),rs.getString("titulo"),
-						rs.getString("descripcion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"));
+						rs.getString("descripcion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"),rs.getInt("orden1"));
 				ret.add(news);
 				
 			}
@@ -3216,7 +3217,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e135", this, e);
 		}
 		return ret;
 	}
@@ -3233,7 +3234,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e136", this, e);
 				}
 		
 		return temp;
@@ -3241,21 +3242,21 @@ public class CDataExam extends CDataBase {
 	public CResultado_Examen getresultado_examenEspecifico(int idinter){
 		CResultado_Examen ret=null;
 		try{
-			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size "+
+			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, pe.orden "+
 					" FROM resultado_examen pe where pe.idresultado_examen=?";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idinter);
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				ret=new CResultado_Examen(rs.getInt("idresultado_examen"),rs.getString("titulo"),
-						rs.getString("interpretacion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"));
+						rs.getString("interpretacion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"), rs.getInt("orden"));
 				
 			}
 			rs.close();
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e137", this, e);
 		}
 		return ret;
 	}
@@ -3272,7 +3273,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e138", this, e);
 		}
 		
 		return false;
@@ -3302,7 +3303,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e139", this, e);
 		}
 		return ret;
 	}
@@ -3323,7 +3324,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e140", this, e);
 		}
 		return news;
 	}
@@ -3341,7 +3342,7 @@ public class CDataExam extends CDataBase {
 					temp=rs2.getInt("cant");
 				} catch (SQLException e) {
 		
-					e.printStackTrace();
+					CLogger.write("e141", this, e);
 				}
 		
 		return temp;
@@ -3356,7 +3357,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e142", this, e);
 		}
 		
 		return false;
@@ -3387,7 +3388,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e143", this, e);
 		}
 		
 		return false;
@@ -3402,7 +3403,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e144", this, e);
 		}
 		
 		return false;
@@ -3430,7 +3431,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e145", this, e);
 		}
 		return enc;
 	}
@@ -3454,7 +3455,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e146", this, e);
 		}
 		return enc;
 	}
@@ -3483,7 +3484,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e147", this, e);
 		}
 		return enc;
 	}
@@ -3507,7 +3508,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e148", this, e);
 		}
 		return enc;
 	}
@@ -3540,7 +3541,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e149", this, e);
 		}
 		return enc;
 	}
@@ -3558,7 +3559,7 @@ public class CDataExam extends CDataBase {
 			temp=rs2.getInt("cant");
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e150", this, e);
 		}
 
 		return temp;
@@ -3576,7 +3577,7 @@ public class CDataExam extends CDataBase {
 			temp=rs2.getString("descripcion");
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e151", this, e);
 		}
 
 		return temp;
@@ -3585,7 +3586,7 @@ public class CDataExam extends CDataBase {
 		ArrayList<CResultado_Examen> ret=new ArrayList<CResultado_Examen>();
 		try{
 			
-			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, ca.descripcion, @rownum:=@rownum+1 rownum "+
+			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, ca.descripcion, pe.orden orden1, @rownum:=@rownum+1 rownum "+
 					" FROM resultado_examen pe inner join tipo_interpretacion ca on ca.idtipo_interpretacion=pe.idtipo_interpretacion, (SELECT @rownum:=0) ro " +
 					" where  pe.idtipo_interpretacion=? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -3593,7 +3594,7 @@ public class CDataExam extends CDataBase {
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CResultado_Examen news=new CResultado_Examen(rs.getInt("idresultado_examen"),rs.getString("titulo"),
-						rs.getString("descripcion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"));
+						rs.getString("descripcion"),rs.getInt("idtipo_interpretacion"), rs.getInt("size"), rs.getInt("orden1"));
 				ret.add(news);
 				
 			}
@@ -3602,7 +3603,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e152", this, e);
 		}
 		return ret;
 	}
@@ -3610,7 +3611,7 @@ public class CDataExam extends CDataBase {
 		ArrayList<CResultado_Examen> ret=new ArrayList<CResultado_Examen>();
 		try{
 			
-			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size "+
+			String sql="SELECT pe.idresultado_examen, pe.titulo, pe.interpretacion, pe.idtipo_interpretacion, pe.size, pe.orden orden1 "+
 					" FROM resultado_examen pe inner join resultado_condicion rc on rc.idresultado_examen=pe.idresultado_examen, (SELECT @rownum:=0) ro " +
 					" where  rc.idencabezado_condicion=? ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -3618,7 +3619,7 @@ public class CDataExam extends CDataBase {
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CResultado_Examen news=new CResultado_Examen(rs.getInt("idresultado_examen"),rs.getString("titulo"),
-						"",rs.getInt("idtipo_interpretacion"), rs.getInt("size"));
+						"",rs.getInt("idtipo_interpretacion"), rs.getInt("size"), rs.getInt("orden1"));
 				ret.add(news);
 				
 			}
@@ -3627,7 +3628,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e153", this, e);
 		}
 		return ret;
 	}
@@ -3659,7 +3660,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e154", this, e);
 		}
 		
 		return false;
@@ -3681,7 +3682,7 @@ public class CDataExam extends CDataBase {
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e155", this, e);
 		}
 		
 		return false;
@@ -3703,7 +3704,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e156", this, e);
 		}
 		
 		return lista;
@@ -3724,7 +3725,7 @@ public class CDataExam extends CDataBase {
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e157", this, e);
 		}
 		
 		return un;
@@ -3754,7 +3755,7 @@ try{
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e158", this, e);
 		}
 		return lista;
 	}
@@ -3773,7 +3774,7 @@ try{
 			
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e159", this, e);
 		}
 		
 		return false;
@@ -3796,7 +3797,7 @@ try{
 			stm.close();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			CLogger.write("e160", this, e);
 		}
 		return lista;
 	}

@@ -41,8 +41,10 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						    colModel: [
 							{display: 'Seleccionar', name : 'chkactividad', width : 30, sortable : false, align: 'left'},           
 							{ display: 'ID', name: 'idresultado', width: 40, sortable: true, align: 'left' },
+							{ display: 'Orden', name: 'orden', width: 40, sortable: true, align: 'left' },
 							{ display: 'Titulo', name: 'titulo', width: 250, sortable: true, align: 'left' },
 							{ display: 'Tipo', name: 'tipo', width: 200, sortable: true, align: 'left' }
+							
 							],
 							usepager: true,
 						    sortname: "idresultado",
@@ -66,6 +68,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					 $("#titulo_interpre").val("");
 					 $("#size_interpre").val("1");
 					 $("#inter_interpre").val("");
+					 $("#orden_interpre").val("");
 					 interpreta=0;	
 					 cambiarTipo();
 				 }
@@ -89,6 +92,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 							       	$("#size_interpre").val(result.size);
 							       	$("#inter_interpre").val(result.interpretacion);
 							       	$("#tipo_interpre").val(result.tipo);
+							       	$("#orden_interpre").val(result.orden);
 					        	}
 					    });
 						
@@ -105,7 +109,8 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						            'titulo='+$("#titulo_interpre").val(),
 						            'size='+$("#size_interpre").val(),
 						            'interpretacion='+$("#inter_interpre").val(),
-						            'tipo='+$("#tipo_interpre").val()
+						            'tipo='+$("#tipo_interpre").val(),
+						            'orden='+$("#orden_interpre").val(),
 						        ].join('&');
 						 $.ajax({
 						        url: "../SInterpretacion",
@@ -163,7 +168,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 															  <option value="1">Sin texto</option>
 															  <option value="2">Pequeño</option>
 															  <option value="3">Mediano</option>
-															  
+															  <option value="4">Grande</option>
 															</select>
 												</div>
 											</div>
@@ -171,6 +176,12 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 												<div class="col_titulo">Interpretacion</div>
 												<div class="col">
 													<textarea id='inter_interpre' name='inter_interpre' rows="6" cols="60"></textarea>
+												</div>
+											</div>
+											<div class="fila">
+												<div class="col_titulo">Orden</div>
+												<div class="col">
+													<input type="text" id='orden_interpre' name='orden_interpre' size="10"/>
 												</div>
 											</div>
 											<div class="fila">

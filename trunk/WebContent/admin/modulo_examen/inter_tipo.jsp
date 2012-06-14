@@ -22,6 +22,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 							    colModel: [
 								{display: 'Seleccionar', name : 'chkinter_tipo', width : 30, sortable : false, align: 'left'},           
 								{ display: 'ID', name: 'idinter_tipo', width: 40, sortable: true, align: 'left' },
+								{ display: 'Orden', name: 'orden', width: 40, sortable: true, align: 'left' },
 								{ display: 'Descripcion', name: 'nombre', width: 250, sortable: true, align: 'left' }
 								],
 								usepager: true,
@@ -40,15 +41,17 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					     
 					  });
 					  $('.pSearch').click();
-					  function EditarInter_tipo(id,nombre){
+					  function EditarInter_tipo(id,nombre,orden){
 						  $("#id_tipo").text(id);
 						  $("#nombre_tipo").val(nombre);
 						  idtipo=id;
+						  $("#orden_tipo").val(orden);
 					  }
 					  function limpiartipo(){
 						  $("#id_tipo").text("NEW");
 						  $("#nombre_tipo").val("");
 						  idtipo=0;
+						  $("#orden_tipo").val("");
 						  $('#inter_tipo').flexReload();
 					  }
 					  function Guardartipo(){
@@ -59,6 +62,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						  cadena = [ 	'id_tipo='   + idtipo,
 						             	'a='+action,
 							            'nombre='+$("#nombre_tipo").val(),
+							            'orden='+$("#orden_tipo").val()
 							        ].join('&');
 						  $.ajax({
 						        url: "../SInterpretacion",
@@ -108,6 +112,10 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 										<div class="fila">
 											<div class="col_titulo">Descripci&oacute;n</div>
 											<div class="col"><input id='nombre_tipo' type="text" size="40"/></div>
+										</div>
+										<div class="fila">
+											<div class="col_titulo">Orden</div>
+											<div class="col"><input id='orden_tipo' type="text" size="10"/></div>
 										</div>
 							</div>
 					</div>				

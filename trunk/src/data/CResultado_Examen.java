@@ -6,6 +6,7 @@ public class CResultado_Examen {
 	 private String interpretacion; 
 	 private int  idtipo_interpretacion;
 	 private int size;
+	 private int orden;
 	/**
 	 * @param idresultado_examen
 	 * @param titulo
@@ -13,15 +14,32 @@ public class CResultado_Examen {
 	 * @param idtipo_interpretacion
 	 */
 	public CResultado_Examen(int idresultado_examen, String titulo,
-			String interpretacion, int idtipo_interpretacion, int size) {
+			String interpretacion, int idtipo_interpretacion, int size, int orden) {
 		this.idresultado_examen = idresultado_examen;
 		this.titulo = titulo;
 		this.interpretacion = interpretacion;
 		this.idtipo_interpretacion = idtipo_interpretacion;
 		this.size=size;
+		this.orden=orden;
 	}
 	
 	
+	/**
+	 * @return the orden
+	 */
+	public int getOrden() {
+		return orden;
+	}
+
+
+	/**
+	 * @param orden the orden to set
+	 */
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
+
+
 	/**
 	 * @return the size
 	 */

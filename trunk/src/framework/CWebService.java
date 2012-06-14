@@ -22,7 +22,7 @@ public class CWebService {
 	
 	private String qname="http://rye.usac.edu.gt/nusoap";
 	private int ciclo=2012;
-	public CWebService(int year){
+	public CWebService(int year,String dependencia,String no_personal, String password){
 		this.ciclo=year;
 	}
 	
@@ -82,7 +82,7 @@ public class CWebService {
 	
 	
 	public static void main (String args[]) {
-        CWebService service=new CWebService(2012);
+        CWebService service=new CWebService(2012,"usalud","200614790","Estud14nt3");
         CPaciente pac=service.DatosGenerales(200711433+"",null);
         CDataExam exam=new CDataExam();
         exam.Connect();

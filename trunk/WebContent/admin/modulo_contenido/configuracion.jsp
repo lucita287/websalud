@@ -93,7 +93,24 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 									<input type="text" id="fecha_examen"  class="datepicker" size="20px" value="<%= configurar.getFormatoFechaddmmyy(configurar.getFecha_examen()) %>" /> dd/mm/yyyy
 								</div>
 							</div>
-
+							<div class="fila">
+								<div class="col_titulo">Dependencia / WEBSERVICES</div>
+								<div class="col">
+									<input type="password" id="dependencia"  size="30px" value="<%= configurar.getDependencia() %>" /> 
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">No Personal / WEBSERVICES</div>
+								<div class="col">
+									<input type="password" id="no_personal"  size="30px" value="<%= configurar.getNo_personal() %>" /> 
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Password / WEBSERVICES</div>
+								<div class="col">
+									<input type="password" id="pass"  size="30px" value="<%= configurar.getPassword() %>" /> 
+								</div>
+							</div>
 				</div>
 </div>							
 	
@@ -122,7 +139,9 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			          'a=GuardarConfig',
 			          'ciclo='+$("#ciclo").val(),
 			          'multifa='+$("#multifa").val(),
-			          
+			          'dependencia='   + $("#dependencia").val(),
+			          'no_personal='+ $("#no_personal").val(),
+			          'password='+$("#pass").val(),				          
 			        ].join('&');
 			$.ajax({
 		        url: "../SConfiguracion",
