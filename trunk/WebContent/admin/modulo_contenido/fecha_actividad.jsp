@@ -311,6 +311,6 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			<table id="fecha_actividad" style="display:none"></table>
 			</div>			
 		<%} %>							
-<%	}	} 
+<%	} 	} 
 
-	}%>					
+	} dbo.Close(); %>					

@@ -13,6 +13,11 @@ idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getP
 }catch(Exception e){}
 
 %>
+<style>
+.wc-time{
+	font-size:60%;
+}
+</style>
 <hr />
 	<% for(int j=0; j<list.size();j++){  
 		CArea area=list.get(j);%>
@@ -79,6 +84,21 @@ idarea=Integer.parseInt(((request.getParameter("idarea")==null)?"1":request.getP
 			},
 			height: function($calendar){
 				return $(window).height() - $("h1").outerHeight(true);
+			},
+			eventRender : function(calEvent, $event) {
+				if(calEvent.color==1){
+					$event.css('backgroundColor', '#1589FF');
+			        $event.find('.time').css({'backgroundColor': '#1589FF', 'border':'1px solid #888'});
+				}else if(calEvent.color==2){
+					$event.css('backgroundColor', '#FDD017');
+			        $event.find('.time').css({'backgroundColor': '#FDD017', 'border':'1px solid #888'});
+				}else if(calEvent.color==3){
+					$event.css('backgroundColor', '#F62217');
+			        $event.find('.time').css({'backgroundColor': '#F62217', 'border':'1px solid #888'});
+				}else{
+					$event.css('backgroundColor', '#4CC417');
+			        $event.find('.time').css({'backgroundColor': '#4CC417', 'border':'1px solid #888'});
+				}
 			},
 	        data: function(start, end, callback) {
 	        	  

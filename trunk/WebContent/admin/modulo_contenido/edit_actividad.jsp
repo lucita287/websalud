@@ -149,6 +149,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								$("#area_actividad").val(result.idarea);
 								$("#id_actividad_f").text(idactividad);
 								$("#titulo_actividad_f").text(result.titulo);
+								$("#color_actividad").val(result.color);
 								var responsable=result.responsables;
 								
 					        	for (var x = 0 ; x < responsable.length ; x++) {
@@ -182,6 +183,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				            'idarea='+$("#area_actividad").val(),
 				            'responsable='+$("#respon_actividad").val(),
 				            'salon='+$("#salon_actividad").val(),
+				            'color='+$("#color_actividad").val(),
 				        ].join('&');
 				$.ajax({
 			        url: "../SActividad",
@@ -268,6 +270,17 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 							<div class="fila">
 								<div class="col_titulo">Salon</div>
 								<div class="col"><input id="salon_actividad" type="text" size="30" /></div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Color</div>
+								<div class="col">
+										<select id="color_actividad" >
+											<option value="1">AZUL</option>
+											<option value="2">ANARANJADO</option>
+											<option value="3">ROJO</option>
+											<option value="4">VERDE</option>
+										</select>
+								</div>
 							</div>
 							<div class="fila">
 								<div class="col_titulo">Area</div>

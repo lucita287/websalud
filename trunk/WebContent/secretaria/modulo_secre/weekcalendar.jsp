@@ -81,8 +81,8 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 			},
 			height: function($calendar){
 				return $(window).height() - $("h1").outerHeight(true);
-			}
-			,eventRender : function(calEvent, $event) {
+			},
+			eventRender : function(calEvent, $event) {
 		        
 				
 				if(calEvent.cupo>=0){
