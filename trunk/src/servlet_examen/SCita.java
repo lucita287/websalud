@@ -142,16 +142,13 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
     		fecha_inicio.setTime(start);
     		Date fecha_fin=new Date();
     		fecha_fin.setTime(end);
-    		//getListaDetalleActividad
     		 ArrayList<CCita> lista=dbo.getListaCita(fecha_inicio, fecha_fin);
 			 String data="[";
 			 String lista_data="";
 			 for(int j=0; j<lista.size();j++){ 
 				 CCita da=lista.get(j);
-				 lista_data+=(lista_data.compareTo("")==0)?"":",";
-				// lista_data+="{\"id\":"+da.getIddetalleactividad()+", \"start\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorainicio())+"\", \"end\":\""+da.getFormatoFechaCalendar(da.getFecha(), da.getHorafin())+"\", \"title\":\""+da.getActividadidactividad().getTitulo()+"\"}";
-				 
-				 lista_data+="{\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
+				 lista_data+=(lista_data.compareTo("")==0)?"":","; 
+				 lista_data+="{\"cupo\":"+(da.getCupo()-da.getCupo_disp())+",\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
 			 }
 			 data+=lista_data+"]";
 			 out.print(data);

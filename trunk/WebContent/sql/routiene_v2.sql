@@ -296,6 +296,7 @@ BEGIN
    return 0;
 END
 $$
+
 DELIMITER $$
 DROP FUNCTION IF EXISTS `estado_cita_paciente`$$
 CREATE FUNCTION estado_cita_paciente(pidcita int,pidpaciente int) RETURNS int

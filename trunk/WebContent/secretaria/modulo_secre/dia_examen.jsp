@@ -51,7 +51,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 			<div style="float:left; width:400px;">
 			Carne<input type="text" id="carne" name="carne"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
 			<%=(pac==null)?"":pac.getCarne()%><br/>
-			<%=(pac==null)?"":pac.getIdpaciente()+ ")"+(pac.getNombre()+" "+pac.getApellido()) %><br/>
+			<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
 			<%=(pac==null)?"":(pac.getddmmyyFecha()) %>
 			</div>
 			<div style="float:left; width:300px;">
@@ -59,11 +59,26 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 			Iterator<CCita> it3=list.iterator();
 			while(it3.hasNext()){
 				CCita cc=it3.next();
+				String img="'../images/close.png'";
+				if(cc.getEstado()==1) img="'../images/exclamation.png'";
+				else if(cc.getEstado()==2) img="'../images/off.png'";
+				else if(cc.getEstado()==0) img="'../images/close.png'";
+				else if(cc.getEstado()==3) img="'../images/on.png'";
 				%>
-				<%= cc.getFormatoFechaddmmyy(cc.getFecha()) %> <%= cc.getFormatoFechahhmm(cc.getHora_inicio()) %> <%= cc.getTipo_examenD() %>
+
+				<button onclick="Modificar(<%= cc.getIdcita()%>)"><img width='18px' height='18px' src=<%=img%> /></button>
+				<%= cc.getFormatoFechaddmmyy(cc.getFecha()) %> <%= cc.getFormatoFechahhmm(cc.getHora_inicio()) %> <%= cc.getTipo_examenD() %><br/>
 			<%}%>
 			</div>
 			<div style="clear: both;"></div>
+		</div>
+		<div style="float:right">
+			REPORTE DE:<select id="tipo_cita">
+				<option value="1" SELECTED>ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
+				<option value="2">ESTUDIANTES CON CITAS CAMBIADAS</option>
+				<option value="3">ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
+				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+			</select>
 		</div>
 				<table> 
 					<tr>
@@ -128,6 +143,22 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 					        }
 					    });
 				}
+				function Modificar(id){
+					cadena = [ 'a=estu_cita','idcita='+id,].join('&');
+					 
+					 $.ajax({
+					        url: "../SCita",
+					        data: cadena,
+					  	    type: 'post',
+					  	  	dataType: 'json',
+					  	  	success: function(data){
+					  	  	$( "#dialog-form" ).dialog( "close" );
+					  		$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+<%=request.getParameter("start")%>+"&end="+<%=request.getParameter("end")%>+"&a=especifico_calendar&");
+					  		$( "#dialog-form" ).dialog( "open" );
+					        }
+					    });
+					
+				}
 				function Actualizar(init,end){
 					$( "#dialog-form" ).dialog( "close" );
 			  		$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
@@ -188,15 +219,15 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						%>
 						
 							function r_dia_examen_<%=cc.getIdcita()%>(){
-								$('#parameters').val('idcita');
-								$('#values').val('<%=cc.getIdcita()%>');
+								$('#parameters').val('idcita,estado');
+								$('#values').val('<%=cc.getIdcita()%>|'+$("#tipo_cita").val());
 								$('#report').val('Estudiantes_cita');
 								$('#report_name').val('Estudiantes_cita');
 								$("#form_report").submit();								
 							}
 							function Er_dia_examen_<%=cc.getIdcita()%>(){
-								$('#parameters1').val('idcita');
-								$('#values1').val('<%=cc.getIdcita()%>');
+								$('#parameters1').val('idcita,estado');
+								$('#values1').val('<%=cc.getIdcita()%>|'+$("#tipo_cita").val());
 								$('#report1').val('Estudiantes_cita');
 								$('#report_name1').val('Estudiantes_cita');
 								$("#form_report1").submit();

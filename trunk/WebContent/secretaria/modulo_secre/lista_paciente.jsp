@@ -24,31 +24,55 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				
 		<div style="clear: both;"></div>
 		<h2>Cita <%=cc.getIdcita() %> /<%=cc.getTipo_examenD()%> -> Fecha: <%=cc.getFormatoFechaddmmyy(cc.getFecha()) %>  <%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %> a <%=cc.getFormatoFechahhmm(cc.getHora_fin()) %> </h2>
-
 <div style="float:left;">
+REPORTE DE:<select id="tipo_cita">
+				<option value="1" SELECTED>ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
+				<option value="2">ESTUDIANTES CON CITAS CAMBIADAS</option>
+				<option value="3">ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
+				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+			</select>
+</div>
+<div style="float:left;">
+	<button id="pdf" onclick="lista_pdf()">PDF</button>
+ </div> 
+ <div style="float:left;">
+  	<button id="excel" onclick="lista_excel()">EXCEL</button>
+</div>
 <form id="form_report" name="form_report" action="../SGen_PDF" method="post" target="_blank">
   	<input type="hidden" name="report" id="report" value="Estudiantes_cita" />
   	<input type="hidden" name="report_name" id="report_name" value="Estudiantes_cita" />
   	<input type="hidden" name="parameters" id="parameters" value="idcita" />
   	<input type="hidden" name="values" id="values" value="<%=cc.getIdcita()%>" />
-  	<input type="submit" id="pdf" value="PDF">
+  	
   </form>
- </div> 
- <div style="float:left;">
-  <form id="form_report1" name="form_report1" action="../SGen_EXCEL" method="post" target="_blank">
+<form id="form_report1" name="form_report1" action="../SGen_EXCEL" method="post" target="_blank">
   	<input type="hidden" name="report" id="report1" value="Estudiantes_cita" />
   	<input type="hidden" name="report_name" id="report_name1" value="Estudiantes_cita" />
   	<input type="hidden" name="parameters" id="parameters1" value="idcita" />
   	<input type="hidden" name="values" id="values1" value="<%=cc.getIdcita()%>" />
-  	<input type="submit" id="excel" value="EXCEL">
-  </form>	
-</div>		
+  </form>  		
 <table id="estudiantes" style="display:none"></table>
 <script>
 $(function() {
 	$( "#pdf" ).button();
 	$( "#excel" ).button();
 });
+function lista_pdf(){
+	$('#parameters').val('idcita,estado');
+	$('#values').val('<%=cc.getIdcita()%>|'+$("#tipo_cita").val());
+	$('#report').val('Estudiantes_cita');
+	$('#report_name').val('Estudiantes_cita');
+	$("#form_report").submit();								
+}
+function lista_excel(){
+	$('#parameters1').val('idcita,estado');
+	$('#values1').val('<%=cc.getIdcita()%>|'+$("#tipo_cita").val());
+	$('#report1').val('Estudiantes_cita');
+	$('#report_name1').val('Estudiantes_cita');
+	$("#form_report1").submit();
+	
+}
+
 $(document).ready(function () {
     $("#estudiantes").flexigrid
 		({

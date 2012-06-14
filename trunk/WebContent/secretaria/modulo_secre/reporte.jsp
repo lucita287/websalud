@@ -32,7 +32,13 @@ CConfiguracion config2=dbo.getConfiguracion();
 					
 				 </select><br>
 	Fecha Inicio: <input type="text"  id="Init_date" readonly="readonly"  class="datepicker" size="12"/>
-	Fecha Fin: <input type="text" id="End_date" readonly="readonly"  class="datepicker" size="12"/><br()>
+	Fecha Fin: <input type="text" id="End_date" readonly="readonly"  class="datepicker" size="12"/><br>
+	Estado:<select id="estado">
+				<option value="1" >ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
+				<option value="2">ESTUDIANTES CON CITAS CAMBIADAS</option>
+				<option value="3" SELECTED>ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
+				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+			</select>
 	</div>
 	<div style="float:right">
 		<button class="button-save" onclick="pdf_facultad()" >PDF</button>
@@ -53,7 +59,12 @@ CConfiguracion config2=dbo.getConfiguracion();
 				 </select><br>
 	Fecha Inicio: <input id="Init_date1" type="text" readonly="readonly"  class="datepicker" size="12">
 	Fecha Fin: <input id="End_date1" type="text" readonly="readonly"  class="datepicker" size="12"><br>
-	
+	Estado:<select id="estado1">
+				<option value="1" >ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
+				<option value="2" >ESTUDIANTES CON CITAS CAMBIADAS</option>
+				<option value="3" SELECTED>ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
+				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+			</select>
 	</div>
 	
 	<div style="float:right">
@@ -75,24 +86,24 @@ $(function() {
 
 });
 function pdf_facultad(){
-	$('#parameters').val('Init_date,End_date,tipo_examen,ciclo');
-	$('#values').val($("#Init_date").val()+'|'+$("#End_date").val()+'|'+$("#tipo_examen").val()+'|'+$("#ciclo").val());
+	$('#parameters').val('Init_date,End_date,tipo_examen,ciclo,estado');
+	$('#values').val($("#Init_date").val()+'|'+$("#End_date").val()+'|'+$("#tipo_examen").val()+'|'+$("#ciclo").val()+'|'+$("#estado").val());
 	$('#report').val('Estudiantes_Facultad');
 	$('#report_name').val('Estudiantes_Facultad');
 	$("#form_report").submit();
 	
 }
 function excel_facultad(){
-	$('#parameters1').val('Init_date,End_date,tipo_examen,ciclo');
-	$('#values1').val($("#Init_date").val()+'|'+$("#End_date").val()+'|'+$("#tipo_examen").val()+'|'+$("#ciclo").val());
+	$('#parameters1').val('Init_date,End_date,tipo_examen,ciclo,estado');
+	$('#values1').val($("#Init_date").val()+'|'+$("#End_date").val()+'|'+$("#tipo_examen").val()+'|'+$("#ciclo").val()+'|'+$("#estado").val());
 	$('#report1').val('Estudiantes_Facultad');
 	$('#report_name1').val('Estudiantes_Facultad');
 	$("#form_report1").submit();
 	
 }
 function excel_estudiantes(){
-	$('#parameters1').val('Init_date,End_date,tipo_examen,ciclo');
-	$('#values1').val($("#Init_date1").val()+'|'+$("#End_date1").val()+'|'+$("#tipo_examen1").val()+'|'+$("#ciclo1").val());
+	$('#parameters1').val('Init_date,End_date,tipo_examen,ciclo,estado');
+	$('#values1').val($("#Init_date1").val()+'|'+$("#End_date1").val()+'|'+$("#tipo_examen1").val()+'|'+$("#ciclo1").val()+'|'+$("#estado1").val());
 	$('#report1').val('Estudiante_Fecha');
 	$('#report_name1').val('Estudiante_Fecha');
 	$("#form_report1").submit();
