@@ -53,36 +53,24 @@ public class SGeneratePrint extends HttpServlet {
 		try{
 			String realpath=getServletContext().getRealPath("/");
 			File r2 = new File(realpath+"/estudiante/report_view/Rexamen_fisico.jrprint");
-			File r3 = new File(realpath+"/estudiante/report_view/Rmedicina.jrprint");
-			File r4 = new File(realpath+"/estudiante/report_view/Rodonto.jrprint");
-			File r5 = new File(realpath+"/estudiante/report_view/Rexamen.jrprint");
+			File r4 = new File(realpath+"/estudiante/report_view/Rexamen.jrprint");
+			File r5 = new File(realpath+"/estudiante/report_view/Rodonto.jrprint");
 			File r6 = new File(realpath+"/estudiante/report_view/rproblem.jrprint");
 			
 			
 			
 			Map<String,Object> parameters = new HashMap<String,Object>();
-			//String[] params=(request.getParameter("parameters")!="") ? request.getParameter("parameters").toString().split(",") :  null;
-				//String[] values=request.getParameter("values").toString().split("\\|");
-			//	parameters.put("idpaciente", 1);
-				//parameters.put("SUBREPORT_DIR","./");
 			
 			parameters.put(JRParameter.REPORT_FILE_RESOLVER, new SimpleFileResolver(new File(realpath+"/estudiante/report_view/")));
 			
 			CDataBase db=new CDataBase();
 			if(db.Connect()){
 				JasperPrint jp2 =(JasperPrint) JRLoader.loadObject(r2);
-				JasperPrint jp3 =(JasperPrint) JRLoader.loadObject(r3);
 				JasperPrint jp4 =(JasperPrint) JRLoader.loadObject(r4);
 				JasperPrint jp5 =(JasperPrint) JRLoader.loadObject(r5);
 				JasperPrint jp6 =(JasperPrint) JRLoader.loadObject(r6);
 				//=JasperFillManager.fillReport(r2.getPath(), null, db.getconnection());
-				List<JRPrintPage> pages = jp3 .getPages();
-				for (int j = 0; j < pages.size(); j++) {
-		            JRPrintPage object = (JRPrintPage)pages.get(j);
-		            jp2.addPage(object);
-
-				}
-				pages = jp4 .getPages();
+				List<JRPrintPage> pages =jp4 .getPages();
 				for (int j = 0; j < pages.size(); j++) {
 		            JRPrintPage object = (JRPrintPage)pages.get(j);
 		            jp2.addPage(object);
