@@ -111,6 +111,34 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 									<input type="password" id="pass"  size="30px" value="<%= configurar.getPassword() %>" /> 
 								</div>
 							</div>
+							<div class="fila">
+								<div class="col_titulo">Correo JavaMail</div>
+								<div class="col">
+									<input type="text" name="email_javamail" class="email_javamail" id="email_javamail" size="30" value="<%= configurar.getCorreo_javamail()%>" />
+									
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Password JavaMail</div>
+								<div class="col">
+									<input type="text" name="pass_javamail" class="pass_javamail" id="pass_javamail" size="30" value="<%= configurar.getPass_javamail()%>" />
+									
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">SMTP JavaMail</div>
+								<div class="col">
+									<input type="text" name="smtp_javamail" class="smtp_javamail" id="smtp_javamail" size="30" value="<%= configurar.getSmtp_javamail() %>" />
+									
+								</div>
+							</div>
+							<div class="fila">
+								<div class="col_titulo">Puerto JavaMail</div>
+								<div class="col">
+									<input type="text" name="port_javamail" class="port_javamail" id="port_javamail" size="30" value="<%= configurar.getPort_javamail() %>" />
+									
+								</div>
+							</div>
 				</div>
 </div>							
 	
@@ -141,7 +169,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			          'multifa='+$("#multifa").val(),
 			          'dependencia='   + $("#dependencia").val(),
 			          'no_personal='+ $("#no_personal").val(),
-			          'password='+$("#pass").val(),				          
+			          'password='+$("#pass").val(),
+			          'correo_javamail='+$("#email_javamail").val(),
+			          'pass_javamail='   + $("#pass_javamail").val(),
+			          'smtp_javamail='+ $("#smtp_javamail").val(),
+			          'port_javamail='+$("#port_javamail").val(),
 			        ].join('&');
 			$.ajax({
 		        url: "../SConfiguracion",
