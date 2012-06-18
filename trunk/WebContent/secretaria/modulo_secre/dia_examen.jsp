@@ -203,6 +203,17 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							  	  		$( "#dialog-form" ).dialog( "close" );
 										$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
 										$( "#dialog-form" ).dialog( "open" );
+										
+										cadena = ['idcita='+id].join('&');
+										$.ajax({
+									        url: "../SSendMailCita",
+									        data: cadena,
+									  	    type: 'post',
+									  	  	dataType: 'json',
+									  	  	success: function(data){
+									  	  			
+									  	  		}
+											});
 						        	}
 						        }
 						    });
