@@ -1,5 +1,4 @@
 create database websalud;
-use websalud;
 
 CREATE USER 'saludweb'@'localhost'  IDENTIFIED BY 'w@bs4lud';
 CREATE USER 'saludweb'@'127.0.0.1'  IDENTIFIED BY 'w@bs4lud';
@@ -8,6 +7,7 @@ IDENTIFIED BY 'w@bs4lud';
 GRANT ALL PRIVILEGES ON websalud.* TO 'saludweb'@'127.0.0.1'  
 IDENTIFIED BY 'w@bs4lud';
 
+use websalud;
 
 -- phpMyAdmin SQL Dump
 -- version 3.5.0
