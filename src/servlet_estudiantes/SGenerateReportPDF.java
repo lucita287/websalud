@@ -59,8 +59,8 @@ public class SGenerateReportPDF extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//HttpSession session=request.getSession(false);
 		HttpSession sessiones=request.getSession(false); 
-		if(sessiones!=null && (sessiones.getAttribute("paciente")!=null || sessiones.getAttribute("paci_consulta")!=null )) {
-			CPaciente pac=(CPaciente)((sessiones.getAttribute("paciente")!=null)?sessiones.getAttribute("paciente"):sessiones.getAttribute("paci_consulta"));		
+		if(sessiones!=null && (sessiones.getAttribute("paciente")!=null  )) {
+			CPaciente pac=(CPaciente)sessiones.getAttribute("paciente");		
 			response.setHeader( "Content-Disposition", "attachment; filename=\"ExamMultifasico.pdf" + "\"" );
 			response.setContentType("application/pdf");
 			try{

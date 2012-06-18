@@ -31,7 +31,7 @@ import framework.CDataExam;
 /**
  * Servlet implementation class SGenerateReportAutoPDF
  */
-@WebServlet("/SGenerateReportAutoPDF")
+@WebServlet("/SGenerateReportAutoPDF2")
 public class SGenerateReportAutoPDF2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -55,8 +55,8 @@ public class SGenerateReportAutoPDF2 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//HttpSession session=request.getSession(false);
 				HttpSession sessiones=request.getSession(false); 
-				if(sessiones!=null && (sessiones.getAttribute("paciente")!=null || sessiones.getAttribute("paci_consulta")!=null )) {
-					CPaciente pac=(CPaciente)((sessiones.getAttribute("paciente")!=null)?sessiones.getAttribute("paciente"):sessiones.getAttribute("paci_consulta"));	;		
+				if(sessiones!=null && ( sessiones.getAttribute("paci_consulta")!=null )) {
+					CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");	;		
 					response.setHeader( "Content-Disposition", "attachment; filename=\"ExamAutoevaluacion.pdf" + "\"" );
 					response.setContentType("application/pdf");
 					try{

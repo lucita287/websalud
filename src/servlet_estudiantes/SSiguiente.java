@@ -92,8 +92,8 @@ public class SSiguiente extends HttpServlet {
 				}
 				if( config2.getFecha_examen().compareTo(new java.util.Date()) <=0 ){ 
 								
-								int noboleta=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("boleta") ));
-									if(noboleta<=0){
+								String noboleta=valid.ValidarRequest(request.getParameter("boleta") );
+									if(noboleta.trim().equalsIgnoreCase("")){
 										param+="<br>Debe ingresar una boleta valida";
 									}
 														
