@@ -70,12 +70,25 @@ public class SConfiguracion extends HttpServlet {
 									String no_personal=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("no_personal")),codificacion);
 									String password=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("password")),codificacion);
 									String fecha=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("fecha")),codificacion);
+									
+									String correo_javamail=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("correo_javamail")),codificacion);
+									String pass_javamail=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("pass_javamail")),codificacion);
+									String smtp_javamail=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("smtp_javamail")),codificacion);
+									String port_javamail=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("port_javamail")),codificacion);
+									
+									
 									String validacion=valid.ValidarRango(size, 1, 15, "{\"resultado\":\"ERROR\",\"mensaje\":\"El rango de tama&ntilde;o subir archivos debe ser entre [1-15]\"}");
 									validacion=(validacion.compareTo("")==0)?valid.isFechaValida(fecha,  "Fecha inicio"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(jefe, "Jefe"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(telefono, "Telefono"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(fax, "Fax"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(correo_javamail, "Correo JavaMail"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(pass_javamail, "Password JavaMail"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(smtp_javamail, "SMTP JavaMail"):validacion;
+									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(port_javamail, "Port JavaMail"):validacion;
+									
 									validacion=(validacion.compareTo("")==0)?valid.ValidarCampoVacio(direccion, "Direccion"):validacion;
+									
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(telefono, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(fax, 48, "Titulo"):validacion;
 									validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(direccion, 250, "Titulo"):validacion;
@@ -97,6 +110,11 @@ public class SConfiguracion extends HttpServlet {
 										configurar.setPassword(password);
 										configurar.setNo_personal(no_personal);
 										configurar.setDependencia(dependencia);
+										configurar.setCorreo_javamail(correo_javamail);
+										configurar.setPass_javamail(pass_javamail);
+										configurar.setSmtp_javamail(smtp_javamail);
+										configurar.setPort_javamail(port_javamail);
+										
 										boolean b=dbo.UpdateConfiguracion(configurar);
 										if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 										else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";

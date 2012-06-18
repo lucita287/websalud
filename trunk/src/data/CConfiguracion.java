@@ -24,10 +24,14 @@ public class CConfiguracion {
 	private String dependencia;
 	private String no_personal;
 	private String password;
+	private String correo_javamail;
+	private String pass_javamail;
+	private String smtp_javamail;
+	private String port_javamail;
 	
 	public CConfiguracion(int idconfiguracion,String telefono, String correo_electronico, String fax, String direccion_imagen,
 			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte,int impresion_salud,int random_carne,String jefe_actual, Date fecha_examen,
-			String dependencia,String no_personal,String password){
+			String dependencia,String no_personal,String password,String correo_javamail, String pass_javamail,String port_javamail,String smtp_javamail ){
 		this.dependencia=dependencia;
 		this.no_personal=no_personal;
 		this.password=password;
@@ -47,10 +51,97 @@ public class CConfiguracion {
 		this.random_carne=random_carne;
 		this.jefe_actual=jefe_actual;
 		this.fecha_examen=fecha_examen;
+		this.correo_javamail=correo_javamail;
+		this.pass_javamail=pass_javamail;
+		this.smtp_javamail=smtp_javamail;
+		this.port_javamail=port_javamail;
+		
 	}
 	
 	
 	
+	/**
+	 * @return the smtp_javamail
+	 */
+	public String getSmtp_javamail() {
+		return smtp_javamail;
+	}
+
+
+
+	/**
+	 * @param smtp_javamail the smtp_javamail to set
+	 */
+	public void setSmtp_javamail(String smtp_javamail) {
+		this.smtp_javamail = smtp_javamail;
+	}
+
+
+
+	/**
+	 * @return the port_javamail
+	 */
+	public String getPort_javamail() {
+		return port_javamail;
+	}
+
+
+
+	/**
+	 * @param port_javamail the port_javamail to set
+	 */
+	public void setPort_javamail(String port_javamail) {
+		this.port_javamail = port_javamail;
+	}
+
+
+
+	/**
+	 * @return the correo_javamail
+	 */
+	public String getCorreo_javamail() {
+		return correo_javamail;
+	}
+
+
+
+	/**
+	 * @param correo_javamail the correo_javamail to set
+	 */
+	public void setCorreo_javamail(String correo_javamail) {
+		this.correo_javamail = correo_javamail;
+	}
+
+	
+
+
+	/**
+	 * @return the pass_javamail
+	 */
+	public String getPass_javamail() {
+		return pass_javamail;
+	}
+
+
+
+	/**
+	 * @param pass_javamail the pass_javamail to set
+	 */
+	public void setPass_javamail(String pass_javamail) {
+		this.pass_javamail = pass_javamail;
+	}
+
+
+
+	/**
+	 * @return the correo_electronico
+	 */
+	public String getCorreo_electronico() {
+		return correo_electronico;
+	}
+
+
+
 	/**
 	 * @return the dependencia
 	 */
