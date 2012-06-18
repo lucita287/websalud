@@ -125,7 +125,7 @@ Iterator<CUnidad_Academica> it=list.iterator();
 				    	if(it1.hasNext()) sql+=",";
 				    }
 				    %>
-				    	<form id="form_report" name="form_report" action="../SGenerateReportPDF" method="post" target="_blank">
+				    	<form id="form_report" name="form_report" action="../SGenerateReportPDF2" method="post" target="_blank">
 						  	<center>
 						  	<input type="submit" id="enviar" value="DESCARGAR MULTIFASICO" />
 						  	</center>
@@ -146,7 +146,7 @@ Iterator<CUnidad_Academica> it=list.iterator();
 			        	if(it1.hasNext()) sql+=",";
 			        }
 			        %>
-			        	<form id="form_report" name="form_report" action="../SGenerateReportAutoPDF" method="post" target="_blank">
+			        	<form id="form_report" name="form_report" action="../SGenerateReportAutoPDF2" method="post" target="_blank">
 					  	<center>
 					  	<input type="submit" id="enviar" value="DESCARGAR AUTOEVALUACION" />
 					  	</center>
