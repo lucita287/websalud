@@ -50,7 +50,7 @@ if(dbo.Connect()){
 														out.println("<div class='instruccion'>"+anuncio.getContenido()+"</div>");
 														%>
 														<%= (error!=null)?"<div class='ui-state-highlight'>":"" %>
-														<div class='instruccion'> Ingresa tu boleta de pago:<input name="boleta" class="required number" type="text"  size="20" value="<%= boleta!=null?boleta:"" %>"  /></div>
+														<div class='instruccion'> Ingresa tu boleta de pago:<input name="boleta" class="required" type="text"  size="20" value="<%= boleta!=null?boleta:"" %>"  /></div>
 														<%= (error!=null)?"</div>":"" %>
 														<% } %>
 														
