@@ -56,7 +56,7 @@ if(dbo.Connect()){
 														
 														
 														
-														<h2>Seleccione una cita</h2>
+														<h2>Selecciona una cita</h2>
 														
 														
 														<% 
@@ -102,7 +102,7 @@ if(dbo.Connect()){
     			 out.println("<div class='instruccion'>"+anuncio.getContenido()+"<div/>");
     		}			
     	}else{%>
-		<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
+		<h2>DEBE COMPLETAR EL PASO 2,  o DAR SIGUIENTE EN PANTALLA SIGUIENTE PARA CONTINUAR</h2>
 		<%}								
     }
 }	

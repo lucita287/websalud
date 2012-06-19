@@ -25,11 +25,14 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		<div style="clear: both;"></div>
 		<h2>Cita <%=cc.getIdcita() %> /<%=cc.getTipo_examenD()%> -> Fecha: <%=cc.getFormatoFechaddmmyy(cc.getFecha()) %>  <%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %> a <%=cc.getFormatoFechahhmm(cc.getHora_fin()) %> </h2>
 <div style="float:left;">
-REPORTE DE:<select id="tipo_cita">
-				<option value="1" SELECTED>ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
-				<option value="2">ESTUDIANTES CON CITAS CAMBIADAS</option>
-				<option value="3">ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
-				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
+				<option value="0,1,2,3,4" SELECTED>TODOS</option>
+				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="2">CAMBIO DE CITA</option>
+				<option value="3">CITA CONFIRMADA</option>
+				<option value="0">NO SE PRESENTO</option>
+				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 			</select>
 </div>
 <div style="float:left;">
@@ -72,7 +75,10 @@ function lista_excel(){
 	$("#form_report1").submit();
 	
 }
-
+function CambiarEstado(){
+	$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
+	  $('#estudiantes').flexReload();
+}
 $(document).ready(function () {
     $("#estudiantes").flexigrid
 		({
@@ -102,7 +108,7 @@ $(document).ready(function () {
 							],
 		    width: 940,
 		    height: 500,
-			params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>}]
+			params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()}]
 		});
    		$('.pSearch').click();
  });
@@ -117,11 +123,11 @@ function Modificar(idpaciente,idcita){
 	  	  	dataType: 'json',
 	  	  	success: function(data){
 	  	  		if(data.resultado=='OK'){
-	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>} ]});
+	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
 				  $('#estudiantes').flexReload();
 	  	  		}else{
 	  	  			alert("No ahi cupo disponible");
-	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>} ]});
+	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
 				  $('#estudiantes').flexReload();
 	  	  		}
 	        }

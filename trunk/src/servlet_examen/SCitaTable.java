@@ -125,7 +125,7 @@ public class SCitaTable extends HttpServlet {
 									 String typeorder=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("sortorder")),codificacion);
 									 String busqueda=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("query")),codificacion);
 									 String qtype=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("qtype")),codificacion);
-									 
+									 String estado=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("estado")),codificacion);
 									 int pqtype=1;
 									 if(qtype.trim().equalsIgnoreCase("nombre")){
 										 pqtype=2;
@@ -153,7 +153,7 @@ public class SCitaTable extends HttpServlet {
 									 
 									 
 									 
-									 ArrayList<CPaciente> lista=dbo.getListaCitasEstudiante(ordenar,asc,min,max,pqtype,busqueda,idcita);
+									 ArrayList<CPaciente> lista=dbo.getListaCitasEstudiante(ordenar,estado,asc,min,max,pqtype,busqueda,idcita);
 									 
 									 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 									 info+="<rows><page>"+page+"</page><total>"+dbo.getTotalCitasEstudiante(pqtype, busqueda,idcita)+"</total>";

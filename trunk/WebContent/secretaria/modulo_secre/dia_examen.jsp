@@ -50,9 +50,11 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		
 			<div style="float:left; width:400px;">
 			Carne<input type="text" id="carne" name="carne"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
-			<%=(pac==null)?"":pac.getCarne()%><br/>
+			<b><%=(pac==null)?"":pac.getCarne()%></b><br/>
 			<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
-			<%=(pac==null)?"":(pac.getddmmyyFecha()) %>
+			<b>Fecha Nac:</b> <%=(pac==null)?"":(pac.getddmmyyFecha()) %> <b>Movil:</b> <%=(pac==null)?"":(pac.getMovil()) %><br/>
+			<b>Email: </b><%=(pac==null)?"":(pac.getEmail()) %><BR>
+			
 			</div>
 			<div style="float:left; width:300px;">
 			<% 
@@ -69,17 +71,31 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				<button onclick="Modificar(<%= cc.getIdcita()%>)"><img width='18px' height='18px' src=<%=img%> /></button>
 				<%= cc.getFormatoFechaddmmyy(cc.getFecha()) %> <%= cc.getFormatoFechahhmm(cc.getHora_inicio()) %> <%= cc.getTipo_examenD() %><br/>
 			<%}%>
+			
 			</div>
+
 			<div style="clear: both;"></div>
+			
 		</div>
+					<div style="width:750px;float:right;">
+						<img width='18px' height='18px' src="../images/exclamation.png" /> CITA NO CONFIRMADA
+				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
+				<img width='18px' height='18px' src="../images/on.png" /> CITA CONFIRMADA
+				<img width='18px' height='18px' src="../images/close.png" /> NO SE PRESENTO		
+			</div>
 		<div style="float:right">
 			REPORTE DE:<select id="tipo_cita">
-				<option value="1" SELECTED>ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
-				<option value="2">ESTUDIANTES CON CITAS CAMBIADAS</option>
-				<option value="3">ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
-				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+				<option value="1,2,3,0" SELECTED>TODOS</option>
+				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="2">CAMBIO DE CITA</option>
+				<option value="3">CITA CONFIRMADA</option>
+				<option value="0">NO SE PRESENTO</option>
+				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
+				
 			</select>
 		</div>
+		
 				<table> 
 					<tr>
 						<td class="tab_cita" style="width:50px;">ID</td>

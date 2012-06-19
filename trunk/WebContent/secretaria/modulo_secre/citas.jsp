@@ -169,6 +169,10 @@ else year=anio;
 				}
 			  
 			</script>
+			<style>
+			#label_estado { width:130px;  padding: 0.4em; background: #fff; }
+			#label_estado h3 { margin: 0; padding: 0.4em; text-align: center; }
+			</style>
 			<div id="dialog-form" title="Citas">
 			</div>
 			<center>
@@ -204,7 +208,21 @@ else year=anio;
 				<input onclick="BuscarFecha()" type="radio" name="exam" id="ambos_exam" class="buscar" value="3" <%=(examv==3||examv==0)?"checked":""%> /><label for="ambos_exam">AMBOS</label>
 				<hr/>
 			</center>
-			
+			<div style="float:left; width:800px;">
 			<table id="fecha_citas" style="display:none"></table>
-					
+			</div>
+			<%
+			String estado1="../images/close.png";
+			String estado2="../images/on.png";
+			String estado3="../images/web.png";
+			%>
+			<div style="float:left; width:150px;">
+				<div id="label_estado" class="ui-widget-content ui-corner-all">
+										<h3 class="ui-widget-header ui-corner-all">Estados</h3>
+										<img src="<%= estado1 %>"  width='18px' height='18px' /> CERRADO<BR/>
+										<img src="<%= estado2 %>"  width='18px' height='18px' /> HABILITADA<BR/>
+										<img src="<%= estado3 %>"  width='18px' height='18px' /> VIA WEB<BR/>
+				</div>						
+			</div>
+			<div style="clear: both;"></div>		
 <% dbo.Close(); } } %>			
