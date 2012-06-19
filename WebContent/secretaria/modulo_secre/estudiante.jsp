@@ -171,7 +171,10 @@ Iterator<CUnidad_Academica> it=list.iterator();
 					
 				}
 				%>
-		
+				<img width='18px' height='18px' src="../images/exclamation.png" /> CITA NO CONFIRMADA
+				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
+				<img width='18px' height='18px' src="../images/on.png" /> CITA CONFIRMADA
+				<img width='18px' height='18px' src="../images/close.png" /> NO SE PRESENTO		
 				<div style="clear: both;"></div>
 							<table id="fecha_citas" style="display:none"></table>
 			<script>	

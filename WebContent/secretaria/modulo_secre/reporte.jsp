@@ -34,10 +34,13 @@ CConfiguracion config2=dbo.getConfiguracion();
 	Fecha Inicio: <input type="text"  id="Init_date" readonly="readonly"  class="datepicker" size="12"/>
 	Fecha Fin: <input type="text" id="End_date" readonly="readonly"  class="datepicker" size="12"/><br>
 	Estado:<select id="estado">
-				<option value="1" >ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
-				<option value="2">ESTUDIANTES CON CITAS CAMBIADAS</option>
-				<option value="3" SELECTED>ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
-				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+				<option value="1,2,3,0" SELECTED>TODOS</option>
+				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="2">CAMBIO DE CITA</option>
+				<option value="3">CITA CONFIRMADA</option>
+				<option value="0">NO SE PRESENTO</option>
+				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 			</select>
 	</div>
 	<div style="float:right">
@@ -60,10 +63,13 @@ CConfiguracion config2=dbo.getConfiguracion();
 	Fecha Inicio: <input id="Init_date1" type="text" readonly="readonly"  class="datepicker" size="12">
 	Fecha Fin: <input id="End_date1" type="text" readonly="readonly"  class="datepicker" size="12"><br>
 	Estado:<select id="estado1">
-				<option value="1" >ESTUDIANTES CON CITAS PENDIENTES DE CONFIRMACION</option>
-				<option value="2" >ESTUDIANTES CON CITAS CAMBIADAS</option>
-				<option value="3" SELECTED>ESTUDIANTES QUE ASISTIERON A SU CITAS</option>
-				<option value="4">ESTUDIANTES QUE NO VINIERON A SUS CITAS</option>
+				<option value="1,2,3,0" SELECTED>TODOS</option>
+				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="2">CAMBIO DE CITA</option>
+				<option value="3">CITA CONFIRMADA</option>
+				<option value="0">NO SE PRESENTO</option>
+				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 			</select>
 	</div>
 	

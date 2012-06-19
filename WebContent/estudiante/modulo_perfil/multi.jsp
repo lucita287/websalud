@@ -23,7 +23,7 @@
     <% 
     CDataExam dbo=new CDataExam();
     if(dbo.Connect()){
-    CAnuncio anuncio=dbo.getAnuncioEspecifico(2);
+    CAnuncio anuncio=dbo.getAnuncioEspecifico(3);
     
     ArrayList<Integer> lista_menu=dbo.ListaMenu_Categoria_Multi(pac.getIdpaciente() );
     ArrayList<CArea_Examen> list_e=dbo.getListaArea_Examen(0,1);

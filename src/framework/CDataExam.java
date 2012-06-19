@@ -2738,7 +2738,7 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
-	public ArrayList<CPaciente> getListaCitasEstudiante(int ordenar,int asc,int min,int max,int type, String busqueda,int idcita){
+	public ArrayList<CPaciente> getListaCitasEstudiante(int ordenar,String estado,int asc,int min,int max,int type, String busqueda,int idcita){
 		ArrayList<CPaciente> ret=new ArrayList<CPaciente>();
 		try{
 			
@@ -2756,7 +2756,7 @@ public class CDataExam extends CDataBase {
 					"inner join paciente p on p.idpaciente=cp.idpaciente "+
 					"left outer join unidad_academica u on u.idunidad_academica=p.idunidad_academica "+
 					" , (SELECT @rownum:=0) ro "+
-					"where c.idcita=? and upper("+busq+") like ?   ) table1 "+
+					"where c.idcita=? and upper("+busq+") like ? and cp.estado in("+estado+")  ) table1 "+
 					" where rownum>=? and rownum<=? order by ? "+((asc==1)?"ASC":"DESC") +"";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idcita);
