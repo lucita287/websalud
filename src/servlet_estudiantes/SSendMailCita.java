@@ -90,7 +90,7 @@ public class SSendMailCita extends HttpServlet {
 						
 						jasperReport = (JasperReport)JRLoader.loadObject(reportFile.getPath());
 					} catch (JRException e1) {
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 					
 					Map<String,Object> parameters = new HashMap<String,Object>();
@@ -162,7 +162,7 @@ public class SSendMailCita extends HttpServlet {
 							
 							
 						}  catch (Exception e) {
-				                e.printStackTrace();
+				               // e.printStackTrace();
 				            }					
 					
 					}		
