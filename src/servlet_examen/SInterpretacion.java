@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.CCategoria_Interpretacion;
 import data.CCondicion;
-import data.CMenu;
 import data.CPregunta;
 import data.CResultado_Examen;
 import data.CTipo_Interpretacion;

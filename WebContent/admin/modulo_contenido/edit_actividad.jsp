@@ -249,15 +249,15 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div class="col"><label id="id_actividad">NEW</label></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Titulo</div>
+								<div class="col_titulo">*Titulo</div>
 								<div class="col"><input id="titulo_actividad" type="text" size="50" /></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Descripci&oacute;n</div>
+								<div class="col_titulo">*Descripci&oacute;n</div>
 								<div class="col"><textarea id="descripcion_actividad" rows="4" cols="50"></textarea></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Lugar</div>
+								<div class="col_titulo">*Lugar</div>
 								<div class="col">
 												<select id="lugar_actividad" >
 													<% for(int j=0; j<list_edificio.size();j++){ 
@@ -272,7 +272,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div class="col"><input id="salon_actividad" type="text" size="30" /></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Color</div>
+								<div class="col_titulo">*Color</div>
 								<div class="col">
 										<select id="color_actividad" >
 											<option value="1">AZUL</option>
@@ -283,7 +283,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								</div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Area</div>
+								<div class="col_titulo">*Area</div>
 								<div class="col">
 										<select id="area_actividad" >
 													<% for(int j=0; j<list.size();j++){ 

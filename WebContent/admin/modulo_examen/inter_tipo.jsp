@@ -110,11 +110,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 											<div class="col"><label id="id_tipo">NEW</label></div>
 										</div>
 										<div class="fila">
-											<div class="col_titulo">Descripci&oacute;n</div>
+											<div class="col_titulo">*Descripci&oacute;n</div>
 											<div class="col"><input id='nombre_tipo' type="text" size="40"/></div>
 										</div>
 										<div class="fila">
-											<div class="col_titulo">Orden</div>
+											<div class="col_titulo">*Orden</div>
 											<div class="col"><input id='orden_tipo' type="text" size="10"/></div>
 										</div>
 							</div>

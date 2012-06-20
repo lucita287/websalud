@@ -158,7 +158,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 												<div class="col"><label id="id_interpre" >NEW</label></div>
 											</div>
 											<div class="fila">
-												<div class="col_titulo">Titulo</div>
+												<div class="col_titulo">*Titulo</div>
 												<div class="col"><input id='titulo_interpre' type="text" size="50"/></div>
 											</div>
 											<div class="fila">
@@ -173,7 +173,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 												</div>
 											</div>
 											<div class="fila">
-												<div class="col_titulo">Interpretacion</div>
+												<div class="col_titulo">*Interpretacion</div>
 												<div class="col">
 													<textarea id='inter_interpre' name='inter_interpre' rows="6" cols="60"></textarea>
 												</div>
@@ -185,7 +185,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 												</div>
 											</div>
 											<div class="fila">
-												<div class="col_titulo">Tipo Interpretaci&oacute;n</div>
+												<div class="col_titulo">*Tipo Interpretaci&oacute;n</div>
 												<div class="col">
 													<select id="tipo_interpre" name="tipo_interpre">
 													<% 

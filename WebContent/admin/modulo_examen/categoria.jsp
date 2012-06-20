@@ -144,15 +144,15 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div class="col"><label id="id_cate">NEW</label></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Descripci&oacute;n</div>
+								<div class="col_titulo">*Descripci&oacute;n</div>
 								<div class="col"><input id='nombre_cate' type="text" size="40"/></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Orden</div>
+								<div class="col_titulo">*Orden</div>
 								<div class="col"><input id='orden_cate' type="text" size="10"/></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Estado</div>
+								<div class="col_titulo">*Estado</div>
 								<div class="col">
 									<select id="estado_pregunta" name="estado_pregunta"  >
 													<option value="0" >DESHABILITADA</option>
@@ -161,7 +161,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								</div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Examenes</div>
+								<div class="col_titulo">*Examenes</div>
 								<div class="col">
 									<input type="checkbox" id="auto_cate" class="check" /><label for="auto_cate">Examen de AutoEvaluaci&oacute;n</label>
 									<input type="checkbox" id="multifa_cate" class="check" /><label for="multifa_cate">Examen Multif&aacute;sico</label>										

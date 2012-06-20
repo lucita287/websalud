@@ -28,7 +28,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.SimpleFileResolver;
-import framework.CDataBase;
 import framework.CDataExam;
 
 /**

@@ -138,11 +138,11 @@
 								<div class="col"><label id="id_lugar" >NEW</label></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Nombre</div>
+								<div class="col_titulo">*Nombre</div>
 								<div class="col"><input id='nombre_lugar' type="text" size="50"/></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Direccion</div>
+								<div class="col_titulo">*Direccion</div>
 								<div class="col"><input id='dir_lugar' type="text" size="50"/></div>
 							</div>
 							<div class="fila">

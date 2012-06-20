@@ -139,15 +139,15 @@
 								<div class="col"><label id="id_respon">NEW</label></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Nombre</div>
+								<div class="col_titulo">*Nombre</div>
 								<div class="col"><input id='nombre_respon' type="text" size="40"/></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Apellido</div>
+								<div class="col_titulo">*Apellido</div>
 								<div class="col"><input id='apellido_respon' type="text" size="40"/></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Area Profesional</div>
+								<div class="col_titulo">*Area Profesional</div>
 								<div class="col">
 								<select id='area_respon'>
 									<% for(int j=0; j<list.size();j++){ 

@@ -56,7 +56,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 			<b>Email: </b><%=(pac==null)?"":(pac.getEmail()) %><BR>
 			
 			</div>
-			<div style="float:left; width:300px;">
+			<div style="float:left; width:350px;">
 			<% 
 			Iterator<CCita> it3=list.iterator();
 			while(it3.hasNext()){

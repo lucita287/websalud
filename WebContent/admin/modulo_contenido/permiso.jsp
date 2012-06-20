@@ -67,6 +67,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 										{display: 'Nick', name : 'nickname', isdefault: true}
 										]
 					});
+			      $('.pSearch').click();
 			  });  
 			 
 			 function editarUser(iduser){

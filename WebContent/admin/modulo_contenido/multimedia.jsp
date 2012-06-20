@@ -47,6 +47,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 										{display: 'Nombre de Creador', name : 'usuario'}
 									  ]
 					});
+			     $('.pSearch').click();
 			  });
 			  function EliminarFecha(com, grid){
 				  if(com=="Eliminar"){

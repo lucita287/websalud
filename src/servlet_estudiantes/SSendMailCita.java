@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -25,14 +24,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 
 import data.CAnuncio;
@@ -92,9 +83,11 @@ public class SSendMailCita extends HttpServlet {
 					else reportFile = new File(realpath+"/estudiante/report_view/auto_cita.jasper");
 					
 					CConfiguracion config=db.getConfiguracion();
-					@SuppressWarnings("deprecation")
+					
 					JasperReport jasperReport=null;
 					try {
+						
+						
 						jasperReport = (JasperReport)JRLoader.loadObject(reportFile.getPath());
 					} catch (JRException e1) {
 						e1.printStackTrace();
