@@ -35,11 +35,11 @@ CConfiguracion config2=dbo.getConfiguracion();
 	Fecha Fin: <input type="text" id="End_date" readonly="readonly"  class="datepicker" size="12"/><br>
 	Estado:<select id="estado">
 				<option value="1,2,3,0" SELECTED>TODOS</option>
-				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="1">PENDIENTE DE ASISTIR</option>
 				<option value="2">CAMBIO DE CITA</option>
-				<option value="3">CITA CONFIRMADA</option>
+				<option value="3">EXAMEN REALIZADO</option>
 				<option value="0">NO SE PRESENTO</option>
-				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="1,3">PENDIENTE DE ASISTIR, EXAMEN REALIZADO</option>
 				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 			</select>
 	</div>
@@ -64,11 +64,11 @@ CConfiguracion config2=dbo.getConfiguracion();
 	Fecha Fin: <input id="End_date1" type="text" readonly="readonly"  class="datepicker" size="12"><br>
 	Estado:<select id="estado1">
 				<option value="1,2,3,0" SELECTED>TODOS</option>
-				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="1">PENDIENTE DE ASISTIR</option>
 				<option value="2">CAMBIO DE CITA</option>
-				<option value="3">CITA CONFIRMADA</option>
+				<option value="3">EXAMEN REALIZADO</option>
 				<option value="0">NO SE PRESENTO</option>
-				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="1,3">PENDIENTE DE ASISTIR, EXAMEN REALIZADO</option>
 				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 			</select>
 	</div>

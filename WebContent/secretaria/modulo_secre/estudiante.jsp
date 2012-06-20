@@ -69,8 +69,8 @@ Iterator<CUnidad_Academica> it=list.iterator();
 								<div class="colc"><input  type="text" name="fecha" size="20px" class="datepicker" value="<%= (pac==null)?"":pac.getddmmyyFecha()%>" /></div>
 								<div class="col_titulo">Genero</div>
 								<div class="colc"> <select id="fecha_nacimiento" name="sexo">
-														<option value="1" <%=(pac!=null&&pac.getSexo()==2)?"selected":""%> >FEMENINO</option>
-														<option value="2" <%=(pac!=null&&pac.getSexo()==1)?"selected":""%> >MASCULINO</option>
+														<option value="1" <%=(pac!=null&&pac.getSexo()==1)?"selected":""%> >MASCULINO</option>
+														<option value="2" <%=(pac!=null&&pac.getSexo()==2)?"selected":""%> >FEMENINO</option>
 													</select> 
 								</div>
 							</div>
@@ -171,9 +171,9 @@ Iterator<CUnidad_Academica> it=list.iterator();
 					
 				}
 				%>
-				<img width='18px' height='18px' src="../images/exclamation.png" /> CITA NO CONFIRMADA
+				<img width='18px' height='18px' src="../images/exclamation.png" /> PENDIENTE DE ASISTIR
 				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
-				<img width='18px' height='18px' src="../images/on.png" /> CITA CONFIRMADA
+				<img width='18px' height='18px' src="../images/on.png" /> EXAMEN REALIZADO
 				<img width='18px' height='18px' src="../images/close.png" /> NO SE PRESENTO		
 				<div style="clear: both;"></div>
 							<table id="fecha_citas" style="display:none"></table>

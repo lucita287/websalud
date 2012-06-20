@@ -1754,6 +1754,23 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
+	public boolean UpdatePacienteExamen2(CPaciente pac){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE paciente SET examen_linea=?, fecha_exam=now() WHERE idpaciente = ?");
+			stm.setInt(1, pac.getExamen_linea());
+			stm.setInt(2, pac.getIdpaciente());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			CLogger.write("e79", this, e);
+		}
+		
+		return false;
+	}
 	public boolean UpdatePacienteEstado(CPaciente pac){
 		PreparedStatement stm;
 		try {
@@ -3274,6 +3291,24 @@ public class CDataExam extends CDataBase {
 		} catch (SQLException e) {
 
 			CLogger.write("e138", this, e);
+		}
+		
+		return false;
+	}
+	public boolean UpdateEncabezado_Condicion(CEncabezado_Condicion cate){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("UPDATE encabezado_condicion SET descripcion = ?, idtipo_interpretacion = ? WHERE   idencabezado_condicion = ?");
+			stm.setString(1,cate.getDescripcion());
+			stm.setInt(2,cate.getIdtipo_interpretacion());
+			stm.setInt(3,cate.getIdencabezado_condicion());
+			
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			CLogger.write("e138-1", this, e);
 		}
 		
 		return false;

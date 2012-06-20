@@ -188,7 +188,7 @@ public class SEstudiante extends HttpServlet {
 				result+="<div  style='border: 1px solid blue'>";
 				result+="<table  >";
 				result+="<tr   ><td rowspan='4'><a onclick='Seleccionar("+pac.getIdpaciente()+")'><img src='../images/on.png' /></a></td></tr>";
-				result+="<tr><td><b>Nombre</b></td><td>"+pac.getNombre()+"</td><td><b>Apellido</b></td><td>"+pac.getApellido()+"</td></tr>";
+				result+="<tr><td><b>Carne</b></td><td>"+pac.getCarne()+"</td><td><b>Apellido</b></td><td>"+pac.getNombre()+" "+pac.getApellido()+"</td></tr>";
 				result+="<tr><td><b>Telefono</b></td><td>"+pac.getTelefono()+"</td><td><b>Movil</b></td><td>"+pac.getMovil()+"</td></tr>";
 				result+="<tr><td><b>Email</b></td><td>"+pac.getEmail()+"</td><td><b>Facultad</b></td><td>"+dbo.getUnidadAcademica(pac.getIdunidad_academica())+"</td></tr>";
 				result+="</table>";

@@ -33,8 +33,8 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				%>
 		<link rel='stylesheet' type='text/css' href="../css/system_secre.css" />		
 		<div style="float:left;">
-		<button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR NOMBRE</button>
-		<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR CARNE</button>
+		<button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR POR NOMBRE</button>
+		<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR POR CARNE</button>
 		<button class="mybutton" onclick="CrearCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">CREAR NUEVO</button>		
 		</div>
 		  <div style="float:right;">			
@@ -78,19 +78,19 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 			
 		</div>
 					<div style="width:750px;float:right;">
-						<img width='18px' height='18px' src="../images/exclamation.png" /> CITA NO CONFIRMADA
+						<img width='18px' height='18px' src="../images/exclamation.png" /> PENDIENTE DE ASISTIR
 				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
-				<img width='18px' height='18px' src="../images/on.png" /> CITA CONFIRMADA
+				<img width='18px' height='18px' src="../images/on.png" /> EXAMEN REALIZADO
 				<img width='18px' height='18px' src="../images/close.png" /> NO SE PRESENTO		
 			</div>
 		<div style="float:right">
 			REPORTE DE:<select id="tipo_cita">
 				<option value="1,2,3,0" SELECTED>TODOS</option>
-				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="1">PENDIENTE DE ASISTIR</option>
 				<option value="2">CAMBIO DE CITA</option>
-				<option value="3">CITA CONFIRMADA</option>
+				<option value="3">EXAMEN REALIZADO</option>
 				<option value="0">NO SE PRESENTO</option>
-				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="1,3">PENDIENTE DE ASISTIR, EXAMEN REALIZADO</option>
 				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 				
 			</select>

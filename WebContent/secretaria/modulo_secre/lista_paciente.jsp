@@ -27,20 +27,27 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 <div style="float:left;">
 REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
 				<option value="0,1,2,3,4" SELECTED>TODOS</option>
-				<option value="1">CITA NO CONFIRMADA</option>
+				<option value="1">PENDIENTE DE ASISTIR</option>
 				<option value="2">CAMBIO DE CITA</option>
-				<option value="3">CITA CONFIRMADA</option>
+				<option value="3">EXAMEN REALIZADO</option>
 				<option value="0">NO SE PRESENTO</option>
-				<option value="1,3">CITA NO CONFIRMADA, CITA CONFIRMADA</option>
+				<option value="1,3">PENDIENTE DE ASISTIR, EXAMEN REALIZADO</option>
 				<option value="2,0">CAMBIO DE CITA, NO SE PRESENTO</option>
 			</select>
 </div>
+
 <div style="float:left;">
 	<button id="pdf" onclick="lista_pdf()">PDF</button>
  </div> 
  <div style="float:left;">
   	<button id="excel" onclick="lista_excel()">EXCEL</button>
 </div>
+<div style="width:750px;float:right;">
+						<img width='18px' height='18px' src="../images/exclamation.png" /> PENDIENTE DE ASISTIR
+				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
+				<img width='18px' height='18px' src="../images/on.png" /> EXAMEN REALIZADO
+				<img width='18px' height='18px' src="../images/close.png" /> NO SE PRESENTO		
+			</div>
 <form id="form_report" name="form_report" action="../SGen_PDF" method="post" target="_blank">
   	<input type="hidden" name="report" id="report" value="Estudiantes_cita" />
   	<input type="hidden" name="report_name" id="report_name" value="Estudiantes_cita" />

@@ -172,7 +172,7 @@ public class SInterpretacionTable extends HttpServlet {
 								 String data="";
 								 for(int i=0; i<lista.size();i++){
 									 CEncabezado_Condicion temp=lista.get(i);
-									 data+="<row  id='"+temp.getIdencabezado_condicion()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarEncabezado("+temp.getIdencabezado_condicion()+")' name='idcentro_radio' value='"+temp.getIdencabezado_condicion()+"' />]]></cell><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"ElimCondicion("+temp.getIdencabezado_condicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdencabezado_condicion()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getTipo()+"]]></cell></row>";	 
+									 data+="<row  id='"+temp.getIdencabezado_condicion()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='EditarEncabezado("+temp.getIdencabezado_condicion()+")' name='idcentro_radio' value='"+temp.getIdencabezado_condicion()+"' />]]></cell><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"ElimCondicion("+temp.getIdencabezado_condicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/delete.png\"/></a>]]></cell><cell><![CDATA[<a class=\"ui-state-default ui-corner-all button-save\"   onclick=\"ModiCondicion("+temp.getIdencabezado_condicion()+")\"><img width=\"18px\" height=\"18px\" src=\"../images/modificar.png\"/></a>]]></cell><cell><![CDATA["+temp.getIdencabezado_condicion()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getTipo()+"]]></cell></row>";	 
 								 }
 								 info+=data+"</rows>";
 								 out.println(info);

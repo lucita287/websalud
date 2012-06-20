@@ -40,7 +40,7 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 										<td><select id="r_tipo_examen1">
 											<option value="0" >SELECCIONE EXAMEN</option>
 											<option value="1" <%=(cita.getTipo_examen()==1)?"SELECTED":""%>>AutoEvaluacion</option>
-											<option value="2" <%=(cita.getTipo_examen()==1)?"SELECTED":""%>>Multifásico</option>
+											<option value="2" <%=(cita.getTipo_examen()==2)?"SELECTED":""%>>Multifásico</option>
 											</select>
 										</td>
 									</tr>
@@ -50,7 +50,7 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 											<select id="r_estado1">
 											<option value="1" <%=(cita.getEstado()==1)?"SELECTED":""%>>HABILITADAS</option>
 											<option value="2" <%=(cita.getEstado()==2)?"SELECTED":""%>>HABILITADAS EN LINEA</option>
-											<option value="0" <%=(cita.getEstado()==3)?"SELECTED":""%> >DESHABILITADAS</option>
+											<option value="0" <%=(cita.getEstado()==0)?"SELECTED":""%> >DESHABILITADAS</option>
 											</select>
 										</td>
 									</tr>
