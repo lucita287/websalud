@@ -2,7 +2,6 @@ package framework;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -2404,7 +2403,6 @@ public class CDataExam extends CDataBase {
 		return temp;
 	}
 	public boolean UpdateCita(int idcita, java.util.Date hora_inicio, java.util.Date hora_fin, int cupo, int examen,int estado){
-		int temp=0;
 		PreparedStatement stm;
 		try {
 			stm = (PreparedStatement)conn.prepareStatement("UPDATE cita SET estado = ?, tipo_examen = ?, cupo = ?, hora_inicio = ?, hora_fin = ? WHERE  idcita = ?");
@@ -3238,14 +3236,15 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
-	public int getresultado_examenTotal(int id){
+	public int getresultado_examenTotal(int id,String busqueda){
 		int temp=0;
 		
 				try {
 					String sql="SELECT count(*) cant  "+
-						" FROM resultado_examen where idtipo_interpretacion=? ";
+						" FROM resultado_examen where upper(titulo) like ? and idtipo_interpretacion=? ";
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-					stm.setInt(1, id);
+					stm.setString(1, "%"+busqueda.trim().toUpperCase()+"%");
+					stm.setInt(2, id);
 					ResultSet rs2=stm.executeQuery();
 					if(rs2.next())
 					temp=rs2.getInt("cant");
@@ -3364,14 +3363,15 @@ public class CDataExam extends CDataBase {
 		return news;
 	}
 	
-	public int getEncabezado_CondicionTotal(int id){
+	public int getEncabezado_CondicionTotal(int id,String valor){
 		int temp=0;
 		
 				try {
 					String sql="SELECT count(*) cant  "+
-						" FROM encabezado_condicion where idtipo_interpretacion=? ";
+						" FROM encabezado_condicion where  upper(descripcion) like ? and  idtipo_interpretacion=? ";
 					PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
-					stm.setInt(1, id);
+					stm.setString(1, "%"+valor.trim().toUpperCase()+"%");
+					stm.setInt(2, id);
 					ResultSet rs2=stm.executeQuery();
 					if(rs2.next())
 					temp=rs2.getInt("cant");

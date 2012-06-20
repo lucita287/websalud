@@ -126,7 +126,7 @@ public class SInterpretacionTable extends HttpServlet {
 						 
 						 		ArrayList<CResultado_Examen> lista=dbo.getListaresultado_examen(ordenar, asc, min, max,busqueda,idtipo);
 						 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-								 info+="<rows><page>"+page+"</page><total>"+dbo.getresultado_examenTotal(idtipo)+"</total>";
+								 info+="<rows><page>"+page+"</page><total>"+dbo.getresultado_examenTotal(idtipo,busqueda)+"</total>";
 								 
 								 String data="";
 								 for(int i=0; i<lista.size();i++){
@@ -167,7 +167,7 @@ public class SInterpretacionTable extends HttpServlet {
 
 						 ArrayList<CEncabezado_Condicion> lista=dbo.getListaEncabezado_Condicion(ordenar, asc, min, max,busqueda,idtipo);
 						 		String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-								 info+="<rows><page>"+page+"</page><total>"+dbo.getEncabezado_CondicionTotal(idtipo)+"</total>";
+								 info+="<rows><page>"+page+"</page><total>"+dbo.getEncabezado_CondicionTotal(idtipo,busqueda)+"</total>";
 								 
 								 String data="";
 								 for(int i=0; i<lista.size();i++){

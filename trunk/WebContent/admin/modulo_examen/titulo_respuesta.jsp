@@ -40,8 +40,8 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								{display: 'Nombre', name : 'nombre'}
 								]
 							});
+					      $('.pSearch').click();
 					  });  
-					  $('.pSearch').click();	
 					  function GuardarEdificio(){
 						  var action='guardar_titulo';
 						   
@@ -100,7 +100,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 											<div class="col"><label id="id_titulo" ></label></div>
 										</div>
 										<div class="fila">
-											<div class="col_titulo">Nombre</div>
+											<div class="col_titulo">*Nombre</div>
 											<div class="col"><input id='nombre' type="text" size="50"/></div>
 										</div>
 			

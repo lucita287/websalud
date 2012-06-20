@@ -45,12 +45,12 @@
 								<div class="col"><label id="idarea"></label></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Nombre</div>
+								<div class="col_titulo">*Nombre</div>
 								<div class="col"><label id="tituloarea"></label></div>
 							</div>
 							
 							<div class="fila">
-								<div class="col_titulo">Tama&ntilde;o:</div>
+								<div class="col_titulo">*Tama&ntilde;o:</div>
 								<div class="col">
 									<select id="edit-tam"> 
 									<option value="4">Enorme</option>
@@ -89,13 +89,13 @@
 								</div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Etiqueta en buscadores</div>
+								<div class="col_titulo">*Etiqueta en buscadores</div>
 								<div class="col">
 										<textarea rows="2" cols="50" id="palabras_buscador"></textarea>
 								</div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Descripcion en buscadores</div>
+								<div class="col_titulo">*Descripcion en buscadores</div>
 								<div class="col">
 										<textarea rows="2" cols="50" id="descripcion_buscador"></textarea>
 								</div>

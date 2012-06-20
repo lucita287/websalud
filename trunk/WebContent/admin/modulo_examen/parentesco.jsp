@@ -39,6 +39,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								],
 							    params : [ {name: 'a', value: 'parentesco'} ]
 							});
+					      $('.pSearch').click();
 					  });  
 					  function Editarparentesco(id,nombre){
 						  $("#id_paren").text(id);
@@ -107,7 +108,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 											<div class="col"><label id="id_paren">NEW</label></div>
 										</div>
 										<div class="fila">
-											<div class="col_titulo">Descripci&oacute;n</div>
+											<div class="col_titulo">*Descripci&oacute;n</div>
 											<div class="col"><input id='nombre_paren' type="text" size="40"/></div>
 										</div>
 							</div>

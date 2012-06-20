@@ -103,7 +103,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 														<div class="col"><label id="id_tsecundaria">NEW</label></div>
 													</div>
 													<div class="fila">
-														<div class="col_titulo">Descripci&oacute;n</div>
+														<div class="col_titulo">*Descripci&oacute;n</div>
 														<div class="col"><input id='nombre_tsecundaria' type="text" size="40"/></div>
 													</div>
 										</div>

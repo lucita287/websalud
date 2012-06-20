@@ -81,12 +81,7 @@ public class CWebService {
 	}
 	
 	
-	public static void main (String args[]) {
-        CWebService service=new CWebService(2012,"usalud","200614790","Estud14nt3");
-        CPaciente pac=service.DatosGenerales(200711433+"",null);
-        CDataExam exam=new CDataExam();
-        exam.Connect();
-    }
+	
 	
 	public int VerificarPin(String user, String pin){
 		try {

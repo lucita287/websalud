@@ -44,7 +44,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				    searchitems : [{display: 'Menu', name : 'menu'}],
 				    params : [ {name: 'a', value: 'menu_categoria'} ]
 				});
-		      
+		      $('.pSearch').click();
 		      $("#cont-text").cleditor({
 				    width:        500,
 				    height:       250,
@@ -166,11 +166,11 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								<div class="col"><label id="id_menu_categoria">NEW</label></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Menu</div>
+								<div class="col_titulo">*Menu</div>
 								<div class="col"><input id='nombre_menu_categoria' type="text" size="40"/></div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Area profesional</div>
+								<div class="col_titulo">*Area profesional</div>
 								<div class="col">
 											<select  id='area_menu_categoria'>
 											<% 
@@ -186,7 +186,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								</div>
 							</div>
 							<div class="fila">
-								<div class="col_titulo">Descripci&oacute;n</div>
+								<div class="col_titulo">*Descripci&oacute;n</div>
 								<div class="col"><textarea id="cont-text" class="editor"></textarea>
 								<div style="clear: both;"></div></div>
 							</div>
