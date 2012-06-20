@@ -55,12 +55,12 @@ $(function() {
 
 function GuardarPaciente(){
 	cadena = [ 'a=crear_estudiante',
-	           'carne='+$("#carne").val(),
-	           'nombre='+$("#nombre").val(),
-	           'apellido='+$("#apellido").val(),
-	           'unidad='+$("#unidad").val(),
-	           'fecha='+$("#fecha").val(),
-	           'sexo='+$("#sexo").val()
+	           'carne='+$("#carne2").val(),
+	           'nombre='+$("#nombre2").val(),
+	           'apellido='+$("#apellido2").val(),
+	           'unidad='+$("#unidad2").val(),
+	           'fecha='+$("#fecha2").val(),
+	           'sexo='+$("#sexo2").val()
 	         ].join('&');
 	 
 	 $.ajax({
@@ -71,11 +71,11 @@ function GuardarPaciente(){
 	  	  	success: function(data){
 	  	  		mensaje(data.mensaje);
 	  	  		if(data.resultado=='OK'){
-	  	  	$("#fecha").val("");
-	  	  	$("#unidad").val("0");
-	  	  	$("#apellido").val("");
-	  	 	$("#nombre").val("");
-	  	 	$("#carne").val("");
+	  	  	$("#fecha2").val("");
+	  	  	$("#unidad2").val("0");
+	  	  	$("#apellido2").val("");
+	  	 	$("#nombre2").val("");
+	  	 	$("#carne2").val("");
 	  	  		}
 	        }
 	    });
@@ -87,8 +87,8 @@ function GuardarPaciente(){
 <div style="float:left;">
 
 <button class="mybutton" onclick="NuevaCita('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">REGRESAR A CITA</button>
-<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR CARNE</button>
-<button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR NOMBRE</button>
+<button class="mybutton" onclick="BuscarCarne('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR POR CARNE</button>
+<button class="mybutton" onclick="BuscarNombre('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">BUSCAR POR NOMBRE</button>
 </div>
 <%	} %>
 <div style="float:right;">			
@@ -97,10 +97,10 @@ function GuardarPaciente(){
 		<div style="clear: both;"></div>
 <h2>Crear Paciente</h2>
 
-Carne: <input type="text" size="20" id="carne" /><br/>
-*Nombre: <input type="text" size="40" id="nombre" /><br/>
-*Apellido: <input type="text" size="40" id="apellido" /><br/>
-Unidad Academica: <select  id="unidad">
+Carne: <input type="text" size="20" id="carne2" /><br/>
+*Nombre: <input type="text" size="40" id="nombre2" /><br/>
+*Apellido: <input type="text" size="40" id="apellido2" /><br/>
+Unidad Academica: <select  id="unidad2">
 									<option value="0"   >NO ES ESTUDIANTE</option>
 										<% 
 											while(it.hasNext()){
@@ -108,8 +108,8 @@ Unidad Academica: <select  id="unidad">
 												<option value="<%= unidad.getIdunidad_academica() %>"   ><%=unidad.getCodigo()+"/"+unidad.getNombre() %></option>
 										<%	} %>
 					</select> <br/>
-*Fecha de Nacimiento: <input type="text" id="fecha" class="datepicker" />dd/MM/yyyy<br/>
-Sexo:  <select  id="sexo">
+*Fecha de Nacimiento: <input type="text" id="fecha2" class="datepicker" />dd/MM/yyyy<br/>
+Sexo:  <select  id="sexo2">
 									<option value="1"   >MASCULINO</option>
 									<option value="2"   >FEMENINO</option>
 		</select>							

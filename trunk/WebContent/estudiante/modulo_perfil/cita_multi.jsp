@@ -102,7 +102,7 @@ if(dbo.Connect()){
     			 out.println("<div class='instruccion'>"+anuncio.getContenido()+"<div/>");
     		}			
     	}else{%>
-		<h2>DEBE COMPLETAR EL PASO 2,  o DAR SIGUIENTE EN PANTALLA SIGUIENTE PARA CONTINUAR</h2>
+		<h2>DEBE COMPLETAR EL PASO 2, O DAR SIGUIENTE EN PASO 3/DASH MULTIF&Aacute;SICO PARA CONTINUAR</h2>
 		<%}								
     }
 }	

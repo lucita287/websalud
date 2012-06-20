@@ -58,14 +58,14 @@ public class SSiguiente extends HttpServlet {
 			}else if(action.equalsIgnoreCase("auto")){
 				if(pac.getExamen_linea()<6){
 					pac.setExamen_linea(6);
-					data.UpdatePacienteExamen(pac);
+					data.UpdatePacienteExamen2(pac);
 					
 				}
 				response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());
 			}else if(action.equalsIgnoreCase("multi")){
 				if(pac.getExamen_linea()<5){
 					pac.setExamen_linea(5);
-					data.UpdatePacienteExamen(pac);
+					data.UpdatePacienteExamen2(pac);
 					
 				}
 				response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());

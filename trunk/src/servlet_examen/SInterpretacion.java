@@ -59,7 +59,7 @@ public class SInterpretacion extends HttpServlet {
 										CUsuarioPermiso user_permiso=(CUsuarioPermiso)sessiones.getAttribute("user_permiso");
 										CDataExam dbo=new CDataExam();
 										dbo.Connect();
-				if((user_permiso.getIdpermiso().indexOf(256)>-1  || user_permiso.getIdpermiso().indexOf(257)>-1 || user_permiso.getIdusuario().getidusuario()==1)){						
+				if((user_permiso.getIdpermiso().indexOf(261)>-1  ||user_permiso.getIdpermiso().indexOf(256)>-1  || user_permiso.getIdpermiso().indexOf(257)>-1 || user_permiso.getIdusuario().getidusuario()==1)){						
 										if(action.equalsIgnoreCase("guardartipo")){
 											String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 											int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_tipo")));
@@ -198,6 +198,25 @@ public class SInterpretacion extends HttpServlet {
 											if(validacion.compareTo("")==0){
 												CEncabezado_Condicion exam=new CEncabezado_Condicion(0,descripcion,idtipo);
 												boolean b=dbo.SafeEncabezado_Condicion(exam);
+												if(!b){
+													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
+												}else{
+													result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+												}
+											}else result=validacion;
+											out.println(result);
+										}else if(action.equalsIgnoreCase("EditarEncabezado")){
+											String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
+											String descripcion=valid.Limpiarvalor2(valid.ValidarRequest(request.getParameter("descripcion")),codificacion);
+											int idtipo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("tipo")));
+											int idencabezado=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idencabezado")));
+											String validacion=valid.ValidarCampoVacio(descripcion, "Descripcion");
+											validacion=(validacion.compareTo("")==0)?valid.ValidarLongintud(descripcion, 250, "Descripcion"):validacion;
+											validacion=(validacion.compareTo("")==0)?valid.ValidarSiesMayor(idtipo, 1,"{\"resultado\":\"ERROR\",\"mensaje\":\"Debe Seleccionar una tipo de interpretacion\"}"):validacion;
+											
+											if(validacion.compareTo("")==0){
+												CEncabezado_Condicion exam=new CEncabezado_Condicion(idencabezado,descripcion,idtipo);
+												boolean b=dbo.UpdateEncabezado_Condicion(exam);
 												if(!b){
 													result="{\"resultado\":\"ERROR\",\"mensaje\":\"No se ha almacenado\"}";
 												}else{

@@ -42,7 +42,8 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								 dataType : 'xml',
 							    colModel: [
 								{display: 'SELECCIONAR', name : 'chkcondicion', width : 70, sortable : false, align: 'left'}, 
-								{display: 'ELIMINAR', name : 'ddcondicion', width : 50, sortable : false, align: 'left'}, 
+								{display: 'ELIMINAR', name : 'ddcondicion', width : 50, sortable : false, align: 'left'},
+								{display: 'MODIFICAR', name : 'ddmodificar', width : 50, sortable : false, align: 'left'},
 								{ display: 'ID', name: 'idcondicion', width: 30, sortable: true, align: 'left' },
 								{ display: 'Descripcion', name: 'descripcion', width: 250, sortable: true, align: 'left' },
 								{ display: 'Tipo', name: 'tipo', width: 200, sortable: true, align: 'left' }
@@ -70,8 +71,13 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					    $('.pSearch').click();
 					 }); 
 					function Nuevo(com, grid){
-						  $( "#dialog-form" ).load("modulo_examen/nuevo_encabezado.jsp");
+						  $( "#dialog-form" ).load("modulo_examen/nuevo_encabezado.jsp?idenca=0&idtipo="+$("#tipo_nuevo_enca").val());
 						   $( "#dialog-form" ).dialog( "open" );
+					}
+					function ModiCondicion(id){
+						$( "#dialog-form" ).load("modulo_examen/nuevo_encabezado.jsp?idenca="+id+"&idtipo="+$("#tipo_nuevo_enca").val());
+						   $( "#dialog-form" ).dialog( "open" );
+						
 					}
 					var encabezado=0;
 					function limpiartabla_condi(){
@@ -133,7 +139,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						
 						$( "#dialog-form" ).dialog({
 							autoOpen: false,
-							height: 300,
+							height: 400,
 							width: 600,
 							modal: true
 						});
