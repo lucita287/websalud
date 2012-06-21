@@ -116,10 +116,12 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							<td><%=cc.getIdcita() %></td> 
 							<td><%=cc.getFormatoFechaddmmyy(cc.getFecha()) %></td> 
 							<td><%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %></td>
-							<td><%=cc.getTipo_examenD()%></td>  
+							<td><%=cc.getTipo_examenD()%><br/><%=cc.getEstadoD() %></td>  
 								<td><%=citaact%> 
-									<% if(citaact>0){%>
+									<% if(citaact>0){
+											if(cc.getEstado()!=0){  %>
 											<a class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a>
+											<%} %>
 											<br/>Boleta<input type="text" id="boleta" name="boleta" size="20"/>
 									<% } %>
 									
