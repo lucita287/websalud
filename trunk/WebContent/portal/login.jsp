@@ -16,7 +16,7 @@
 										
 											<table>
 												<tr>	
-													<td>Usuario</td>
+													<td>Usuario <br/>(Carné)</td>
 													<td><input id="user" name="user" type="text" value="" size="13"/></td>
 												</tr>
 												<tr>	
