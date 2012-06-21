@@ -178,7 +178,7 @@ String error=valid.ValidarRequest(request.getParameter("e"));
 						<div class="border">
 							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Telefono casa</div>
-									<div class="col"><input type="text" id="tel_personal" name="tel_personal" value="<%=pac.getEmer_telefono() %>" class="required" size="20"/></div>
+									<div class="col"><input type="text" id="tel_personal" name="tel_personal" value="<%=pac.getEmer_telefono() %>"  size="20"/></div>
 									
 								<div style="clear: both;"></div>
 							<%if(!error.isEmpty()) out.println("</div>"); %>	
@@ -186,7 +186,7 @@ String error=valid.ValidarRequest(request.getParameter("e"));
 						<div class="border">
 							<%if(!error.isEmpty()) out.println("<div class='ui-state-default ui-corner-all  ui-state-highlight '>"); %>
 									<div class="col_titulo">*Telefono movil</div>
-									<div class="col"><input type="text" id="movil_personal" name="movil_personal" value="<%=pac.getEmer_movil() %>" class="required" size="20"/></div>
+									<div class="col"><input type="text" id="movil_personal" name="movil_personal" value="<%=pac.getEmer_movil() %>" size="20"/></div>
 									
 							<div style="clear: both;"></div>
 							<%if(!error.isEmpty()) out.println("</div>"); %>	
