@@ -90,6 +90,7 @@
 	}else{
 		%>
 			<h2>DEBE COMPLETAR EL PASO 1, PARA CONTINUAR</h2>
+			En el menu del lado izquierdo, presiona PASO 1 y selecciona Datos Generales
 		<%
 	}	
     	

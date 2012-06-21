@@ -68,6 +68,7 @@
     	}
     	}else{%>
     		<h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
+    		En el menu del lado izquierdo, presiona PASO 2 y selecciona EXAMEN AUTOEVALUACI&Oacute;N
     	<%}
     	
     

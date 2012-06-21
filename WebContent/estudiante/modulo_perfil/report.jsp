@@ -66,6 +66,8 @@ if(sessiones!=null && sessiones.getAttribute("paciente")!=null){
 
     }else{%>
 <h2>DEBE COMPLETAR EL PASO 2, PARA CONTINUAR</h2>
+En el menu del lado izquierdo, presiona PASO 2 y selecciona EXAMEN MULTIF&Aacute;SICO
+<BR> DEBES COMPLETAR EL CUESTIONARIO DE SALUD, PARA CONTINUAR
 	<%
 	
     } 

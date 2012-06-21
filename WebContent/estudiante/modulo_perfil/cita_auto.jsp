@@ -106,6 +106,14 @@ if(dbo.Connect()){
     		
     	}else{%>
 		<h2>DEBE COMPLETAR EL PASO 2, O DAR SIGUIENTE EN PASO 3/CUESTIONARIO DE AUTOEVALUACI&Oacute;N PARA CONTINUAR</h2>
+		<H3>PASO 2:</H3>
+		- DEBERA FINALIZAR EL CUESTIONARIO Y ASÍ PODER PRESIONAR SIGUIENTE EN EL PASO 2<BR>
+		 Para regresar al paso 2, en el menu del lado izquierdo, presiona PASO 2 y selecciona EXAMEN AUTOEVALUACI&Oacute;N
+		 <H3>PASO 3:</H3>
+		- DEBE PRESIONAR SIGUIENTE EN EL PASO 3<BR>
+		 Para regresar al paso 3, en el menu del lado izquierdo, presiona PASO 3 y selecciona Dash Multif&aacute;sico
+		
+		
 		<%}								
     }
 }	
