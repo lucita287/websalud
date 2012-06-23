@@ -28,10 +28,11 @@ public class CConfiguracion {
 	private String pass_javamail;
 	private String smtp_javamail;
 	private String port_javamail;
+	private int examen_linea;
 	
 	public CConfiguracion(int idconfiguracion,String telefono, String correo_electronico, String fax, String direccion_imagen,
 			String direccion_pdf, int tamanio_sub,String dir_rel_imagen, String dir_rel_pdf,String direccion, int ciclo, int multifa_reporte,int impresion_salud,int random_carne,String jefe_actual, Date fecha_examen,
-			String dependencia,String no_personal,String password,String correo_javamail, String pass_javamail,String port_javamail,String smtp_javamail ){
+			String dependencia,String no_personal,String password,String correo_javamail, String pass_javamail,String port_javamail,String smtp_javamail, int examen_linea ){
 		this.dependencia=dependencia;
 		this.no_personal=no_personal;
 		this.password=password;
@@ -55,11 +56,29 @@ public class CConfiguracion {
 		this.pass_javamail=pass_javamail;
 		this.smtp_javamail=smtp_javamail;
 		this.port_javamail=port_javamail;
-		
+		this.examen_linea=examen_linea;
 	}
 	
 	
 	
+	/**
+	 * @return the examen_linea
+	 */
+	public int getExamen_linea() {
+		return examen_linea;
+	}
+
+
+
+	/**
+	 * @param examen_linea the examen_linea to set
+	 */
+	public void setExamen_linea(int examen_linea) {
+		this.examen_linea = examen_linea;
+	}
+
+
+
 	/**
 	 * @return the smtp_javamail
 	 */

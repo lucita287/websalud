@@ -35,7 +35,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 				    	sql+=it1.next();
 				    	if(it1.hasNext()) sql+=",";
 				    }
-				    //SGenerateReportPDF
+				    //SGenerateReportPDF2
 				    %>
 				    	<form id="form_report" name="form_report" action="../SGenerateReportPDF2" method="post" target="_blank">
 						  	<center>

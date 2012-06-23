@@ -596,6 +596,7 @@ public class CDataExam extends CDataBase {
 	}
 	public boolean SafePaciente(CPaciente paciente){
 		PreparedStatement stm;
+		boolean b=false;
 		try {
 			String sql="INSERT INTO paciente (nombre, apellido, fecha_nac, carne, direccion, telefono, movil, email, usuario, sexo,  estado, idnacionalidad, iddepartamento, idunidad_academica) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
@@ -622,14 +623,23 @@ public class CDataExam extends CDataBase {
 			if(paciente.getIdunidad_academica()>0) stm.setInt(14, paciente.getIdunidad_academica());
 			else stm.setNull(14,java.sql.Types.NULL );
 			if(stm.executeUpdate()>0)
-				return true;
+				b= true;
+			
+		//	try {
+			//			CDataSalud salud=new CDataSalud();
+			//		if(salud.Connect()){
+			//			String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
+			//			salud.InsertarPaciente(paciente, unidad);
+			//		}
+			//		salud.Close();
+			//} catch (Throwable e) {}
 			
 		} catch (SQLException e) {
 
 			CLogger.write("e30", this, e);
 		}
 		
-		return false;
+		return b;
 	}
 
 	public int getIdPaciente(String user){
@@ -2389,8 +2399,9 @@ public class CDataExam extends CDataBase {
 			stm.setTimestamp(2,new java.sql.Timestamp(hora_inicio.getTime()));
 			stm.setTimestamp(3,new java.sql.Timestamp(hora_fin.getTime()));
 			stm.setInt(4, cupo);
-			stm.setInt(5, examen);
-			stm.setInt(6, estado);
+			stm.setInt(5, estado);
+			stm.setInt(6, examen);
+			
 			
 			ResultSet rs2=stm.executeQuery();
 			if(rs2.next())
@@ -2715,6 +2726,38 @@ public class CDataExam extends CDataBase {
 		 return lista;
 		 
 	}
+	public ArrayList<CCita> ListCitasEstudiante2(int idpaciente){
+		 ArrayList<CCita> lista=new  ArrayList<CCita>();
+		 try{    
+			 String sql="SELECT t.idcita, t.tipo_examen, t.cupo, t.fecha, t.hora_inicio, t.hora_fin, t.estado, "+
+					 " cp.estado estado_paciente, cp.recibo_pago "
+					 +" FROM cita t inner join cita_paciente cp on cp.idcita=t.idcita  where cp.idpaciente=? and cp.estado=3 ";
+			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+	        	stm.setInt(1, idpaciente);
+	        	
+	        	    ResultSet rs=stm.executeQuery();
+	                while(rs.next()){                							
+	                         CCita cita=	new CCita(
+	                                				rs.getInt("idcita"),
+	                                				new java.util.Date(rs.getDate("fecha").getTime()),
+	                                				new java.util.Date(rs.getTimestamp("hora_inicio").getTime()),
+	                                				new java.util.Date(rs.getTimestamp("hora_fin").getTime()),
+	                                				rs.getInt("estado_paciente"),
+	                                				rs.getInt("tipo_examen"),
+	                                				rs.getInt("cupo"),
+	                                				rs.getInt("estado"));
+	                        lista.add(cita);
+	                }
+	                rs.close();
+	                stm.close();
+			}catch(Throwable e){
+				CLogger.write("e112", this, e);
+				 //CLogger.write("1", this, e);
+			} 
+		 
+		 return lista;
+		 
+	}
 	
 	
 	public int UpdatePacienteCita(int idcita,int idpaciente){
@@ -2753,6 +2796,23 @@ public class CDataExam extends CDataBase {
 		
 		return false;
 	}
+	public boolean UpdatePacienteCita2(int idcita,int idpaciente){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("update cita_paciente set estado=? where idcita=? and idpaciente=?");
+			stm.setInt(1, 3);
+			stm.setInt(2, idcita);
+			stm.setInt(3,idpaciente);
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+
+			CLogger.write("e114", this, e);
+		}
+		
+		return false;
+	}
 	public ArrayList<CPaciente> getListaCitasEstudiante(int ordenar,String estado,int asc,int min,int max,int type, String busqueda,int idcita){
 		ArrayList<CPaciente> ret=new ArrayList<CPaciente>();
 		try{
@@ -2765,7 +2825,7 @@ public class CDataExam extends CDataBase {
 			}
 			
 			String sql="select * from (SELECT p.idpaciente,p.carne, p.nombre, p.apellido, ifnull(p.fecha_nac,now()) fecha_nac,  "+
-					"ifnull(u.nombre,'') unidad, p.idunidad_academica, cp.recibo_pago, c.idcita, ifnull(p.examen_linea,0) examen_linea, "+
+					"ifnull(u.nombre,'') unidad, p.idunidad_academica, cp.recibo_pago, c.idcita, ifnull(p.examen_linea,0) examen_linea, ifnull(p.movil,'') movil, ifnull(p.telefono,'') telefono, "+
 					"cp.estado estado,  @rownum:=@rownum+1 rownum  "+
 					"FROM cita c inner join cita_paciente cp on c.idcita=cp.idcita "+
 					"inner join paciente p on p.idpaciente=cp.idpaciente "+
@@ -2782,7 +2842,7 @@ public class CDataExam extends CDataBase {
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				CPaciente news=new CPaciente(rs.getInt("idpaciente"),rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
-						rs.getInt("carne"), rs.getString("recibo_pago"),"","",
+						rs.getInt("carne"), rs.getString("recibo_pago"),rs.getString("telefono"),rs.getString("movil"),
 						0,"", rs.getInt("carne")+"",
 						0, "",
 						0, "",
@@ -2978,7 +3038,7 @@ public class CDataExam extends CDataBase {
 	public boolean SafeGrupoFamiliar(CGrupo_Familiar grupo){
 		PreparedStatement stm;
 		try {
-			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO grupo_familiar(idpaciente, idparentesco,genero,ocupacion,ingreso,salud, lugar,edad) VALUES (?, ?, ?, ?, ?, ?,?,?)");
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO grupo_familiar(idpaciente, idparentesco,genero,ocupacion,ingreso,salud, lugar,edad,aporte) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
 			
 			stm.setInt(1,grupo.getIdpaciente());
 			stm.setInt(2,grupo.getIdparentesco());
@@ -2988,6 +3048,7 @@ public class CDataExam extends CDataBase {
 			stm.setInt(6,grupo.getSalud());
 			stm.setString(7,grupo.getLugar());
 			stm.setInt(8,grupo.getEdad());
+			stm.setDouble(9,grupo.getAporte());
 			if(stm.executeUpdate()>0) return true;
 			
 		} catch (SQLException e) {
@@ -3018,7 +3079,7 @@ public class CDataExam extends CDataBase {
 	public ArrayList<CGrupo_Familiar> getListaGrupoFamiliar(int idpaciente){
 		ArrayList<CGrupo_Familiar> lista=new  ArrayList<CGrupo_Familiar>();
 		 try{    
-			 String sql="SELECT idpaciente, idgrupo_familiar, idparentesco, genero, ocupacion, ingreso, salud, lugar, edad FROM grupo_familiar where idpaciente=? ";
+			 String sql="SELECT idpaciente, idgrupo_familiar, idparentesco, genero, ocupacion, ingreso, salud, lugar, edad, ifnull(aporte,0) aporte FROM grupo_familiar where idpaciente=? ";
 			 	PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 	        	stm.setInt(1, idpaciente);
 	        	
@@ -3027,7 +3088,7 @@ public class CDataExam extends CDataBase {
 	                                lista.add(
 	                                		new CGrupo_Familiar(rs.getInt("idpaciente"), rs.getInt("idgrupo_familiar"),
 	                                				rs.getInt("idparentesco"),rs.getInt("genero"),rs.getString("ocupacion"), rs.getDouble("ingreso"),
-	                                				rs.getString("lugar"), rs.getInt("salud"), rs.getInt("edad"))
+	                                				rs.getString("lugar"), rs.getInt("salud"), rs.getInt("edad"), rs.getDouble("aporte"))
 	                                		); 
 
 	                }
@@ -3103,6 +3164,7 @@ public class CDataExam extends CDataBase {
 			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO tipo_interpretacion (descripcion,orden) VALUES (?,?)");
 			
 			stm.setString(1,ctipo.getDescripcion());
+			stm.setInt(2,ctipo.getOrden());
 			if(stm.executeUpdate()>0)
 				return true;
 			
@@ -3836,5 +3898,41 @@ try{
 		}
 		return lista;
 	}
-	
+	public int getEstudianteCita(int idcita, int idpaciente){
+		int temp=0;
+		PreparedStatement stm;
+		try {
+			
+			String sql="select count(idcita) cant from cita_paciente where idcita=? and idpaciente=?";
+			stm = (PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, idcita);
+			stm.setInt(2, idpaciente);
+			ResultSet rs=stm.executeQuery();
+			if(rs.next()){
+				temp=rs.getInt("cant");
+			}
+		}catch(Throwable e){
+			
+			 CLogger.write("e161", this, e);
+		}
+		return temp;
+	}
+	public boolean SafeEstado3CitaPaciente(int idcita, int idpaciente){
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("INSERT INTO cita_paciente (idcita,idpaciente,estado,recibo_pago) VALUES (?,?,?,?)");
+			
+			stm.setInt(1,idcita);
+			stm.setInt(2,idpaciente);
+			stm.setInt(3,3);
+			stm.setString(4,"");
+			if(stm.executeUpdate()>0)
+				return true;
+			
+		} catch (SQLException e) {
+			CLogger.write("e8", this, e);
+		}
+		
+		return false;
+	}
 }

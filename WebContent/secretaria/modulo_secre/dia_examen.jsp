@@ -49,7 +49,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		
 		
 			<div style="float:left; width:400px;">
-			Carne<input type="text" id="carne" name="carne"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
+			Carne<input type="text" id="carne" name="carne" value="<%=(pac==null)?"":pac.getCarne()%>"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
 			<b><%=(pac==null)?"":pac.getCarne()%></b><br/>
 			<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
 			<b>Fecha Nac:</b> <%=(pac==null)?"":(pac.getddmmyyFecha()) %> <b>Movil:</b> <%=(pac==null)?"":(pac.getMovil()) %><br/>
@@ -120,14 +120,14 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 								<td><%=citaact%> 
 									<% if(citaact>0){
 											if(cc.getEstado()!=0){  %>
-											<a class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</a>
+											<button id="asignarexamen" class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</button>
 											<%} %>
 											<br/>Boleta<input type="text" id="boleta" name="boleta" size="20"/>
 									<% } %>
 									
 								</td>
 							<td>
-							<a class="mybutton"  target="_blank" href="index.jsp?portal=10&idcita=<%=cc.getIdcita()%>&a=especifico_calendar"> VER <%=cc.getCupo_disp() %></a><br/>
+							<a class="mybutton"  href="index.jsp?portal=10&idcita=<%=cc.getIdcita()%>&a=especifico_calendar"> VER <%=cc.getCupo_disp() %></a><br/>
 							<a class="mybutton" onclick="r_dia_examen_<%=cc.getIdcita()%>()">(VER PDF)</a><br/>
 							<a class="mybutton" onclick="Er_dia_examen_<%=cc.getIdcita()%>()">(VER EXCEL)</a><br/>
 							</td>
@@ -195,6 +195,22 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				$(function() {
 					$( ".mybutton" ).button();
 					$( ".button-save" ).button();
+					
+					<%
+						if(pac==null){
+							%>$('#carne').focus();
+							<%
+						}else if(list.size()>0){
+							%>$('#carne').focus();
+							
+							<%
+						}else{
+							%>$("#asignarexamen").focus();
+							
+							<%
+						}
+					%>
+					
 				});
 					function BuscarNombre(init,end){
 						$( "#dialog-form" ).dialog( "close" );
@@ -218,21 +234,21 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 						  	  	success: function(data){
 						        	alert(data.mensaje);
 						  	  		if(data.resultado=='OK'){
-							  	  		$( "#dialog-form" ).dialog( "close" );
-										$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
-										$( "#dialog-form" ).dialog( "open" );
+							  	  		
 										
 										cadena = ['idcita='+id].join('&');
 										$.ajax({
 									        url: "../SSendMailCita",
 									        data: cadena,
 									  	    type: 'post',
-									  	  	dataType: 'json',
 									  	  	success: function(data){
 									  	  			
 									  	  		}
 											});
 						        	}
+						  	  	$( "#dialog-form" ).dialog( "close" );
+								$( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?start="+init+"&end="+end+"&a=especifico_calendar&");
+								$( "#dialog-form" ).dialog( "open" );
 						        }
 						    });
 					}

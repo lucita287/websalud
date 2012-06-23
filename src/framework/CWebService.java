@@ -24,6 +24,9 @@ public class CWebService {
 	private int ciclo=2012;
 	public CWebService(int year,String dependencia,String no_personal, String password){
 		this.ciclo=year;
+		this.dependencia=dependencia;
+		this.password=password;
+		this.usuario=no_personal;
 	}
 	
 	private String generateDatosGenerales(String carne){

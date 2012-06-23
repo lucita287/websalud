@@ -98,8 +98,13 @@ public class SSiguiente extends HttpServlet {
 									}
 														
 								if(param.compareTo("")==0){
-									data.AsignarCita(cita, pac.getIdpaciente(), noboleta+"");
+									int result=data.AsignarCita(cita, pac.getIdpaciente(), noboleta+"");
+									if(result==1){
 									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea());
+									}else{
+										String e="&e=YA NO EXISTE CUPO PARA ESA CITA&noboleta="+noboleta;
+										response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea()+e);
+									}
 								}else{
 									String e="&e="+param+"&noboleta="+noboleta+"&cita="+cita;
 									response.sendRedirect("estudiante/index.jsp?portal="+pac.getExamen_linea()+e);

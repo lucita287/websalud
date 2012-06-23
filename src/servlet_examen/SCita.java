@@ -148,7 +148,7 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			 for(int j=0; j<lista.size();j++){ 
 				 CCita da=lista.get(j);
 				 lista_data+=(lista_data.compareTo("")==0)?"":","; 
-				 lista_data+="{\"cupo\":"+(da.getCupo()-da.getCupo_disp())+",\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo total "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Actual "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
+				 lista_data+="{\"cupo\":"+(da.getCupo()-da.getCupo_disp())+",\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo Disponible "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Asignado "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
 			 }
 			 data+=lista_data+"]";
 			 out.print(data);
@@ -269,6 +269,38 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 				
 			}else result="{\"resultado\":\"ERROR\"}";
 			out.print(result);
+		}else if(action.compareTo("estu_examen_rea")==0){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			HttpSession sessiones=request.getSession(false); 
+			String result="{\"resultado\":\"ERROR\"}";
+			if(sessiones!=null){
+				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+				if(pac!=null && idcita>0){
+					int respuesta=dbo.getEstudianteCita(idcita,pac.getIdpaciente());
+					if(respuesta>0){
+						dbo.UpdatePacienteCita2(idcita, pac.getIdpaciente());
+						result="{\"resultado\":\"OK\"}";
+					}else{
+						result="{\"resultado\":\"NO EXISTE\"}";
+					}
+				}else{
+					result="{\"resultado\":\"ERROR\"}";
+				}
+			}else{
+				result="{\"resultado\":\"ERROR\"}";
+			}	
+			out.println(result);
+		}else if(action.compareTo("new_cita_pac")==0){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			HttpSession sessiones=request.getSession(false); 
+			String result="{\"resultado\":\"ERROR\"}";
+			if(sessiones!=null){
+				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+				if(pac!=null && idcita>0){
+					dbo.SafeEstado3CitaPaciente(idcita,pac.getIdpaciente());
+				}	
+			}
+		
 		}
 		dbo.Close();
 		 }

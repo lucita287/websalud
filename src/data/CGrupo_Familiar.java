@@ -6,11 +6,11 @@ public class CGrupo_Familiar {
 	private int idparentesco;
 	private int genero;
 	private String ocupacion;
-	private Double ingreso;
+	private Double aporte;
 	private String lugar;
 	private int salud;
 	private int edad;
-	
+	private Double ingreso;
 	
 	
 	/**
@@ -25,18 +25,40 @@ public class CGrupo_Familiar {
 	 * @param edad
 	 */
 	public CGrupo_Familiar(int idpaciente, int idgrupo_familiar,
-			int idparentesco, int genero, String ocupacion, Double ingreso,
-			String lugar, int salud, int edad) {
+			int idparentesco, int genero, String ocupacion, Double  aporte,
+			String lugar, int salud, int edad,Double ingreso ) {
 		this.idpaciente = idpaciente;
 		this.idgrupo_familiar = idgrupo_familiar;
 		this.idparentesco = idparentesco;
 		this.genero = genero;
 		this.ocupacion = ocupacion;
 		this.ingreso = ingreso;
+		this.aporte= aporte;
 		this.lugar = lugar;
 		this.salud = salud;
 		this.edad = edad;
 	}
+	
+	
+	
+	/**
+	 * @return the aporte
+	 */
+	public Double getAporte() {
+		return aporte;
+	}
+
+
+
+	/**
+	 * @param aporte the aporte to set
+	 */
+	public void setAporte(Double aporte) {
+		this.aporte = aporte;
+	}
+
+
+
 	/**
 	 * @return the idpaciente
 	 */

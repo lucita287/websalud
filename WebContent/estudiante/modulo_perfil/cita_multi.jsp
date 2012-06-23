@@ -20,7 +20,9 @@ if(dbo.Connect()){
 						int idcita=dbo.getCita(pac);
 						String error=request.getParameter("e");
 						String boleta=request.getParameter("noboleta");
-						
+						%>
+						<%=  (error!=null)?"<div class='ui-state-error style'><h3>"+error+"</h3></div>":"" %>  
+						<%
 						if(idcita==0){			
 															ArrayList<CCita> list=dbo. getListaCitasEstudiante(2);
 														
@@ -33,7 +35,7 @@ if(dbo.Connect()){
 																		  $(".cita").button();
 																	  });	  
 														</script>			
-														<%=  (error!=null)?"<div class='ui-state-error style'>"+error+"</div>":"" %>  
+														
 														<form id="MainForm" name="MainForm" action="../SSiguiente" method="post">
 														
 														<div style="float:right;">

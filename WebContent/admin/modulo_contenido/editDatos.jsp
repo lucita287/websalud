@@ -132,7 +132,6 @@
 															$('#edit-submenu').text('');
 												        	$('#edit-titulo').val('');
 												        	$('#edit-id').text('');
-												        	$('#edit-estado').text(1);
 												        	LimpiarImagenes();
 											  	  		}	
 											        }});
