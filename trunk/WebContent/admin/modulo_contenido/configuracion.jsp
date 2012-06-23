@@ -88,6 +88,16 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 								</div>
 							</div>
 							<div class="fila">
+								<div class="col_titulo">Examen en linea</div>
+								<div class="col">
+									<select name="linea" class="linea" id="linea">	
+										<option value="0" <%= (configurar.getExamen_linea()==0)?"selected":"" %>>NO</option>
+										<option value="1" <%= (configurar.getExamen_linea()==1)?"selected":"" %>>SI</option>
+									</select>
+
+								</div>
+							</div>
+							<div class="fila">
 								<div class="col_titulo">Fecha de cobro de examen de salud, extraordinario</div>
 								<div class="col">
 									<input type="text" id="fecha_examen"  class="datepicker" size="20px" value="<%= configurar.getFormatoFechaddmmyy(configurar.getFecha_examen()) %>" /> dd/mm/yyyy
@@ -174,6 +184,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 			          'pass_javamail='   + $("#pass_javamail").val(),
 			          'smtp_javamail='+ $("#smtp_javamail").val(),
 			          'port_javamail='+$("#port_javamail").val(),
+			          'linea='+$("#linea").val(),
 			        ].join('&');
 			$.ajax({
 		        url: "../SConfiguracion",

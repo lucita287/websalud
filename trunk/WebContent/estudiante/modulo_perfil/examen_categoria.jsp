@@ -49,7 +49,7 @@ $(function() {
 	
 	</div>
 	<div style="float:left;">
-	<h2>PASO 2 / <%= menu_desc.getNombre() %> </h2>
+	<h2><%= menu_desc.getNombre() %> </h2>
 	<input type="hidden" name="idarea" value="<%= menu_desc.getArea_examen()%>" id="idarea"/>
 	</div>
 		<div style="clear: both;"></div>

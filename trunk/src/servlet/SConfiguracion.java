@@ -64,6 +64,7 @@ public class SConfiguracion extends HttpServlet {
 									int ciclo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("ciclo")));
 									String jefe=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("jefe")),codificacion);
 									int random_carne=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("random_carne")));
+									int linea=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("linea")));
 									int imp_salud=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("imp_salud")));
 									
 									String dependencia=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("dependencia")),codificacion);
@@ -114,7 +115,7 @@ public class SConfiguracion extends HttpServlet {
 										configurar.setPass_javamail(pass_javamail);
 										configurar.setSmtp_javamail(smtp_javamail);
 										configurar.setPort_javamail(port_javamail);
-										
+										configurar.setExamen_linea(linea);
 										boolean b=dbo.UpdateConfiguracion(configurar);
 										if(b) result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 										else result="{\"resultado\":\"ERROR\",\"mensaje\":\"Error al guardar\"}";

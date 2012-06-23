@@ -3,6 +3,7 @@
     <%@page import="framework.CValidation" %>
     <%@page import="java.util.Date" %>
     <%@page import="data.CCita" %>
+    <%@page import="data.CPaciente" %>
     <%@page import="java.util.ArrayList" %>
     <%@page import="java.util.Iterator" %>
     <%@page import="framework.CDataExam" %>
@@ -17,6 +18,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		
 	
 	if(dbo.Connect()){
+				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
 				CCita cc=dbo.getCita(idcita);
 			if(cc!=null){	
@@ -24,6 +26,15 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				
 		<div style="clear: both;"></div>
 		<h2>Cita <%=cc.getIdcita() %> /<%=cc.getTipo_examenD()%> -> Fecha: <%=cc.getFormatoFechaddmmyy(cc.getFecha()) %>  <%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %> a <%=cc.getFormatoFechahhmm(cc.getHora_fin()) %> </h2>
+
+<div style="float:right; width:400px;">
+	<input type="text" id="carne3" name="carne3" value="<%=(pac==null)?"":pac.getCarne()%>"/>
+	<button id="bcarne3" onclick="buscar_carne3()">BUSCAR</button>
+	<button id="examen_realizado"  onclick="examen_realizado()" >EXAMEN REALIZADO</button><BR/>
+	<%=(pac==null)?"":pac.getCarne()%><br>
+	<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
+	
+</div>
 <div style="float:left;">
 REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
 				<option value="0,1,2,3,4" SELECTED>TODOS</option>
@@ -42,6 +53,7 @@ REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
  <div style="float:left;">
   	<button id="excel" onclick="lista_excel()">EXCEL</button>
 </div>
+
 <div style="width:750px;float:right;">
 						<img width='18px' height='18px' src="../images/exclamation.png" /> PENDIENTE DE ASISTIR
 				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
@@ -63,7 +75,35 @@ REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
   </form>  		
 <table id="estudiantes" style="display:none"></table>
 <script>
+$('#carne3').keypress(function(e){
+	if(e.keyCode == 13)
+	{ 
+		buscar_carne3();
+	}
+});
+function buscar_carne3(){
+	cadena = [ 'a=estudiante_consulta','carne='+$("#carne3").val(),].join('&');
+	 
+	 $.ajax({
+	        url: "../SEstudiante",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	success: function(data){
+	  	  		document.location.href="index.jsp?portal=10&idcita=<%=cc.getIdcita() %>&a=especifico_calendar";
+	  	  		
+	        }
+	    });
+}
 $(function() {
+	<%
+	ArrayList<CCita> list=new ArrayList<CCita>();
+	if(pac!=null) list=dbo.ListCitasEstudiante2(pac.getIdpaciente());
+	if(pac==null || list.size()>0){%>
+	$( "#carne3" ).focus();
+	<%
+	}else{%>
+		$("#examen_realizado").focus();
+	<%}%>
 	$( "#pdf" ).button();
 	$( "#excel" ).button();
 });
@@ -82,6 +122,45 @@ function lista_excel(){
 	$("#form_report1").submit();
 	
 }
+function examen_realizado(){
+	cadena = [ 'a=estu_examen_rea','idcita='+<%=cc.getIdcita() %>].join('&');
+	 
+	 $.ajax({
+	        url: "../SCita",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	dataType: 'json',
+	  	  	success: function(data){
+	  	  		if(data.resultado=='OK'){
+			  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
+						  $('#estudiantes').flexReload();
+						  alert("Almacenado");
+						  $( "#carne3" ).val("");
+						  $( "#carne3" ).focus();
+	  	  		}else if(data.resultado=='ERROR'){
+	  	  			alert("Seleccione un estudiante");
+	  	  		$( "#carne3" ).val("");
+				  $( "#carne3" ).focus();
+	  	  		}else if(data.resultado=='NO EXISTE'){
+		  	  		if(confirm('No tiene cita asignada, desea asignarlo?')){
+		  	  		cadena = [ 'a=new_cita_pac','idcita=<%= idcita%>'].join('&');	
+		  	  		$.ajax({
+		  		        url: "../SCita",
+		  		        data: cadena,
+		  		  	    type: 'post',
+		  		  	  	dataType: 'json',
+		  		  	  	success: function(data){
+		  		  	  	$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
+						  $('#estudiantes').flexReload();
+						  $( "#carne3" ).val("");
+						  $( "#carne3" ).focus();
+		  		        }
+		  		    });	  			
+		  	  		}
+	  	  		}
+	        }
+	    });
+}
 function CambiarEstado(){
 	$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
 	  $('#estudiantes').flexReload();
@@ -93,12 +172,13 @@ $(document).ready(function () {
 			url: '../SCitaTable',
 			dataType : 'xml',
 		    colModel: [
-			{display: 'ID', name : 'chkactividad', width : 35, sortable : false, align: 'left'},           
 			{ display: 'Carne', name: 'carne', width: 60, sortable: true, align: 'left' },
-			{ display: 'Nombre', name: 'nombre', width: 150, sortable: true, align: 'left' },
-			{ display: 'Apellido', name: 'apellido', width: 150, sortable: true, align: 'left' },
-			{ display: 'Unidad Academica', name: 'unidad', width: 180, sortable: true, align: 'left' },
+			{ display: 'Nombre', name: 'nombre', width: 140, sortable: true, align: 'left' },
+			{ display: 'Apellido', name: 'apellido', width: 140, sortable: true, align: 'left' },
+			{ display: 'Unidad Academica', name: 'unidad', width: 170, sortable: true, align: 'left' },
+			
 			{ display: 'Estado', name: 'estado', width: 60, sortable: true, align: 'left' },
+			{ display: 'Movil', name: 'telefono', width: 65, sortable: true, align: 'left' },
 			{ display: 'Boleta', name: 'boleta', width: 200, sortable: true, align: 'left' }
 			],
 			usepager: true,
@@ -117,7 +197,7 @@ $(document).ready(function () {
 		    height: 500,
 			params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()}]
 		});
-   		$('.pSearch').click();
+   		//$('.pSearch').click();
  });
 
 function Modificar(idpaciente,idcita){
@@ -137,6 +217,18 @@ function Modificar(idpaciente,idcita){
 	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
 				  $('#estudiantes').flexReload();
 	  	  		}
+	        }
+	    });
+}
+function EnviarPorCarne(carne){
+	cadena = [ 'a=estudiante_consulta','carne='+carne,].join('&');
+	 $.ajax({
+	        url: "../SEstudiante",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	success: function(data){
+	  	  		document.location.href="index.jsp?portal=3";
+	  	  		
 	        }
 	    });
 }

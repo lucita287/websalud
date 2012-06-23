@@ -127,7 +127,7 @@ public class CValidationMensaje extends CValidation {
 	public String ValidarECombo(int num,String tipo){
 		if(num>0)
 			return "";
-		 else return "Debe seleccionar un "+tipo+"<br>";
+		 else return "Selecciona un "+tipo+"<br>";
 	}
 	public String ValidarENombre(String name,int longitud,String tipo){
 		String result="";

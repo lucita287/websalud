@@ -64,11 +64,11 @@ public class SDatoPersonal extends HttpServlet {
 					if(mensaje2.compareTo("")==0) pac.setEstado_civilidestado_civil(civil_personal);
 					mensaje+=mensaje2;
 					
-					mensaje2=valid.ValidarECombo(emer_idpar,"parentesco en caso de emergencia");
+					mensaje2=valid.ValidarECombo(emer_idpar,"Parentesco en Caso de Emergencia");
 					if(mensaje2.compareTo("")==0) pac.setIdemer_parentesco(emer_idpar);
 					mensaje+=mensaje2;
 					
-					mensaje2=valid.ValidarECombo(tsange,"tipo de sangre");
+					mensaje2=valid.ValidarECombo(tsange,"Tipo de Sangre");
 					if(mensaje2.compareTo("")==0) pac.setIdtipo_sangre(tsange);
 					mensaje+=mensaje2;
 					
@@ -80,11 +80,11 @@ public class SDatoPersonal extends HttpServlet {
 					if(mensaje2.compareTo("")==0) pac.setTitulo_secundaria(tit_secun);
 					mensaje+=mensaje2;
 					
-					mensaje2=valid.ValidarENombre(emer_tel, 50, "Telefono de emergencia");
-					if(mensaje2.compareTo("")==0) pac.setEmer_telefono(emer_tel);
+					mensaje2=valid.ValidarENombreV2(emer_tel, 50, "Telefono de emergencia");
+					pac.setEmer_telefono(emer_tel);
 					mensaje+=mensaje2;
 					
-					mensaje2=valid.ValidarENombre(emer_movil, 50, "Telefono movil");
+					mensaje2=valid.ValidarENombreV2(emer_movil, 50, "Telefono movil");
 					if(mensaje2.compareTo("")==0) pac.setEmer_movil(emer_movil);
 					mensaje+=mensaje2;
 					
@@ -141,19 +141,20 @@ public class SDatoPersonal extends HttpServlet {
 				int genero=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("genero")));
 				int salud=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("salud")));
 				String trabajo=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("trabajo")), codificacion);
-				Double mensual=valid.ConvertDouble(valid.ValidarRequest(request.getParameter("mensual")));
+				Double aporte=valid.ConvertDouble(valid.ValidarRequest(request.getParameter("aporte")));
 				String lugar=valid.Limpiarvalor(valid.ValidarRequest(request.getParameter("lugar")), codificacion);
+				Double ingreso=valid.ConvertDouble(valid.ValidarRequest(request.getParameter("ingreso")));
 				String error="";
-				if(idparen==0) error+="Debe seleccionar parentesco<br/>";
-				if(edad==0) error+="Debe ingresar una edad valida<br/>";
-				if(salud==0) error+="Debe ingresar su estado de salud<br/>";
-				if(trabajo.length()>30) error+="La longitud maxima del trabajo es 30<br/>";
-				if(lugar.length()>50) error+="La longitud maxima del lugar es 50<br/>";
+				if(idparen==0) error+="Parentesco<br/>";
+				if(edad==0) error+="Edad<br/>";
+				if(salud==0) error+="Estado de Salud<br/>";
+				if(trabajo.length()>30) error+="La longitud maxima del (Trabajo: Ocupación, Profesión u Oficio) es 30<br/>";
+				if(lugar.length()>50) error+="La longitud maxima del Lugar de Residenc&iacute;a es 50<br/>";
 				
 				if(error.compareTo("")==0){
 					CGrupo_Familiar grupo=new CGrupo_Familiar(pac.getIdpaciente(),0,
-							idparen, genero,trabajo, mensual,
-							lugar,salud,edad);
+							idparen, genero,trabajo, aporte,
+							lugar,salud,edad,ingreso);
 					boolean b=data.SafeGrupoFamiliar(grupo);
 					if(b){
 						response.sendRedirect("estudiante/index.jsp?portal=11");
@@ -161,7 +162,7 @@ public class SDatoPersonal extends HttpServlet {
 						response.sendRedirect("estudiante/index.jsp?e=Error al guardar&portal=11");
 					}
 				}else{
-					String param="&e="+error+"&idparen="+idparen+"&edad="+edad+"&genero="+genero+"&salud="+salud+"&trabajo="+trabajo+"&mensual="+mensual+"&lugar="+lugar;
+					String param="&e="+error+"&idparen="+idparen+"&edad="+edad+"&genero="+genero+"&salud="+salud+"&trabajo="+trabajo+"&aporte="+aporte+"&lugar="+lugar+"&ingreso="+ingreso;
 					response.sendRedirect("estudiante/index.jsp?portal=11"+param);
 				}
 			}else if(idestatus==4){

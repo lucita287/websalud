@@ -51,7 +51,8 @@ if(menu_desc!=null){
 
 </div>
 <div style="float:left;">
-	<h2>PASO 2 / <%= menu_desc.getNombre() %> </h2>
+<h2><%= menu_desc.getNombre() %></h2>
+	<h3> RELACI&Oacute;N CON TU FAMILIA </h3>
 	<input type="hidden" name="idarea" value="<%= menu_desc.getArea_examen()%>" id="idarea"/>
 	</div>
 		
@@ -60,18 +61,19 @@ if(menu_desc!=null){
 	</div>
 <div style="clear: both;"></div>
 
-<%if(error.compareTo("")!=0){%>
-<div class="ui-state-error">
-	<h3> SI DESEA AGREGAR UN FAMILIAR DEBE AGREGAR: <BR><%=error %></h3>
-</div>
-<% } %>
+
 <div class="instruccion">
 <%=	anuncio2.getContenido() %>
 </div>
 			<textarea rows="4" name="descripcion" id="descripcion" cols="60"><%=ambiente %></textarea>
 			<div style="clear: both;"></div>
 
-<h2>GRUPO FAMILIAR (Miembros que est&aacute;n unidos)</h2>
+<h3>GRUPO FAMILIAR (Miembros que est&aacute;n unidos)</h3>
+<%if(error.compareTo("")!=0){%>
+<div class="ui-state-error">
+	<h3> SI DESEAS AGREGAR UN FAMILIAR DEBES COMPLETAR: <BR><%=error %></h3>
+</div>
+<% } %>
 <div class="instruccion">
 <%=	anuncio.getContenido() %>
 </div>
