@@ -29,7 +29,7 @@ public class CReadXML {
             int status=valid.ConvertEntero(node.getText());
             return status;
 		} catch (JDOMException | IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return 0;
 	}
@@ -63,7 +63,7 @@ public class CReadXML {
         	}
             return paciente;
 		} catch (JDOMException | IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return null;
 	}

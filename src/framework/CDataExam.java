@@ -624,16 +624,17 @@ public class CDataExam extends CDataBase {
 			else stm.setNull(14,java.sql.Types.NULL );
 			if(stm.executeUpdate()>0)
 				b= true;
-			
-		//	try {
-			//			CDataSalud salud=new CDataSalud();
-			//		if(salud.Connect()){
-			//			String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
-			//			salud.InsertarPaciente(paciente, unidad);
-			//		}
-			//		salud.Close();
-			//} catch (Throwable e) {}
-			
+		
+			if(paciente.getCarne()>0){
+			try {
+						CDataSalud salud=new CDataSalud();
+					if(salud.Connect()){
+						String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
+						salud.InsertarPaciente(paciente, unidad);
+					}
+					salud.Close();
+			} catch (Throwable e) {}
+			}
 		} catch (SQLException e) {
 
 			CLogger.write("e30", this, e);
@@ -2484,7 +2485,7 @@ public class CDataExam extends CDataBase {
 			String sql="SELECT da.idcita, da.fecha, da.hora_inicio, da.hora_fin, da.tipo_examen , da.cupo, da.estado, "+
 			" (select count(*) from  cita_paciente cp where (cp.estado = 1 or cp.estado=3) and cp.idcita= da.idcita) cant "+ 		
 			" FROM cita da "+
-			" where (da.fecha>=? and da.fecha<=?) ";
+			" where (da.fecha>=? and da.fecha<=?) order by da.tipo_examen, da.estado desc ";
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setDate(1, new java.sql.Date(fecha_inicio.getTime()));
 			stm.setDate(2, new java.sql.Date(fecha_fin.getTime()));
@@ -2925,6 +2926,37 @@ public class CDataExam extends CDataBase {
 		}
 		return ret;
 	}
+	public CCita getCita(int idcita,int idpaciente){
+		CCita ret=null;
+		try{
+			String sql="SELECT da.idcita, da.fecha, da.hora_inicio, da.hora_fin, da.tipo_examen , da.cupo, cp.estado "+
+			" FROM cita da inner join cita_paciente cp on da.idcita=cp.idcita "+
+			" where da.idcita=? and cp.idpaciente=? ";
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1, idcita);
+			stm.setInt(2, idpaciente);
+			ResultSet rs=stm.executeQuery();
+			while(rs.next()){
+				ret=new CCita
+						(rs.getInt("idcita"),
+						new java.util.Date(rs.getDate("fecha").getTime()),
+						new java.util.Date(rs.getTimestamp("hora_inicio").getTime()),
+						new java.util.Date(rs.getTimestamp("hora_fin").getTime()),
+						rs.getInt("estado"),rs.getInt("tipo_examen"),
+						rs.getInt("cupo"),
+						0
+						);
+				
+			}
+			rs.close();
+			stm.close();
+		}catch(Throwable e){
+			CLogger.write("e117-1", this, e);
+			 //CLogger.write("86", this, e);
+		}
+		return ret;
+	}
+	
 	public int getCita(CPaciente pac){
 		int idcita=0;
 		try{

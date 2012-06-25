@@ -163,6 +163,10 @@ public class CCita {
 		SimpleDateFormat formatter = new SimpleDateFormat("E ',' dd 'de' MMMM 'de' yyyy", new Locale("es"));
 		return formatter.format(date);
 	}
+	public String getFormatoFechaDes2(Date date){
+		SimpleDateFormat formatter = new SimpleDateFormat("E',' dd 'de' MMMM", new Locale("es"));
+		return formatter.format(date);
+	}
 	public String getTipo_examenD(){
 		return (this.tipo_examen==1)?"AUTOEVALUACION":"MULTIFASICO";
 	}

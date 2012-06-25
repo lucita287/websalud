@@ -46,6 +46,13 @@ int portal=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("portal
 						<div style="clear: both;"></div>
 </div>
 <% if(portal==1){ %>
+
+<div style="float:left">
+<div id="message" class="ui-corner-all">
+	<h4>CITAS:</h4>
+	<div id="citas_calendario"></div>
+</div> 
+</div>
 <div style="float:right">
 <div id="datepicker"></div>
 </div>

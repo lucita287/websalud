@@ -70,6 +70,10 @@ public class SCategoriaTable extends HttpServlet {
 							 	 ordenar=2;
 							 }else if(order.equalsIgnoreCase("orden")){
 								 ordenar=3;
+							 }else if(order.equalsIgnoreCase("multifa")){
+								 ordenar=5;
+							 }else if(order.equalsIgnoreCase("auto")){
+								 ordenar=4;
 							 }
 							 
 							 int asc=0;
@@ -84,7 +88,7 @@ public class SCategoriaTable extends HttpServlet {
 									 String data="";
 									 for(int i=0; i<lista.size();i++){
 										 CCategoria temp=lista.get(i);
-										 	data+="<row id='"+temp.getIdcategoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarcategoria("+temp.getIdcategoria()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+","+temp.getBooleano(temp.getAutoevaluacion())+","+temp.getBooleano(temp.getMultifasico())+","+temp.getIdmenu_categoria().getIdmenu_categoria()+")' name='idcategoria' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getEstadoMensaje()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAutoevaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
+										 	data+="<row id='"+temp.getIdcategoria()+"'><cell><![CDATA[<input type='radio' class='menu_radio' onclick='Editarcategoria("+temp.getIdcategoria()+",\""+temp.getDescripcion()+"\","+temp.getOrden()+","+temp.getBooleano(temp.getAutoevaluacion())+","+temp.getBooleano(temp.getMultifasico())+","+temp.getIdmenu_categoria().getIdmenu_categoria()+")' name='idcategoria' value='"+temp.getIdcategoria()+"' />]]></cell><cell><![CDATA["+temp.getIdcategoria()+"]]></cell><cell><![CDATA["+temp.getOrden()+"]]></cell><cell><![CDATA["+temp.getDescripcion()+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getAutoevaluacion())+"]]></cell><cell><![CDATA["+temp.getMensaje(temp.getMultifasico())+"]]></cell></row>";	 
 									 }
 									 info+=data+"</rows>";
 									 out.println(info);
