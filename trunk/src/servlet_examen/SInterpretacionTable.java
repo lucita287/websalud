@@ -114,7 +114,7 @@ public class SInterpretacionTable extends HttpServlet {
 						 }else if(order.equalsIgnoreCase("tipo")){
 							 ordenar=5;
 						 }else if(order.equalsIgnoreCase("orden")){
-							 ordenar=8;
+							 ordenar=7;
 						 }else if(order.equalsIgnoreCase("idresultado")){
 							 ordenar=1;
 						 }

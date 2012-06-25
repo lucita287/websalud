@@ -5,6 +5,10 @@
     <%@ page import="data.CUnidad_Academica"%>
     <%@ page import="java.util.ArrayList"%>
     <%@ page import="java.util.Iterator"%>
+    <%@ page import="framework.CValidation" %>
+    <%@ page import="java.text.SimpleDateFormat" %>
+    <%@ page import="java.util.Date" %>
+    <%@ page import="java.util.Locale" %>
 <%
 HttpSession sessiones=request.getSession(false); 		 	
 if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
@@ -13,6 +17,8 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 	String user=(String)sessiones.getAttribute("resultado");
 	user=(user==null)?"0":user;
 CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
+CValidation valid=new CValidation();
+String idcita=request.getParameter("idcita");
 ArrayList<CUnidad_Academica>list=dbo.getListaUnidadAcademicas();
 Iterator<CUnidad_Academica> it=list.iterator();
 %>    
@@ -43,14 +49,19 @@ Iterator<CUnidad_Academica> it=list.iterator();
 <% }else{ %>
 				function Cancelar(){
 					$( "#dialog-form" ).dialog( "close" );
+					<%if(idcita==null){%>
 					document.location.href="index.jsp?portal=3";	
+					<%}else{%>
+					document.location.href="index.jsp?portal=10&idcita=<%=idcita%>&a=especifico_calendar";
+					<%}%>
 				}	
-<% }%>				
+<%}%>				
 
 $(function() {
 	$( ".button-save" ).button();
 	$('.mybutton').button();
 	$(".datepicker").mask("99/99/9999");
+	$("#carne2").focus();
 });
 
 function GuardarPaciente(){
@@ -69,13 +80,13 @@ function GuardarPaciente(){
 	  	    type: 'post',
 	  	  	dataType: 'json',
 	  	  	success: function(data){
-	  	  		mensaje(data.mensaje);
+	  	  		alert(data.mensaje);
 	  	  		if(data.resultado=='OK'){
-	  	  	$("#fecha2").val("");
-	  	  	$("#unidad2").val("0");
-	  	  	$("#apellido2").val("");
-	  	 	$("#nombre2").val("");
-	  	 	$("#carne2").val("");
+			  	  	<% if(request.getParameter("start")!=null){%>
+			  			NuevaCita(<%=request.getParameter("start")%>,<%=request.getParameter("end")%>);
+				  	<% }else{%>
+				  			Cancelar();
+				  	<% }%>
 	  	  		}
 	        }
 	    });
@@ -108,14 +119,18 @@ Unidad Academica: <select  id="unidad2">
 												<option value="<%= unidad.getIdunidad_academica() %>"   ><%=unidad.getCodigo()+"/"+unidad.getNombre() %></option>
 										<%	} %>
 					</select> <br/>
-*Fecha de Nacimiento: <input type="text" id="fecha2" class="datepicker" />dd/MM/yyyy<br/>
+<% 
+Date cal=new Date();
+SimpleDateFormat formatter = new SimpleDateFormat("dd'/'MM'/'yyyy", new Locale("es"));
+String fecha= formatter.format(cal);
+%>					
+*Fecha de Nacimiento: <input type="text" id="fecha2" class="datepicker" value="<%= fecha %>" />dd/MM/yyyy<br/>
 Sexo:  <select  id="sexo2">
 									<option value="1"   >MASCULINO</option>
 									<option value="2"   >FEMENINO</option>
 		</select>							
 <center>
-<a  class="ui-state-default ui-corner-all button-save" onclick="GuardarPaciente()"> <img  width="24px"  height="24px" src="../images/guardar.png" />Guardar</a>
+<button class="ui-state-default ui-corner-all button-save" onclick="GuardarPaciente()"><img  width="24px"  height="24px" src="../images/guardar.png" />Guardar</button>
 </center>
-<% 		}	
-	dbo.Close();	
-	} %>
+<% } dbo.Close(); } 
+%>

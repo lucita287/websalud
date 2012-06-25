@@ -4,14 +4,23 @@
 HttpSession sessiones=request.getSession(false); 		 	
 if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 
-%>    
+%>  
+ 
+    <style>
+    #message {
+		font-size: 1em;
+		width: 550px;
+		height: 150px;
+		padding: 1em;
+		background: #ffc;
+		border: 1px solid #dda;
+		float:left;
+		overflow: auto;
+	}
     
-<div style="float:right">
+    </style>
 
-</div>
-<div id="dialog-form" title="Citas">
-			</div>
-<div id="message" class="ui-corner-all"></div> 
+<div id="dialog-form" title="Citas"></div>
 
 <div style="clear: both;"></div>
 <div id='calendar'></div>
@@ -35,9 +44,24 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 
 	
 	$(function() {
-		$( "#datepicker" ).datepicker();		
+		//$( "#datepicker" ).datepicker();		
+		
+		$( "#datepicker" ).datepicker({
+			dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mi&eacute;', 'Jue', 'Vie', 'S&aacute;b'],
+			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
+			changeMonth: true,
+			changeYear: true
+		});
 		$( "#datepicker" ).datepicker( "option", "dateFormat", "mm/dd/yy");
 	
+		//$("#datepicker").datepicker({ 
+		//	  dateFormat: 'mm/dd/yy', 
+		//	  changeYear: true,
+		//	  changeMonth: true,
+		//	  dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mi&eacute;', 'Jue', 'Vie', 'S&aacute;b'],
+		//	  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre']
+		//	});
+		
 			$( "#dialog-form" ).dialog({
 				
 				autoOpen: false,
@@ -69,13 +93,7 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 			overlapEventsSeparate: true,
 			totalEventsWidthPercentInOneColumn : 95,
 			eventClick : function(calEvent, $event) {
-				cadena = [ 
-				           "a=especifico_calendar",
-				           "start="+calEvent.start.getTime(),
-				           "end="+calEvent.end.getTime(),
-				           ].join('&');
-				 $( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?"+cadena);
-				  $( "#dialog-form" ).dialog( "open" );
+				Cita(calEvent.start.getTime(),calEvent.end.getTime());
 				
 			    //displayMessage(calEvent.start.getTimezoneOffset()+"<strong>Clicked Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end);
 			},
@@ -84,7 +102,7 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 			},
 			eventRender : function(calEvent, $event) {
 		        
-				
+				$("#citas_calendario").append("<a href='#' onclick=Cita("+calEvent.start.getTime()+","+calEvent.end.getTime()+") >"+calEvent.des_dia+"</a><br/>");
 				if(calEvent.cupo>=0){
 						
 					if(calEvent.estado==2){
@@ -145,8 +163,12 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 	        	        dataType: 'json',
 				  	  	success:    function(json) {
 	        	        	
+				  	  	
+				  	  	$("#citas_calendario").html("");
 	        	            if ($.isArray(json)) { 
 	        	                $.each(json, function(key, value) { 
+	        	                	
+	        	                	
 	        	                	value.start = new Date(value.start.year,value.start.month,value.start.day,value.start.hour,value.start.minute); 
 	        	                    value.end =new Date(value.end.year,value.end.month,value.end.day,value.end.hour,value.end.minute); 
 	        	                });
@@ -166,6 +188,14 @@ if(sessiones!=null && sessiones.getAttribute("user_secretaria")!=null){
 	   $('#calendar').weekCalendar("gotoWeek", new Date($('#datepicker').val()));
 	});
 
-	
+	function Cita(start,end){
+		cadena = [ 
+		           "a=especifico_calendar",
+		           "start="+start,
+		           "end="+end,
+		           ].join('&');
+		 $( "#dialog-form" ).load("modulo_secre/dia_examen.jsp?"+cadena);
+		  $( "#dialog-form" ).dialog( "open" );
+	}
 </script>
 <%	} %>

@@ -32,7 +32,6 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					{ display: 'ID', name: 'idcategoria', width: 40, sortable: true, align: 'left' },
 					{ display: 'Orden', name: 'orden', width: 40, sortable: true, align: 'left' },
 					{ display: 'Descripcion', name: 'nombre', width: 250, sortable: true, align: 'left' },
-					{ display: 'Estado', name: 'estado', width: 60, sortable: false, align: 'left' },
 					{ display: 'Autoevaluaci&oacute;n', name: 'auto', width: 80, sortable: true, align: 'left' },
 					{ display: 'Multif&aacute;sico', name: 'multifa', width: 80, sortable: true, align: 'left' }
 					],

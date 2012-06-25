@@ -18,6 +18,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
     ArrayList<CTipo_Interpretacion> list=dbo.getListaTipo_Interpretacion();
     Iterator<CTipo_Interpretacion> it=list.iterator();
     %>
+    <label id="descrip_tabla"></label><br/>
 					 <select id="tipo_nuevo_enca" name="tipo_nuevo_enca" onchange="cambiarTipo()">
 					<% while(it.hasNext()){
 						CTipo_Interpretacion ctipo=it.next();
@@ -126,6 +127,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 					        	    $("#descrip_paren").text(result.descripcion);
 					        	    $("#descrip_result").text(result.descripcion);
 					        	    $("#descrip_inicio").text(result.descripcion);
+					        	    $("#descrip_tabla").text(result.descripcion);
 					        	}
 					    });
 						CargarParentesis();
@@ -147,6 +149,7 @@ if(sessiones!=null &&  sessiones.getAttribute("user_permiso")!=null){
 						
 					});
 					</script>
+					
 					<table id="Pregunta_table" style="display:none"></table>
 						<div id="dialog-form" title="FORMULARIO DE PREGUNTA">
 						</div>

@@ -44,8 +44,9 @@ public class SCitaTable extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 response.setContentType("text/html;charset=UTF-8"); 
 			PrintWriter out = response.getWriter(); 
-			HttpSession sessiones = request.getSession(false);			
+			HttpSession sessiones = request.getSession(true);			
 			String codificacion=request.getCharacterEncoding();
+			
 			codificacion=(codificacion==null)?"ISO-8859-1":codificacion;
 			CDataExam dbo=new CDataExam();
 						if( dbo.Connect()){

@@ -203,9 +203,7 @@ Iterator<CUnidad_Academica> it=list.iterator();
 						    title: 'FECHAS DE CITAS',
 						    width: 930,
 						    height: 300,
-							params : [ 
-							          {name: 'a', value: 'est_cita'} 
-							        ]
+							params : [ {name: 'a', value: 'est_cita'} ]
 						});
 				  }); 
 			function Modificar(id){
@@ -217,7 +215,9 @@ Iterator<CUnidad_Academica> it=list.iterator();
 				  	    type: 'post',
 				  	  	dataType: 'json',
 				  	  	success: function(data){
-				  	  	document.location.href="index.jsp?portal=3";
+				  	  	$('#fecha_citas').flexOptions({params : [ {name: 'a', value: 'est_cita'} ]});
+						$('#fecha_citas').flexReload();
+				  	  		//document.location.href="index.jsp?portal=3";
 				        }
 				    });
 				

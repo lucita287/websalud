@@ -21,19 +21,21 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 				CPaciente pac=(CPaciente)sessiones.getAttribute("paci_consulta");
 				int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
 				CCita cc=dbo.getCita(idcita);
+				
 			if(cc!=null){	
 				%>
 				
 		<div style="clear: both;"></div>
 		<h2>Cita <%=cc.getIdcita() %> /<%=cc.getTipo_examenD()%> -> Fecha: <%=cc.getFormatoFechaddmmyy(cc.getFecha()) %>  <%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %> a <%=cc.getFormatoFechahhmm(cc.getHora_fin()) %> </h2>
 
-<div style="float:right; width:400px;">
+		
+<div style="float:right; width:450px;">
 	<input type="text" id="carne3" name="carne3" value="<%=(pac==null)?"":pac.getCarne()%>"/>
 	<button id="bcarne3" onclick="buscar_carne3()">BUSCAR</button>
 	<button id="examen_realizado"  onclick="examen_realizado()" >EXAMEN REALIZADO</button><BR/>
-	<%=(pac==null)?"":pac.getCarne()%><br>
-	<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
-	
+	<div id="paciente_info">
+	<jsp:include page="cita_paciente.jsp" />
+	</div>
 </div>
 <div style="float:left;">
 REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
@@ -54,6 +56,12 @@ REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
   	<button id="excel" onclick="lista_excel()">EXCEL</button>
 </div>
 
+<div style="float:left">
+<button id="nuevo_carne" onclick="CrearCarne()">CREAR NUEVO</button>
+
+</div>
+<div style="clear: both;"></div>  
+<div id="dialog-form" title="Citas"></div>
 <div style="width:750px;float:right;">
 						<img width='18px' height='18px' src="../images/exclamation.png" /> PENDIENTE DE ASISTIR
 				<img width='18px' height='18px' src="../images/off.png" /> CAMBIO DE CITA
@@ -106,6 +114,17 @@ $(function() {
 	<%}%>
 	$( "#pdf" ).button();
 	$( "#excel" ).button();
+	$("#examen_realizado").button();
+	$("#bcarne3").button();
+	$("#nuevo_carne").button();
+	$( "#dialog-form" ).dialog({
+		
+		autoOpen: false,
+		height: 450,
+		width: 800,
+		modal: true
+	});
+	$( "#dialog:ui-dialog" ).dialog( "destroy" );
 });
 function lista_pdf(){
 	$('#parameters').val('idcita,estado');
@@ -121,6 +140,10 @@ function lista_excel(){
 	$('#report_name1').val('Estudiantes_cita');
 	$("#form_report1").submit();
 	
+}
+function CrearCarne(){
+		$( "#dialog-form" ).load("modulo_secre/crear_estudiante.jsp?idcita=<%=cc.getIdcita()%>");
+		$( "#dialog-form" ).dialog( "open" );
 }
 function examen_realizado(){
 	cadena = [ 'a=estu_examen_rea','idcita='+<%=cc.getIdcita() %>].join('&');
@@ -158,6 +181,7 @@ function examen_realizado(){
 		  		    });	  			
 		  	  		}
 	  	  		}
+	  	  	$("#paciente_info").load("modulo_secre/cita_paciente.jsp?idcita=<%= idcita%>");
 	        }
 	    });
 }
@@ -201,7 +225,7 @@ $(document).ready(function () {
  });
 
 function Modificar(idpaciente,idcita){
-	cadena = [ 'a=estu_cita_pac','idcita='+idcita,'idpaciente='+idpaciente].join('&');
+	cadena = [ 'a=estu_cita_pac','idcita='+idcita,'idpaciente='+idpaciente,].join('&');
 	 
 	 $.ajax({
 	        url: "../SCita",
@@ -217,6 +241,7 @@ function Modificar(idpaciente,idcita){
 	  	  		$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
 				  $('#estudiantes').flexReload();
 	  	  		}
+	  	  		$("#paciente_info").load("modulo_secre/cita_paciente.jsp?idcita=<%= idcita%>");
 	        }
 	    });
 }

@@ -148,7 +148,7 @@ String result="{\"resultado\":\"OK\",\"mensaje\":\"Almacenado\"}";
 			 for(int j=0; j<lista.size();j++){ 
 				 CCita da=lista.get(j);
 				 lista_data+=(lista_data.compareTo("")==0)?"":","; 
-				 lista_data+="{\"cupo\":"+(da.getCupo()-da.getCupo_disp())+",\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo Disponible "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Asignado "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
+				 lista_data+="{\"des_dia\":\""+da.getIdcita()+") "+(da.getFormatoFechaDes2(da.getFecha())+" "+da.getFormatoFechahhmm(da.getHora_inicio()))+" /<b>"+da.getTipo_examenD()+"</b> Cupo Disponible <b> "+(da.getCupo()-da.getCupo_disp())+" "+da.getEstadoD()+" </b> \",\"cupo\":"+(da.getCupo()-da.getCupo_disp())+",\"id\":"+da.getIdcita()+", \"estado\":"+da.getEstado()+", \"tipo\":"+da.getTipo_examen()+", \"start\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_inicio())+", \"end\":"+da.getFormatoFechaCalendar(da.getFecha(), da.getHora_fin())+", \"title\":\""+da.getTipo_examenD()+"<br> Cupo Disponible "+(da.getCupo()-da.getCupo_disp())+"<br>Cupo Asignado "+da.getCupo_disp()+"<br>"+da.getEstadoD()+"\"}";
 			 }
 			 data+=lista_data+"]";
 			 out.print(data);

@@ -114,7 +114,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							
 							<tr>
 							<td><%=cc.getIdcita() %></td> 
-							<td><%=cc.getFormatoFechaddmmyy(cc.getFecha()) %></td> 
+							<td><%=cc.getFormatoFechaddmmyy(cc.getFecha())+" <br>"+cc.getFormatoFechaDes2(cc.getFecha()) %></td> 
 							<td><%=cc.getFormatoFechahhmm(cc.getHora_inicio()) %></td>
 							<td><%=cc.getTipo_examenD()%><br/><%=cc.getEstadoD() %></td>  
 								<td><%=citaact%> 

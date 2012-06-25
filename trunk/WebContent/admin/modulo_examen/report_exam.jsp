@@ -54,6 +54,11 @@ $(function() {
 	Ciclo: <input id="ciclo" type="text" size="10" value="<%= config2.getCiclo() %>" /> <br>
 	Fecha Inicio: <input type="text"  id="Init_date" readonly="readonly"  class="datepicker" size="12"/>
 	Fecha Fin: <input type="text" id="End_date" readonly="readonly"  class="datepicker" size="12"/><br>
+	Tipo Examen<select id="tipo_examen" name="tipo_examen" >
+						  <option value="2,3">TODOS</option>
+						  <option value="2">AUTOEVALUACI&Oacute;N</option>
+						  <option value="3">MULTIF&Aacute;SICO</option>  
+						</select>
 	</div>
 	<div style="float:right">
 		<button  onclick="estudiante_tipo_examen()" class="breporte" >EXCEL</button>
@@ -88,7 +93,12 @@ $(function() {
 						<% } %>  
 						</select><br/>
 	Pregunta<select id="new-submenu" name="new-submenu">
-						</select>					
+						</select><br/>
+	Tipo Examen<select id="tipo_examen2" name="tipo_examen2" >
+						  <option value="2,3">TODOS</option>
+						  <option value="2">AUTOEVALUACI&Oacute;N</option>
+						  <option value="3">MULTIF&Aacute;SICO</option>  
+						</select>										
 	</div>
 	<div style="float:right">
 		<button  onclick="estudiante_preg()" class="breporte" >EXCEL</button>
@@ -140,15 +150,15 @@ function cambiarCategoria(){
 				$( ".breporte" ).button();
 			});
 		 function estudiante_tipo_examen(){
-			 $('#parameters1').val('fecha_inicio,fecha_fin,ciclo');
-				$('#values1').val($("#Init_date").val()+'|'+$("#End_date").val()+'|'+$("#ciclo").val());
+			 $('#parameters1').val('fecha_inicio,fecha_fin,ciclo,tipo_examen');
+				$('#values1').val($("#Init_date").val()+'|'+$("#End_date").val()+'|'+$("#ciclo").val()+"|"+$("#tipo_examen").val());
 				$('#report1').val('Estudiantes');
 				$('#report_name1').val('Estudiantes');
 				$("#form_report1").submit();
 		 }
 		 function estudiante_preg(){
-			 $('#parameters1').val('fecha_inicio,fecha_fin,ciclo,idpregunta');
-				$('#values1').val($("#Init_date2").val()+'|'+$("#End_date2").val()+'|'+$("#ciclo2").val()+'|'+$("#new-submenu").val());
+			 $('#parameters1').val('fecha_inicio,fecha_fin,ciclo,idpregunta,tipo_examen');
+				$('#values1').val($("#Init_date2").val()+'|'+$("#End_date2").val()+'|'+$("#ciclo2").val()+'|'+$("#new-submenu").val()+"|"+$("#tipo_examen2").val());
 				$('#report1').val('Estudiante_pregunta');
 				$('#report_name1').val('Estudiante_pregunta');
 				$("#form_report1").submit();
