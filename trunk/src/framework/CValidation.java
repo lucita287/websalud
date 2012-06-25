@@ -180,6 +180,13 @@ public class CValidation {
 		campo=campo.replaceAll("\r", "\\\\r");
 		campo=campo.replaceAll("\f", "\\\\f");
 		campo=campo.replaceAll("\n", "\\\\n");
+		byte[] arrByte;
+		try {
+			arrByte = campo.getBytes("UTF-8");
+			campo = new String(arrByte, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 		campo=campo.trim();
 		return campo;
 	}

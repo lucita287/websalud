@@ -125,9 +125,9 @@ public class SUsuario extends HttpServlet {
 									 }
 									 area="areas:["+area+"]";
 									 
-									 result= "{nombre:\""+temp_user.getnombre()+" \",apellido:\""+temp_user.getapellido()+"\",nick:\""+temp_user.getnick()+"\",telefono:\""+
-											 temp_user.gettelefono()+"\",email:\""+temp_user.getemail()+"\","
-										 +"telefono:\""+temp_user.gettelefono()+"\",no_personal:\""+temp_user.getNo_personal()+"\",estado:\""+temp_user.getEstado()+"\","+data+","+area+"}";
+									 result= "{nombre:\""+valid.Limpiarvalor3(temp_user.getnombre())+" \",apellido:\""+valid.Limpiarvalor3(temp_user.getapellido())+"\",nick:\""+valid.Limpiarvalor3(temp_user.getnick())+"\",telefono:\""+
+											 valid.Limpiarvalor3(temp_user.gettelefono())+"\",email:\""+valid.Limpiarvalor3(temp_user.getemail())+"\","
+										 +"telefono:\""+valid.Limpiarvalor3(temp_user.gettelefono())+"\",no_personal:\""+valid.Limpiarvalor3(temp_user.getNo_personal())+"\",estado:\""+temp_user.getEstado()+"\","+data+","+area+"}";
 									 
 								 }
 								 out.println(result);

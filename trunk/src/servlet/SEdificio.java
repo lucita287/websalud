@@ -81,8 +81,8 @@ public class SEdificio extends HttpServlet {
 									int idedificio=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idedificio")));
 									CEdificio edi=dbo.getEdificioEspecifica(idedificio);
 									 if(edi!=null){
-										 result= "{nombre:\""+edi.getNombre()+"\",direccion:\""+edi.getDireccion()+"\",telefono:\""+
-												 edi.getTelefono()+"\"}";
+										 result= "{nombre:\""+valid.Limpiarvalor3(edi.getNombre())+"\",direccion:\""+valid.Limpiarvalor3(edi.getDireccion())+"\",telefono:\""+
+												 valid.Limpiarvalor3(edi.getTelefono())+"\"}";
 									 }
 									 out.println(result);
 									//MODIFICAR EDIFICIO 
@@ -133,7 +133,7 @@ public class SEdificio extends HttpServlet {
 									for(int j=0; j<list_edi.size();j++){ 
 										CEdificio edi=list_edi.get(j);
 										data+=(data.compareTo("")==0)?"":",";
-										data+="{value:"+edi.getIdedificio()+",text:'"+edi.getNombre()+"'}";
+										data+="{value:"+edi.getIdedificio()+",text:'"+valid.Limpiarvalor3(edi.getNombre())+"'}";
 									}
 									result+=data+"]}";
 									out.println(result);

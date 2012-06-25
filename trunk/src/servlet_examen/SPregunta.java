@@ -271,7 +271,7 @@ public class SPregunta extends HttpServlet {
 				int idtitulo=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idtitulo")));
 				CTitulo_Respuesta edi=dbo.getTitulo_RespuestaEspecifica(idtitulo);
 				 if(edi!=null){
-					 result= "{nombre:\""+edi.getDescripcion()+"\"}";
+					 result= "{nombre:\""+valid.Limpiarvalor3(edi.getDescripcion())+"\"}";
 				 }
 				 out.println(result);
 				//MODIFICAR EDIFICIO 
