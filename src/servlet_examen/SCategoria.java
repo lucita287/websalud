@@ -130,7 +130,7 @@ public class SCategoria extends HttpServlet {
 						int idcate_pond=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcate_pond")));
 						CCategoria_Interpretacion act=dbo.getCategoria_InterpretacionEspecifico(idcate_pond);
 						 if(act!=null){							 
-							 result= "{\"min\":\""+act.getPonderacion_min()+"\",\"max\":\""+act.getPonderacion_max()+"\",\"interpretacion\":\""+valid.Limpiarvalor3(act.getInterpretacion())+"\",\"titulo\":\""+act.getTitulo()+"\",\"size\":\""+act.getSize()+"\"}";
+							 result= "{\"min\":\""+act.getPonderacion_min()+"\",\"max\":\""+act.getPonderacion_max()+"\",\"interpretacion\":\""+valid.Limpiarvalor3(act.getInterpretacion())+"\",\"titulo\":\""+valid.Limpiarvalor3(act.getTitulo())+"\",\"size\":\""+act.getSize()+"\"}";
 						 }
 						 out.println(result);
 						//MODIFICAR CATEGORIA 
@@ -278,7 +278,7 @@ public class SCategoria extends HttpServlet {
 						for(int j=0; j<list_respon.size();j++){ 
 							CMenu_Categoria respon=list_respon.get(j);
 							data+=(data.compareTo("")==0)?"":",";
-							data+="{value:"+respon.getIdmenu_categoria()+",text:'"+respon.getNombre()+"'}";
+							data+="{value:"+respon.getIdmenu_categoria()+",text:'"+valid.Limpiarvalor3(respon.getNombre())+"'}";
 						}
 						result+=data+"]}";
 						out.println(result);
@@ -287,7 +287,7 @@ public class SCategoria extends HttpServlet {
 						 CMenu_Categoria temp_area=dbo.getMenuCategoriaEspecifico(idmenu_Categoria);
 						 String result="";
 						 if(temp_area!=null){
-							 result= "{nombre:\""+temp_area.getNombre()+" \", contenido:\""+temp_area.getInstruccion()+" \", area:\""+temp_area.getArea_examen()+"\"}";
+							 result= "{nombre:\""+valid.Limpiarvalor3(temp_area.getNombre())+" \", contenido:\""+valid.Limpiarvalor3(temp_area.getInstruccion())+" \", area:\""+temp_area.getArea_examen()+"\"}";
 						 }
 						 response.setContentType("text/html;charset="+codificacion);
 						 out.println(base64.codificar(valid.Imprimirvalor(result,codificacion)));

@@ -1,3 +1,4 @@
+drop database websalud;
 create database websalud;
 
 CREATE USER 'saludweb'@'localhost'  IDENTIFIED BY 'w@bs4lud';
@@ -8,6 +9,7 @@ GRANT ALL PRIVILEGES ON websalud.* TO 'saludweb'@'127.0.0.1'
 IDENTIFIED BY 'w@bs4lud';
 
 use websalud;
+
 
 -- phpMyAdmin SQL Dump
 -- version 3.5.0

@@ -88,8 +88,8 @@ public class SResponsable extends HttpServlet {
 									int idresponsable=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idresponsable")));
 									CResponsable respon=dbo.getResponsableEspecifica(idresponsable);
 									 if(respon!=null){
-										 result= "{nombre:\""+respon.getNombre()+"\",apellido:\""+respon.getApellido()+"\",areanombre:\""+
-												 respon.getAreaidarea().getnombre()+"\",idarea:"+respon.getAreaidarea().getidarea()+",idusuario:\""+respon.getUsuariosidusuario().getidusuario()+"\"}";
+										 result= "{nombre:\""+valid.Limpiarvalor3(respon.getNombre())+"\",apellido:\""+valid.Limpiarvalor3(respon.getApellido())+"\",areanombre:\""+
+												 valid.Limpiarvalor3(respon.getAreaidarea().getnombre())+"\",idarea:"+respon.getAreaidarea().getidarea()+",idusuario:\""+respon.getUsuariosidusuario().getidusuario()+"\"}";
 									 }
 									 out.println(result);
 									//MODIFICAR RESPONSABLE 

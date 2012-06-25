@@ -181,7 +181,7 @@ public class SInterpretacion extends HttpServlet {
 											int id=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_interpre")));
 											CResultado_Examen exam=dbo.getresultado_examenEspecifico(id);
 											 if(exam!=null){							 
-												 result= "{\"titulo\":\""+exam.getTitulo()+"\",\"size\":\""+exam.getSize()+"\",\"interpretacion\":\""+ valid.Limpiarvalor3(exam.getInterpretacion())+"\",\"tipo\":\""+exam.getIdtipo_interpretacion()+"\",\"orden\":\""+exam.getOrden()+"\"}";
+												 result= "{\"titulo\":\""+valid.Limpiarvalor3(exam.getTitulo())+"\",\"size\":\""+exam.getSize()+"\",\"interpretacion\":\""+ valid.Limpiarvalor3(exam.getInterpretacion())+"\",\"tipo\":\""+exam.getIdtipo_interpretacion()+"\",\"orden\":\""+exam.getOrden()+"\"}";
 											 }
 											 out.println(result); 
 										}else if(action.equalsIgnoreCase("NuevoEncabezado")){
@@ -230,7 +230,7 @@ public class SInterpretacion extends HttpServlet {
 											for(int i=0; i<preg.size(); i++){
 												CPregunta pregunta=preg.get(i);
 												data+=(data.equalsIgnoreCase("")?"":",");
-												data+="{\"idmenu\":\""+pregunta.getIdpregunta()+"\",\"descripcion\": \""+pregunta.getOrden()+")"+pregunta.getPregunta()+"\"}";
+												data+="{\"idmenu\":\""+pregunta.getIdpregunta()+"\",\"descripcion\": \""+pregunta.getOrden()+")"+valid.Limpiarvalor3(pregunta.getPregunta())+"\"}";
 											}
 											
 												String result=	" {\"menus\": [  "+data+" ] }";
@@ -240,7 +240,7 @@ public class SInterpretacion extends HttpServlet {
 											int id=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("id_encabezado")));
 											CEncabezado_Condicion exam=dbo.getEncabezado_CondicionEspecifico(id); 
 											if(exam!=null){							 
-												 result= "{\"descripcion\":\""+exam.getDescripcion()+"\"}";
+												 result= "{\"descripcion\":\""+valid.Limpiarvalor3(exam.getDescripcion())+"\"}";
 											 }
 											 out.println(result); 
 										}else if(action.equalsIgnoreCase("guardarcond")){
@@ -310,7 +310,7 @@ public class SInterpretacion extends HttpServlet {
 											for(int i=0; i<preg.size(); i++){
 												CCondicion pregunta=preg.get(i);
 												data+=(data.equalsIgnoreCase("")?"":",");
-												data+="{\"idmenu\":\""+pregunta.getIdcondicion()+"\",\"descripcion\": \""+pregunta.getIdcondicion()+"/"+pregunta.getDescripcion()+"\"}";
+												data+="{\"idmenu\":\""+pregunta.getIdcondicion()+"\",\"descripcion\": \""+pregunta.getIdcondicion()+"/"+valid.Limpiarvalor3(pregunta.getDescripcion())+"\"}";
 											}
 											
 												String result=	" {\"menus\": [  "+data+" ] }";
@@ -386,7 +386,7 @@ public class SInterpretacion extends HttpServlet {
 											for(int i=0; i<preg.size(); i++){
 												CResultado_Examen pregunta=preg.get(i);
 												data+=(data.equalsIgnoreCase("")?"":",");
-												data+="{\"idmenu\":\""+pregunta.getIdresultado_examen()+"\",\"descripcion\": \""+pregunta.getTitulo()+"\"}";
+												data+="{\"idmenu\":\""+pregunta.getIdresultado_examen()+"\",\"descripcion\": \""+valid.Limpiarvalor3(pregunta.getTitulo())+"\"}";
 											}
 											
 												String result=	" {\"menus\": [  "+data+" ] }";
