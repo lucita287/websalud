@@ -625,16 +625,16 @@ public class CDataExam extends CDataBase {
 			if(stm.executeUpdate()>0)
 				b= true;
 		
-			if(paciente.getCarne()>0){
-			try {
-						CDataSalud salud=new CDataSalud();
-					if(salud.Connect()){
-						String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
-						salud.InsertarPaciente(paciente, unidad);
-					}
-					salud.Close();
-			} catch (Throwable e) {}
-			}
+			//if(paciente.getCarne()>0){
+				//try {
+				//CDataSalud salud=new CDataSalud();
+						//if(salud.Connect()){
+						//String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
+						//salud.InsertarPaciente(paciente, unidad);
+						//}
+					//salud.Close();
+					//} catch (Throwable e) {}
+			//}
 		} catch (SQLException e) {
 
 			CLogger.write("e30", this, e);
