@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import data.CConfiguracion;
 import data.CPaciente;
+import data.CTarjeta_Impresa_S;
 import framework.CDataExam;
 import framework.CValidation;
 import framework.CWebService;
@@ -300,6 +301,11 @@ public class SEstudiante extends HttpServlet {
 			 }
 			response.sendRedirect("admin/index.jsp?portal=20");
 			
+		}else if(action.equalsIgnoreCase("enviar_imprimir")){
+			int idcita=valid.ConvertEntero(valid.ValidarRequest(request.getParameter("idcita")));
+			dbo.getListaTarjetaImpresa(idcita);
+			
+			out.print("{\"resultado\":\"OK\",\"mensaje\":\"ALMACENADO\"}");
 		}
 		dbo.Close();
 	}

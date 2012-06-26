@@ -2,11 +2,14 @@ package framework;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import data.CPaciente;
+import data.CTarjeta_Impresa_S;
 
 public class CDataSalud {
 	
@@ -93,4 +96,103 @@ public class CDataSalud {
 		
 		return result;
 	} 
+	
+	
+	
+	public boolean UpdatePaciente(CTarjeta_Impresa_S  pac){
+		boolean result=false;
+		
+		int temp=0;
+		
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select count(carne) cant from alumno where carne=? and fecha_examen is null");
+			stm.setInt(1, pac.getCarne());
+			
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+			temp=rs2.getInt("cant");
+			
+			}
+			
+			if(temp>0){
+				
+				stm = (PreparedStatement)conn.prepareStatement("UPDATE alumno SET fecha_examen = ? WHERE carne = ?");
+				stm.setDate(1, new java.sql.Date(pac.getFecha().getTime()));
+				stm.setInt(2, pac.getCarne());
+				if(stm.executeUpdate()>0){	
+					return true;
+				}
+				
+			}
+			
+		}catch(Throwable e){
+			
+		}
+		
+		return result;
+	}
+	public boolean UpdateTarjeta_impresa(CTarjeta_Impresa_S  pac){
+		boolean result=false;
+		
+		int temp=0;
+		
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select count(*) cant from tarjeta_impresa where carne=? and CAST(fecha AS DATE)=?");
+			stm.setInt(1, pac.getCarne());
+			stm.setDate(2, new java.sql.Date(pac.getFecha().getTime()));
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+			temp=rs2.getInt("cant");
+			
+			}
+			
+			if(temp==0){
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy'-'MM'-'dd", new Locale("es"));
+				stm = (PreparedStatement)conn.prepareStatement("INSERT INTO tarjeta_impresa (carne,nombre,fecha) VALUES ("+pac.getCarne()+",'"+pac.getNombre()+"','"+formatter.format(pac.getFecha())+"')");
+				if(stm.executeUpdate()>0){	
+					return true;
+				}
+				
+			}
+			
+		}catch(Throwable e){
+			
+		}
+		
+		return result;
+	}
+	public boolean UpdateTarjeta_imprimir(CTarjeta_Impresa_S  pac){
+		boolean result=false;
+		
+		int temp=0;
+		
+		PreparedStatement stm;
+		try {
+			stm = (PreparedStatement)conn.prepareStatement("select count(*) cant from tarjeta_imprimir where carne=? and CAST(fecha AS DATE)=?");
+			stm.setInt(1, pac.getCarne());
+			stm.setDate(2, new java.sql.Date(pac.getFecha().getTime()));
+			ResultSet rs2=stm.executeQuery();
+			if(rs2.next()){
+			temp=rs2.getInt("cant");
+			
+			}
+			
+			if(temp==0){
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy'-'MM'-'dd", new Locale("es"));
+				stm = (PreparedStatement)conn.prepareStatement("INSERT INTO tarjeta_imprimir (carne,nombre,fecha) VALUES ("+pac.getCarne()+",'"+pac.getNombre()+"','"+formatter.format(pac.getFecha())+"')");
+				if(stm.executeUpdate()>0){	
+					return true;
+				}
+				
+			}
+			
+		}catch(Throwable e){
+			
+		}
+		
+		return result;
+	}
+	
 }

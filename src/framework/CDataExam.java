@@ -2,6 +2,7 @@ package framework;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,6 +29,7 @@ import data.CPregunta;
 import data.CPregunta_Paciente;
 import data.CPregunta_Titulo_Respuesta;
 import data.CResultado_Examen;
+import data.CTarjeta_Impresa_S;
 import data.CTipo_Interpretacion;
 import data.CTipo_Pregunta;
 import data.CTipo_Sangre;
@@ -625,22 +627,52 @@ public class CDataExam extends CDataBase {
 			if(stm.executeUpdate()>0)
 				b= true;
 		
-			//if(paciente.getCarne()>0){
-				//try {
-				//CDataSalud salud=new CDataSalud();
-						//if(salud.Connect()){
-						//String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
-						//salud.InsertarPaciente(paciente, unidad);
-						//}
-					//salud.Close();
-					//} catch (Throwable e) {}
-			//}
+			this.SafeEstudiante_SALUD(paciente);
 		} catch (SQLException e) {
 
 			CLogger.write("e30", this, e);
 		}
 		
 		return b;
+	}
+	
+	public void SafeEstudiante_SALUD(CPaciente paciente){
+		if(paciente.getCarne()>0){
+		try {
+			
+		CDataSalud salud=new CDataSalud();
+				if(salud.Connect()){
+					String unidad=this.getUnidadAcademica(paciente.getIdunidad_academica());
+					salud.InsertarPaciente(paciente, unidad);
+				}
+			salud.Close();
+		} catch (Throwable e) {}
+		}
+	}
+	public void UpdateEstudiante_SALUD(CTarjeta_Impresa_S paciente){
+		if(paciente.getCarne()>0){
+		try {
+			
+		CDataSalud salud=new CDataSalud();
+				if(salud.Connect()){
+					salud.UpdatePaciente(paciente);
+				}
+			salud.Close();
+		} catch (Throwable e) {}
+		}
+	}
+	public void UpdateTarjeta_SALUD(CTarjeta_Impresa_S paciente){
+		if(paciente.getCarne()>0){
+		try {
+			
+		CDataSalud salud=new CDataSalud();
+				if(salud.Connect()){
+					salud.UpdateTarjeta_impresa(paciente);
+					salud.UpdateTarjeta_imprimir(paciente);
+				}
+			salud.Close();
+		} catch (Throwable e) {}
+		}
 	}
 
 	public int getIdPaciente(String user){
@@ -2521,7 +2553,7 @@ public class CDataExam extends CDataBase {
 			 String sql="SELECT da.idcita, estado, tipo_examen, cupo, fecha, hora_inicio, hora_fin, "+
 					 " (select count(*) from  cita_paciente cp where (cp.estado = 1 or cp.estado=3) and cp.idcita= da.idcita) cant " 
 					 +" FROM cita da where da.fecha=? and hour(hora_inicio)=? and minute(hora_inicio)=? "+
-            " and hour(hora_fin)=? and minute(hora_fin)=? ";
+            " and hour(hora_fin)=? and minute(hora_fin)=? order by da.estado asc ";
 			
 			
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
@@ -2863,7 +2895,7 @@ public class CDataExam extends CDataBase {
 		
 		return ret;
 	}
-	public int getTotalCitasEstudiante(int type, String busqueda,int idcita){
+	public int getTotalCitasEstudiante(int type, String busqueda,int idcita, String estado){
 		int cant=0;
 		try{
 			
@@ -2877,12 +2909,11 @@ public class CDataExam extends CDataBase {
 			String sql="SELECT count(*) cant "+
 					"FROM cita c inner join cita_paciente cp on c.idcita=cp.idcita "+
 					"inner join paciente p on p.idpaciente=cp.idpaciente "+
-					"where c.idcita=? and upper("+busq+") like ?   ";
+					"where c.idcita=? and upper("+busq+") like ? and cp.estado in ("+estado+")  ";
 			
 			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
 			stm.setInt(1,idcita);
 			stm.setString(2,"%"+busqueda.trim().toUpperCase()+"%");
-	
 			ResultSet rs=stm.executeQuery();
 			while(rs.next()){
 				cant=rs.getInt("cant");
@@ -3962,9 +3993,55 @@ try{
 				return true;
 			
 		} catch (SQLException e) {
-			CLogger.write("e8", this, e);
+			CLogger.write("e162", this, e);
 		}
 		
 		return false;
 	}
+	public void getListaTarjetaImpresa(int idcita){
+		try{
+			String sql=" select c.fecha fecha1,p.carne carne1, concat(p.nombre,' ',p.apellido) nombre1, "+
+					" p.idpaciente, p.nombre, ifnull(p.fecha_nac,now()) fecha_nac, ifnull(p.carne,0) carne, p.direccion, ifnull(p.telefono,'') telefono, ifnull(p.movil,'') movil, ifnull(p.email,'') email, ifnull(p.emer_nombre,'') emer_nombre, ifnull(p.idemer_parentesco,0) idemer_parentesco, ifnull(p.emer_telefono,'') emer_telefono, ifnull(p.emer_movil,'') emer_movil, ifnull(p.tipo_sangreidtipo_sangre,0) idtipo_sangre, ifnull(p.estado_civilidestado_civil,0) idestado_civil, ifnull(p.titulo_secundaria,'') titulo_secundaria,  p.usuario, p.sexo, "+
+					" p.apellido, "+			
+					" ifnull(p.crecio_en,'') crecio_en, ifnull(p.titulo_secundaria,'') titulo_secundaria, "+			
+					" ifnull(p.emer_nombre,'') emer_nombre, ifnull(emer_telefono,'') emer_telefono, ifnull(emer_movil,'') emer_movil,  "+
+					" ifnull(p.idemer_parentesco,'') idemer_parentesco, "+
+					" ifnull(p.tipo_sangreidtipo_sangre,0)  idtipo_sangre, "+
+					" ifnull(p.estado_civilidestado_civil,0) idestado_civil, "+
+					" ifnull(p.idnacionalidad,0) idnacionalidad, ifnull(p.iddepartamento,0) iddepartamento, ifnull(p.estado,0) estado, ifnull(p.examen_linea,0) examen_linea, ifnull(p.idunidad_academica,0) idunidad_academica "+
+					" from cita_paciente cp inner join cita c on c.idcita=cp.idcita "+
+					" inner join paciente p on p.idpaciente=cp.idpaciente where cp.idcita=? and cp.estado=? and p.carne is not null ";
+			
+			
+			PreparedStatement stm=(PreparedStatement)conn.prepareStatement(sql);
+			stm.setInt(1,idcita);
+			stm.setInt(2,3);
+			ResultSet rs=stm.executeQuery();
+			
+			while(rs.next()){
+				CTarjeta_Impresa_S tarjeta=new CTarjeta_Impresa_S(new java.util.Date(rs.getDate("fecha1").getTime()),rs.getInt("carne1"),rs.getString("nombre1"));
+				CPaciente pac=new CPaciente(rs.getInt("idpaciente"), rs.getString("nombre"),new java.util.Date(rs.getDate("fecha_nac").getTime()),
+						rs.getInt("carne"),  rs.getString("direccion"),rs.getString("telefono"),rs.getString("movil"),
+						rs.getInt("sexo"), rs.getString("email"),
+						rs.getString("usuario"),
+						rs.getInt("idestado_civil"), rs.getString("emer_nombre"),
+						rs.getInt("idemer_parentesco"), rs.getString("emer_telefono"),
+						rs.getString("emer_movil"), rs.getInt("idtipo_sangre"),
+						rs.getString("titulo_secundaria"),
+						rs.getString("crecio_en"),rs.getString("apellido"),rs.getInt("idnacionalidad"),rs.getInt("iddepartamento"),
+						rs.getInt("estado"),rs.getInt("examen_linea"),rs.getInt("idunidad_academica")
+						);
+				this.SafeEstudiante_SALUD(pac);
+				this.UpdateEstudiante_SALUD(tarjeta);
+				this.UpdateTarjeta_SALUD(tarjeta);
+			}
+			rs.close();
+			stm.close();
+		} catch (SQLException e) {
+
+			CLogger.write("e163", this, e);
+		}
+		
+	}
 }
+
