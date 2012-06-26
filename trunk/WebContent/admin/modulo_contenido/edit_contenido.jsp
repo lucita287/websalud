@@ -33,7 +33,7 @@
 						sortorder: "desc",
 					    title: 'Menu',
 					    useRp: true,
-					    rp: 15,
+					    rp: 30,
 					    showTableToggleBtn: true,
 					    width: 600,
 					    height: 200,
