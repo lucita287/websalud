@@ -24,9 +24,9 @@ CDataExam dbo=new CDataExam();
 						
 				}
 %>				
-<%=(pac==null)?"":pac.getCarne()%><br>
+<%=(pac==null)?"":"<a href='index.jsp?portal=3'>Carne: "+pac.getCarne()+"</a>"%><br>
 	<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
-	<%=(pac==null)?"":"<b>"+dbo.getUnidadAcademica(pac.getIdunidad_academica()) %></b><br/>
+	<%=(pac==null)?"":"<b>"+dbo.getUnidadAcademica(pac.getIdunidad_academica())+"</b> Celular: "+pac.getMovil() %><br/>
 	<%if(img!=null) {%>CITA ACTUAL:<button onclick="Modificar(<%=pac.getIdpaciente() %>,<%= idcita %>)" > <img src=<%=img %> widht="16px" height="16px" ></button><%} %>
 <% } dbo.Close(); } } %>	
 	
