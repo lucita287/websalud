@@ -255,7 +255,7 @@ public class CValidation {
 			if(pass.length()>=6){
 				try{
 					Integer.parseInt(pass);
-					result="{\"resultado\":\"ERROR\",\"mensaje\":\"Debe contener almenos una letra\"}";	
+					result="{\"resultado\":\"ERROR\",\"mensaje\":\"El password debe contener almenos una letra\"}";	
 				}catch(Exception e){
 					result="";
 				}
