@@ -58,7 +58,7 @@ REPORTE DE:<select id="tipo_cita" onchange="CambiarEstado()">
 
 <div style="float:left">
 <button id="nuevo_carne" onclick="CrearCarne()">CREAR NUEVO</button>
-
+<button id="enviar_imprimir" onclick="EnviarImprimir()">ENVIAR APP-SALUD</button>
 </div>
 <div style="clear: both;"></div>  
 <div id="dialog-form" title="Citas"></div>
@@ -117,6 +117,7 @@ $(function() {
 	$("#examen_realizado").button();
 	$("#bcarne3").button();
 	$("#nuevo_carne").button();
+	$("#enviar_imprimir").button();
 	$( "#dialog-form" ).dialog({
 		
 		autoOpen: false,
@@ -188,6 +189,18 @@ function examen_realizado(){
 function CambiarEstado(){
 	$('#estudiantes').flexOptions({params : [{name: 'a',value:'lista_estudiantes'},{name: 'idcita', value: <%= idcita%>},{name: 'estado', value:$("#tipo_cita").val()} ]});
 	  $('#estudiantes').flexReload();
+}
+function EnviarImprimir(){
+	cadena = [ 'a=enviar_imprimir','idcita=<%= idcita%>',].join('&');
+	 $.ajax({
+	        url: "../SEstudiante",
+	        data: cadena,
+	  	    type: 'post',
+	  	  	success: function(data){
+	  	  		//document.location.href="index.jsp?portal=3";
+	  	  		alert("Estudiantes Enviados");
+	        }
+	    });
 }
 $(document).ready(function () {
     $("#estudiantes").flexigrid

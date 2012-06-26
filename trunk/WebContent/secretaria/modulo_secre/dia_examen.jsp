@@ -19,7 +19,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 	
 	
 	CDataExam dbo=new CDataExam();
-	
+	int idcita_focus=0;
 	if(dbo.Connect()){
 		
 		ArrayList<CCita> list=new ArrayList<CCita>();
@@ -49,7 +49,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 		
 		
 			<div style="float:left; width:400px;">
-			Carne<input type="text" id="carne" name="carne" value="<%=(pac==null)?"":pac.getCarne()%>"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
+			Carne<input type="text" id="carne" name="carne" value="<%=(pac!=null && list.size()==0)?pac.getCarne():""%>"  size="20px"/><button onclick="buscar('<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')" class="mybutton">BUSCAR</button><br/>
 			<b><%=(pac==null)?"":pac.getCarne()%></b><br/>
 			<%=(pac==null)?"":pac.getIdpaciente()+ ")<b>"+(pac.getNombre()+" "+pac.getApellido()) %></b><br/>
 			<b>Fecha Nac:</b> <%=(pac==null)?"":(pac.getddmmyyFecha()) %> <b>Movil:</b> <%=(pac==null)?"":(pac.getMovil()) %><br/>
@@ -119,8 +119,12 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							<td><%=cc.getTipo_examenD()%><br/><%=cc.getEstadoD() %></td>  
 								<td><%=citaact%> 
 									<% if(citaact>0){
-											if(cc.getEstado()!=0){  %>
-											<button id="asignarexamen" class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</button>
+											if(cc.getEstado()!=0){  
+											if(idcita_focus==0){
+												idcita_focus=cc.getIdcita();
+											}
+											%>
+											<button id="asignarexamen<%=cc.getIdcita()%>" class="mybutton" onclick="asignar('<%=cc.getIdcita()%>','<%=request.getParameter("start") %>','<%=request.getParameter("end") %>')">(ASIGNAR)</button>
 											<%} %>
 											<br/>Boleta<input type="text" id="boleta" name="boleta" size="20"/>
 									<% } %>
@@ -205,7 +209,7 @@ if(action.equalsIgnoreCase("especifico_calendar")){
 							
 							<%
 						}else{
-							%>$("#asignarexamen").focus();
+							%>$("#asignarexamen<%=idcita_focus%>").focus();
 							
 							<%
 						}

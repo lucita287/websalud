@@ -157,7 +157,7 @@ public class SCitaTable extends HttpServlet {
 									 ArrayList<CPaciente> lista=dbo.getListaCitasEstudiante(ordenar,estado,asc,min,max,pqtype,busqueda,idcita);
 									 
 									 String info="<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-									 info+="<rows><page>"+page+"</page><total>"+dbo.getTotalCitasEstudiante(pqtype, busqueda,idcita)+"</total>";
+									 info+="<rows><page>"+page+"</page><total>"+dbo.getTotalCitasEstudiante(pqtype, busqueda,idcita,estado)+"</total>";
 									 
 									 String data="";
 									 for(int i=0; i<lista.size();i++){
