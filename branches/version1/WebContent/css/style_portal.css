@@ -1,0 +1,443 @@
+/*********** INFORMACIÓN DE LA INSTITUCIÓN *************/
+		#info_configuracion {
+		width:700px; margin: 0 auto 0 auto;
+		//color: #000;
+		}
+/************* PORTAL ******************/
+
+		#menu-principal {  width:25%;  float:left; }
+		
+		#noticias {width:730px; float:left; }
+		
+		
+		#feedback { font-size: 1.4em; }
+		
+		#header-inicio {float:left; }
+		#tabs1-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }
+		#Panel-inicio-info { width:90%;  padding: 0.4em; background: #fff; }
+		
+		
+		#tabs1-inicio-info h3 { margin: 0; padding: 0.4em; text-align: center; }
+		#Panel-texto { width:90%;  padding: 0.4em; background: #fff; }
+		#Panel-texto h3 { margin: 0; padding: 0.4em; text-align: center; }
+		
+		#Panel-texto-tit { 
+		margin: 0; padding: 0.4em; text-align: center; 
+		font-size:1.5em;
+		}
+		#button_login { margin: 0; padding: 0.4em; text-align: center; }
+		.divbutton_login {margin:0 auto 0 auto; width:80px;  }
+			
+/**************** CONTENIDO *********************/
+		#pdf_titulo{
+			  	font-weight:bold;
+			  	font-size:1.2em;
+			  	text-transform: uppercase;
+			  }
+			  #pdf_descripcion{
+			  	width: 400px;
+                   
+					margin: 0px 20px 20px 20px;
+			  }
+			  #pdf_div{
+			  		margin:0 auto 0 auto;
+					width: 500px;
+					background: #eeeef4;
+					height: 180px;
+					overflow: auto;
+			  }	
+ 				#first_conte{
+               		width: 95%;
+                    border-style:solid;
+					border-width:1px;
+               }
+ 				#panel-texto-c1 {
+                    width: 95%;
+                    height: 150px;
+                    overflow: auto;
+                    background: #E0E0E0;
+   					margin: 0px 20px 20px 20px;
+               }
+               
+               #panel-texto-c2 {
+                    width: 95%;
+                    height: 220px;
+                    overflow: auto;
+                    background: #E0E0E0;
+   					margin: 0px 20px 20px 20px;
+               }
+               #panel-texto-c3 {
+                    width: 95%;
+                    height: 300px;
+                    overflow: auto;
+                    background: #E0E0E0;
+   					margin: 0px 20px 20px 20px;
+               }
+               #panel-texto-c4 {
+                    width: 95%;
+                    height: 500px;
+                    overflow: auto;
+                    background: #E0E0E0;
+   					margin: 0px 20px 20px 20px;
+               }
+				#gallery_nav {
+					width: 580px;
+					height: 130px;
+					overflow: auto;
+					max-height: 150px;
+					background: #eeeef4;
+				}	
+				#gallery img {
+					border: none;
+				}
+				
+				
+				
+				#gallery_output {
+					margin:0 auto 0 auto;
+					width: 600px;
+					height: 550px;
+					overflow: auto;
+				}
+				
+				#gallery_output img {
+					display: block;
+					margin: 20px auto 0 auto;
+				}
+				
+/************** MENU ***********************/
+			
+			
+			#menu-salud{ background: #25587E;}
+			
+			ul#menu, ul#menu ul {
+			  list-style-type:none;
+			  margin: 0;
+			  padding: 0;
+			  width: 20em;
+			}
+			
+			ul#menu a {
+			  display: block;
+			  text-decoration: none;	
+			}
+			
+			ul#menu li {
+			  margin-top: 1px;
+			}
+			
+			ul#menu li ul{
+				background: #E0E0E0;
+			}
+			ul#menu li a {
+			  // background: #325179;
+			  background: #25587E;
+			  color: #fff;	
+			  padding: 0.5em;
+			}
+			
+			ul#menu li a:hover {
+			  background: #151B54;
+			}
+			
+			
+			ul#menu li ul li a {
+			  background: #E0E0E0;
+			  color: #000;
+			  padding-left: 20px;
+			}
+			
+			ul#menu li ul li a:hover {
+			  background: #aaa;
+			  border-left: 5px #000 solid;
+			  padding-left: 15px;
+			}
+/************* noticias descripcion *****************/
+
+		#news_descripcion {
+		width:450px; 
+		float:left; 
+		height: 220px;
+        overflow: auto;
+        margin: 0px 20px 20px 20px;
+		}
+		.news_vermas{
+		float:right;
+		background:#E0E0E0;
+		padding: 10px;
+		border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			border-top-right-radius: 4px;
+			border-top-left-radius: 4px;
+			border: 1px solid #AAAAAA;
+    		font-weight:bold;
+		}
+		.news_vermas2{
+		float:right;
+		}
+		.news_vermas3{
+		margin: 0 auto 0 auto;
+		width: 400px;
+		}
+		
+/************** LOGIN ******************************/
+.error_label {color:red;  font-size:1.2em; text-align:center; text-decoration:blink; text-transform:uppercase; }
+#Panel-login { width:230px;  padding: 0.4em; background: #fff; }
+#Panel-login h3 { margin: 0; padding: 0.4em; text-align: center; }
+#button-login {width:200px; margin:0 auto 0 auto; text-align: center; }
+/************** NOTICIAS ******************************/
+
+#Panel-inicio { width:723px;  padding: 0.4em; background: #fff; }
+#Panel-inicio h3 { margin: 0; padding: 0.4em; text-align: center; }	
+#tabs1-inicio-info { width:253px; float:left; }
+#widget-info { width:450px; float:left; }
+.news-inicio{	width:250px; height:100px; border-style:solid; border-width:1px;	}
+#Panel-texto-tit { margin: 0; padding: 0.4em; text-align: center; }
+.button  { margin: 20px 0px 20px 0px; padding: 1.5em; text-align: center; TEXT-DECORATION: none; }
+.news-todas{
+		margin-top:5px;	 border-style:solid; border-width:1px;
+		border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			border-top-right-radius: 4px;
+			border-top-left-radius: 4px;
+			border: 1px solid #AAAAAA;
+}
+#titulo_noticia_descripcion {
+	font-weight:bold;
+	text-transform:uppercase;
+	color:#00688B;
+	font-size:1.5em;
+}
+.titulo_noticias{
+	font-weight:bold;
+	text-transform:uppercase;
+	color:#00688B;
+}
+.todas_noticias_titulo{
+	font-weight:bold;
+	text-transform:uppercase;
+	color:#00688B;
+	font-size:2em;
+}
+.todas_noticias_descripcion{
+	width:900px;
+	margin-left:25px;
+}
+.news_vermas_especifica{
+		float:left;
+		font-size:2em;
+		background:#E0E0E0;
+		padding: 15px;
+		border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			border-top-right-radius: 4px;
+			border-top-left-radius: 4px;
+			border: 1px solid #AAAAAA;
+    		font-weight:bold;
+		}
+/************** CALENDAR ******************************/
+#message {
+		font-size: 0.9em;
+		width: 350px;
+		height: 150px;
+		padding: 1em;
+		background: #ffc;
+		border: 1px solid #dda;
+		float:left;
+		display: none;
+		overflow: auto;
+	}
+#retorna_unidad{
+	float:left; margin-top:15px;
+	margin-bottom:20px;
+}
+#titulo_area_calendario{
+	width: 250px;
+	text-align:center;
+	margin: 0 auto 0 auto;
+	font-size: 1.5em;
+	text-transform:uppercase;
+}
+.bt_actividad_calendario{
+	float:right; margin-top:15px;
+	margin-bottom:20px;
+}
+.bt_area_calendario{
+	float:left; margin-top:15px;
+	margin-bottom:20px;
+}
+.wc-nav .wc-title{
+	font-size: 0.85em;
+}
+.wc-time{
+	font-size: 0.85em;
+}
+	.calendario_ventana { width: 450px; height: 300px;  float:left;  margin:10px 10px 10px 20px;  overflow: auto;}
+	.calendario_ventana h3 { text-align: center; margin: 0; text-transform:uppercase; }
+	#calendario-frame {
+clear: right;
+border: 1px solid #DDD;
+overflow: auto;
+position: relative;
+}
+
+.calendario_actividad .tabla
+{
+	width:450px;
+	
+	margin: 0 auto;
+}
+
+.calendario_actividad .fila
+{
+	clear: both;
+}
+
+.calendario_actividad .col_titulo
+{
+	float: left;
+	padding: 5px;
+	background: #B0E0E6;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	width:410px;
+}
+
+.calendario_actividad .col
+{
+	float: left;
+	padding: 5px;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	width:410px;
+}
+.calendario_actividad .tr1
+{
+	text-align:center;
+	width:100px; float:left;
+}
+.calendario_actividad .tr2
+{
+width:280px; float:right;
+}
+.calendario_actividad .titulo_area
+{
+float:right;
+font-size: 1.5em;
+font-weight:bold;
+}
+	.mes_calendar { width: 910px;   margin:10px 10px 10px 10px; }
+	.day_calendar { margin:5px 5px 5px 5px; float:left;  width: 45px;   padding: 5px; font-size: 3em; border: 1px solid #000; background: #eee; color: #333; }
+	.year_calendar { font-size: 2em; text-align:center;}
+.mes_calendar .tabla{
+	width:830px;
+	float: left;
+	 margin:5px 5px 5px 5px;
+	 
+}
+
+.mes_calendar .fila
+{
+	clear: both;
+}
+
+.mes_calendar .col_titulo
+{
+	float: left;
+	padding: 5px;
+	background: #B0E0E6;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	
+}
+
+.mes_calendar .col
+{
+	float: left;
+	border-color: #00688B;
+	border-style: solid;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+}
+.mes_calendar .tr1
+{
+	float:left;
+	padding: 2px;
+}
+/************* REGISTRO ************************************/
+
+#registro_usuarios{
+	width:960px; margin: 0 auto 0 auto;	
+}
+#registro_titulo{
+	width:150px; float:right;
+}
+#registro_usuarios h3{
+	margin: 0; padding: 0.4em; text-align: center; 
+}
+.bt_registrarse{
+margin:0 auto 0 auto; width:120px;
+}
+.button_registro{
+	width: 550px;
+}
+/*********** REGISTRO ***************************************/
+		
+		.registro_user .tabla{
+			width:940px;
+			float: left;
+			margin:5px 5px 5px 5px; 
+		}
+		.registro_user .fila
+		{
+			clear: both;
+		}
+		.registro_user .col_titulo
+		{
+			float: left;
+			padding: 5px;
+			width:150px;
+			color:#00688B;
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			border-top-right-radius: 4px;
+			border-top-left-radius: 4px;
+			border: 1px solid #AAAAAA;
+    		font-weight:bold;
+			text-transform:uppercase;
+		}
+		.registro_user .col
+		{
+			width:730px;
+			float: left;
+			padding: 5px;
+			border-color: #00688B;
+			
+		}
+		#disp_usuario{
+			color:red;  font-size:1.2em; text-align:center; text-transform:uppercase;
+		}		
+		label.error { 
+		padding-left: .5em;  
+		border: 1px solid #CD0A0A;
+			background: #FEF1EC;
+			color: #CD0A0A;
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			border-top-right-radius: 4px;
+			border-top-left-radius: 4px;
+		}

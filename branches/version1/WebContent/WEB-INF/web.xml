@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>Unidad de Salud USAC</display-name>
+  <description>
+     Unidad de Salud, Bienestar Estudiantil
+  </description>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>SUploadImagen</display-name>
+    <servlet-name>SUploadImagen</servlet-name>
+    <servlet-class>servlet.SUploadImagen</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SUploadImagen</servlet-name>
+    <url-pattern>/uploadimagen</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SUploadPDF</display-name>
+    <servlet-name>SUploadPDF</servlet-name>
+    <servlet-class>servlet.SUploadPDF</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SUploadPDF</servlet-name>
+    <url-pattern>/uploadpdf</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SCalendario</display-name>
+    <servlet-name>SCalendario</servlet-name>
+    <servlet-class>servlet.SCalendario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SCalendario</servlet-name>
+    <url-pattern>/SCalendario</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SRimage</display-name>
+    <servlet-name>SRimage</servlet-name>
+    <servlet-class>net.sf.jasperreports.j2ee.servlets.ImageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SRimage</servlet-name>
+    <url-pattern>/SRimage</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/perror.jsp</location>
+  </error-page>
+  <session-config>
+    <session-timeout>180</session-timeout>
+  </session-config>
+</web-app>
